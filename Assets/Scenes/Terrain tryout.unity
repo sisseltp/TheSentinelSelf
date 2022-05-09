@@ -12498,9 +12498,17 @@ PrefabInstance:
       value: -0.134
       objectReference: {fileID: 0}
     - target: {fileID: -4157524182732408741, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4157524182732408741, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -3522955778539423533, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
+      objectReference: {fileID: -2813467912831258332, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
+    - target: {fileID: -4157524182732408741, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: -6629797300637803691, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
     - target: {fileID: 919132149155446097, guid: 95e2363a7415f4e0c9a12897bdbf3d6f, type: 3}
       propertyPath: m_Name
       value: sentinel1-test
