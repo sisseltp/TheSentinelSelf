@@ -4,9 +4,8 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_Name: Deep Lake
   m_Shader: {fileID: 4800000, guid: f625f9c13440d4e49bf26284e1c8c132, type: 3}
   m_ShaderKeywords: _ENABLEREFLECTIONS_ON
@@ -96,7 +95,7 @@ Material:
     - _FoamDistFade: 2.87
     - _FoamDistFalloff: 20.1
     - _FoamIntensity: 10
-    - _FoamSpeed: -200.46
+    - _FoamSpeed: -200
     - _FoamTiling: 30
     - _FoamVisibility: 0.547
     - _FogDistance: 1000
@@ -105,7 +104,7 @@ Material:
     - _Gloss: 0.9
     - _Glossiness: 0.5
     - _LargeWaveRefraction: 1.53
-    - _LargeWavesSpeed: 14.7
+    - _LargeWavesSpeed: 50
     - _LargeWavesTiling: 1
     - _LightWrapping: 2
     - _LongTilingDistance: 1500
@@ -125,7 +124,7 @@ Material:
     - _ShoreFade: 0.56
     - _ShoreTransparency: 0.5
     - _SmallWaveRrefraction: 1.16
-    - _SmallWavesSpeed: 1
+    - _SmallWavesSpeed: 60
     - _SmallWavesTiling: 1
     - _Specular: 1
     - _SrcBlend: 1
@@ -139,10 +138,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DeepWaterColor: {r: 0.36663666, g: 0.28635636, b: 0.5188679, a: 1}
+    - _DeepWaterColor: {r: 0, g: 0.03316428, b: 0.04411763, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FoamColor: {r: 0.29208258, g: 0.2924528, b: 0.2717604, a: 1}
+    - _FoamColor: {r: 0.3823529, g: 0.3879758, b: 0.3879758, a: 1}
     - _FogColor: {r: 0.8014706, g: 0.8014706, b: 0.8014706, a: 1}
-    - _MainColor: {r: 0.7924528, g: 0.5585124, b: 0.24296904, a: 1}
+    - _MainColor: {r: 0, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.7205882, g: 0.7311851, b: 0.7311851, a: 1}
-  m_BuildTextureStacks: []
