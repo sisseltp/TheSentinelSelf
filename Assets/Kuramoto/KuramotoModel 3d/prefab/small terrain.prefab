@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 5264773224215294310}
   - component: {fileID: 5264773224215294311}
   - component: {fileID: 5264773224215294304}
-  - component: {fileID: 5264773224215294309}
-  - component: {fileID: 5264773224215294308}
   m_Layer: 0
   m_Name: small terrain
   m_TagString: Untagged
@@ -43,7 +41,7 @@ Terrain:
   m_GameObject: {fileID: 5264773224215294305}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: a48339942ca5b43cba0f30b715183fc9, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: a2656f9f25b7740899bdf959b6724ed8, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -58,7 +56,7 @@ Terrain:
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -74,50 +72,7 @@ TerrainCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5264773224215294305}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 607312263e6edad4293a3fd7bb6602cf, type: 2}
   m_Enabled: 1
-  m_TerrainData: {fileID: 15600000, guid: a48339942ca5b43cba0f30b715183fc9, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: a2656f9f25b7740899bdf959b6724ed8, type: 2}
   m_EnableTreeColliders: 1
---- !u!95 &5264773224215294309
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5264773224215294305}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9a5401b869e4940888d1e5570dd8b094, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!205 &5264773224215294308
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5264773224215294305}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
-  m_FadeMode: 2
-  m_AnimateCrossFading: 1
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers: []
-  - screenRelativeHeight: 0.3
-    fadeTransitionWidth: 0
-    renderers: []
-  m_Enabled: 1
