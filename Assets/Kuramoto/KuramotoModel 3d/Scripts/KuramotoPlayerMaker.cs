@@ -8,6 +8,8 @@ public class KuramotoPlayerMaker : MonoBehaviour
 
     [SerializeField]
     private GameObject sentinel; // the sentinel game object
+    [SerializeField]
+    private GameObject sentinelCam; // the sentinel game object
     [Range(1, 3000)]
     [SerializeField]
     public int nSentinels = 10; // number of sentinels to be made
@@ -52,17 +54,45 @@ public class KuramotoPlayerMaker : MonoBehaviour
     public struct GenVel
     {
 
-        public GenVel(Vector3[] vels, float fit)
+        public GenVel(Vector3[] vels, float fit = 0)
         {
             Vels = vels;
             fitness = fit;
+        }
+
+        public Vector3[] BlendAttributes(Vector3[] otherVels)
+        {
+            Vector3[] newVels = new Vector3[Vels.Length];
+            for (int i = 0; i < newVels.Length; i++)
+            {
+
+                float rand = UnityEngine.Random.value;
+
+                if (rand < 0.33f)
+                {
+                    newVels[i] = Vels[i];
+                }
+                else if (rand < 0.66f)
+                {
+                    newVels[i] = otherVels[i];
+                }
+                else
+                {
+                    newVels[i] = UnityEngine.Random.insideUnitSphere;
+                    newVels[i].y = Mathf.Abs(newVels[i].y);
+                }
+            }
+
+
+
+            return newVels;
         }
 
         public Vector3[] Vels;
         public float fitness;
 
     }
-    // struct to hold the GenKurmto settings and fitness
+    // struct to holg gene kurmto data
     public struct GenKurmto
     {
         public float[] Settings;
@@ -77,8 +107,31 @@ public class KuramotoPlayerMaker : MonoBehaviour
             Settings[3] = couplingRange;
             fitness = fit;
         }
+
+        public float[] BlendAttributes(float[] otherSettings)
+        {
+            float[] newSetting = new float[Settings.Length];
+            for (int i = 0; i < newSetting.Length; i++)
+            {
+
+                float rand = UnityEngine.Random.value;
+
+                if (rand < 0.5f)
+                {
+                    newSetting[i] = Settings[i];
+                }
+                else
+                {
+                    newSetting[i] = otherSettings[i];
+                }
+
+
+            }
+
+            return newSetting;
+        }
     }
-     
+
 
     // Start is called before the first frame update
     void Start()
@@ -101,7 +154,15 @@ public class KuramotoPlayerMaker : MonoBehaviour
             Vector3 pos = new Vector3(x, y, z);
 
             // create a new sentinel asa child and at pos
-            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            GameObject thisSentinel;
+
+            if (i == 0) {
+                thisSentinel = Instantiate(sentinelCam, pos, Quaternion.identity, this.transform);
+            }
+            else
+            {
+                thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            }
             // get the kuramoto sentinel
             KuramotoPlayer kuramoto = thisSentinel.GetComponent<KuramotoPlayer>();
             kuramoto.Reset();// reset its setting to randomize them
@@ -215,25 +276,29 @@ public class KuramotoPlayerMaker : MonoBehaviour
         }
         else
         {
-            // select a random indx
+            // add random sentinel from lib
             int rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            // add sentinel from lib
-            // get that data
-            GenKurmto kurData = GenKurLib[rand];
-            // set it from that data
-            KuramotoPlayer kuramoto = thisSentinel.GetComponent<KuramotoPlayer>();
-            kuramoto.Reset();
-            kuramoto.speed = kurData.Settings[0];
-            kuramoto.noiseScl = kurData.Settings[1];
-            kuramoto.couplingRange = kurData.Settings[3];
-            kuramoto.coupling = kurData.Settings[2];
+            GenKurmto kurData1 = GenKurLib[rand];
+            rand = UnityEngine.Random.Range(0, GenKurLib.Count);
+            GenKurmto kurData2 = GenKurLib[rand];
 
-            // select random indx
+            float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
+
+            KuramotoSentinel kuramoto = thisSentinel.GetComponent<KuramotoSentinel>();
+            kuramoto.Reset();
+            kuramoto.speed = Settings[0];
+            kuramoto.noiseScl = Settings[1];
+            kuramoto.couplingRange = Settings[3];
+            kuramoto.coupling = Settings[2];
+
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            GenVel genVel = GenVelLib[rand];
-            // set from data
-            GeneticMovementPlayer genMov = thisSentinel.GetComponent<GeneticMovementPlayer>();
-            genMov.geneticMovement = genVel.Vels;
+            GenVel genVel1 = GenVelLib[rand];
+            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
+            GenVel genVel2 = GenVelLib[rand];
+
+            GeneticMovementSentinel genMov = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            genMov.Reset();
+            genMov.geneticMovement = genVel1.BlendAttributes(genVel2.Vels);
 
 
         }

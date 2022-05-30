@@ -477,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentinel: {fileID: 3438557043950093338, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
+  sentinelCam: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
   nSentinels: 14
   spawnArea: 100
   speedVariation: 0.45
@@ -577,7 +578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &359411228
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2116,7 +2117,6 @@ MonoBehaviour:
   counter: 0
   dead: 0
   fitness: 0
-  age: 0
   col0: {r: 0.21340132, g: 1, b: 0, a: 0}
   col1: {r: 1, g: 0.9708301, b: 0, a: 0}
 --- !u!23 &1353210226

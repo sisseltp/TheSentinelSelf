@@ -54,10 +54,38 @@ public class KuramotoSentinelMaker : MonoBehaviour
     public struct GenVel
     {
 
-        public GenVel(Vector3[] vels, float fit)
+        public GenVel(Vector3[] vels, float fit=0)
         {
             Vels = vels;
             fitness = fit;
+        }
+
+        public Vector3[] BlendAttributes(Vector3[] otherVels)
+        {
+            Vector3[] newVels = new Vector3[Vels.Length];
+             for(int i=0; i < newVels.Length; i++)
+            {
+
+                float rand = UnityEngine.Random.value;
+
+                if (rand < 0.33f)
+                {
+                    newVels[i] = Vels[i];
+                }
+                else if (rand < 0.66f)
+                {
+                    newVels[i] = otherVels[i];
+                }
+                else
+                {
+                    newVels[i] = UnityEngine.Random.insideUnitSphere;
+                }
+
+            }
+
+            
+
+            return newVels;
         }
 
         public Vector3[] Vels;
@@ -78,6 +106,29 @@ public class KuramotoSentinelMaker : MonoBehaviour
             Settings[2] = coupling;
             Settings[3] = couplingRange;
             fitness = fit;
+        }
+
+        public float[] BlendAttributes(float[] otherSettings)
+        {
+            float[] newSetting = new float[Settings.Length];
+            for (int i = 0; i < newSetting.Length; i++)
+            {
+
+                float rand = UnityEngine.Random.value;
+
+                if (rand < 0.5f)
+                {
+                    newSetting[i] = Settings[i];
+                }
+                else 
+                {
+                    newSetting[i] = otherSettings[i];
+                }
+              
+
+            }
+
+            return newSetting;
         }
     }
      
@@ -165,11 +216,10 @@ public class KuramotoSentinelMaker : MonoBehaviour
             if (GenVelLib.Count > 1000)
             {
                 // reorder the lib by fitness
-                Debug.Log("Resize");
-                Debug.Log(GenVelLib[0].fitness);
+                
+                int indx = GenVelLib.Count;
                 GenVelLib.Sort(SortByScore);
                 GenKurLib.Sort(SortByScore);
-                Debug.Log(GenVelLib[0].fitness);
                 // remove the first 250
                 GenVelLib.RemoveRange(0, 250);
                 GenKurLib.RemoveRange(0, 250);
@@ -220,21 +270,27 @@ public class KuramotoSentinelMaker : MonoBehaviour
         {
             // add random sentinel from lib
             int rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            
-            GenKurmto kurData = GenKurLib[rand];
+            GenKurmto kurData1 = GenKurLib[rand];
+            rand = UnityEngine.Random.Range(0, GenKurLib.Count);
+            GenKurmto kurData2 = GenKurLib[rand];
+
+            float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
             KuramotoSentinel kuramoto = thisSentinel.GetComponent<KuramotoSentinel>();
             kuramoto.Reset();
-            kuramoto.speed = kurData.Settings[0];
-            kuramoto.noiseScl = kurData.Settings[1];
-            kuramoto.couplingRange = kurData.Settings[3];
-            kuramoto.coupling = kurData.Settings[2];
+            kuramoto.speed = Settings[0];
+            kuramoto.noiseScl = Settings[1];
+            kuramoto.couplingRange = Settings[3];
+            kuramoto.coupling = Settings[2];
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            GenVel genVel = GenVelLib[rand];
+            GenVel genVel1 = GenVelLib[rand];
+            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
+            GenVel genVel2 = GenVelLib[rand];
 
             GeneticMovementSentinel genMov = thisSentinel.GetComponent<GeneticMovementSentinel>();
-            genMov.geneticMovement = genVel.Vels;
+            genMov.Reset();
+            genMov.geneticMovement = genVel1.BlendAttributes(genVel2.Vels);
 
 
         }
