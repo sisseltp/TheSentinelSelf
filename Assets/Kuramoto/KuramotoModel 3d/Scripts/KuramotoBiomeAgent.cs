@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoSentinel : MonoBehaviour
+public class KuramotoBiomeAgent : MonoBehaviour
 {
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI;
     private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
@@ -18,6 +18,7 @@ public class KuramotoSentinel : MonoBehaviour
     public float speedVariation = 0.1f; // amount to randomize data
     public int counter = 0; // num neighbors
     public bool played = false; // if the player has been in contact
+    public bool dead = false; // collision killer
 
     // holds the x,y position of the phase
     public float sumx = 0f; 
@@ -76,6 +77,18 @@ public class KuramotoSentinel : MonoBehaviour
         }
     }
 
+    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
+    {
+        speed = UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y);
+        phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
+        noiseScl = UnityEngine.Random.Range(noiseRange.x, noiseRange.y);
+        coupling = UnityEngine.Random.Range(couplingScl.x, couplingScl.y);
+        couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
+        fitness = 0;
+        age = 0;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -117,6 +130,7 @@ public class KuramotoSentinel : MonoBehaviour
         if (played) { 
             age = 0;// reset age
             played = false; // reset played gate
+            fitness += 10;
         }
         else { age++; } // else add to the age each frame
 
@@ -152,7 +166,7 @@ public class KuramotoSentinel : MonoBehaviour
             if (distance < couplingRange)
             {
                 // get the kuramoto component
-                KuramotoSentinel sentinel = sentinals[y].GetComponent<KuramotoSentinel>();
+                KuramotoBiomeAgent sentinel = sentinals[y].GetComponent<KuramotoBiomeAgent>();
                 // times the points value by 2*Pi
                 theta = sentinel.phase * CIRCLE_IN_RADIAN;
                 // get this phases x,y pos
@@ -212,5 +226,13 @@ public class KuramotoSentinel : MonoBehaviour
         couplingRange = UnityEngine.Random.Range(1,10);
         age = 0;
         fitness = 0;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
+        {
+            dead = true;
+        }
     }
 }

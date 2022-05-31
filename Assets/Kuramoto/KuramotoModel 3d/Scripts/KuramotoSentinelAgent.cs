@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoPlayer : MonoBehaviour
+public class KuramotoSentinelAgent : MonoBehaviour
 {
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
@@ -33,9 +33,24 @@ public class KuramotoPlayer : MonoBehaviour
     private Color col1;
 
     //holds the sentinel manager
-    private KuramotoSentinelMaker sentinelMaker;
+    private BiomeManager biomeManager;
     // holds the sentinels
     private GameObject[] sentinels;
+
+    private bool played = false;
+    public int age=0;
+
+
+    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
+    {
+        speed = UnityEngine.Random.Range(SpeedRange.x,SpeedRange.y);
+        phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
+        noiseScl = UnityEngine.Random.Range(noiseRange.x, noiseRange.y);
+        coupling = UnityEngine.Random.Range(couplingScl.x, couplingScl.y);
+        couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
+        fitness = 0;
+        age = 0;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -45,10 +60,10 @@ public class KuramotoPlayer : MonoBehaviour
         // hook up rendr component
         rendr = GetComponent<Renderer>();
         // find the sentinel maker
-        sentinelMaker = GameObject.FindGameObjectWithTag("Respawn").GetComponent<KuramotoSentinelMaker>();
+        biomeManager = GameObject.FindGameObjectWithTag("Respawn").GetComponent<BiomeManager>();
         
         // link the sentinels as a list
-        sentinels = sentinelMaker.sentinels ;
+        sentinels = biomeManager.sentinels ;
         
     }
 
@@ -56,9 +71,9 @@ public class KuramotoPlayer : MonoBehaviour
     void Update()
     {
         // if the num of sentinels changes relink them
-        if (sentinelMaker.nSentinels != sentinels.Length)
+        if (biomeManager.nSentinels != sentinels.Length)
         {
-            sentinels = sentinelMaker.sentinels;
+            sentinels = biomeManager.sentinels;
         }
         //run coherence function
         Coherence();
@@ -86,9 +101,19 @@ public class KuramotoPlayer : MonoBehaviour
         // set the new phase value
         phase = p;
 
+        // ad the amount of partners * sclr to the fitness
+        fitness += counter * 0.2f;
 
         //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
         rendr.material.color = Color.Lerp(col0, col1, phase);
+
+        // if its been interacted with by the players
+        if (played)
+        {
+            age = 0;// reset age
+            played = false; // reset played gate
+        }
+        else { age++; } // else add to the age each frame
     }
 
     // main comparing function 
@@ -117,7 +142,7 @@ public class KuramotoPlayer : MonoBehaviour
             if (distance < couplingRange)// if less than coupling range
             {
                 // get the kuramoto component
-                KuramotoSentinel sentinel = sentinels[y].GetComponent<KuramotoSentinel>();
+                KuramotoBiomeAgent sentinel = sentinels[y].GetComponent<KuramotoBiomeAgent>();
                 // times the points value by 2*Pi
                 theta = sentinel.phase * CIRCLE_IN_RADIAN;
                 // get this sentinels x,y pos
@@ -147,6 +172,9 @@ public class KuramotoPlayer : MonoBehaviour
 
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
+
+                played = true;
+            
             }
 
         }
@@ -180,6 +208,8 @@ public class KuramotoPlayer : MonoBehaviour
         }
     }
 
+
+    
     // resets and randomizes the base parameter
     internal void Reset()
     {
@@ -189,5 +219,6 @@ public class KuramotoPlayer : MonoBehaviour
         coupling = UnityEngine.Random.Range(2, 10);
         couplingRange = UnityEngine.Random.Range(4, 20);
         fitness = 0;
+        age = 0;
     }
 }

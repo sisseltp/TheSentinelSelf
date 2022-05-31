@@ -3,40 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoSentinelMaker : MonoBehaviour
+public class SentinelManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject sentinel; // holds the sentinel prefab
+    private GameObject sentinel; // the sentinel game object
+    [SerializeField]
+    private GameObject sentinelCam; // the sentinel game object
     [Range(1, 3000)]
     [SerializeField]
-    public int nSentinels = 10; // number of them to be made
+    public int nSentinels = 10; // number of sentinels to be made
 
-    [Range(0.1f, 1000f)]
+    [Range(0.1f, 100f)]
     [SerializeField]
-    private float spawnArea = 1.0f; // area to spawn in 
+    private float spawnArea = 1.0f; // area to be spawned in
     [SerializeField]
-    private float speedVariation = 0.1f;  // variation of speed
+    private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have
     [SerializeField]
-    private float couplingRange = 1; // coupling distance
+    private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
     [SerializeField]
-    private float noiseScl = 1; // scls the noise
+    private Vector2 noiseSclRange = new Vector2( 0.01f, 0.5f); // noise Scl to have
     [SerializeField]
-    private float coupling = 0.5f; // coupling value
+    private Vector2 couplingSclRange = new Vector2(0.2f,10f); // coupling scl
 
     [HideInInspector]
-    public GameObject[] sentinels; //list to hold the sentinels
+    public GameObject[] sentinels; // list of the sentinel object
 
-    public Sentinel[] sentinelsStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public Sentinel[] sentinelsStruct; // list of sentinel struct, that will hold the data for gpu compute
 
-    public List<GenVel> GenVelLib; // lib to hold the gene move data
+    public List<GenVel> GenVelLib; // list of the GenVel data to act as the library
 
-    public List<GenKurmto> GenKurLib; // lib to hold gene kurmto data
+    public List<GenKurmto> GenKurLib;// list of the GenKurmto data to act as the library
 
-    [SerializeField]
-    private float age = 1000; // age limit to kill sentinels
 
-    // struct to hold data maybe for gpu acceleration
+    // struct to hold all the sentinels data potential gpu compute
     public struct Sentinel
     {
         public float speed;
@@ -50,11 +50,11 @@ public class KuramotoSentinelMaker : MonoBehaviour
         public Vector3 vel;
         public Vector3[] GenVel;
     }
-    // struct to hold the genetic move data
+    // struct to hold the Genvels settings and fitness
     public struct GenVel
     {
 
-        public GenVel(Vector3[] vels, float fit=0)
+        public GenVel(Vector3[] vels, float fit = 0)
         {
             Vels = vels;
             fitness = fit;
@@ -63,7 +63,7 @@ public class KuramotoSentinelMaker : MonoBehaviour
         public Vector3[] BlendAttributes(Vector3[] otherVels)
         {
             Vector3[] newVels = new Vector3[Vels.Length];
-             for(int i=0; i < newVels.Length; i++)
+            for (int i = 0; i < newVels.Length; i++)
             {
 
                 float rand = UnityEngine.Random.value;
@@ -79,11 +79,11 @@ public class KuramotoSentinelMaker : MonoBehaviour
                 else
                 {
                     newVels[i] = UnityEngine.Random.insideUnitSphere;
+                    newVels[i].y = Mathf.Abs(newVels[i].y);
                 }
-
             }
 
-            
+
 
             return newVels;
         }
@@ -93,7 +93,7 @@ public class KuramotoSentinelMaker : MonoBehaviour
 
     }
     // struct to holg gene kurmto data
-     public struct GenKurmto
+    public struct GenKurmto
     {
         public float[] Settings;
         public float fitness;
@@ -120,51 +120,56 @@ public class KuramotoSentinelMaker : MonoBehaviour
                 {
                     newSetting[i] = Settings[i];
                 }
-                else 
+                else
                 {
                     newSetting[i] = otherSettings[i];
                 }
-              
+
 
             }
 
             return newSetting;
         }
     }
-     
+
 
     // Start is called before the first frame update
     void Start()
     {
-        // create list to hold object
+        // create the sentiels list
         sentinels = new GameObject[nSentinels];
-        // create list to hold data structs
+        // create the data struct list
         sentinelsStruct = new Sentinel[nSentinels];
-        // create the two lib lists
+        // create the two libs as lists
         GenKurLib = new List<GenKurmto>();
         GenVelLib = new List<GenVel>();
 
-        // loop over the nsentinels
+        // for n sentinels
         for(int i=0; i<nSentinels; i++)
         {
-            // set rand pos
+            // set a random pos
             float x = UnityEngine.Random.Range(-spawnArea, spawnArea);
             float y = 0;
             float z = UnityEngine.Random.Range(-spawnArea, spawnArea);
-
             Vector3 pos = new Vector3(x, y, z);
 
-            // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            // create a new sentinel asa child and at pos
+            GameObject thisSentinel;
 
-            // get its kurmto component
-            KuramotoSentinel kuramoto = thisSentinel.GetComponent<KuramotoSentinel>();
-            kuramoto.Reset();// randomize its settings
+            if (i == 0) {
+                thisSentinel = Instantiate(sentinelCam, pos, Quaternion.identity, this.transform);
+            }
+            else
+            {
+                thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            }
+            // get the kuramoto sentinel
+            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            kuramoto.Setup(noiseSclRange,couplingRange,speedRange, couplingSclRange, 0.2f);// setup its setting to randomize them
 
-            // add the object to the list
-            sentinels[i] = thisSentinel;
+            sentinels[i] = thisSentinel; // set the sentinel object to the list
 
-            // set data in the struct
+            // set the values of the struct from the sentinel
             sentinelsStruct[i].speed = kuramoto.speed;
             sentinelsStruct[i].phase = kuramoto.phase;
             sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
@@ -184,12 +189,13 @@ public class KuramotoSentinelMaker : MonoBehaviour
 
     private void Update()
     {
-        // loop over the n sentinels
+        
         for (int i = 0; i < nSentinels; i++)
         {
-            // get the kurmto
-            KuramotoSentinel kuramoto = sentinels[i].GetComponent<KuramotoSentinel>();
-            // set its variable
+            // get the components kuramoto component
+            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
+
+            // set the values of the struct from the sentinel
             sentinelsStruct[i].speed = kuramoto.speed;
             sentinelsStruct[i].phase = kuramoto.phase;
             sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
@@ -201,26 +207,29 @@ public class KuramotoSentinelMaker : MonoBehaviour
             sentinelsStruct[i].vel = sentinels[i].GetComponent<Rigidbody>().velocity;
             sentinelsStruct[i].GenVel = sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement;
 
-            // if older than age 
-            if (kuramoto.age > age) {
-                // add data to lib
+            // if the agent is dead
+            if (kuramoto.dead || kuramoto.age>1000) {
+                // add it settings to the librarys
                 GenKurmto genKurm = new GenKurmto(kuramoto.speed, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
                 GenVel vels = new GenVel(sentinelsStruct[i].GenVel, kuramoto.fitness);
                 GenVelLib.Add(vels);
-                // reset its values
+                // call the reset function
                 ResetSentinel(i);
+                // reset the dead gate
+                kuramoto.dead = false;
             }
 
-            // if the lib is greater than ...
+            // if lib is greater than ...
             if (GenVelLib.Count > 1000)
             {
-                // reorder the lib by fitness
-                
-                int indx = GenVelLib.Count;
+                // reorder on fitness
+                Debug.Log("Resize");
+                Debug.Log(GenVelLib[0].fitness);
                 GenVelLib.Sort(SortByScore);
                 GenKurLib.Sort(SortByScore);
-                // remove the first 250
+                Debug.Log(GenVelLib[0].fitness);
+                // remover 250 of the lowest scores
                 GenVelLib.RemoveRange(0, 250);
                 GenKurLib.RemoveRange(0, 250);
 
@@ -229,7 +238,7 @@ public class KuramotoSentinelMaker : MonoBehaviour
         }
 
     }
-    // functions for the list sort function, to order values
+
     private int SortByScore(GenKurmto x, GenKurmto y)
     {
         return x.fitness.CompareTo(y.fitness);
@@ -239,15 +248,13 @@ public class KuramotoSentinelMaker : MonoBehaviour
     {
         return x.fitness.CompareTo(y.fitness);
     }
-
-    // resets the i sentinel
+    // resets the sentinel
     public void ResetSentinel(int i)
     {
-
-        // get i sentinel
+        // get the sentinel
         GameObject thisSentinel = sentinels[i];
 
-        //Random pos
+        // randomize pos
         float x = UnityEngine.Random.Range(-spawnArea, spawnArea);
         float y = 0;
         float z = UnityEngine.Random.Range(-spawnArea, spawnArea);
@@ -256,12 +263,13 @@ public class KuramotoSentinelMaker : MonoBehaviour
 
         thisSentinel.transform.position = pos;
 
-        // if lib less than 500
+
+        // lib count is bellow 500
         if (GenKurLib.Count < 500)
         {
-            // add random new sentinel
-            KuramotoSentinel kuramoto = thisSentinel.GetComponent<KuramotoSentinel>();
-            kuramoto.Reset();
+            // reset bothe genetic values to random
+            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, 0.2f);
 
             GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
             genVel.Reset();
@@ -276,8 +284,8 @@ public class KuramotoSentinelMaker : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoSentinel kuramoto = thisSentinel.GetComponent<KuramotoSentinel>();
-            kuramoto.Reset();
+            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, 0.2f);
             kuramoto.speed = Settings[0];
             kuramoto.noiseScl = Settings[1];
             kuramoto.couplingRange = Settings[3];
@@ -296,14 +304,12 @@ public class KuramotoSentinelMaker : MonoBehaviour
         }
         
     }
-
-
-    // functions bellow are for ui to change settings in debug
+    // all bellow is for ui to change all sentinels values 
     public void setRange(float range)
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinel kuramoto = sentinels[i].GetComponent<KuramotoSentinel>();
+            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
             kuramoto.couplingRange = range;
 
         }
@@ -313,7 +319,7 @@ public class KuramotoSentinelMaker : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinel kuramoto = sentinels[i].GetComponent<KuramotoSentinel>();
+            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
             kuramoto.coupling = range;
 
         }
@@ -323,9 +329,13 @@ public class KuramotoSentinelMaker : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinel kuramoto = sentinels[i].GetComponent<KuramotoSentinel>();
+            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
             kuramoto.noiseScl = range;
 
         }
+
+        JsonUtility.ToJson(GenVelLib);
     }
+
+
 }

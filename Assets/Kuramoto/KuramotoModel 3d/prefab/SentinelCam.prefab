@@ -90,6 +90,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3438557043950093314, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
+      propertyPath: speedScl
+      value: 1.42
+      objectReference: {fileID: 0}
     - target: {fileID: 3438557043950093338, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: m_Name
       value: PlayerCam

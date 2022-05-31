@@ -5,37 +5,39 @@ using UnityEngine;
 public class GeneticMovementSentinel : MonoBehaviour
 {
     [SerializeField]
-    private int cycleLength = 10; // length of movment list
-
+    private int cycleLength = 10; // number of steps in cylcle
     [SerializeField]
-    private float speedScl = 0.5f; // scl for the speed
+    private float speedScl = 0.5f; // sclr for the speed
 
-    public Vector3[] geneticMovement; // list to hold the vels
+    public Vector3[] geneticMovement; // list to hold vels in
 
-    private KuramotoSentinel sentinel; // kurmto to get the phase val
+    private KuramotoSentinelAgent sentinel; // sentinel obj
 
-    private Rigidbody rb; // rigidbody to add velocity to
+    private Rigidbody rb;// rigidbody
 
-    private int step = 0; // step number
+    private int step = 0;// to hold the steps number
 
-    private float lastPhase = 0; // holds the last phase pos
+    private float lastPhase = 0;// holds the last phase
 
 
     // Start is called before the first frame update
     void Start()
     {
-        // get the kurmto component
-        sentinel = GetComponent<KuramotoSentinel>();
-        // get the rb component
+        // gets the sentinels kurmto
+        sentinel = GetComponent<KuramotoSentinelAgent>();
+        // gets this rb
         rb = GetComponent<Rigidbody>();
-        // creat a new list to hold the vels
+        // sets it to a new vec3 list for vels
         geneticMovement = new Vector3[cycleLength];
 
-        //loop over the number of cycles
-        for (int i = 0; i < cycleLength; i++)
+        // set the vels of the list
+        for(int i=0; i<cycleLength; i++)
         {
-            // add a random vector3 value
+            // random vec
             geneticMovement[i] = Random.insideUnitSphere;
+            // absolute y value so only positive
+            geneticMovement[i].y = Mathf.Abs(geneticMovement[i].y);
+
         }
     }
     
@@ -43,24 +45,28 @@ public class GeneticMovementSentinel : MonoBehaviour
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (sentinel.phase > lastPhase) { 
-            step++; //go to the next step
-
-            if (step >= cycleLength)// if longer than cycle go back to 0
+        if (sentinel.phase < lastPhase) { 
+            step++;// add a step
+            if (step >= cycleLength)// if greater than list length, back to 0
             {
                 step = 0;
             }
         }
-        // get this steps vel from the list and mult it by phase and scl it
+
+        // get vel from this steps genmov, mult by phase and scl
         Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
 
-        // ad it to the rb
+        // more than one sentinel contact scl it up
+        if (sentinel.counter > 2) { vel*=Mathf.Sqrt(sentinel.counter)*0.6f; }
+        
+        // add the vel to the rb
         rb.velocity += vel;
 
-        // set last phase to phase
+       // set last phase to phase
         lastPhase = sentinel.phase;
     }
-    // reset randomize the list of vels
+
+    // reset randomizes the list of vels
     public void Reset()
     {
         for (int i = 0; i < cycleLength; i++)
