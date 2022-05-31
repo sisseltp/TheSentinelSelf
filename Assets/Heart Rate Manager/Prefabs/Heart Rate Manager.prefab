@@ -1,0 +1,597 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &763207998433013383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763207998433013379}
+  - component: {fileID: 763207998433013378}
+  - component: {fileID: 763207998433013376}
+  - component: {fileID: 763207998433013377}
+  - component: {fileID: 763207998433013382}
+  m_Layer: 0
+  m_Name: Sentinel Receive 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763207998433013379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998433013383}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.438057, y: -12.603821, z: -16.337063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763207999372241599}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763207998433013378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998433013383}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Port: 9001
+--- !u!114 &763207998433013376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998433013383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207998433013378}
+  m_Address: /sentinel/1/rate
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel1Rate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207998433013377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998433013383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207998433013378}
+  m_Address: /sentinel/1/ibi
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel1Interval
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207998433013382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998433013383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207998433013378}
+  m_Address: /sentinel/1/pulse
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel1Pulse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &763207999152831067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763207999152831142}
+  - component: {fileID: 763207999152831143}
+  - component: {fileID: 763207999152831140}
+  - component: {fileID: 763207999152831141}
+  - component: {fileID: 763207999152831066}
+  m_Layer: 0
+  m_Name: Sentinel Receive 3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763207999152831142
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999152831067}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.438057, y: -12.603821, z: -16.337063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763207999372241599}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763207999152831143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999152831067}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Port: 9003
+--- !u!114 &763207999152831140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999152831067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999152831143}
+  m_Address: /sentinel/3/rate
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel3Rate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207999152831141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999152831067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999152831143}
+  m_Address: /sentinel/3/ibi
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel3Interval
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207999152831066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999152831067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999152831143}
+  m_Address: /sentinel/3/pulse
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel3Pulse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &763207999372241597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763207999372241599}
+  - component: {fileID: 763207999372241596}
+  m_Layer: 0
+  m_Name: Heart Rate Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763207999372241599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999372241597}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.438057, y: 12.603821, z: 16.337063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 763207998433013379}
+  - {fileID: 763207999378848852}
+  - {fileID: 763207999152831142}
+  - {fileID: 763208000476144839}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763207999372241596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999372241597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349b6e7de5d59944fb3dd86555ef8505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel1Rate: 0
+  sentinel1Interval: 0
+  sentinel1Pulse: 0
+  sentinel2Rate: 0
+  sentinel2Interval: 0
+  sentinel2Pulse: 0
+  sentinel3Rate: 0
+  sentinel3Interval: 0
+  sentinel3Pulse: 0
+  sentinel4Rate: 0
+  sentinel4Interval: 0
+  sentinel4Pulse: 0
+--- !u!1 &763207999378848841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763207999378848852}
+  - component: {fileID: 763207999378848853}
+  - component: {fileID: 763207999378848842}
+  - component: {fileID: 763207999378848843}
+  - component: {fileID: 763207999378848840}
+  m_Layer: 0
+  m_Name: Sentinel Receive 2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763207999378848852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999378848841}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.438057, y: -12.603821, z: -16.337063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763207999372241599}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763207999378848853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999378848841}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Port: 9002
+--- !u!114 &763207999378848842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999378848841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999378848853}
+  m_Address: /sentinel/2/rate
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel2Rate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207999378848843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999378848841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999378848853}
+  m_Address: /sentinel/2/ibi
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel2Interval
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763207999378848840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207999378848841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763207999378848853}
+  m_Address: /sentinel/2/pulse
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel2Pulse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &763208000476144888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763208000476144839}
+  - component: {fileID: 763208000476144836}
+  - component: {fileID: 763208000476144837}
+  - component: {fileID: 763208000476144890}
+  - component: {fileID: 763208000476144891}
+  m_Layer: 0
+  m_Name: Sentinel Receive 4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763208000476144839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763208000476144888}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.438057, y: -12.603821, z: -16.337063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 763207999372241599}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763208000476144836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763208000476144888}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Port: 9004
+--- !u!114 &763208000476144837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763208000476144888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763208000476144836}
+  m_Address: /sentinel/4/rate
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel4Rate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763208000476144890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763208000476144888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763208000476144836}
+  m_Address: /sentinel/4/ibi
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel4Interval
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &763208000476144891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763208000476144888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f98b8931f42473c86594c4d60823231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Receiver: {fileID: 763208000476144836}
+  m_Address: /sentinel/4/pulse
+  OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 763207999372241596}
+        m_TargetAssemblyTypeName: featherValues, Assembly-CSharp
+        m_MethodName: setSentinel4Pulse
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
