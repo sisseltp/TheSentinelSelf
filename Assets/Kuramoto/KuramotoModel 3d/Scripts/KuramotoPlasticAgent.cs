@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoSentinelAgent : MonoBehaviour
+public class KuramotoPlasticAgent : MonoBehaviour
 {
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
@@ -33,15 +33,13 @@ public class KuramotoSentinelAgent : MonoBehaviour
     private Color col1;
 
     //holds the sentinel manager
-    private BiomeManager biomeManager;
+    public SentinelManager sentinelManager;
     // holds the sentinels
     private GameObject[] sentinels;
 
     private bool played = false;
     public int age=0;
 
-    public float sumX = 0f;
-    public float sumY = 0f;
 
     public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
     {
@@ -58,12 +56,11 @@ public class KuramotoSentinelAgent : MonoBehaviour
     void Start()
     {
         // hook up rendr component
-        rendr = GetComponent<Renderer>();
-        // find the sentinel maker
-        biomeManager = GameObject.FindGameObjectWithTag("Respawn").GetComponent<BiomeManager>();
+        rendr = GetComponentInChildren<Renderer>();
+        
         
         // link the sentinels as a list
-        sentinels = biomeManager.sentinels ;
+        sentinels = sentinelManager.sentinels ;
         
     }
 
@@ -71,9 +68,9 @@ public class KuramotoSentinelAgent : MonoBehaviour
     void Update()
     {
         // if the num of sentinels changes relink them
-        if (biomeManager.nSentinels != sentinels.Length)
+        if (sentinelManager.nSentinels != sentinels.Length)
         {
-            sentinels = biomeManager.sentinels;
+            sentinels = sentinelManager.sentinels;
         }
         //run coherence function
         Coherence();
@@ -121,7 +118,9 @@ public class KuramotoSentinelAgent : MonoBehaviour
     {
 
 
-        
+        // variables to hold oscilation totals
+        var sumx = 0f;
+        var sumy = 0f;
         // times the points value by 2*Pi
         var theta = phase * CIRCLE_IN_RADIAN;
 
@@ -140,20 +139,20 @@ public class KuramotoSentinelAgent : MonoBehaviour
             if (distance < couplingRange)// if less than coupling range
             {
                 // get the kuramoto component
-                KuramotoBiomeAgent sentinel = sentinels[y].GetComponent<KuramotoBiomeAgent>();
+                KuramotoSentinelAgent sentinel = sentinels[y].GetComponent<KuramotoSentinelAgent>();
                 // times the points value by 2*Pi
                 theta = sentinel.phase * CIRCLE_IN_RADIAN;
                 // get this sentinels x,y pos
                 float thisX = Mathf.Cos(theta);
                 float thisY = Mathf.Sin(theta);
                 // add to oscilation values to sums (total) 
-                sumX += thisX;
-                sumY += thisY;
+                sumx += thisX;
+                sumy += thisY;
 
                 // set the sentinels pos to account for this agent
-                sentinel.sumx = phaseX;
-                sentinel.sumy = phaseY;
-                sentinel.played = true;// set the played gate to tru
+                sentinel.sumX += phaseX;
+                sentinel.sumY += phaseY;
+
                 // add the 1 to the counter
                 counter++;
 
@@ -181,19 +180,16 @@ public class KuramotoSentinelAgent : MonoBehaviour
         {
 
             // average the values over total
-            sumX /= counter;
-            sumY /= counter;
+            sumx /= counter;
+            sumy /= counter;
 
         }
 
         // angle to x,y pos to positive x axis
-        cohPhi = Mathf.Atan2(sumY, sumX) * RADIAN_TO_NORMALIZED;
+        cohPhi = Mathf.Atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
         // distance to 0
-        coherenceRadius = Mathf.Sqrt(sumX * sumX + sumY * sumY);
+        coherenceRadius = Mathf.Sqrt(sumx * sumx + sumy * sumy);
 
-        // reset oscilation totals
-        sumX = 0f;
-        sumY = 0f;
     }
     // simple noise function
     protected float Noise()

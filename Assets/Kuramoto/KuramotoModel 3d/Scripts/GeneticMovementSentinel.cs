@@ -69,7 +69,7 @@ public class GeneticMovementSentinel : MonoBehaviour
     // reset randomizes the list of vels
     public void Reset()
     {
-        for (int i = 0; i < cycleLength; i++)
+        for (int i = 0; i < geneticMovement.Length; i++)
         {
             geneticMovement[i] = Random.insideUnitSphere;
         }

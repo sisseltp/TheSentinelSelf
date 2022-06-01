@@ -48,9 +48,6 @@ public class KuramotoBiomeAgent : MonoBehaviour
         // attach the rigidbody component
         rb = GetComponent<Rigidbody>();
 
-        // reset value
-        Reset();
-
         // attach the renderer component
         rendr = GetComponent<Renderer>();
 
@@ -184,7 +181,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
                 // invert
                 sigDst *= -1;
                 // add the vector between the two * the distance in cycles
-                vel += (sentinals[y].position- transform.position)*sigDst;
+                vel -= (sentinals[y].position- transform.position)*sigDst;
                 // draw a line if connected
                 Debug.DrawLine(sentinals[y].position, transform.position, Color.red);
             }

@@ -120,6 +120,7 @@ MonoBehaviour:
   speedVariation: 0.1
   counter: 0
   played: 0
+  dead: 0
   sumx: 0
   sumy: 0
   col0: {r: 1, g: 0, b: 0, a: 0}
@@ -135,7 +136,7 @@ Rigidbody:
   m_GameObject: {fileID: 610433536846796970}
   serializedVersion: 2
   m_Mass: 0.1
-  m_Drag: 0.42
+  m_Drag: 0.3
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -155,5 +156,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 1.66
+  speedScl: 1.91
   geneticMovement: []

@@ -112,6 +112,8 @@ MonoBehaviour:
   col0: {r: 0.21340132, g: 1, b: 0, a: 0}
   col1: {r: 1, g: 0.9708301, b: 0, a: 0}
   age: 0
+  sumX: 0
+  sumY: 0
 --- !u!54 &3438557043950093312
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -120,8 +122,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3438557043950093338}
   serializedVersion: 2
-  m_Mass: 0.63
-  m_Drag: 0.81
+  m_Mass: 0.5
+  m_Drag: 0.6
   m_AngularDrag: 7.39
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -164,9 +166,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3438557043950093338}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c77fac490a22d841a6aca53ff717c23, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cycleLength: 20
-  speedScl: 1.42
+  cycleLength: 10
+  speedScl: 2
   geneticMovement: []

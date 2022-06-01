@@ -480,9 +480,9 @@ MonoBehaviour:
   nSentinels: 14
   spawnArea: 80
   speedRange: {x: 0.76, y: 0.92}
-  couplingRange: {x: 1, y: 10}
-  noiseSclRange: {x: 0.01, y: 0.13}
-  couplingSclRange: {x: 0.2, y: 10}
+  couplingRange: {x: 6, y: 12}
+  noiseSclRange: {x: 0.01, y: 0.05}
+  couplingSclRange: {x: 3, y: 10}
   sentinels: []
 --- !u!1 &326741975
 GameObject:
@@ -802,9 +802,9 @@ MonoBehaviour:
   nSentinels: 350
   spawnArea: 137
   speedRange: {x: 0.81, y: 1}
-  couplingRange: {x: 1, y: 10}
-  noiseSclRange: {x: 0.01, y: 0.17}
-  couplingSclRange: {x: 0.2, y: 10}
+  couplingRange: {x: 2, y: 14}
+  noiseSclRange: {x: 0.01, y: 0.05}
+  couplingSclRange: {x: 0.2, y: 4}
   sentinels: []
   age: 2000
 --- !u!1001 &445073253
@@ -1686,6 +1686,7 @@ GameObject:
   - component: {fileID: 982037002}
   - component: {fileID: 982037004}
   - component: {fileID: 982037003}
+  - component: {fileID: 982037005}
   m_Layer: 0
   m_Name: Plastic
   m_TagString: Untagged
@@ -1737,6 +1738,33 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 5.98
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &982037005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982037001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d4856c2ae0306479e0c2ff47364824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0.48336333
+  phase: 0.4654054
+  cohPhi: 0
+  coherenceRadius: 0
+  couplingRange: 30
+  noiseScl: 0.08
+  coupling: 7
+  speedVariation: 1.05
+  counter: 0
+  dead: 0
+  fitness: 0
+  col0: {r: 1, g: 0.032075405, b: 0.9829266, a: 1}
+  col1: {r: 0, g: 1, b: 0.1410408, a: 1}
+  sentinelManager: {fileID: 322907038}
+  age: 0
 --- !u!1 &1065865529
 GameObject:
   m_ObjectHideFlags: 0
