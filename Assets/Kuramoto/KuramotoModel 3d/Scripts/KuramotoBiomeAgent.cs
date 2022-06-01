@@ -83,7 +83,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
         fitness = 0;
         age = 0;
-
+        dead = false;
     }
 
     // Update is called once per frame

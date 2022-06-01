@@ -52,6 +52,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
         couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
         fitness = 0;
         age = 0;
+        dead = false;
     }
 
     // Start is called before the first frame update
