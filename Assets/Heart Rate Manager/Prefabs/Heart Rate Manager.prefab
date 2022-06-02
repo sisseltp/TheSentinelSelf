@@ -41,7 +41,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763207998433013383}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
   m_Name: 
@@ -327,8 +327,6 @@ MonoBehaviour:
   sentinel4Rate: 0
   sentinel4Interval: 0
   sentinel4Pulse: 0
-  pulseGradient: 0
-  bias: 3
 --- !u!1 &763207999378848841
 GameObject:
   m_ObjectHideFlags: 0

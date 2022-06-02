@@ -26,6 +26,7 @@ public class ethernetValues : MonoBehaviour
     public int sentinel4Interval;
     public float sentinel4Pulse;
 
+
     public float pulseGradient;
     private KuramotoSentinelAgent agent;
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
@@ -35,6 +36,7 @@ public class ethernetValues : MonoBehaviour
     void Start()
     {
         agent = GetComponentInParent<KuramotoSentinelAgent>();
+
     }
 
     // Update is called once per frame
@@ -42,8 +44,7 @@ public class ethernetValues : MonoBehaviour
     {
         if (sentinel1Rate != 0)
         {
-
-            float step =  (float)sentinel1Rate/60;
+            float step = (float)sentinel1Rate / 60;
             step *= Time.deltaTime;
             pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
             pulseGradient = Mathf.Clamp01(pulseGradient);
@@ -61,6 +62,7 @@ public class ethernetValues : MonoBehaviour
             //agent.AddOsiclation(thisX, thisY, bias);
             agent.phase = pulseGradient;
         }
+    }
     }
 
 
