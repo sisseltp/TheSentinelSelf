@@ -44,9 +44,16 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
     public int age = 0; // holds this agents age
 
+    private Collider[] connections;
+    public int maxConnections=10;
+
+    public bool DebugSize = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        connections = new Collider[maxConnections];
+
         // attach the rigidbody component
         rb = GetComponent<Rigidbody>();
 
@@ -165,21 +172,21 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
         var phasePos = new Vector2(phaseX, phaseY);
 
-        Connections = 0; // reset Connections to 0
 
         vel = Vector3.zero; // reset vel to 0
 
-        // loop over sentinels 
-        for (var y = 0; y < sentinals.Length; y++)
-        {
-            // get the distance between the two agents
-            float distance = Vector3.Distance(sentinals[y].position, transform.position);
+        int nmKnct = Physics.OverlapSphereNonAlloc(transform.position, couplingRange, connections, 3);
 
-            // if less than coupling range
-            if (distance < couplingRange)
+        
+        // loop over sentinels 
+        for (var y = 0; y < nmKnct; y++)
+        {
+            Debug.Log(connections[y].tag);
+            // get the kuramoto component
+            KuramotoBiomeAgent sentinel = connections[y].GetComponent<KuramotoBiomeAgent>();
+            if (sentinel!=null)
             {
-                // get the kuramoto component
-                KuramotoBiomeAgent sentinel = sentinals[y].GetComponent<KuramotoBiomeAgent>();
+                
                 // times the points value by 2*Pi
                 theta = sentinel.phase * CIRCLE_IN_RADIAN;
                 // get this phases x,y pos
@@ -197,16 +204,16 @@ public class KuramotoBiomeAgent : MonoBehaviour
                 // invert
                 sigDst *= -1;
                 // add the vector between the two * the distance in cycles
-                vel += (sentinals[y].position- transform.position)*sigDst;
+                vel += (connections[y].transform.position - transform.position) * sigDst;
                 // draw a line if connected
-                Debug.DrawLine(sentinals[y].position, transform.position, Color.red);
+                Debug.DrawLine(connections[y].transform.position, transform.position, Color.green);
+                newConnections++;
             }
            
         }
 
         Connections = newConnections;
         newConnections = 0;
-
         // if the count is 0 (its connected)
         if (Connections != 0) { 
 
@@ -260,6 +267,15 @@ public class KuramotoBiomeAgent : MonoBehaviour
         if (collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
         {
             dead = true;
+        }
+    }
+
+    
+    public void OnDrawGizmos()
+    {
+        if (DebugSize)
+        {
+            Gizmos.DrawSphere(transform.position, couplingRange);
         }
     }
 }

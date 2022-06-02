@@ -45,6 +45,9 @@ public class KuramotoSentinelAgent : MonoBehaviour
     public float sumX = 0f;
     public float sumY = 0f;
 
+    private Collider[] connections;
+    public int maxConnections = 10;
+
     public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
     {
         speedBPM = UnityEngine.Random.Range(SpeedRange.x,SpeedRange.y);
@@ -149,15 +152,15 @@ public class KuramotoSentinelAgent : MonoBehaviour
         // reset the Connections
         Connections = 0;
 
-        // loop over the sentinels
-        for (var y = 0; y < sentinels.Length; y++)
+        int nmKnct = Physics.OverlapSphereNonAlloc(transform.position, couplingRange, connections, 3);
+
+        // loop over sentinels 
+        for (var y = 0; y < nmKnct; y++)
         {
-            // find the distnace to this agent
-            float distance = Vector3.Distance(sentinels[y].transform.position, transform.position);
-            if (distance < couplingRange)// if less than coupling range
+            // get the kuramoto component
+            KuramotoSentinelAgent sentinel = connections[y].GetComponent<KuramotoSentinelAgent>();
+            if (sentinel != null)
             {
-                // get the kuramoto component
-                KuramotoBiomeAgent sentinel = sentinels[y].GetComponent<KuramotoBiomeAgent>();
                 // times the points value by 2*Pi
                 theta = sentinel.phase * CIRCLE_IN_RADIAN;
                 // get this sentinels x,y pos
@@ -181,10 +184,10 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
+                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - connections[y].transform.position) * sigDst;
 
                 // draw a line for the connection
-                Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
+                Debug.DrawLine(connections[y].transform.position, transform.position, Color.red);
 
                 played = true;
             
@@ -249,4 +252,6 @@ public class KuramotoSentinelAgent : MonoBehaviour
         fitness = 0;
         age = 0;
     }
+
+ 
 }

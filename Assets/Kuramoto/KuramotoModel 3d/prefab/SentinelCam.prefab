@@ -92,7 +92,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3438557043950093312, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: m_Drag
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 3438557043950093312, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: m_Mass
@@ -108,7 +108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3438557043950093314, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: speedScl
-      value: 1.6
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3438557043950093314, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: m_Enabled
