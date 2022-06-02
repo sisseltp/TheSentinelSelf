@@ -57,7 +57,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
 
         // more than one sentinel contact scl it up
-        if (sentinel.counter > 2) { vel*=Mathf.Sqrt(sentinel.counter)*0.6f; }
+        if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
         
         // add the vel to the rb
         rb.velocity += vel;

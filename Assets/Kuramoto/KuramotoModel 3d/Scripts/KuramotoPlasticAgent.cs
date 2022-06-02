@@ -7,13 +7,13 @@ public class KuramotoPlasticAgent : MonoBehaviour
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
 
-    [HideInInspector]
+    
     public float speed; // driving force for the phase
-    [HideInInspector]
+    
     public float phase; // holds the phase position
-    [HideInInspector]
+    
     public float cohPhi; // angle to positive a-xis
-    [HideInInspector]
+    
     public float coherenceRadius; //holds the phase distance to 0,0
     public float couplingRange = 1; // holds the distance to the coupling range
     public float noiseScl = 1; // scales the noise added
@@ -22,6 +22,8 @@ public class KuramotoPlasticAgent : MonoBehaviour
     public int counter = 0; // counts how many links it has within the range
     public bool dead = false;// dead trigger
     public float fitness = 0;// fitness rating for the agent
+
+    public Vector2 rbEffectsRange = new Vector2(0.5f, 1.5f);
    
     // holds the rendr
     Renderer rendr;
@@ -128,6 +130,7 @@ public class KuramotoPlasticAgent : MonoBehaviour
         var phaseX = Mathf.Cos(theta);
         var phaseY = Mathf.Sin(theta);
         var phasePos = new Vector2(phaseX, phaseY);
+
         // reset the counter
         counter = 0;
 
@@ -149,9 +152,7 @@ public class KuramotoPlasticAgent : MonoBehaviour
                 sumx += thisX;
                 sumy += thisY;
 
-                // set the sentinels pos to account for this agent
-                sentinel.sumX += phaseX;
-                sentinel.sumY += phaseY;
+                sentinel.AddOsiclation(phaseX, phaseY);
 
                 // add the 1 to the counter
                 counter++;
@@ -159,14 +160,18 @@ public class KuramotoPlasticAgent : MonoBehaviour
                 // get the oscilation distance (0-2 as sin )
                 float sigDst = Vector2.Distance(phasePos, new Vector2(thisX, thisY));
 
-                // subtract 1 so it is -1-1
-                sigDst -= 1;
-                // invert it
-                sigDst *= -1;
+                float normDist = distance / couplingRange;
+
+                sigDst -= 1; ;
+
+                normDist *= (rbEffectsRange.y- rbEffectsRange.x);
+                normDist += rbEffectsRange.x;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity -= (transform.position - sentinels[y].transform.position) * sigDst;
-
+                //sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
+                sentinels[y].GetComponent<Rigidbody>().mass = normDist;
+                sentinels[y].GetComponent<Rigidbody>().drag = normDist;
+                sentinel.noiseScl = normDist / 100;
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
 

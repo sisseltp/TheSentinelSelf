@@ -46,7 +46,7 @@ public class BiomeManager : MonoBehaviour
         public float couplingRange;
         public float noiseScl;
         public float coupling;
-        public int counter;
+        public int Connections;
         public Vector3 vel;
         public Vector3[] GenVel;
     }
@@ -172,7 +172,7 @@ public class BiomeManager : MonoBehaviour
             sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
             sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
             sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].counter = kuramoto.counter;
+            sentinelsStruct[i].Connections = kuramoto.Connections;
             sentinelsStruct[i].vel = thisSentinel.GetComponent<Rigidbody>().velocity;
             sentinelsStruct[i].GenVel = thisSentinel.GetComponent<GeneticMovementBiome>().geneticMovement;
            
@@ -197,7 +197,7 @@ public class BiomeManager : MonoBehaviour
             sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
             sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
             sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].counter = kuramoto.counter;
+            sentinelsStruct[i].Connections = kuramoto.Connections;
             sentinelsStruct[i].vel = sentinels[i].GetComponent<Rigidbody>().velocity;
             sentinelsStruct[i].GenVel = sentinels[i].GetComponent<GeneticMovementBiome>().geneticMovement;
 

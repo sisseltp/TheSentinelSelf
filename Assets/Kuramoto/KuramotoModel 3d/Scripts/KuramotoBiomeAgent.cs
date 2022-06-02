@@ -16,7 +16,8 @@ public class KuramotoBiomeAgent : MonoBehaviour
     public float noiseScl = 1; // amount of noise
     public float coupling = 0.5f; // coupling scaler
     public float speedVariation = 0.1f; // amount to randomize data
-    public int counter = 0; // num neighbors
+    public int Connections = 0; // num neighbors
+    private int newConnections = 0;
     public bool played = false; // if the player has been in contact
     public bool dead = false; // collision killer
 
@@ -59,7 +60,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         sentinals = new Transform[nChild -1];
 
 
-        int sub = 0; // counter to hold indx
+        int sub = 0; // Connections to hold indx
         for (int i = 0; i < nChild; i++) // loop for num child
         {
             // get the i child
@@ -121,7 +122,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
         // ad the amount of partners * sclr to the fitness
-        fitness += counter * 0.2f;
+        fitness += Connections * 0.2f;
 
         // if its been interacted with by the players
         if (played) { 
@@ -149,7 +150,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
         var phasePos = new Vector2(phaseX, phaseY);
 
-        counter = 0; // reset counter to 0
+        Connections = 0; // reset Connections to 0
 
         vel = Vector3.zero; // reset vel to 0
 
@@ -172,8 +173,8 @@ public class KuramotoBiomeAgent : MonoBehaviour
                 // add to oscilation values to sums (total) 
                 sumx += thisX;
                 sumy += thisY;
-                // add one to the counter
-                counter++;
+                // add one to the Connections
+                newConnections++;
                 // find the distance between the two cycles (between 0-2 as its sin/cos positions)
                 float sigDst = Vector2.Distance(phasePos, new Vector2(thisX, thisY));
                 // minus 1 so betwenn -1-1
@@ -188,13 +189,16 @@ public class KuramotoBiomeAgent : MonoBehaviour
            
         }
 
+        Connections = newConnections;
+        newConnections = 0;
+
         // if the count is 0 (its connected)
-        if (counter != 0) { 
+        if (Connections != 0) { 
 
         // average the values over total num neighbors 
-        sumx /= counter;
-        sumy /= counter;
-        vel /= counter;
+        sumx /= Connections;
+        sumy /= Connections;
+        vel /= Connections;
 
         }
 
@@ -223,6 +227,14 @@ public class KuramotoBiomeAgent : MonoBehaviour
         couplingRange = UnityEngine.Random.Range(1,10);
         age = 0;
         fitness = 0;
+    }
+
+    public void AddOsiclation(float posX, float posY)
+    {
+        sumx += posX;
+        sumy += posY;
+        newConnections++;
+        played = true;
     }
 
     private void OnCollisionEnter(Collision collision)

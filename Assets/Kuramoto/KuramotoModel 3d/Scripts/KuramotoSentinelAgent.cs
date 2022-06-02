@@ -19,7 +19,8 @@ public class KuramotoSentinelAgent : MonoBehaviour
     public float noiseScl = 1; // scales the noise added
     public float coupling = 0.5f; // scales the coupling effect
     public float speedVariation = 0.1f; // variation to randomise speed
-    public int counter = 0; // counts how many links it has within the range
+    public int Connections = 0; // counts how many links it has within the range
+    private int newConnections = 0;
     public bool dead = false;// dead trigger
     public float fitness = 0;// fitness rating for the agent
    
@@ -103,7 +104,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
         phase = p;
 
         // ad the amount of partners * sclr to the fitness
-        fitness += counter * 0.2f;
+        fitness += Connections * 0.2f;
 
         //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
         rendr.material.color = Color.Lerp(col0, col1, phase);
@@ -130,8 +131,8 @@ public class KuramotoSentinelAgent : MonoBehaviour
         var phaseX = Mathf.Cos(theta);
         var phaseY = Mathf.Sin(theta);
         var phasePos = new Vector2(phaseX, phaseY);
-        // reset the counter
-        counter = 0;
+        // reset the Connections
+        Connections = 0;
 
         // loop over the sentinels
         for (var y = 0; y < sentinels.Length; y++)
@@ -151,12 +152,10 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sumX += thisX;
                 sumY += thisY;
 
-                // set the sentinels pos to account for this agent
-                sentinel.sumx = phaseX;
-                sentinel.sumy = phaseY;
-                sentinel.played = true;// set the played gate to tru
-                // add the 1 to the counter
-                counter++;
+                sentinel.AddOsiclation(phaseX, phaseY);
+
+                // add the 1 to the Connections
+                newConnections++;
 
                 // get the oscilation distance (0-2 as sin )
                 float sigDst = Vector2.Distance(phasePos, new Vector2(thisX, thisY));
@@ -177,13 +176,16 @@ public class KuramotoSentinelAgent : MonoBehaviour
             }
 
         }
+
+        Connections = newConnections;
+        newConnections = 0;
         // if there have been connections
-        if (counter != 0)
+        if (Connections != 0)
         {
 
             // average the values over total
-            sumX /= counter;
-            sumY /= counter;
+            sumX /= Connections;
+            sumY /= Connections;
 
         }
 
@@ -210,8 +212,14 @@ public class KuramotoSentinelAgent : MonoBehaviour
         }
     }
 
+    public void AddOsiclation(float posX, float posY)
+    {
+        sumX += posX;
+        sumY += posY;
+        newConnections++;
+        played = true;
+    }
 
-    
     // resets and randomizes the base parameter
     internal void Reset()
     {
