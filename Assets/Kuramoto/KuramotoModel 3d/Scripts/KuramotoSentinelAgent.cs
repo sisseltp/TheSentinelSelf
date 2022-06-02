@@ -152,7 +152,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sumX += thisX;
                 sumY += thisY;
 
-                sentinel.AddOsiclation(phaseX, phaseY);
+                sentinel.AddOsiclation(phaseX, phaseY, 2);
 
                 // add the 1 to the Connections
                 newConnections++;
@@ -166,7 +166,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity -= (transform.position - sentinels[y].transform.position) * sigDst;
+                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
 
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
@@ -212,11 +212,14 @@ public class KuramotoSentinelAgent : MonoBehaviour
         }
     }
 
-    public void AddOsiclation(float posX, float posY)
+    public void AddOsiclation(float posX, float posY, int Biase =1)
     {
-        sumX += posX;
-        sumY += posY;
-        newConnections++;
+        for (int i = 0; i < Biase; i++)
+        {
+            sumX += posX;
+            sumY += posY;
+            newConnections++;
+        }
         played = true;
     }
 

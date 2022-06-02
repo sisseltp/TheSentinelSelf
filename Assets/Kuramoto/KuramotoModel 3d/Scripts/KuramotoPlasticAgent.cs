@@ -152,7 +152,7 @@ public class KuramotoPlasticAgent : MonoBehaviour
                 sumx += thisX;
                 sumy += thisY;
 
-                sentinel.AddOsiclation(phaseX, phaseY);
+                sentinel.AddOsiclation(phaseX, phaseY, 3);
 
                 // add the 1 to the counter
                 counter++;
@@ -162,16 +162,18 @@ public class KuramotoPlasticAgent : MonoBehaviour
 
                 float normDist = distance / couplingRange;
 
-                sigDst -= 1; ;
+                sigDst -= 1; 
+                sigDst *=0.1f;
 
                 normDist *= (rbEffectsRange.y- rbEffectsRange.x);
                 normDist += rbEffectsRange.x;
+                normDist += sigDst;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
                 //sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
                 sentinels[y].GetComponent<Rigidbody>().mass = normDist;
                 sentinels[y].GetComponent<Rigidbody>().drag = normDist;
-                sentinel.noiseScl = normDist / 100;
+                sentinel.noiseScl = normDist ;
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
 

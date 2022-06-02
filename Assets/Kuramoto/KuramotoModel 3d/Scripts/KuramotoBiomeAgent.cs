@@ -182,7 +182,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
                 // invert
                 sigDst *= -1;
                 // add the vector between the two * the distance in cycles
-                vel -= (sentinals[y].position- transform.position)*sigDst;
+                vel += (sentinals[y].position- transform.position)*sigDst;
                 // draw a line if connected
                 Debug.DrawLine(sentinals[y].position, transform.position, Color.red);
             }
@@ -229,11 +229,14 @@ public class KuramotoBiomeAgent : MonoBehaviour
         fitness = 0;
     }
 
-    public void AddOsiclation(float posX, float posY)
+    public void AddOsiclation(float posX, float posY, int Biase = 1)
     {
-        sumx += posX;
-        sumy += posY;
-        newConnections++;
+        for (int i = 0; i < Biase; i++)
+        {
+            sumx += posX;
+            sumy += posY;
+            newConnections++;
+        }
         played = true;
     }
 

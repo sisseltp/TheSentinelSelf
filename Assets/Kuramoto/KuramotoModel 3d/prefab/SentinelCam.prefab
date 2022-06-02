@@ -114,6 +114,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3438557043950093319, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
+      propertyPath: dead
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3438557043950093338, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
       propertyPath: m_Name
       value: SentinelCam
