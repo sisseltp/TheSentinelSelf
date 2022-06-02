@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedBPM: 0
   speed: 0
   phase: 0
   cohPhi: 0
@@ -106,7 +107,7 @@ MonoBehaviour:
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
-  counter: 0
+  Connections: 0
   dead: 0
   fitness: 0
   col0: {r: 0.21340132, g: 1, b: 0, a: 0}
@@ -170,5 +171,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 2
+  speedScl: 1.6
   geneticMovement: []
