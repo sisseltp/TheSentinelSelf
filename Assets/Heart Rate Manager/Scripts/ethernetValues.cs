@@ -63,7 +63,7 @@ public class ethernetValues : MonoBehaviour
             agent.phase = pulseGradient;
         }
     }
-    }
+    
 
 
     public void setSentinel1Rate(int value)
@@ -122,3 +122,4 @@ public class ethernetValues : MonoBehaviour
     }
 
 }
+
