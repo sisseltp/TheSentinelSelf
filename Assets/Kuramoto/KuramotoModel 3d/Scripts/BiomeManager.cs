@@ -204,7 +204,7 @@ public class BiomeManager : MonoBehaviour
             // if older than age 
             if (kuramoto.dead || kuramoto.age > age) {
                 // add data to lib
-                GenKurmto genKurm = new GenKurmto(kuramoto.speed, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
+                GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
                 GenVel vels = new GenVel(sentinelsStruct[i].GenVel, kuramoto.fitness);
                 GenVelLib.Add(vels);
@@ -277,12 +277,7 @@ public class BiomeManager : MonoBehaviour
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
             KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, 0.2f);// setup its setting to randomize them
-
-            kuramoto.speed = Settings[0];
-            kuramoto.noiseScl = Settings[1];
-            kuramoto.couplingRange = Settings[3];
-            kuramoto.coupling = Settings[2];
+            kuramoto.SetupData(Settings);
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
             GenVel genVel1 = GenVelLib[rand];

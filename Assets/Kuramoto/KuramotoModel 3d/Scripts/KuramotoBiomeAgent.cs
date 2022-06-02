@@ -8,7 +8,8 @@ public class KuramotoBiomeAgent : MonoBehaviour
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI;
     private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
 
-    public float speed; // speed force of the 
+    public float speedBPM; // speed force of the 
+    public float speed;
     public float phase; // the phase its in 
     public float cohPhi; // the agle to positive x-axis
     public float coherenceRadius; // distance to 0
@@ -77,11 +78,25 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
     public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
     {
-        speed = UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y);
+        speedBPM = UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y);
+        speed = speedBPM/60;
         phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
         noiseScl = UnityEngine.Random.Range(noiseRange.x, noiseRange.y);
         coupling = UnityEngine.Random.Range(couplingScl.x, couplingScl.y);
         couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
+        fitness = 0;
+        age = 0;
+        dead = false;
+    }
+
+    public void SetupData(float[] settingsData, float thisSpeedVariation = 0.1f)
+    {
+        speedBPM = settingsData[0];
+        noiseScl = settingsData[1];
+        couplingRange = settingsData[3];
+        coupling = settingsData[2];
+        speed = 60 / speedBPM;
+        phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
         fitness = 0;
         age = 0;
         dead = false;

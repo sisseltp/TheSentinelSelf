@@ -98,10 +98,10 @@ public class SentinelManager : MonoBehaviour
         public float[] Settings;
         public float fitness;
         // constructor 
-        public GenKurmto(float speed, float noiseScl, float coupling, float couplingRange, float fit)
+        public GenKurmto(float speedBPM, float noiseScl, float coupling, float couplingRange, float fit)
         {
             Settings = new float[4];
-            Settings[0] = speed;
+            Settings[0] = speedBPM;
             Settings[1] = noiseScl;
             Settings[2] = coupling;
             Settings[3] = couplingRange;
@@ -210,7 +210,7 @@ public class SentinelManager : MonoBehaviour
             // if the agent is dead
             if (kuramoto.dead || kuramoto.age>1000) {
                 // add it settings to the librarys
-                GenKurmto genKurm = new GenKurmto(kuramoto.speed, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
+                GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
                 GenVel vels = new GenVel(sentinelsStruct[i].GenVel, kuramoto.fitness);
                 GenVelLib.Add(vels);
@@ -285,11 +285,8 @@ public class SentinelManager : MonoBehaviour
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
             KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, 0.2f);
-            kuramoto.speed = Settings[0];
-            kuramoto.noiseScl = Settings[1];
-            kuramoto.couplingRange = Settings[3];
-            kuramoto.coupling = Settings[2];
+            kuramoto.SetupData(Settings);
+           
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
             GenVel genVel1 = GenVelLib[rand];
