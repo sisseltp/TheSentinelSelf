@@ -43,9 +43,9 @@ public class ethernetValues : MonoBehaviour
         if (sentinel1Rate != 0)
         {
 
-            float step = 60 / (float)sentinel1Rate;
+            float step =  (float)sentinel1Rate/60;
             step *= Time.deltaTime;
-            pulseGradient += step*1.4f;
+            pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
             if (sentinel1Pulse == 1)

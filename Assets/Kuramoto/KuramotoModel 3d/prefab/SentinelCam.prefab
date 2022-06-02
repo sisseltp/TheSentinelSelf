@@ -188,6 +188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heart Rate Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 763207999372241597, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 763207999372241599, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
       propertyPath: m_RootOrder
       value: 1
