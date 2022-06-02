@@ -26,16 +26,41 @@ public class ethernetValues : MonoBehaviour
     public int sentinel4Interval;
     public float sentinel4Pulse;
 
+    public float pulseGradient;
+    private KuramotoSentinelAgent agent;
+    private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
+    public int bias = 3;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        agent = GetComponentInParent<KuramotoSentinelAgent>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (sentinel1Rate != 0)
+        {
 
+            float step = 60 / (float)sentinel1Rate;
+            step *= Time.deltaTime;
+            pulseGradient += step*1.4f;
+            pulseGradient = Mathf.Clamp01(pulseGradient);
+
+            if (sentinel1Pulse == 1)
+            {
+                pulseGradient = 0;
+            }
+
+            float theta = pulseGradient * CIRCLE_IN_RADIAN;
+            // get this sentinels x,y pos
+            float thisX = Mathf.Cos(theta);
+            float thisY = Mathf.Sin(theta);
+
+            //agent.AddOsiclation(thisX, thisY, bias);
+            agent.phase = pulseGradient;
+        }
     }
 
 
