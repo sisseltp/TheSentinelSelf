@@ -23,7 +23,7 @@ public class SpeedControler : MonoBehaviour
         {
 
             Time.timeScale = timeScl;
-            Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
+            //Time.fixedDeltaTime = fixedDeltaTime * Time.timeScale;
 
         }
     }
