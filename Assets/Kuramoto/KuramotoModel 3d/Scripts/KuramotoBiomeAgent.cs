@@ -19,7 +19,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
     public float speedVariation = 0.1f; // amount to randomize data
     public int Connections = 0; // num neighbors
     private int newConnections = 0;
-    public bool played = false; // if the player has been in contact
+    public int played = 0; // if the player has been in contact
     public bool dead = false; // collision killer
 
     // holds the x,y position of the phase
@@ -100,39 +100,41 @@ public class KuramotoBiomeAgent : MonoBehaviour
         fitness = 0;
         age = 0;
         dead = false;
+        rb.velocity = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
     {
         // call the coherence function
-        Coherence();
+        //Coherence();
 
         // get the time between this frame and the last
-        var dt = Time.deltaTime;
+        //var dt = Time.deltaTime;
      
 
         //get the phase
-        var p = phase;
+        //var p = phase;
         // get the its current angle to positive x axis
-        var cphi = cohPhi;
+       // var cphi = cohPhi;
         // Get its distance to 0
-        var crad = coherenceRadius;
+        //var crad = coherenceRadius;
         // get the noise
-        float thisNoise = noiseScl * Noise();
+       // float thisNoise = noiseScl * Noise();
         // not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
-        float calc = Mathf.Sin((cphi - p) * CIRCLE_IN_RADIAN);
+       // float calc = Mathf.Sin((cphi - p) * CIRCLE_IN_RADIAN);
         // second phase (scaler * distTo0 * lastClac)
-        calc = coupling * crad * calc;
+       // calc = coupling * crad * calc;
         // add the speed noise and calc together and times by delta time, and add to P
-        p += dt * (speed + thisNoise + calc);
+      //  p += dt * (speed + thisNoise + calc);
         // subtract its intiger to leave it as a 0. someting
-        p -= (int)p;
+      //  p -= (int)p;
         // set the new phase value
-        phase = p;
+      //  phase = p;
 
         // add the vel to the rigid body, scaled by the phase to make it pulse movement
-        rb.velocity += vel * p*0.1f;
+        //rb.velocity += vel * 0.1f;
+
         // set the material to lerp between the the 2 cols by the phase
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
@@ -140,9 +142,8 @@ public class KuramotoBiomeAgent : MonoBehaviour
         fitness += Connections * 0.2f;
 
         // if its been interacted with by the players
-        if (played) { 
+        if (played==1) { 
             age = 0;// reset age
-            played = false; // reset played gate
             fitness += 10;
         }
         else { age++; } // else add to the age each frame
@@ -244,16 +245,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         fitness = 0;
     }
 
-    public void AddOsiclation(float posX, float posY, int Biase = 1)
-    {
-        for (int i = 0; i < Biase; i++)
-        {
-            sumx += posX;
-            sumy += posY;
-            newConnections++;
-        }
-        played = true;
-    }
+  
 
     private void OnCollisionEnter(Collision collision)
     {

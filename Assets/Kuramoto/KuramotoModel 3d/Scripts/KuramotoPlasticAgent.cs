@@ -112,7 +112,7 @@ public class KuramotoPlasticAgent : MonoBehaviour
                 // get the kuramoto component
                 KuramotoSentinelAgent sentinel = sentinels[y].GetComponent<KuramotoSentinelAgent>();
                
-                sentinel.AddOsiclation(phaseX, phaseY, 3);
+               // sentinel.AddOsiclation(phaseX, phaseY, 3);
 
                
                 float normDist = distance / couplingRange;

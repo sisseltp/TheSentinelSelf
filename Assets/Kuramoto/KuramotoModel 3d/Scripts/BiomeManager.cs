@@ -39,6 +39,9 @@ public class BiomeManager : MonoBehaviour
     // struct to hold data maybe for gpu acceleration
     public struct Sentinel
     {
+        public int age;
+        public int connections;
+        public int played;
         public float speed;
         public float phase;
         public float cohPhi;
@@ -46,9 +49,31 @@ public class BiomeManager : MonoBehaviour
         public float couplingRange;
         public float noiseScl;
         public float coupling;
-        public int Connections;
         public Vector3 vel;
-        public Vector3[] GenVel;
+        public Vector3 pos;
+
+        
+
+        
+        public void SetFromKuramoto(KuramotoBiomeAgent kuramoto)
+        {
+
+
+            speed = kuramoto.speed;
+            phase = kuramoto.phase;
+            cohPhi = kuramoto.cohPhi;
+            coherenceRadius = kuramoto.coherenceRadius;
+            couplingRange = kuramoto.couplingRange;
+            noiseScl = kuramoto.noiseScl;
+            coupling = kuramoto.coupling;
+            connections = kuramoto.Connections;
+
+        }
+
+   
+
+    
+
     }
     // struct to hold the genetic move data
     public struct GenVel
@@ -165,18 +190,8 @@ public class BiomeManager : MonoBehaviour
             sentinels[i] = thisSentinel;
 
             // set data in the struct
-            sentinelsStruct[i].speed = kuramoto.speed;
-            sentinelsStruct[i].phase = kuramoto.phase;
-            sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
-            sentinelsStruct[i].coherenceRadius = kuramoto.coherenceRadius;
-            sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
-            sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
-            sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].Connections = kuramoto.Connections;
-            sentinelsStruct[i].vel = thisSentinel.GetComponent<Rigidbody>().velocity;
-            sentinelsStruct[i].GenVel = thisSentinel.GetComponent<GeneticMovementBiome>().geneticMovement;
-           
-
+            sentinelsStruct[i].SetFromKuramoto(kuramoto);
+            sentinelsStruct[i].pos = sentinels[i].transform.position;
         }
 
 
@@ -189,27 +204,24 @@ public class BiomeManager : MonoBehaviour
         {
             // get the kurmto
             KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
-            // set its variable
-            sentinelsStruct[i].speed = kuramoto.speed;
-            sentinelsStruct[i].phase = kuramoto.phase;
-            sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
-            sentinelsStruct[i].coherenceRadius = kuramoto.coherenceRadius;
-            sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
-            sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
-            sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].Connections = kuramoto.Connections;
-            sentinelsStruct[i].vel = sentinels[i].GetComponent<Rigidbody>().velocity;
-            sentinelsStruct[i].GenVel = sentinels[i].GetComponent<GeneticMovementBiome>().geneticMovement;
+            kuramoto.phase = sentinelsStruct[i].phase;
+            kuramoto.Connections = sentinelsStruct[i].connections;
+            kuramoto.played = sentinelsStruct[i].played;
+            sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel;
+            sentinelsStruct[i].pos = sentinels[i].transform.position;
 
             // if older than age 
             if (kuramoto.dead || kuramoto.age > age) {
                 // add data to lib
                 GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                GenVel vels = new GenVel(sentinelsStruct[i].GenVel, kuramoto.fitness);
+                GenVel vels = new GenVel(sentinels[i].GetComponent<GeneticMovementBiome>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
                 // reset its values
                 ResetSentinel(i);
+
+                sentinelsStruct[i].SetFromKuramoto(kuramoto);
+                sentinelsStruct[i].pos = sentinels[i].transform.position;
             }
 
             // if the lib is greater than ...
@@ -229,6 +241,9 @@ public class BiomeManager : MonoBehaviour
         }
 
     }
+
+   
+
     // functions for the list sort function, to order values
     private int SortByScore(GenKurmto x, GenKurmto y)
     {
@@ -324,4 +339,5 @@ public class BiomeManager : MonoBehaviour
 
         }
     }
+
 }

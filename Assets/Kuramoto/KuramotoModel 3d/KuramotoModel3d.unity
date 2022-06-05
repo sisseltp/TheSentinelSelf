@@ -432,6 +432,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 206763048}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &260131534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 260131536}
+  - component: {fileID: 260131535}
+  m_Layer: 0
+  m_Name: GPUCompute
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &260131535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260131534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bc4cc99ab1d0b4492847574afd0ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 7200000, guid: e4f7e5de32c5753468f7558f521e6c05, type: 3}
+  Agents: {fileID: 937563589}
+--- !u!4 &260131536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260131534}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.18533, y: -57.056816, z: -4.590988}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &322907036
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,7 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentinel: {fileID: 610433536846796970, guid: de8805aa987ba0c498a27909543fcab9, type: 3}
-  nSentinels: 350
+  nSentinels: 175
   spawnArea: 137
   speedRange: {x: 0.81, y: 1}
   couplingRange: {x: 2, y: 14}
@@ -1751,21 +1796,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.48336333
+  speedBPM: 0
   phase: 0.4654054
-  cohPhi: 0
   coherenceRadius: 0
   couplingRange: 30
   noiseScl: 0.08
   coupling: 7
   speedVariation: 1.05
-  counter: 0
-  dead: 0
-  fitness: 0
   rbEffectsRange: {x: 12, y: 0.5}
   col0: {r: 1, g: 0.032075405, b: 0.9829266, a: 1}
   col1: {r: 0, g: 1, b: 0.1410408, a: 1}
   sentinelManager: {fileID: 322907038}
-  age: 0
 --- !u!1 &1065865529
 GameObject:
   m_ObjectHideFlags: 0

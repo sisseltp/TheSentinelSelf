@@ -39,6 +39,9 @@ public class SentinelManager : MonoBehaviour
     // struct to hold all the sentinels data potential gpu compute
     public struct Sentinel
     {
+        public int age;
+        public int connections;
+        public int played;
         public float speed;
         public float phase;
         public float cohPhi;
@@ -46,9 +49,23 @@ public class SentinelManager : MonoBehaviour
         public float couplingRange;
         public float noiseScl;
         public float coupling;
-        public int Connections;
         public Vector3 vel;
-        public Vector3[] GenVel;
+        public Vector3 pos;
+
+        public void SetFromKuramoto(KuramotoSentinelAgent kuramoto)
+        {
+
+
+            speed = kuramoto.speed;
+            phase = kuramoto.phase;
+            cohPhi = kuramoto.cohPhi;
+            coherenceRadius = kuramoto.coherenceRadius;
+            couplingRange = kuramoto.couplingRange;
+            noiseScl = kuramoto.noiseScl;
+            coupling = kuramoto.coupling;
+            connections = kuramoto.Connections;
+
+        }
     }
     // struct to hold the Genvels settings and fitness
     public struct GenVel
@@ -169,18 +186,9 @@ public class SentinelManager : MonoBehaviour
 
             sentinels[i] = thisSentinel; // set the sentinel object to the list
 
-            // set the values of the struct from the sentinel
-            sentinelsStruct[i].speed = kuramoto.speed;
-            sentinelsStruct[i].phase = kuramoto.phase;
-            sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
-            sentinelsStruct[i].coherenceRadius = kuramoto.coherenceRadius;
-            sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
-            sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
-            sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].Connections = kuramoto.Connections;
-            sentinelsStruct[i].vel = thisSentinel.GetComponent<Rigidbody>().velocity;
-            sentinelsStruct[i].GenVel = thisSentinel.GetComponent<GeneticMovementSentinel>().geneticMovement;
-           
+            
+            sentinelsStruct[i].SetFromKuramoto(kuramoto);
+            sentinelsStruct[i].pos = sentinels[i].transform.position;
 
         }
 
@@ -194,30 +202,24 @@ public class SentinelManager : MonoBehaviour
         {
             // get the components kuramoto component
             KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
-
-            // set the values of the struct from the sentinel
-            sentinelsStruct[i].speed = kuramoto.speed;
-            sentinelsStruct[i].phase = kuramoto.phase;
-            sentinelsStruct[i].cohPhi = kuramoto.cohPhi;
-            sentinelsStruct[i].coherenceRadius = kuramoto.coherenceRadius;
-            sentinelsStruct[i].couplingRange = kuramoto.couplingRange;
-            sentinelsStruct[i].noiseScl = kuramoto.noiseScl;
-            sentinelsStruct[i].coupling = kuramoto.coupling;
-            sentinelsStruct[i].Connections = kuramoto.Connections;
-            sentinelsStruct[i].vel = sentinels[i].GetComponent<Rigidbody>().velocity;
-            sentinelsStruct[i].GenVel = sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement;
+            kuramoto.phase = sentinelsStruct[i].phase;
+            kuramoto.Connections = sentinelsStruct[i].connections;
+            kuramoto.played = sentinelsStruct[i].played;
+            //sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel;
+            sentinelsStruct[i].pos = sentinels[i].transform.position;
 
             // if the agent is dead
             if (kuramoto.dead || kuramoto.age>1000) {
                 // add it settings to the librarys
                 GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                GenVel vels = new GenVel(sentinelsStruct[i].GenVel, kuramoto.fitness);
+                GenVel vels = new GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
                 // call the reset function
                 ResetSentinel(i);
-                // reset the dead gate
-                kuramoto.dead = false;
+
+                sentinelsStruct[i].SetFromKuramoto(kuramoto);
+                sentinelsStruct[i].pos = sentinels[i].transform.position;
             }
 
             // if lib is greater than ...

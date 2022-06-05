@@ -39,7 +39,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
     // holds the sentinels
     private GameObject[] sentinels;
 
-    private bool played = false;
+    public int played =0;
     public int age=0;
 
     public float sumX = 0f;
@@ -93,30 +93,30 @@ public class KuramotoSentinelAgent : MonoBehaviour
             sentinels = biomeManager.sentinels;
         }
         //run coherence function
-        Coherence();
+        //Coherence();
 
         // get the time between this frame and the last
-        var dt = Time.deltaTime;
+       // var dt = Time.deltaTime;
 
 
         //get the phase
-        var p = phase;
+        //var p = phase;
         // get the its current angle to positive x axis
-        var cphi = cohPhi;
+        //var cphi = cohPhi;
         // Get its distance to 0
-        var crad = coherenceRadius;
+        //var crad = coherenceRadius;
         // get the noise
-        float thisNoise = noiseScl * Noise();
+        //float thisNoise = noiseScl * Noise();
         // not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
-        float calc = Mathf.Sin((cphi - p) * CIRCLE_IN_RADIAN);
+        //float calc = Mathf.Sin((cphi - p) * CIRCLE_IN_RADIAN);
         // second phase (scaler * distTo0 * lastClac)
-        calc = coupling * crad * calc;
+        //calc = coupling * crad * calc;
         // add the speed noise and calc together and times by delta time, and add to P
-        p += dt * (speed + thisNoise + calc);
+        //p += dt * (speed + thisNoise + calc);
         // subtract its intiger to leave it as a 0. someting
-        p -= (int)p;
+        //p -= (int)p;
         // set the new phase value
-        phase = p;
+        //phase = p;
 
         // ad the amount of partners * sclr to the fitness
         fitness += Connections * 0.2f;
@@ -125,10 +125,9 @@ public class KuramotoSentinelAgent : MonoBehaviour
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
         // if its been interacted with by the players
-        if (played)
+        if (played==1)
         {
             age = 0;// reset age
-            played = false; // reset played gate
         }
         else { age++; } // else add to the age each frame
     }
@@ -167,7 +166,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sumX += thisX;
                 sumY += thisY;
 
-                sentinel.AddOsiclation(phaseX, phaseY, 2);
+                //sentinel.AddOsiclation(phaseX, phaseY, 2);
 
                 // add the 1 to the Connections
                 newConnections++;
@@ -181,12 +180,12 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
+                //sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
 
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
 
-                played = true;
+                played = 1;
             
             }
 
@@ -227,16 +226,6 @@ public class KuramotoSentinelAgent : MonoBehaviour
         }
     }
 
-    public void AddOsiclation(float posX, float posY, int Biase =1)
-    {
-        for (int i = 0; i < Biase; i++)
-        {
-            sumX += posX;
-            sumY += posY;
-            newConnections++;
-        }
-        played = true;
-    }
 
     // resets and randomizes the base parameter
     internal void Reset()

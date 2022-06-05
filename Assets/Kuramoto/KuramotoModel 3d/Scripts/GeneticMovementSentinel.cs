@@ -11,6 +11,8 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     public Vector3[] geneticMovement; // list to hold vels in
 
+    public Vector3 thisGenVel;
+
     private KuramotoSentinelAgent sentinel; // sentinel obj
 
     private Rigidbody rb;// rigidbody
@@ -53,8 +55,10 @@ public class GeneticMovementSentinel : MonoBehaviour
             }
         }
 
+        thisGenVel = geneticMovement[step];
+
         // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
+        Vector3 vel = thisGenVel * sentinel.phase * speedScl;
 
         // more than one sentinel contact scl it up
         if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
