@@ -14,12 +14,15 @@ public class CameraTracker : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField]
     private float drag;
+    [Range(5f, 50f)]
+    [SerializeField]
+    private float distLimit;
     private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         tracked = transform.parent;
-        offset = tracked.position - transform.position;
+        offset = transform.position - tracked.position;
         setDistance = Vector3.Distance(tracked.position, transform.position);
         rb = GetComponent<Rigidbody>();
     }
@@ -42,12 +45,13 @@ public class CameraTracker : MonoBehaviour
         {
             return;
         }
+        else if (dist> distLimit){
+            transform.position = tracked.position + offset;
+        }
 
         rb.velocity += dif*drag;
 
-       //
-
-       // rb.MoveRotation
-
+     
     }
+
 }

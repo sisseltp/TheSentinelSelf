@@ -195,7 +195,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
                 // minus 1 so betwenn -1-1
                 sigDst -= 1;
                 // invert
-                sigDst *= -1;
+               // sigDst *= -1;
                 // add the vector between the two * the distance in cycles
                 vel += (sentinals[y].position- transform.position)*sigDst;
                 // draw a line if connected
