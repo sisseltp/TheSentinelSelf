@@ -178,10 +178,10 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 // subtract 1 so it is -1-1
                 sigDst -= 1;
                 // invert it
-                //sigDst *= -1;
+                sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
+                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst *0.35f;
 
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);
