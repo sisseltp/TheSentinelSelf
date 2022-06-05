@@ -479,9 +479,9 @@ MonoBehaviour:
   sentinelCam: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
   nSentinels: 14
   spawnArea: 80
-  speedRange: {x: 85, y: 110}
+  speedRange: {x: 95, y: 110}
   couplingRange: {x: 6, y: 12.29}
-  noiseSclRange: {x: 0, y: 0}
+  noiseSclRange: {x: 0.01, y: 0.05}
   couplingSclRange: {x: 6.02, y: 10}
   sentinels: []
 --- !u!1 &326741975
@@ -799,9 +799,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentinel: {fileID: 610433536846796970, guid: de8805aa987ba0c498a27909543fcab9, type: 3}
-  nSentinels: 350
+  nSentinels: 175
   spawnArea: 137
-  speedRange: {x: 100, y: 120}
+  speedRange: {x: 90, y: 110}
   couplingRange: {x: 2, y: 14}
   noiseSclRange: {x: 0.01, y: 0.05}
   couplingSclRange: {x: 0.2, y: 4}

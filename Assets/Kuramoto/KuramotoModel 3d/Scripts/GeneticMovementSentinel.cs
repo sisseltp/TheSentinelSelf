@@ -57,10 +57,10 @@ public class GeneticMovementSentinel : MonoBehaviour
         Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
 
         // more than one sentinel contact scl it up
-       // if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.2f; }
+       vel*=1 + (sentinel.Connections*0.02f); 
         
         // add the vel to the rb
-        rb.velocity += vel;
+        rb.velocity += vel* Time.deltaTime;
 
        // set last phase to phase
         lastPhase = sentinel.phase;

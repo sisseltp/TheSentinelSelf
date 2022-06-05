@@ -21,6 +21,8 @@ public class GeneticMovementBiome : MonoBehaviour
     private float lastPhase = 0; // holds the last phase pos
 
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,7 +57,7 @@ public class GeneticMovementBiome : MonoBehaviour
         Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
 
         // ad it to the rb
-        rb.velocity += vel;
+        rb.velocity += vel * Time.deltaTime;
 
         // set last phase to phase
         lastPhase = sentinel.phase;

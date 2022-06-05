@@ -45,6 +45,8 @@ public class KuramotoSentinelAgent : MonoBehaviour
     public float sumX = 0f;
     public float sumY = 0f;
 
+    public float attractionScl = 4f;
+
     public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, float thisSpeedVariation = 0.1f)
     {
         speedBPM = UnityEngine.Random.Range(SpeedRange.x,SpeedRange.y);
@@ -181,7 +183,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
-                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst *0.35f;
+                sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst  *Time.deltaTime * attractionScl;
 
                 // draw a line for the connection
                 Debug.DrawLine(sentinels[y].transform.position, transform.position, Color.red);

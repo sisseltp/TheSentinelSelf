@@ -115,6 +115,7 @@ MonoBehaviour:
   age: 0
   sumX: 0
   sumY: 0
+  attractionScl: 6
 --- !u!54 &3438557043950093312
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,5 +171,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 1
+  speedScl: 24.24
   geneticMovement: []

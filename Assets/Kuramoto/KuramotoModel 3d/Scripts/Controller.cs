@@ -35,8 +35,8 @@ public class Controller : MonoBehaviour
         forward.y = 0;
         Vector3 right = Quaternion.Euler(0,90,0) * forward;
 
-        rb.velocity+= forward * V *power;
-        rb.velocity += right * H * power;
+        rb.velocity+= forward * V * power * Time.deltaTime;
+        rb.velocity += right * H * power * Time.deltaTime;
        // Quaternion rot = rb.rotation * Quaternion.Euler(new Vector3(mousePos.y * rotScl, mousePos.x * rotScl, 0));
        // rb.MoveRotation(rot);
 

@@ -44,6 +44,8 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
     public int age = 0; // holds this agents age
 
+    public float attractionScl = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -132,7 +134,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         phase = p;
 
         // add the vel to the rigid body, scaled by the phase to make it pulse movement
-        rb.velocity += vel * p*0.1f;
+        rb.velocity += vel * p * Time.deltaTime * attractionScl;
         // set the material to lerp between the the 2 cols by the phase
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
