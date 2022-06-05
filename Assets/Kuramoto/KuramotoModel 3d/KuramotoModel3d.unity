@@ -479,10 +479,10 @@ MonoBehaviour:
   sentinelCam: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
   nSentinels: 14
   spawnArea: 80
-  speedRange: {x: 0.76, y: 0.92}
-  couplingRange: {x: 6, y: 12}
-  noiseSclRange: {x: 0.01, y: 0.05}
-  couplingSclRange: {x: 3, y: 10}
+  speedRange: {x: 85, y: 110}
+  couplingRange: {x: 6, y: 12.29}
+  noiseSclRange: {x: 0, y: 0}
+  couplingSclRange: {x: 6.02, y: 10}
   sentinels: []
 --- !u!1 &326741975
 GameObject:
@@ -801,9 +801,9 @@ MonoBehaviour:
   sentinel: {fileID: 610433536846796970, guid: de8805aa987ba0c498a27909543fcab9, type: 3}
   nSentinels: 350
   spawnArea: 137
-  speedRange: {x: 0.81, y: 1}
+  speedRange: {x: 100, y: 120}
   couplingRange: {x: 2, y: 14}
-  noiseSclRange: {x: 0.01, y: 0.05}
+  noiseSclRange: {x: 0, y: 0}
   couplingSclRange: {x: 0.2, y: 4}
   sentinels: []
   age: 2000
@@ -1751,21 +1751,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.48336333
+  speedBPM: 0
   phase: 0.4654054
-  cohPhi: 0
   coherenceRadius: 0
   couplingRange: 30
   noiseScl: 0.08
   coupling: 7
   speedVariation: 1.05
-  counter: 0
-  dead: 0
-  fitness: 0
   rbEffectsRange: {x: 12, y: 0.5}
   col0: {r: 1, g: 0.032075405, b: 0.9829266, a: 1}
   col1: {r: 0, g: 1, b: 0.1410408, a: 1}
   sentinelManager: {fileID: 322907038}
-  age: 0
 --- !u!1 &1065865529
 GameObject:
   m_ObjectHideFlags: 0

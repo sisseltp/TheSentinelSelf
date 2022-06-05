@@ -257,7 +257,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
+        if (collision.gameObject.tag == "Untagged")
         {
             dead = true;
         }

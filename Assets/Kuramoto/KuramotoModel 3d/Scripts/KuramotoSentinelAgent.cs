@@ -178,7 +178,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
                 // subtract 1 so it is -1-1
                 sigDst -= 1;
                 // invert it
-                sigDst *= -1;
+                //sigDst *= -1;
 
                 // get the vector between the two, scale it by the oscilation difference and add to the rb velocity;
                 sentinels[y].GetComponent<Rigidbody>().velocity += (transform.position - sentinels[y].transform.position) * sigDst;
@@ -221,7 +221,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
     // if it collides with the surrounding area it dies
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
+        if(collision.gameObject.tag == "Untagged")
         {
             dead = true;
         }
