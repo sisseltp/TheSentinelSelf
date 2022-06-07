@@ -64,7 +64,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
         
         // add the vel to the rb
-        rb.velocity += vel;
+        rb.velocity += vel * Time.deltaTime;
 
        // set last phase to phase
         lastPhase = sentinel.phase;

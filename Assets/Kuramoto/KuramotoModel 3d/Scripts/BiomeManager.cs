@@ -36,6 +36,9 @@ public class BiomeManager : MonoBehaviour
     [SerializeField]
     private float age = 1000; // age limit to kill sentinels
 
+    [SerializeField]
+    private float speedScl = 3f;
+
     // struct to hold data maybe for gpu acceleration
     public struct Sentinel
     {
@@ -207,7 +210,7 @@ public class BiomeManager : MonoBehaviour
             kuramoto.phase = sentinelsStruct[i].phase;
             kuramoto.Connections = sentinelsStruct[i].connections;
             kuramoto.played = sentinelsStruct[i].played;
-            sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel;
+            sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel* Time.deltaTime * speedScl;
             sentinelsStruct[i].pos = sentinels[i].transform.position;
 
             // if older than age 

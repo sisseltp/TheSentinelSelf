@@ -139,7 +139,7 @@ public class KuramotoBiomeAgent : MonoBehaviour
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
         // ad the amount of partners * sclr to the fitness
-        fitness += Connections * 0.2f;
+        fitness += Connections * Time.deltaTime;
 
         // if its been interacted with by the players
         if (played==1) { 

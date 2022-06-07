@@ -119,7 +119,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
         //phase = p;
 
         // ad the amount of partners * sclr to the fitness
-        fitness += Connections * 0.2f;
+        fitness += Connections *Time.deltaTime;
 
         //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
         rendr.material.color = Color.Lerp(col0, col1, phase);

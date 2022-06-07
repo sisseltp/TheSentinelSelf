@@ -522,9 +522,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sentinel: {fileID: 3438557043950093338, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
   sentinelCam: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-  nSentinels: 14
+  nSentinels: 42
   spawnArea: 80
-  speedRange: {x: 0.76, y: 0.92}
+  speedRange: {x: 90, y: 100}
   couplingRange: {x: 6, y: 12}
   noiseSclRange: {x: 0.01, y: 0.05}
   couplingSclRange: {x: 3, y: 10}
@@ -811,7 +811,7 @@ GameObject:
   - component: {fileID: 434733781}
   - component: {fileID: 434733782}
   m_Layer: 0
-  m_Name: ' Biom Manager'
+  m_Name: Biom Manager
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -844,14 +844,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentinel: {fileID: 610433536846796970, guid: de8805aa987ba0c498a27909543fcab9, type: 3}
-  nSentinels: 175
+  nSentinels: 1316
   spawnArea: 137
-  speedRange: {x: 0.81, y: 1}
+  speedRange: {x: 90, y: 100}
   couplingRange: {x: 2, y: 14}
   noiseSclRange: {x: 0.01, y: 0.05}
   couplingSclRange: {x: 0.2, y: 4}
   sentinels: []
   age: 2000
+  speedScl: 17.1
 --- !u!1001 &445073253
 PrefabInstance:
   m_ObjectHideFlags: 0

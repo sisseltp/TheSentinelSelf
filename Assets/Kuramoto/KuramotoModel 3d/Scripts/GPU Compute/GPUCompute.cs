@@ -120,7 +120,7 @@ public class GPUCompute : MonoBehaviour
         BiomeBuffer.SetData(biomeData);
 
         Debug.Log("start");
-        
+        Debug.Log(biomeData[0].phase);
 
         int UpdateBiome = shader.FindKernel("BiomeUpdate");
         //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
@@ -129,14 +129,14 @@ public class GPUCompute : MonoBehaviour
         shader.SetBuffer(UpdateBiome, "sentinelData", sentinelBuffer);
         shader.SetBuffer(UpdateBiome, "biomeData", BiomeBuffer);
         shader.SetFloat("dt", Time.deltaTime);
-        Debug.Log(sentinelData[0].phase);
+        
         shader.Dispatch(UpdateBiome, TexResolution , 1 , 1);
         //shader.Dispatch(UpdateSentinel, TexResolution, 1, 1);
 
         BiomeBuffer.GetData(biomeData);
         sentinelBuffer.GetData(sentinelData);
        // Debug.Log(sentinelData[1].connections);
-        Debug.Log(sentinelData[0].phase);
+        Debug.Log(biomeData[0].phase);
        //Debug.Log(biomeData[21].pos);
        // Debug.Log(biomeData[21].played);
        // Debug.Log(biomeData[21].phase);
