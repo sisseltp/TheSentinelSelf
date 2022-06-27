@@ -2,10 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Rendering;
 using System.Runtime.InteropServices;
-using System;
 using System.Linq;
 
 public class GPUCompute : MonoBehaviour
@@ -13,23 +10,33 @@ public class GPUCompute : MonoBehaviour
     [SerializeField]
     private ComputeShader shader;
 
-    [SerializeField]
-    private GameObject Agents;
 
     private int TexResolution;
     
     private RenderTexture rt;
 
-    private SentinelManager.Sentinel[] sentinelData;
+    private SentinelManager.GPUData[] sentinelData;
 
-    private BiomeManager.Sentinel[] biomeData;
+    private BiomeManager.GPUData[] biomeData;
+
+    private PlasticManager.GPUData[] plasticData;
 
     private SentinelManager[] sentinels;
     private BiomeManager[] biome;
+    private PlasticManager[] plastics;
+
 
     // Start is called before the first frame update
 
+    private void Start()
+    {
+        sentinels = GetComponentsInChildren<SentinelManager>();
 
+        biome = GetComponentsInChildren<BiomeManager>();
+
+        plastics = GetComponentsInChildren<PlasticManager>();
+
+    }
     private void Update()
     {
             LinkData();
@@ -42,66 +49,86 @@ public class GPUCompute : MonoBehaviour
 
     private void SetData()
     {
-        
-        biome = Agents.GetComponentsInChildren<BiomeManager>();
-
         int bioOffset = 0;
 
         for (int i = 0; i < biome.Length; i++)
         {
-            if (biome[i].sentinelsStruct != null)
+            if (biome[i].GPUStruct != null)
             {
 
-                biome[i].sentinelsStruct = Extensions.SubArray(biomeData, bioOffset, bioOffset + biome[i].sentinelsStruct.Length);
-                bioOffset += biome[i].sentinelsStruct.Length;
+                biome[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset, bioOffset + biome[i].GPUStruct.Length);
+                bioOffset += biome[i].GPUStruct.Length;
             }
         }
+ 
 
         int sentOffset = 0;
 
         for (int i = 0; i < sentinels.Length; i++)
         {
-            if (sentinels[i].sentinelsStruct != null)
+            if (sentinels[i].GPUStruct != null)
             {
 
-                sentinels[i].sentinelsStruct = Extensions.SubArray(sentinelData, sentOffset, sentOffset+sentinels[i].sentinelsStruct.Length);
-                sentOffset += sentinels[i].sentinelsStruct.Length;
+                sentinels[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentOffset+sentinels[i].GPUStruct.Length);
+                sentOffset += sentinels[i].GPUStruct.Length;
             }
         }
 
+        int plasticOffset = 0;
+
+        for (int i = 0; i < plastics.Length; i++)
+        {
+            if (plastics[i].GPUStruct != null)
+            {
+
+                plastics[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset, plasticOffset + plastics[i].GPUStruct.Length);
+                plasticOffset += plastics[i].GPUStruct.Length;
+            }
+        }
     }
 
     private void LinkData()
     {
-        sentinels = Agents.GetComponentsInChildren<SentinelManager>();
 
-        List<SentinelManager.Sentinel> sentData = new List<SentinelManager.Sentinel>();
+        List<SentinelManager.GPUData> sentData = new List<SentinelManager.GPUData>();
 
         for (int i = 0; i < sentinels.Length; i++)
         {
-            if (sentinels[i].sentinelsStruct != null)
+            if (sentinels[i].GPUStruct != null)
             {
-                sentData.AddRange(sentinels[i].sentinelsStruct);
+                sentData.AddRange(sentinels[i].GPUStruct);
             }
         }
 
         sentinelData = sentData.ToArray();
 
-        biome = Agents.GetComponentsInChildren<BiomeManager>();
 
-        List<BiomeManager.Sentinel> bioData = new List<BiomeManager.Sentinel>();
+        List<BiomeManager.GPUData> bioData = new List<BiomeManager.GPUData>();
 
         for (int i = 0; i < biome.Length; i++)
         {
-            if (biome[i].sentinelsStruct != null)
+            if (biome[i].GPUStruct != null)
             {
-                bioData.AddRange(biome[i].sentinelsStruct);
+                bioData.AddRange(biome[i].GPUStruct);
             }
         }
 
         biomeData = bioData.ToArray();
 
-        TexResolution = biomeData.Length + sentinelData.Length;
+
+        List<PlasticManager.GPUData> plasData = new List<PlasticManager.GPUData>();
+
+        for (int i = 0; i < plastics.Length; i++)
+        {
+            if (plastics[i].GPUStruct != null)
+            {
+                plasData.AddRange(plastics[i].GPUStruct);
+            }
+        }
+
+        plasticData = plasData.ToArray();
+
+        TexResolution = biomeData.Length + sentinelData.Length + plasticData.Length;
         
     }
 
@@ -113,14 +140,17 @@ public class GPUCompute : MonoBehaviour
         rt.enableRandomWrite = true;
         RenderTexture.active = rt;
 
-        ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(SentinelManager.Sentinel)));
+        ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(SentinelManager.GPUData)));
         sentinelBuffer.SetData(sentinelData);
 
-        ComputeBuffer BiomeBuffer = new ComputeBuffer(biomeData.Length, Marshal.SizeOf(typeof(BiomeManager.Sentinel)));
+        ComputeBuffer BiomeBuffer = new ComputeBuffer(biomeData.Length, Marshal.SizeOf(typeof(BiomeManager.GPUData)));
         BiomeBuffer.SetData(biomeData);
 
-        Debug.Log("start");
-        Debug.Log(biomeData[0].phase);
+        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager.GPUData)));
+        plasticBuffer.SetData(plasticData);
+
+      //  Debug.Log("start");
+      //  Debug.Log(plasticData[0].phase);
 
         int UpdateBiome = shader.FindKernel("BiomeUpdate");
         //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
@@ -128,6 +158,7 @@ public class GPUCompute : MonoBehaviour
         shader.SetTexture(UpdateBiome, "Result", rt);
         shader.SetBuffer(UpdateBiome, "sentinelData", sentinelBuffer);
         shader.SetBuffer(UpdateBiome, "biomeData", BiomeBuffer);
+        shader.SetBuffer(UpdateBiome, "plasticData", plasticBuffer);
         shader.SetFloat("dt", Time.deltaTime);
         
         shader.Dispatch(UpdateBiome, TexResolution , 1 , 1);
@@ -135,21 +166,22 @@ public class GPUCompute : MonoBehaviour
 
         BiomeBuffer.GetData(biomeData);
         sentinelBuffer.GetData(sentinelData);
-       // Debug.Log(sentinelData[1].connections);
-        Debug.Log(biomeData[0].phase);
-       //Debug.Log(biomeData[21].pos);
-       // Debug.Log(biomeData[21].played);
-       // Debug.Log(biomeData[21].phase);
-       // Debug.Log(biomeData[21].speed);
+        plasticBuffer.GetData(plasticData);
+      //  Debug.Log(plasticData[0].phase);
+
         BiomeBuffer.Dispose();
         sentinelBuffer.Dispose();
+        plasticBuffer.Dispose();
  //       print("C");
 
 
     }
-   
+
+
+
 
 }
+
 
 public static class Extensions
 {

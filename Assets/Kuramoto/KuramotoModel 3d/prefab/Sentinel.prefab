@@ -107,6 +107,7 @@ MonoBehaviour:
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
+  attractionSclr: 0.5
   Connections: 0
   dead: 0
   fitness: 0
@@ -172,6 +173,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 21
+  speedScl: 14
   geneticMovement: []
   thisGenVel: {x: 0, y: 0, z: 0}
