@@ -88,6 +88,100 @@ public class Genetics
         }
     }
 
+    public struct Antigen
+        {
+
+        public int[] Key;
+        public float fitness;
+
+        public Antigen(int[] SetKey = null, float fit = 0)
+        {
+            if (SetKey != null)
+            {
+                Key = SetKey;
+            }
+            else
+            {
+                Key = new int[5];
+
+                for(int i=0; i<Key.Length; i++)
+                {
+                    Key[i] = UnityEngine.Random.Range(0, 10);
+                }
+            }
+            fitness = fit;
+        }
+
+        public Antigen(int keyLength)
+        {
+
+            Key = new int[keyLength];
+            // set the vels of the list
+            for (int i = 0; i < keyLength; i++)
+            {
+                Key[i] = UnityEngine.Random.Range(0, keyLength);
+
+            }
+                        
+            fitness = 0;
+        }
+
+        public bool Compare(int[] otherKey)
+        {
+
+            if (Key.Length != otherKey.Length) { return false; }
+
+
+            for(int i=0; i<otherKey.Length; i++)
+            {
+
+                if (Key[i] != otherKey[i]) { return false; }
+
+            }
+            return true;
+        }
+
+
+        public int[] BlendAttributes(int[] otherKey)
+        {
+            int[] newKey = new int[Key.Length];
+            for (int i = 0; i < newKey.Length; i++)
+            {
+
+                int rand = UnityEngine.Random.Range(0,10);
+
+                if (rand < 0.5f)
+                {
+                    newKey[i] = Key[i];
+                }
+                else
+                {
+                    newKey[i] = otherKey[i];
+                }
+
+
+            }
+
+            return newKey;
+        }
+
+
+
+    }
+
+    internal static List<Antigen> NegativeSelection(List<Antigen> antigenLib)
+    {
+        antigenLib.Sort(SortByfitness);
+        // remove the first 250
+        antigenLib.RemoveRange(0, 250);
+
+        return antigenLib;
+    }
+
+    private static int SortByfitness(Antigen x, Antigen y)
+    {
+        return x.fitness.CompareTo(y.fitness);
+    }
 
 
 

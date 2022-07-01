@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class BiomeManager : MonoBehaviour
+public class TCellManager : MonoBehaviour
 {
 
     [SerializeField]
@@ -12,6 +12,8 @@ public class BiomeManager : MonoBehaviour
     [Range(1, 3000)]
     [SerializeField]
     public int nSentinels = 10; // number of them to be made
+    private int MaxSentinels = 15;
+    private int RealNumSentinels = 0;
 
     [Range(0.1f, 1000f)]
     [SerializeField]
@@ -30,11 +32,13 @@ public class BiomeManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
 
-    public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public BiomeManager.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     
     public List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
 
     public List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
+
+    public List<Genetics.Antigen> antigenLib;
 
     [SerializeField]
     private float MaxAge = 1000; // age limit to kill sentinels
@@ -45,62 +49,29 @@ public class BiomeManager : MonoBehaviour
     [SerializeField]
     private float yOffset = 5;
 
-
-    // struct to hold data maybe for gpu acceleration
-    public struct GPUData
-    {
-        public int age;
-        public int connections;
-        public int played;
-        public float speed;
-        public float phase;
-        public float cohPhi;
-        public float coherenceRadius;
-        public float couplingRange;
-        public float noiseScl;
-        public float coupling;
-        public float attractionScl;
-        public float fittness;
-        public Vector3 vel;
-        public Vector3 pos;
-
-        
-        public void SetFromKuramoto(KuramotoBiomeAgent kuramoto)
-        {
-            speed = kuramoto.speed;
-            phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
-            coherenceRadius = kuramoto.coherenceRadius;
-            couplingRange = kuramoto.couplingRange;
-            noiseScl = kuramoto.noiseScl;
-            coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
-            attractionScl = kuramoto.attractionSclr;
-            age = 0;
-            fittness = 0;
-        }
-
-        public void SetPos(Vector3 Pos)
-        {
-            pos=Pos;
-            age = 0;
-        }
-    }
     
     // Start is called before the first frame update
     void Start()
     {
+        MaxSentinels = Mathf.FloorToInt(nSentinels * 1.5f);
+
         // create list to hold object
-        sentinels = new GameObject[nSentinels];
+        sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUData[nSentinels];
+        GPUStruct = new BiomeManager.GPUData[MaxSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
+        antigenLib = new List<Genetics.Antigen>();
+
+
 
         // loop over the nsentinels
-        for(int i=0; i<nSentinels; i++)
+        for (int i=0; i<nSentinels; i++)
         {
+
+            RealNumSentinels++;
+
             // set rand pos
             float x = transform.position.x + UnityEngine.Random.Range(-spawnArea, spawnArea);
             float y = transform.position.y + yOffset;
@@ -122,37 +93,50 @@ public class BiomeManager : MonoBehaviour
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
             
-            
-        }
 
+        }
 
     }
 
     private void Update()
     {
+        List<int> toRemove = new List<int>();
         // loop over the n sentinels
-        for (int i = 0; i < nSentinels; i++)
+        for (int i = 0; i < RealNumSentinels; i++)
         {
+
+            if(sentinels[i] == null) { continue; }
             // get the kurmto
             KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
             
             // if older than age 
             if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
+
+                if (i > nSentinels)
+                {
+                    toRemove.Add(i);
+                    
+                    continue;
+                }
+
                 // add data to lib
                 Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementBiome>().geneticMovement, kuramoto.fitness);
+                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementTcell>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
+
+                antigenLib.Add(sentinels[i].GetComponent<GeneticAntigenKey>().antigen);
+
                 // reset its values
                 ResetSentinel(i);
                 
                 GPUStruct[i].SetFromKuramoto(kuramoto);
                 GPUStruct[i].pos = sentinels[i].transform.position;
 
-                 
             }
             else
             {
+
                 kuramoto.fitness = GPUStruct[i].fittness;
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
@@ -173,6 +157,38 @@ public class BiomeManager : MonoBehaviour
             // negative selection
             GenVelLib = Genetics.NegativeSelection(GenVelLib);
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
+
+        }
+
+
+
+        int nxtIndx = -1;
+        
+        for ( int i=0; i<toRemove.Count; i++)
+        {
+            int indx = toRemove[i];
+            if (i != toRemove.Count-1)
+            {
+                 nxtIndx = toRemove[i+1];
+            }
+            else
+            {
+                nxtIndx = RealNumSentinels;
+            }
+
+            for (int p = indx+1; p <= nxtIndx ; p++)
+            {
+                GPUStruct[p - (i+1)] = GPUStruct[p];
+                sentinels[p - (i+1)] = sentinels[p];
+
+            }            
+
+        }
+        RealNumSentinels -= toRemove.Count;
+        
+        if (nxtIndx != -1) {
+            GPUStruct[nxtIndx] = new BiomeManager.GPUData();
+            sentinels[nxtIndx] = null;
 
         }
 
@@ -210,9 +226,11 @@ public class BiomeManager : MonoBehaviour
             // add random new sentinel
             KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-
-            GeneticMovementBiome genVel = thisSentinel.GetComponent<GeneticMovementBiome>();
+            
+            GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
             genVel.Reset();
+
+            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
         }
         else
         {
@@ -234,13 +252,37 @@ public class BiomeManager : MonoBehaviour
 
             Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
 
-            GeneticMovementBiome genMov = thisSentinel.GetComponent<GeneticMovementBiome>();
+            GeneticMovementTcell genMov = thisSentinel.GetComponent<GeneticMovementTcell>();
             genMov.Reset();
             genMov.geneticMovement = genVel1.BlendAttributes(Vels);
+
+            GeneticAntigenKey antigenKey = thisSentinel.GetComponent<GeneticAntigenKey>();
+            antigenKey.Reset();
+
 
 
         }
         
+    }
+
+    public void AddTCell(GameObject TCell)
+    {
+        if (RealNumSentinels < MaxSentinels)
+        {
+            RealNumSentinels++;
+
+
+            // add the object to the list
+            sentinels[RealNumSentinels-1] = TCell;
+            KuramotoBiomeAgent kuramoto = TCell.GetComponent<KuramotoBiomeAgent>();
+
+            // set data in the struct
+            BiomeManager.GPUData gpuStruct = new BiomeManager.GPUData();
+            gpuStruct.SetFromKuramoto(kuramoto);
+            gpuStruct.SetPos(TCell.transform.position);
+            GPUStruct[RealNumSentinels] = gpuStruct;
+        }
+
     }
 
 

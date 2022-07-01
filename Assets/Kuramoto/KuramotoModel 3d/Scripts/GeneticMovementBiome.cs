@@ -68,4 +68,26 @@ public class GeneticMovementBiome : MonoBehaviour
             geneticMovement[i] = Random.insideUnitSphere;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Kill")
+        {
+            sentinel.dead = true;
+        }
+        else if (collision.gameObject.tag == "Player")
+        {
+            Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
+
+
+            GameObject newObj = transform.GetChild(0).gameObject;
+
+            GameObject attached = Instantiate(newObj, newObj.transform.position, rot, collision.transform);
+            attached.transform.position -= (newObj.transform.position - collision.transform.position) * 0.3f;
+            attached.transform.localScale = transform.localScale;
+            attached.transform.parent = collision.transform;
+            
+            sentinel.dead = true;
+        }
+    }
 }

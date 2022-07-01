@@ -114,22 +114,9 @@ public class KuramotoBiomeAgent : MonoBehaviour
         // set the material to lerp between the the 2 cols by the phase
         rendr.material.color = Color.Lerp(col0, col1, phase);
 
-        // ad the amount of partners * sclr to the fitness
-        fitness += Connections * Time.deltaTime;
-
-        // if its been interacted with by the players
-        if (played > 0) { 
-            fitness += 10;
-        }
      
 
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
-        {
-            dead = true;
-        }
-    }
+    
 }

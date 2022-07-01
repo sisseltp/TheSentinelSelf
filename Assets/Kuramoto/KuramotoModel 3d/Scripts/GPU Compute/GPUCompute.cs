@@ -24,6 +24,7 @@ public class GPUCompute : MonoBehaviour
     private SentinelManager[] sentinels;
     private BiomeManager[] biome;
     private PlasticManager[] plastics;
+    private TCellManager[] tcells;
 
 
     // Start is called before the first frame update
@@ -35,6 +36,8 @@ public class GPUCompute : MonoBehaviour
         biome = GetComponentsInChildren<BiomeManager>();
 
         plastics = GetComponentsInChildren<PlasticManager>();
+
+        tcells = GetComponentsInChildren<TCellManager>();
 
     }
     private void Update()
@@ -60,7 +63,16 @@ public class GPUCompute : MonoBehaviour
                 bioOffset += biome[i].GPUStruct.Length;
             }
         }
- 
+
+        for (int i = 0; i < tcells.Length; i++)
+        {
+            if (tcells[i].GPUStruct != null)
+            {
+                tcells[i].GPUStruct = biomeData.SubArray<BiomeManager.GPUData>(bioOffset, tcells[i].GPUStruct.Length);
+                bioOffset += tcells[i].GPUStruct.Length;
+            }
+        }
+
 
         int sentOffset = 0;
 
@@ -68,7 +80,6 @@ public class GPUCompute : MonoBehaviour
         {
             if (sentinels[i].GPUStruct != null)
             {
-
                 sentinels[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentOffset+sentinels[i].GPUStruct.Length);
                 sentOffset += sentinels[i].GPUStruct.Length;
             }
@@ -100,6 +111,7 @@ public class GPUCompute : MonoBehaviour
             }
         }
 
+
         sentinelData = sentData.ToArray();
 
 
@@ -110,6 +122,14 @@ public class GPUCompute : MonoBehaviour
             if (biome[i].GPUStruct != null)
             {
                 bioData.AddRange(biome[i].GPUStruct);
+            }
+        }
+
+        for (int i = 0; i < tcells.Length; i++)
+        {
+            if (tcells[i].GPUStruct != null)
+            {
+                bioData.AddRange(tcells[i].GPUStruct);
             }
         }
 

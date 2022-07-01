@@ -17,6 +17,10 @@ public class SentinelManager : MonoBehaviour
     [Range(0.1f, 100f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to be spawned in
+
+    [SerializeField]
+    private float yOffset = 5;
+
     [SerializeField]
     private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have
     [SerializeField]
@@ -39,6 +43,12 @@ public class SentinelManager : MonoBehaviour
 
     [SerializeField]
     private float MaxAge = 1000; // age limit to kill sentinels
+
+    public Vector3[] Lymphondes;
+
+    public Vector3[] PathogenEmitters;
+
+
 
     // struct to hold all the sentinels data potential gpu compute
     public struct GPUData
@@ -78,89 +88,6 @@ public class SentinelManager : MonoBehaviour
     }
 
 
-    // struct to hold the Genvels settings and fitness
-    public struct GenVel
-    {
-
-        public GenVel(Vector3[] vels, float fit = 0)
-        {
-            Vels = vels;
-            fitness = fit;
-        }
-
-        public Vector3[] BlendAttributes(Vector3[] otherVels)
-        {
-            Vector3[] newVels = new Vector3[Vels.Length];
-            for (int i = 0; i < newVels.Length; i++)
-            {
-
-                float rand = UnityEngine.Random.value;
-
-                if (rand < 0.33f)
-                {
-                    newVels[i] = Vels[i];
-                }
-                else if (rand < 0.66f)
-                {
-                    newVels[i] = otherVels[i];
-                }
-                else
-                {
-                    newVels[i] = UnityEngine.Random.insideUnitSphere;
-                    newVels[i].y = Mathf.Abs(newVels[i].y);
-                }
-            }
-
-
-
-            return newVels;
-        }
-
-        public Vector3[] Vels;
-        public float fitness;
-
-    }
-    // struct to holg gene kurmto data
-    public struct GenKurmto
-    {
-        public float[] Settings;
-        public float fitness;
-        // constructor 
-        public GenKurmto(float speedBPM, float noiseScl, float coupling, float couplingRange, float fit)
-        {
-            Settings = new float[4];
-            Settings[0] = speedBPM;
-            Settings[1] = noiseScl;
-            Settings[2] = coupling;
-            Settings[3] = couplingRange;
-            fitness = fit;
-        }
-
-        public float[] BlendAttributes(float[] otherSettings)
-        {
-            float[] newSetting = new float[Settings.Length];
-            for (int i = 0; i < newSetting.Length; i++)
-            {
-
-                float rand = UnityEngine.Random.value;
-
-                if (rand < 0.5f)
-                {
-                    newSetting[i] = Settings[i];
-                }
-                else
-                {
-                    newSetting[i] = otherSettings[i];
-                }
-
-
-            }
-
-            return newSetting;
-        }
-    }
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -176,9 +103,9 @@ public class SentinelManager : MonoBehaviour
         for(int i=0; i<nSentinels; i++)
         {
             // set a random pos
-            float x = UnityEngine.Random.Range(-spawnArea, spawnArea);
-            float y = 0;
-            float z = UnityEngine.Random.Range(-spawnArea, spawnArea);
+            float x = transform.position.x+UnityEngine.Random.Range(-spawnArea, spawnArea);
+            float y = transform.position.y+ yOffset;
+            float z = transform.position.z+UnityEngine.Random.Range(-spawnArea, spawnArea);
             Vector3 pos = new Vector3(x, y, z);
 
             // create a new sentinel asa child and at pos
@@ -201,6 +128,22 @@ public class SentinelManager : MonoBehaviour
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
 
+        }
+
+        GameObject[] lymphs = GameObject.FindGameObjectsWithTag("Lymphonde");
+        Lymphondes = new Vector3[lymphs.Length];
+
+        for (int i = 0; i < lymphs.Length; i++)
+        {
+            Lymphondes[i] = lymphs[i].transform.position;
+        }
+
+        GameObject[] pathogens = GameObject.FindGameObjectsWithTag("PathogenEmitter");
+        PathogenEmitters = new Vector3[pathogens.Length];
+
+        for (int i = 0; i < pathogens.Length; i++)
+        {
+            PathogenEmitters[i] = pathogens[i].transform.position;
         }
 
 
@@ -263,9 +206,9 @@ public class SentinelManager : MonoBehaviour
         GameObject thisSentinel = sentinels[i];
 
         // randomize pos
-        float x = UnityEngine.Random.Range(-spawnArea, spawnArea);
-        float y = 0;
-        float z = UnityEngine.Random.Range(-spawnArea, spawnArea);
+        float x = transform.position.x+UnityEngine.Random.Range(-spawnArea, spawnArea);
+        float y = transform.position.y + yOffset;
+        float z = transform.position.z+UnityEngine.Random.Range(-spawnArea, spawnArea);
 
         Vector3 pos = new Vector3(x, y, z);
 

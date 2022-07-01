@@ -21,6 +21,9 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private float lastPhase = 0;// holds the last phase
 
+    private Vector3 target;
+
+    private SentinelManager manager;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +44,15 @@ public class GeneticMovementSentinel : MonoBehaviour
             geneticMovement[i].y = Mathf.Abs(geneticMovement[i].y);
 
         }
+
+
+        manager = GetComponentInParent<SentinelManager>();
+        int indx = Random.Range(0, manager.Lymphondes.Length);
+        
+        target = manager.Lymphondes[indx];
+
+       
+
     }
     
     // Update is called once per frame
@@ -57,11 +69,12 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         thisGenVel = geneticMovement[step];
 
-        // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel = thisGenVel * sentinel.phase * speedScl;
+         // get vel from this steps genmov, mult by phase and scl
+        Vector3 vel =   thisGenVel * sentinel.phase * speedScl;
+        vel += Vector3.Normalize(target - transform.position) * sentinel.phase* speedScl;
 
         // more than one sentinel contact scl it up
-        if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
+        //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
         
         // add the vel to the rb
         rb.velocity += vel * Time.deltaTime;
@@ -77,5 +90,31 @@ public class GeneticMovementSentinel : MonoBehaviour
         {
             geneticMovement[i] = Random.insideUnitSphere;
         }
+        
     }
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Lymphonde")
+        {
+            int indx = Random.Range(0, manager.PathogenEmitters.Length);
+
+            target = manager.PathogenEmitters[indx];
+
+            GeneticAntigenKey[] keys =  GetComponentsInChildren<GeneticAntigenKey>();
+
+            foreach(GeneticAntigenKey key in keys)
+            {
+
+                key.TimeOut();
+
+            }
+        }
+        else if (collision.gameObject.tag == "PathogenEmitter")
+        {
+            int indx = Random.Range(0, manager.Lymphondes.Length);
+
+            target = manager.Lymphondes[indx];
+        }
+    }
+
 }

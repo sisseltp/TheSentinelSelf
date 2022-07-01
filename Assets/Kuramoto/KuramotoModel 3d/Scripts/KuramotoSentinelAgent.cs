@@ -22,7 +22,6 @@ public class KuramotoSentinelAgent : MonoBehaviour
     public float speedVariation = 0.1f; // variation to randomise speed
     public float attractionSclr = 0.5f;
     public int Connections = 0; // counts how many links it has within the range
-    private int newConnections = 0;
     public bool dead = false;// dead trigger
     public float fitness = 0;// fitness rating for the agent
    
@@ -80,7 +79,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
         // hook up rendr component
         rendr = GetComponent<Renderer>();
         // find the sentinel maker
-        biomeManager = GameObject.FindGameObjectWithTag("Player").GetComponent<BiomeManager>();
+        biomeManager = GameObject.FindGameObjectWithTag("PathogenEmitter").GetComponent<BiomeManager>();
         
         // link the sentinels as a list
         sentinels = biomeManager.sentinels ;
@@ -108,7 +107,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
     // if it collides with the surrounding area it dies
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag != "Terrain" && collision.gameObject.tag != "Player" && collision.gameObject.tag != "Sentinel")
+        if(collision.gameObject.tag == "Kill")
         {
             dead = true;
         }
