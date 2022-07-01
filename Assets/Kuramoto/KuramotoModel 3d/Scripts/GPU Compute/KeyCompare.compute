@@ -1,0 +1,55 @@
+// Each #kernel tells which function to compile; you can have many kernels
+
+#pragma kernel KeyCompare
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+
+struct AntigenKeys
+{
+	int key1;
+	int key2;
+	int key3;
+	int key4;
+
+	int hit;
+
+	
+};
+
+
+
+RWTexture2D<float4> Result;
+
+RWStructuredBuffer<AntigenKeys> antigenKeys;
+
+AntigenKeys thisKey;
+
+bool Compare(AntigenKeys otherKey) {
+	
+	if (otherKey.key1 == thisKey.key1 && otherKey.key2 == thisKey.key2 && otherKey.key3 == thisKey.key3 && otherKey.key4 == thisKey.key4) {
+		return true;
+	}
+	else { return false; }
+}
+
+
+[numthreads(1,1,1)]
+void KeyCompare(uint3 id : SV_DispatchThreadID)
+{
+	 thisKey = antigenKeys[0];
+	 antigenKeys[0].hit = 0;
+
+	for (int i = 1; i < int(antigenKeys.Length); i++) {
+		
+		if (Compare(antigenKeys[i])) {
+			antigenKeys[i].hit = 1;
+		}
+		else {
+			antigenKeys[i].hit = 0;
+		}
+		
+		//antigenKeys[i].hit = 2;
+	 }
+}
+

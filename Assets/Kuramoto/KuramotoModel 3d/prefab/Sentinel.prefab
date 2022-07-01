@@ -107,15 +107,16 @@ MonoBehaviour:
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
+  attractionSclr: 0.5
   Connections: 0
-  dead: 1
+  dead: 0
   fitness: 0
-  col0: {r: 0, g: 1, b: 0.30628633, a: 0}
-  col1: {r: 0.8802662, g: 0, b: 1, a: 0}
+  col0: {r: 0.21340132, g: 1, b: 0, a: 0}
+  col1: {r: 1, g: 0.9708301, b: 0, a: 0}
+  played: 0
   age: 0
   sumX: 0
   sumY: 0
-  attractionScl: 8
 --- !u!54 &3438557043950093312
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -125,7 +126,7 @@ Rigidbody:
   m_GameObject: {fileID: 3438557043950093338}
   serializedVersion: 2
   m_Mass: 0.5
-  m_Drag: 1.2
+  m_Drag: 0.5
   m_AngularDrag: 7.39
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -145,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   power: 1.05
+  rotScl: 4
 --- !u!135 &3438557043950093316
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -152,7 +154,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3438557043950093338}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -171,5 +173,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 24.24
+  speedScl: 7
   geneticMovement: []
+  thisGenVel: {x: 0, y: 0, z: 0}

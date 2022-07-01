@@ -1,0 +1,387 @@
+// Each #kernel tells which function to compile; you can have many kernels
+
+#pragma kernel BiomeUpdate
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+
+
+struct Sentinel
+{
+	int age;
+	int connections;
+	int played;
+	float speed;
+	float phase;
+	float cohPhi;
+	float coherenceRadius;
+	float couplingRange;
+	float noiseScl;
+	float coupling;
+	float attractionScl;
+	float fittness;
+	float3 vel;
+	float3 pos;
+};
+
+
+
+RWTexture2D<float4> Result;
+
+RWStructuredBuffer<Sentinel> sentinelData;
+RWStructuredBuffer<Sentinel> biomeData;
+RWStructuredBuffer<Sentinel> plasticData;
+
+static const float PI = 3.14159265f;
+static const float CIRCLE_IN_RADIAN = 2 * PI;
+static const float RADIAN_TO_NORMALIZED = 1 / CIRCLE_IN_RADIAN;
+
+float sumx = 0;
+float sumy = 0;
+float dt;
+
+float phaseX;
+float phaseY;
+
+int Conects = 0;
+float PlasticConnects = 0;
+
+//Biom function
+void Bio2BioCOHERENCE(int id) {
+
+
+	// loop over biome 
+	for (int b = 0; b < int( biomeData.Length); b++)
+	{
+		// if not this agent
+		if (int(b) != int(id)) {
+			// get the distance between the two agents
+			float dist = distance(biomeData[b].pos, biomeData[id].pos);
+
+			// if less than coupling range
+			if (dist < biomeData[id].couplingRange)
+			{
+
+				// times the points value by 2*Pi
+				float theta = biomeData[b].phase * CIRCLE_IN_RADIAN;
+				// get this phases x,y pos
+				float thisX = cos(theta);
+				float thisY = sin(theta);
+				// add to oscilation values to sums (total) 
+				sumx += thisX;
+				sumy += thisY;
+				// add one to the Connections
+				biomeData[id].connections = biomeData[id].connections + 1;
+
+				// find the distance between the two cycles (between 0-2 as its sin/cos positions)
+				float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
+				// minus 1 so betwenn -1-1
+				sigDst -= 1;
+				// invert
+				sigDst *= -1;
+				// add the vector between the two * the distance in cycles
+				biomeData[id].vel += (biomeData[b].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl * biomeData[b].attractionScl;
+
+				
+			}
+		}
+	}
+
+}
+
+void Bio2SenCOHERENCE(int id) {
+
+
+
+	// loop over sentinels 
+	for (int s = 0; s < int(sentinelData.Length); s++)
+	{
+		
+			// get the distance between the two agents
+			float dist = distance(sentinelData[s].pos, biomeData[id].pos);
+
+			// if less than coupling range
+			if (dist < biomeData[id].couplingRange)
+			{
+
+				// times the points value by 2*Pi
+				float theta = sentinelData[s].phase * CIRCLE_IN_RADIAN;
+				// get this phases x,y pos
+				float thisX = cos(theta);
+				float thisY = sin(theta);
+				// add to oscilation values to sums (total) 
+				sumx += thisX ;
+				sumy += thisY ;
+				// add one to the Connections
+				biomeData[id].connections ++;
+
+				// find the distance between the two cycles (between 0-2 as its sin/cos positions)
+				float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
+				// minus 1 so betwenn -1-1
+				sigDst -= 1;
+				// invert
+				sigDst *= -1;
+				// add the vector between the two * the distance in cycles
+				biomeData[id].vel += (sentinelData[s].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl * sentinelData[s].attractionScl;
+				// add to played data
+				biomeData[id].played += 1;
+
+			}
+		
+	}
+
+}
+
+
+// sentinel functions
+void Plas2SenCOHERENCE(int id) {
+
+	sentinelData[id].played =1;
+
+	// loop over sentinels 
+	for (int b = 0; b < int(plasticData.Length); b++)
+	{
+
+		// get the distance between the two agents
+		float dist = distance(plasticData[b].pos, sentinelData[id].pos);
+
+		// if less than plastic agents coupling range
+		if (dist < plasticData[b].couplingRange)
+		{
+			// get the phase
+			float p = plasticData[b].phase;
+
+			// times the points value by 2*Pi
+			float theta = p * CIRCLE_IN_RADIAN;
+
+			// get this phases x,y pos
+			float thisX = cos(theta);// *normDist;
+			float thisY = sin(theta);// *normDist;
+
+			// add to oscilation values to sums (total) 
+			sumy += thisY;
+			sumx += thisX;
+
+			// add one to the Connections
+			sentinelData[id].connections += 1 ;// = round(normDist);
+			sentinelData[id].played += 1;
+		}
+
+	}
+
+}
+
+
+void Sen2BioCOHERENCE(int id) {
+
+
+	// loop over biome 
+	for (int b = 0; b < int(biomeData.Length); b++)
+	{
+
+		// get the distance between the two agents
+		float dist = distance(biomeData[b].pos, sentinelData[id].pos);
+
+		// if less than sentinel coupling range
+		if (dist < sentinelData[id].couplingRange)
+		{
+
+			// times the points value by 2*Pi
+			float theta = biomeData[b].phase * CIRCLE_IN_RADIAN;
+			// get this phases x,y pos
+			float thisX = cos(theta);
+			float thisY = sin(theta);
+			// add to oscilation values to sums (total) 
+			sumx += thisX;
+			sumy += thisY;
+			// add one to the Connections
+			sentinelData[id].connections += 1;
+
+			// find the distance between the two cycles (between 0-2 as its sin/cos positions)
+			float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
+			// minus 1 so betwenn -1-1
+			sigDst -= 1;
+			// invert
+			sigDst *= -1;
+			// add the vector between the two * the distance in cycles
+			//biomeData[b].vel += (biomeData[b].pos - sentinelData[id].pos) * sigDst * sentinelData[id].attractionScl;
+			
+
+		}
+
+	}
+}
+
+float Noise(float3 co)
+{
+	return frac(sin(dot(co.xyz, float3(12.9898, 78.233, 45.5432))) * 43758.5453);
+}
+
+
+[numthreads(1,1,1)]
+void BiomeUpdate (uint3 id : SV_DispatchThreadID)
+{
+	 sumx = 0;
+	 sumy = 0;
+	 Conects = 0;
+	 
+	 // if in sentinel range
+	if (int(id.x) < int(sentinelData.Length)) {
+		// reset num connections
+		sentinelData[id.x].connections = 0;
+		//reset played Value
+		sentinelData[id.x].played = 0;
+		// get phase value
+		float p = sentinelData[id.x].phase;
+
+		// times the points value by 2*Pi
+		float theta = p * CIRCLE_IN_RADIAN;
+		// get this agents phase x,y
+		phaseX = cos(theta);
+		phaseY = sin(theta);
+
+		// sentinel to biome interaction
+		Sen2BioCOHERENCE(int(id.x));
+		// plastic to sentinel interaction
+		Plas2SenCOHERENCE(int(id.x));
+
+
+		// if the count is not 0 (its connected)
+		if (sentinelData[id.x].connections != 0) {
+
+			// average the values over total num connections 
+			sumx /= float( sentinelData[id.x].connections);
+			sumy /= float(sentinelData[id.x].connections);
+
+			// angle to x,y pos to positive x axis
+			sentinelData[id.x].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
+			// distance to 0
+			sentinelData[id.x].coherenceRadius = sqrt(sumx * sumx + sumy * sumy);
+
+
+			// get  its current angle to positive x axis
+			float cphi = sentinelData[id.x].cohPhi;
+			// Get its distance to 0
+			float crad = sentinelData[id.x].coherenceRadius;
+			// get the noise
+			float thisNoise = sentinelData[id.x].noiseScl * Noise(sentinelData[id.x].pos);// *PlasticConnects;
+			thisNoise *= sentinelData[id.x].played;
+			// not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
+			float calc = sin((cphi - p) * CIRCLE_IN_RADIAN);
+			// second phase (scaler * distTo0 * lastClac)
+			calc = sentinelData[id.x].coupling * crad * calc;
+			// add the speed noise and calc together and times by delta time, and add to Phase
+			p += dt * (sentinelData[id.x].speed + abs(thisNoise) + calc);
+			sentinelData[id.x].age = 0;
+		}
+		else {
+			float thisNoise = sentinelData[id.x].noiseScl * Noise(sentinelData[id.x].pos);
+			p += dt * (sentinelData[id.x].speed + abs(thisNoise));
+			sentinelData[id.x].age ++;
+		}
+	
+		// subtract its intiger to leave it as a 0. someting
+		p -= float(floor(p));
+
+		// set the new phase value
+		sentinelData[id.x].phase = p;
+
+		// add the vel to the rigid body, scaled by the phase to make it pulse movement
+		//sentinelData[id.x].vel *= p;
+		sentinelData[id.x].fittness += biomeData[id.x].connections * dt;
+
+	}// if in biome section
+	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
+		// set the offseted index
+		int indx = id.x - int(sentinelData.Length) ;
+		// reset the vel
+		biomeData[indx].vel = float3(0, 0, 0);
+		// reset if its been played
+		biomeData[indx].played = 0;
+		// reset num connections
+		biomeData[indx].connections = 0;
+		// get biomes phase
+		float p = biomeData[indx].phase;
+
+		// times the points value by 2*Pi
+		float theta = p * CIRCLE_IN_RADIAN;
+		// get this agents phase x,y
+		phaseX = cos(theta);
+		phaseY = sin(theta);
+
+		// biome 2 biome function
+		Bio2BioCOHERENCE(indx);
+		// biome to sentinel funtion
+		Bio2SenCOHERENCE(indx);
+		//Bio2SenCOHERENCE(indx);
+
+		// if the count is 0 (its connected)
+		if (biomeData[indx].connections != 0) {
+
+			// average the values over total num neighbors 
+			sumx /= float(biomeData[indx].connections);
+			sumy /= float(biomeData[indx].connections);
+			biomeData[indx].vel /= biomeData[indx].connections;
+
+			// angle to x,y pos to positive x axis
+			biomeData[indx].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
+			// distance to 0
+			biomeData[indx].coherenceRadius = sqrt(sumx * sumx + sumy * sumy);
+
+			// get the its current angle to positive x axis
+			float cphi = biomeData[indx].cohPhi;
+			// Get its distance to 0
+			float crad = biomeData[indx].coherenceRadius;
+			// get the noise
+			float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
+			// not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
+			float calc = sin((cphi - p) * CIRCLE_IN_RADIAN);
+			// second phase (scaler * distTo0 * lastClac)
+			calc = biomeData[indx].coupling * crad * calc;
+			// add the speed noise and calc together and times by delta time, and add to P
+			p += dt * (biomeData[indx].speed + abs(thisNoise) + calc);
+		}
+		else {
+			// if no connects just add speed + noise * delta time
+			float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
+			p += dt * (biomeData[indx].speed + abs(thisNoise));
+		}
+
+		if (biomeData[indx].played > 0) {
+			biomeData[indx].age = 0;
+		}
+		else {
+			biomeData[indx].age++;
+		}
+		// subtract its intiger to leave it as a 0. someting
+		p -= float(floor(p));
+
+		// set the new phase value
+		biomeData[indx].phase = p;
+
+		// add the vel to the rigid body, scaled by the phase to make it pulse movement
+		biomeData[indx].vel *= p;
+
+		// ad the amount of partners * sclr to the fitness
+		biomeData[indx].fittness += biomeData[indx].connections * dt;
+		// ad the amount of partners * sclr to the fitness
+		biomeData[indx].fittness += biomeData[indx].played * dt * 10;
+	}
+	else if (int(id.x) < int(biomeData.Length + sentinelData.Length + plasticData.Length)) {
+
+		int indx = id.x - int(biomeData.Length) - int(sentinelData.Length);
+
+		
+		float p = plasticData[indx].phase;
+		float thisNoise = plasticData[indx].noiseScl * Noise(plasticData[indx].pos);
+		p += dt* (plasticData[indx].speed + abs(thisNoise));
+	
+		// subtract its intiger to leave it as a 0. someting
+		p -= float(floor(p));
+
+		// set the new phase value
+		plasticData[indx].phase = p;
+
+	}
+
+}
+
