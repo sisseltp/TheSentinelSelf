@@ -102,11 +102,9 @@ public class SentinelManager : MonoBehaviour
         // for n sentinels
         for(int i=0; i<nSentinels; i++)
         {
-            // set a random pos
-            float x = transform.position.x+UnityEngine.Random.Range(-spawnArea, spawnArea);
-            float y = transform.position.y+ yOffset;
-            float z = transform.position.z+UnityEngine.Random.Range(-spawnArea, spawnArea);
-            Vector3 pos = new Vector3(x, y, z);
+
+
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
             // create a new sentinel asa child and at pos
             GameObject thisSentinel;
@@ -204,13 +202,8 @@ public class SentinelManager : MonoBehaviour
     {
         // get the sentinel
         GameObject thisSentinel = sentinels[i];
-
-        // randomize pos
-        float x = transform.position.x+UnityEngine.Random.Range(-spawnArea, spawnArea);
-        float y = transform.position.y + yOffset;
-        float z = transform.position.z+UnityEngine.Random.Range(-spawnArea, spawnArea);
-
-        Vector3 pos = new Vector3(x, y, z);
+        
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 

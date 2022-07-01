@@ -59,7 +59,7 @@ public class GPUCompute : MonoBehaviour
             if (biome[i].GPUStruct != null)
             {
 
-                biome[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset, bioOffset + biome[i].GPUStruct.Length);
+                biome[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset,  biome[i].GPUStruct.Length);
                 bioOffset += biome[i].GPUStruct.Length;
             }
         }
@@ -68,7 +68,8 @@ public class GPUCompute : MonoBehaviour
         {
             if (tcells[i].GPUStruct != null)
             {
-                tcells[i].GPUStruct = biomeData.SubArray<BiomeManager.GPUData>(bioOffset, tcells[i].GPUStruct.Length);
+                tcells[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset, tcells[i].GPUStruct.Length);
+
                 bioOffset += tcells[i].GPUStruct.Length;
             }
         }
@@ -80,7 +81,7 @@ public class GPUCompute : MonoBehaviour
         {
             if (sentinels[i].GPUStruct != null)
             {
-                sentinels[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentOffset+sentinels[i].GPUStruct.Length);
+                sentinels[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentinels[i].GPUStruct.Length);
                 sentOffset += sentinels[i].GPUStruct.Length;
             }
         }
@@ -92,7 +93,7 @@ public class GPUCompute : MonoBehaviour
             if (plastics[i].GPUStruct != null)
             {
 
-                plastics[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset, plasticOffset + plastics[i].GPUStruct.Length);
+                plastics[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset,  plastics[i].GPUStruct.Length);
                 plasticOffset += plastics[i].GPUStruct.Length;
             }
         }
@@ -134,7 +135,6 @@ public class GPUCompute : MonoBehaviour
         }
 
         biomeData = bioData.ToArray();
-
 
         List<PlasticManager.GPUData> plasData = new List<PlasticManager.GPUData>();
 
@@ -189,9 +189,9 @@ public class GPUCompute : MonoBehaviour
         plasticBuffer.GetData(plasticData);
       //  Debug.Log(plasticData[0].phase);
 
-        BiomeBuffer.Dispose();
-        sentinelBuffer.Dispose();
-        plasticBuffer.Dispose();
+        BiomeBuffer.Release();
+        sentinelBuffer.Release();
+        plasticBuffer.Release();
  //       print("C");
 
 

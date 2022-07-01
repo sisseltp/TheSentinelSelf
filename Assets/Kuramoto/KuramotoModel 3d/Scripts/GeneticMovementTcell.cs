@@ -22,7 +22,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private float lastPhase = 0;// holds the last phase
 
-    private Vector3 target;
+    public Vector3 target;
 
     private TCellManager manager;
 

@@ -55,6 +55,7 @@ public class TCellManager : MonoBehaviour
     {
         MaxSentinels = Mathf.FloorToInt(nSentinels * 1.5f);
 
+
         // create list to hold object
         sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
@@ -72,12 +73,8 @@ public class TCellManager : MonoBehaviour
 
             RealNumSentinels++;
 
-            // set rand pos
-            float x = transform.position.x + UnityEngine.Random.Range(-spawnArea, spawnArea);
-            float y = transform.position.y + yOffset;
-            float z = transform.position.z + UnityEngine.Random.Range(-spawnArea, spawnArea);
 
-            Vector3 pos = new Vector3(x, y, z);
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
             // instantiate a new sentinel as child and at pos
             GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
@@ -95,13 +92,15 @@ public class TCellManager : MonoBehaviour
             
 
         }
-
+        //Debug.Log(GPUStruct.Length);
     }
 
     private void Update()
     {
+        //Debug.Log(RealNumSentinels);
         List<int> toRemove = new List<int>();
         // loop over the n sentinels
+       
         for (int i = 0; i < RealNumSentinels; i++)
         {
 
@@ -211,12 +210,9 @@ public class TCellManager : MonoBehaviour
         // get i sentinel
         GameObject thisSentinel = sentinels[i];
 
-        // set rand pos
-        float x = transform.position.x + UnityEngine.Random.Range(-spawnArea, spawnArea);
-        float y = transform.position.y + yOffset;
-        float z = transform.position.z + UnityEngine.Random.Range(-spawnArea, spawnArea);
 
-        Vector3 pos = new Vector3(x, y, z);
+
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 

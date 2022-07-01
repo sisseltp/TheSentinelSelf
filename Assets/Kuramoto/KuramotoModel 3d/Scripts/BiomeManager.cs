@@ -101,12 +101,9 @@ public class BiomeManager : MonoBehaviour
         // loop over the nsentinels
         for(int i=0; i<nSentinels; i++)
         {
-            // set rand pos
-            float x = transform.position.x + UnityEngine.Random.Range(-spawnArea, spawnArea);
-            float y = transform.position.y + yOffset;
-            float z = transform.position.z + UnityEngine.Random.Range(-spawnArea, spawnArea);
 
-            Vector3 pos = new Vector3(x, y, z);
+
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
             // instantiate a new sentinel as child and at pos
             GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
@@ -195,12 +192,9 @@ public class BiomeManager : MonoBehaviour
         // get i sentinel
         GameObject thisSentinel = sentinels[i];
 
-        // set rand pos
-        float x = transform.position.x + UnityEngine.Random.Range(-spawnArea, spawnArea);
-        float y = transform.position.y + yOffset;
-        float z = transform.position.z + UnityEngine.Random.Range(-spawnArea, spawnArea);
 
-        Vector3 pos = new Vector3(x, y, z);
+
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 
