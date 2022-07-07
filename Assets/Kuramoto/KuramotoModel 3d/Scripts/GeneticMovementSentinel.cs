@@ -7,8 +7,9 @@ public class GeneticMovementSentinel : MonoBehaviour
     [SerializeField]
     private int cycleLength = 10; // number of steps in cylcle
     [SerializeField]
-    private float speedScl = 0.5f; // sclr for the speed
-
+    private float genSpeedScl = 0.5f; // sclr for the speed
+    [SerializeField]
+    private float targetSpeedScl = 1.5f; // sclr for the speed
     public Vector3[] geneticMovement; // list to hold vels in
 
     public Vector3 thisGenVel;
@@ -40,8 +41,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         {
             // random vec
             geneticMovement[i] = Random.insideUnitSphere;
-            // absolute y value so only positive
-            geneticMovement[i].y = Mathf.Abs(geneticMovement[i].y);
+           
 
         }
 
@@ -70,14 +70,14 @@ public class GeneticMovementSentinel : MonoBehaviour
         thisGenVel = geneticMovement[step];
 
          // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel =   thisGenVel * sentinel.phase * speedScl;
-        vel += Vector3.Normalize(target - transform.position) * sentinel.phase* speedScl;
+        Vector3 vel =   thisGenVel * sentinel.phase * genSpeedScl;
+        vel += Vector3.Normalize(target - transform.position) * sentinel.phase* targetSpeedScl;
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
         
         // add the vel to the rb
-        rb.velocity += vel * Time.deltaTime;
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position -transform.forward);
 
        // set last phase to phase
         lastPhase = sentinel.phase;
@@ -94,6 +94,7 @@ public class GeneticMovementSentinel : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
+        print(collision.gameObject.tag);
         if (collision.gameObject.tag == "Lymphonde")
         {
             int indx = Random.Range(0, manager.PathogenEmitters.Length);

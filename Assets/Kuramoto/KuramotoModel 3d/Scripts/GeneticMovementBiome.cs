@@ -57,7 +57,7 @@ public class GeneticMovementBiome : MonoBehaviour
         Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
 
         // ad it to the rb
-        rb.velocity += vel * Time.deltaTime;
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
         // set last phase to phase
         lastPhase = sentinel.phase;

@@ -48,8 +48,6 @@ public class GeneticMovementTcell : MonoBehaviour
         {
             // random vec
             geneticMovement[i] = Random.insideUnitSphere;
-            // absolute y value so only positive
-            geneticMovement[i].y = Mathf.Abs(geneticMovement[i].y);
 
         }
 
@@ -86,9 +84,9 @@ public class GeneticMovementTcell : MonoBehaviour
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
-        
+
         // add the vel to the rb
-        rb.velocity += vel * Time.deltaTime;
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
        // set last phase to phase
         lastPhase = sentinel.phase;
