@@ -156,11 +156,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 610433536846796970}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76b089cbfad0bec42b2edf4c95419b7d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4edd38e0b75c1534482bfb36ebe2cac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 7.07
+  speedScl: 2
   geneticMovement: []
 --- !u!1 &5667436207580941629
 GameObject:
@@ -272,3 +272,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keyLength: 4
   origin: {x: 0, y: 0, z: 0}
+  fadeTime: 10
+  fadeTimeVarience: 4

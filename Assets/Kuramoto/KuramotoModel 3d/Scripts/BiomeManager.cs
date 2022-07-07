@@ -6,44 +6,49 @@ using UnityEngine;
 
 public class BiomeManager : MonoBehaviour
 {
-
+    [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
     private GameObject sentinel; // holds the sentinel prefab
+    [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
     public int nSentinels = 10; // number of them to be made
 
+    [Tooltip("radius to be spawned in from this obects transform")]
     [Range(0.1f, 1000f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to spawn in 
+    [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
     [SerializeField]
-    private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have
+    private Vector2 speedRange = new Vector2(90, 100); // variation of speed for them to have
+    [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
     [SerializeField]
     private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
+    [Tooltip("Kuramoto, range for noise effect, x=min y=max")]
     [SerializeField]
     private Vector2 noiseSclRange = new Vector2(0.01f, 0.5f); // noise Scl to have
+    [Tooltip("Kuramoto, range for the strength of the coupling effect, x=min y=max")]
     [SerializeField]
     private Vector2 couplingSclRange = new Vector2(0.2f, 10f); // coupling scl
+    [Tooltip("Kuramoto, range for the scaling the clustering/attraction effect, x=min y=max")]
     [SerializeField]
     private Vector2 attractionSclRange = new Vector2(0.2f, 1f); // coupling scl
 
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
-
+    [HideInInspector]
     public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
-    
-    public List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
 
-    public List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
-
+    private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
+   
+    private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
+    [Tooltip("Max age the agents will reach")]
     [SerializeField]
     private float MaxAge = 1000; // age limit to kill sentinels
 
     [SerializeField]
     private float speedScl = 3f;
 
-    [SerializeField]
-    private float yOffset = 5;
 
 
     // struct to hold data maybe for gpu acceleration
