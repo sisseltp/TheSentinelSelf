@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -2432090755550338912, guid: 8974295f4747ec5468ab0cd760690353, type: 3}
+    - target: {fileID: 8497705632968310002, guid: 4b1466869323e7a4b9a799a64c020d83, type: 3}
+      propertyPath: m_Radius
+      value: 1.48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b1466869323e7a4b9a799a64c020d83, type: 3}

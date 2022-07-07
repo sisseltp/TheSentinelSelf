@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1073697049552059812, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
+      propertyPath: m_Radius
+      value: 1.15
+      objectReference: {fileID: 0}
     - target: {fileID: 1073697049552059814, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
       propertyPath: m_Mesh
       value: 
