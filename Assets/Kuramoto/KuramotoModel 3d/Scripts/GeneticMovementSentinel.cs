@@ -47,9 +47,9 @@ public class GeneticMovementSentinel : MonoBehaviour
 
 
         manager = GetComponentInParent<SentinelManager>();
-        int indx = Random.Range(0, manager.Lymphondes.Length);
+        int indx = Random.Range(0, manager.PathogenEmitters.Length);
         
-        target = manager.Lymphondes[indx];
+        target = manager.PathogenEmitters[indx];
 
        
 
