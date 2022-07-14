@@ -593,7 +593,7 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    1: AQUAS_PRESENT;UNITY_POST_PROCESSING_STACK_V1
+    1: UNITY_POST_PROCESSING_STACK_V1;AQUAS_PRESENT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
