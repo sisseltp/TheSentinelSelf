@@ -226,7 +226,7 @@ public class PlasticManager : MonoBehaviour
                 // add data to lib
                 GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                GenVel vels = new GenVel(plastics[i].GetComponent<GeneticMovementBiome>().geneticMovement, kuramoto.fitness);
+                GenVel vels = new GenVel(plastics[i].GetComponent<GeneticMovementPathogen>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
                 // reset its values
                 ResetSentinel(i);

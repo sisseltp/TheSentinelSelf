@@ -74,7 +74,7 @@ public class SentinelManager : MonoBehaviour
         public Vector3 vel;
         public Vector3 pos;
 
-        public void SetFromKuramoto(KuramotoSentinelAgent kuramoto)
+        public void SetFromKuramoto(KuramotoAffecterAgent kuramoto)
         {
 
 
@@ -123,7 +123,7 @@ public class SentinelManager : MonoBehaviour
                 thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
             }
             // get the kuramoto sentinel
-            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
             kuramoto.Setup(noiseSclRange,couplingRange,speedRange, couplingSclRange, attractionSclRange,  0.2f);// setup its setting to randomize them
 
             sentinels[i] = thisSentinel; // set the sentinel object to the list
@@ -159,7 +159,7 @@ public class SentinelManager : MonoBehaviour
         for (int i = 0; i < nSentinels; i++)
         {
             // get the components kuramoto component
-            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
             
 
             // if the agent is dead
@@ -218,7 +218,7 @@ public class SentinelManager : MonoBehaviour
         if (GenKurLib.Count < 500)
         {
             // reset bothe genetic values to random
-            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
             GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
@@ -234,7 +234,7 @@ public class SentinelManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoSentinelAgent kuramoto = thisSentinel.GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
             kuramoto.SetupData(Settings);
            
 
@@ -259,7 +259,7 @@ public class SentinelManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
             kuramoto.couplingRange = range;
 
         }
@@ -269,7 +269,7 @@ public class SentinelManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
             kuramoto.coupling = range;
 
         }
@@ -279,7 +279,7 @@ public class SentinelManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoSentinelAgent kuramoto = sentinels[i].GetComponent<KuramotoSentinelAgent>();
+            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
             kuramoto.noiseScl = range;
 
         }

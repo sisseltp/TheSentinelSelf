@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoSentinelAgent : MonoBehaviour
+public class KuramotoAffecterAgent : MonoBehaviour
 {
     // holds the rendr
     Renderer rendr;

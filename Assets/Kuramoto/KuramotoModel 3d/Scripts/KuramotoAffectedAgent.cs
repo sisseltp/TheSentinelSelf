@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KuramotoBiomeAgent : MonoBehaviour
+public class KuramotoAffectedAgent : MonoBehaviour
 {
     // to hold this object rigid body component
     private Rigidbody rb;

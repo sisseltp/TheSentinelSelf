@@ -70,7 +70,7 @@ public class PathogenManager : MonoBehaviour
         public Vector3 pos;
 
         
-        public void SetFromKuramoto(KuramotoBiomeAgent kuramoto)
+        public void SetFromKuramoto(KuramotoAffectedAgent kuramoto)
         {
             speed = kuramoto.speed;
             phase = kuramoto.phase;
@@ -114,7 +114,7 @@ public class PathogenManager : MonoBehaviour
             GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
             // add the object to the list
@@ -136,14 +136,14 @@ public class PathogenManager : MonoBehaviour
         for (int i = 0; i < nSentinels; i++)
         {
             // get the kurmto
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
             // if older than age 
             if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
                 // add data to lib
                 Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementBiome>().geneticMovement, kuramoto.fitness);
+                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementPathogen>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
                 // reset its values
                 ResetSentinel(i);
@@ -196,10 +196,10 @@ public class PathogenManager : MonoBehaviour
         if (GenKurLib.Count < 500)
         {
             // add random new sentinel
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
-            GeneticMovementBiome genVel = thisSentinel.GetComponent<GeneticMovementBiome>();
+            GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
         }
         else
@@ -212,7 +212,7 @@ public class PathogenManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.SetupData(Settings);
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
@@ -222,7 +222,7 @@ public class PathogenManager : MonoBehaviour
 
             Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
 
-            GeneticMovementBiome genMov = thisSentinel.GetComponent<GeneticMovementBiome>();
+            GeneticMovementPathogen genMov = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genMov.Reset();
             genMov.geneticMovement = genVel1.BlendAttributes(Vels);
 
@@ -237,7 +237,7 @@ public class PathogenManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.couplingRange = range;
 
         }
@@ -247,7 +247,7 @@ public class PathogenManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.coupling = range;
 
         }
@@ -257,7 +257,7 @@ public class PathogenManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.noiseScl = range;
 
         }

@@ -18,7 +18,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private Vector3 thisGenVel;
 
-    private KuramotoSentinelAgent sentinel; // sentinel obj
+    private KuramotoAffecterAgent sentinel; // sentinel obj
 
     private Rigidbody rb;// rigidbody
 
@@ -34,7 +34,7 @@ public class GeneticMovementSentinel : MonoBehaviour
     void Start()
     {
         // gets the sentinels kurmto
-        sentinel = GetComponent<KuramotoSentinelAgent>();
+        sentinel = GetComponent<KuramotoAffecterAgent>();
         // gets this rb
         rb = GetComponent<Rigidbody>();
         // sets it to a new vec3 list for vels

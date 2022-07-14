@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotationSelector : MonoBehaviour
+public class BodyEmitter : MonoBehaviour
 {
 
     [SerializeField]
@@ -20,6 +20,7 @@ public class RotationSelector : MonoBehaviour
 
     private float timeGate = float.NegativeInfinity;
 
+
     private void Start()
     {
         selecterScreenPos = new Vector2(selecterScreenPos.x * Screen.width, selecterScreenPos.y * Screen.height);
@@ -36,34 +37,16 @@ public class RotationSelector : MonoBehaviour
             timeGate = Time.time;
             Destroy(bod, life);
         }
-
-        if (Input.GetMouseButtonDown(0))
+      
+        if (Input.GetMouseButtonDown(0) )
         {
-            GameObject[] bodies = GameObject.FindGameObjectsWithTag("Player");
+           CameraTracker camTrack =  Camera.main.GetComponent<CameraTracker>();
 
-            float dist = float.PositiveInfinity;
-
-            int indx = -1;
-
-            for(int i=0; i<bodies.Length; i++)
-            {
-                Vector2 screenPos = Camera.main.WorldToScreenPoint(bodies[i].transform.position);
-                float thisDist = Vector2.Distance(screenPos, selecterScreenPos);
-                if (thisDist < dist)
-                {
-                    indx = i;
-                    dist = thisDist;
-                }
-            }
-
-            CameraTracker camTrack =  Camera.main.GetComponent<CameraTracker>();
-
-            camTrack.rb = bodies[indx].GetComponent<Rigidbody>();
+            camTrack.FindTracked("Body");
             camTrack.enabled = true;
 
-            camTrack.tracked = bodies[indx].transform;
+         
         }
     }
 
-    
 }

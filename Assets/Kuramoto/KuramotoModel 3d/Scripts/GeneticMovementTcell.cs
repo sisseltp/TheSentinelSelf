@@ -19,7 +19,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private Vector3 thisGenVel;// this steps velocity
 
-    private KuramotoBiomeAgent sentinel; // sentinel obj
+    private KuramotoAffectedAgent sentinel; // sentinel obj
 
     private Rigidbody rb;// rigidbody
 
@@ -42,7 +42,7 @@ public class GeneticMovementTcell : MonoBehaviour
     void Start()
     {
         // gets the sentinels kurmto
-        sentinel = GetComponent<KuramotoBiomeAgent>();
+        sentinel = GetComponent<KuramotoAffectedAgent>();
         // gets this rb
         rb = GetComponent<Rigidbody>();
         // sets it to a new vec3 list for vels

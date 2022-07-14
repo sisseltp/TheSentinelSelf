@@ -85,7 +85,7 @@ public class TCellManager : MonoBehaviour
             GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
             // add the object to the list
@@ -111,7 +111,7 @@ public class TCellManager : MonoBehaviour
 
             if(sentinels[i] == null) { continue; }
             // get the kurmto
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
             // if older than age 
             if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
@@ -214,7 +214,7 @@ public class TCellManager : MonoBehaviour
         if (GenKurLib.Count < 500)
         {
             // add random new sentinel
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
             
             GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
@@ -232,7 +232,7 @@ public class TCellManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoBiomeAgent kuramoto = thisSentinel.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.SetupData(Settings);
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
@@ -264,7 +264,7 @@ public class TCellManager : MonoBehaviour
 
             // add the object to the list
             sentinels[RealNumSentinels-1] = TCell;
-            KuramotoBiomeAgent kuramoto = TCell.GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = TCell.GetComponent<KuramotoAffectedAgent>();
 
             // set data in the struct
             PathogenManager.GPUData gpuStruct = new PathogenManager.GPUData();
@@ -281,7 +281,7 @@ public class TCellManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.couplingRange = range;
 
         }
@@ -291,7 +291,7 @@ public class TCellManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.coupling = range;
 
         }
@@ -301,7 +301,7 @@ public class TCellManager : MonoBehaviour
     {
         for (int i = 0; i < nSentinels; i++)
         {
-            KuramotoBiomeAgent kuramoto = sentinels[i].GetComponent<KuramotoBiomeAgent>();
+            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             kuramoto.noiseScl = range;
 
         }

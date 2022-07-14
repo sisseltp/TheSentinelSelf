@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneticMovementBiome : MonoBehaviour
+public class GeneticMovementPathogen : MonoBehaviour
 {
     [Tooltip("How many cycles to contain")]
     [SerializeField]
@@ -13,7 +13,7 @@ public class GeneticMovementBiome : MonoBehaviour
     [HideInInspector]
     public Vector3[] geneticMovement; // list to hold the vels
 
-    private KuramotoBiomeAgent sentinel; // kurmto to get the phase val
+    private KuramotoAffectedAgent sentinel; // kurmto to get the phase val
 
     private Rigidbody rb; // rigidbody to add velocity to
 
@@ -28,7 +28,7 @@ public class GeneticMovementBiome : MonoBehaviour
     void Start()
     {
         // get the kurmto component
-        sentinel = GetComponent<KuramotoBiomeAgent>();
+        sentinel = GetComponent<KuramotoAffectedAgent>();
         // get the rb component
         rb = GetComponent<Rigidbody>();
         // creat a new list to hold the vels
