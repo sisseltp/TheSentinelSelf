@@ -5,33 +5,29 @@ using UnityEngine;
 public class KuramotoPlasticAgent : MonoBehaviour
 {
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
-    
+
+
+    private Renderer rendr;
+    [Tooltip("colour 1 to lerp between")]
+    [SerializeField]
+    private Color col0;// phase col1
+    [Tooltip("colour 2 to lerp between")]
+    [SerializeField]
+    private Color col1; // phase col2
+
+
+
+    [Header("Debugging Atrributes (just for looking)")]
     public float speed; // driving force for the phase
     public float speedBPM;
     public float phase; // holds the phase position
-    
-    
     public float coherenceRadius; //holds the phase distance to 0,0
     public float couplingRange = 1; // holds the distance to the coupling range
     public float noiseScl = 1; // scales the noise added
     public float coupling = 0.5f; // scales the coupling effect
     public float speedVariation = 0.1f; // variation to randomise speed
-
-    public Vector2 rbEffectsRange = new Vector2(0.5f, 1.5f);
    
-    // holds the rendr
-    Renderer rendr;
 
-    // two colours to lerp between
-    [SerializeField]
-    private Color col0;
-    [SerializeField]
-    private Color col1;
-
-    //holds the sentinel manager
-    private SentinelManager sentinelManager;
-    // holds the sentinels
-    private GameObject[] sentinels;
 
 
 

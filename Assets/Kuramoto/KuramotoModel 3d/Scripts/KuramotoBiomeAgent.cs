@@ -5,9 +5,21 @@ using UnityEngine;
 
 public class KuramotoBiomeAgent : MonoBehaviour
 {
-    private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI;
-    private const float RADIAN_TO_NORMALIZED = 1f / CIRCLE_IN_RADIAN;
+    // to hold this object rigid body component
+    private Rigidbody rb;
+    // to hold the renderer component
 
+    private Renderer rendr;
+    [Tooltip("colour 1 to lerp between")]
+    [SerializeField]
+    private Color col0;// phase col1
+    [Tooltip("colour 2 to lerp between")]
+    [SerializeField]
+    private Color col1; // phase col2
+
+    private Transform[] sentinals; // list of the other sentinels transforms
+
+    [Header("Debugging Atrributes (just for looking)")]
     public float speedBPM; // speed force of the 
     public float speed;
     public float phase; // the phase its in 
@@ -19,31 +31,13 @@ public class KuramotoBiomeAgent : MonoBehaviour
     public float speedVariation = 0.1f; // amount to randomize data
     public float attractionSclr = 0.5f;// Scales Attraction
     public int Connections = 0; // num neighbors
-    private int newConnections = 0;
     public int played = 0; // if the player has been in contact
     public bool dead = false; // collision killer
-
-    // holds the x,y position of the phase
-    public float sumx = 0f; 
-    public float sumy = 0f;
-
-    // to hold this object rigid body component
-    private Rigidbody rb;
-    // to hold a velocity value
-    private Vector3 vel = new Vector3(0,0,0);
-    // to hold the renderer component
-    Renderer rendr;
-
-    [SerializeField]
-    private Color col0;// phase col1
-    [SerializeField]
-    private Color col1; // phase col2
-
-    private Transform[] sentinals; // list of the other sentinels transforms
-
     public float fitness=0; // holds this agents fitness value
-
     public int age = 0; // holds this agents age
+    // holds the x,y position of the phase
+    public float sumx = 0f;
+    public float sumy = 0f;
 
     // Start is called before the first frame update
     void Start()

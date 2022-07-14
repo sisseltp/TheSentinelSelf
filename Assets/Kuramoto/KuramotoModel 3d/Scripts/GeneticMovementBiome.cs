@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class GeneticMovementBiome : MonoBehaviour
 {
+    [Tooltip("How many cycles to contain")]
     [SerializeField]
     private int cycleLength = 10; // length of movment list
-
+    [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
     private float speedScl = 0.5f; // scl for the speed
-
+    [HideInInspector]
     public Vector3[] geneticMovement; // list to hold the vels
 
     private KuramotoBiomeAgent sentinel; // kurmto to get the phase val
@@ -73,11 +74,11 @@ public class GeneticMovementBiome : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Kill")
+        if (collision.gameObject.tag == "Kill" )
         {
             sentinel.dead = true;
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Tcell")
         {
             Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
 

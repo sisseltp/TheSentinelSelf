@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraTracker : MonoBehaviour
 {
-    private Transform tracked;
+    public Transform tracked;
     private Vector3 offset;
     private float setDistance;
 
@@ -17,11 +17,12 @@ public class CameraTracker : MonoBehaviour
     [Range(5f, 50f)]
     [SerializeField]
     private float distLimit;
-    private Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        tracked = transform.parent;
+        //tracked = transform.parent;
         offset = transform.position - tracked.position;
         setDistance = Vector3.Distance(tracked.position, transform.position);
         rb = GetComponent<Rigidbody>();

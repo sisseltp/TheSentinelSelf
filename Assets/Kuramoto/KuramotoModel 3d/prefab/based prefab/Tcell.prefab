@@ -160,9 +160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 5
+  genSpeedScl: 5
+  targetSpeedScl: 20
   geneticMovement: []
   thisGenVel: {x: 0, y: 0, z: 0}
+  target: {x: 0, y: 0, z: 0}
   compare: {fileID: 7200000, guid: 3f6cf722db9dba94a9d5581c53aa8c38, type: 3}
 --- !u!54 &-8787049304685513055
 Rigidbody:

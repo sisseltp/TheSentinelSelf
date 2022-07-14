@@ -179,18 +179,7 @@ public class BiomeManager : MonoBehaviour
         }
 
     }
-    /*
-    void OnDrawGizmos()
-    {
-        // Draw a yellow sphere at the transform's position
-        for (int i = 0; i < nSentinels; i++)
-        {
-
-            Gizmos.DrawSphere(sentinels[i].transform.position + sentinels[i].transform.up, 0.5f);
-        }
-    }
-    */
-    // resets the i sentinel
+   
     public void ResetSentinel(int i)
     {
 

@@ -6260,6 +6260,10 @@ PrefabInstance:
       value: 209
       objectReference: {fileID: 0}
     - target: {fileID: 3850774876664968191, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: MaxAge
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774876664968191, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: sentinel
       value: 
       objectReference: {fileID: 403500845710721881, guid: d304e539180fcfa4580df20372213053, type: 3}
@@ -6282,6 +6286,10 @@ PrefabInstance:
     - target: {fileID: 3850774877178959696, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_Radius
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: MaxAge
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877639536772, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6317,7 +6325,7 @@ PrefabInstance:
       objectReference: {fileID: 5847784545933103348, guid: 4e669c0af6b5d4a40afec0119b1298d6, type: 3}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: nSentinels
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: sentinelCam
