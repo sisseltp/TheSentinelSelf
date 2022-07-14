@@ -36,7 +36,7 @@ public class KuramotoSentinelAgent : MonoBehaviour
 
 
     //holds the sentinel manager
-    private BiomeManager biomeManager;
+    private PathogenManager pathogenManager;
     // holds the sentinels
     private GameObject[] sentinels;
 
@@ -76,10 +76,10 @@ public class KuramotoSentinelAgent : MonoBehaviour
         // hook up rendr component
         rendr = GetComponent<Renderer>();
         // find the sentinel maker
-        biomeManager = GameObject.FindGameObjectWithTag("PathogenEmitter").GetComponent<BiomeManager>();
+        pathogenManager = GameObject.FindGameObjectWithTag("PathogenEmitter").GetComponent<PathogenManager>();
         
         // link the sentinels as a list
-        sentinels = biomeManager.sentinels ;
+        sentinels = pathogenManager.sentinels ;
         
     }
 
@@ -87,9 +87,9 @@ public class KuramotoSentinelAgent : MonoBehaviour
     void Update()
     {
         // if the num of sentinels changes relink them
-        if (biomeManager.nSentinels != sentinels.Length)
+        if (pathogenManager.nSentinels != sentinels.Length)
         {
-            sentinels = biomeManager.sentinels;
+            sentinels = pathogenManager.sentinels;
         }
         
 

@@ -39,7 +39,7 @@ public class TCellManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
-    public BiomeManager.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public PathogenManager.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
 
@@ -64,7 +64,7 @@ public class TCellManager : MonoBehaviour
         // create list to hold object
         sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new BiomeManager.GPUData[MaxSentinels];
+        GPUStruct = new PathogenManager.GPUData[MaxSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -191,7 +191,7 @@ public class TCellManager : MonoBehaviour
         RealNumSentinels -= toRemove.Count;
         
         if (nxtIndx != -1) {
-            GPUStruct[nxtIndx] = new BiomeManager.GPUData();
+            GPUStruct[nxtIndx] = new PathogenManager.GPUData();
             sentinels[nxtIndx] = null;
 
         }
@@ -267,7 +267,7 @@ public class TCellManager : MonoBehaviour
             KuramotoBiomeAgent kuramoto = TCell.GetComponent<KuramotoBiomeAgent>();
 
             // set data in the struct
-            BiomeManager.GPUData gpuStruct = new BiomeManager.GPUData();
+            PathogenManager.GPUData gpuStruct = new PathogenManager.GPUData();
             gpuStruct.SetFromKuramoto(kuramoto);
             gpuStruct.SetPos(TCell.transform.position);
             GPUStruct[RealNumSentinels] = gpuStruct;
