@@ -5,39 +5,41 @@ using UnityEngine;
 
 public class PlasticManager : MonoBehaviour
 {
-
+    [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
     private GameObject plastic; // holds the sentinel prefab
+    [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
     public int nPlastic = 2; // number of them to be made
-
+    
+    [Tooltip("radius to be spawned in from this obects transform")]
     [Range(0.1f, 1000f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to spawn in 
+    [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
     [SerializeField]
     private Vector2 speedRange = new Vector2(80, 100); // variation of speed for them to have
+    [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
     [SerializeField]
     private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
+    [Tooltip("Kuramoto, range for noise effect, x=min y=max")]
     [SerializeField]
     private Vector2 noiseSclRange = new Vector2(0.01f, 0.5f); // noise Scl to have
+    [Tooltip("Kuramoto, range for the strength of the coupling effect, x=min y=max")]
     [SerializeField]
     private Vector2 couplingSclRange = new Vector2(0.2f, 10f); // coupling scl
 
     [HideInInspector]
     public GameObject[] plastics; //list to hold the sentinels
-
+    [HideInInspector]
     public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
 
    // public List<GenVel> GenVelLib; // lib to hold the gene move data
 
-    public List<GenKurmto> GenKurLib; // lib to hold gene kurmto data
+    private List<GenKurmto> GenKurLib; // lib to hold gene kurmto data
 
-    [SerializeField]
-    private float age = 1000; // age limit to kill sentinels
 
-    [SerializeField]
-    private float speedScl = 3f;
 
     // struct to hold data maybe for gpu acceleration
     public struct GPUData
@@ -224,7 +226,7 @@ public class PlasticManager : MonoBehaviour
                 // add data to lib
                 GenKurmto genKurm = new GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
-                GenVel vels = new GenVel(plastics[i].GetComponent<GeneticMovementBiome>().geneticMovement, kuramoto.fitness);
+                GenVel vels = new GenVel(plastics[i].GetComponent<GeneticMovementPathogen>().geneticMovement, kuramoto.fitness);
                 GenVelLib.Add(vels);
                 // reset its values
                 ResetSentinel(i);

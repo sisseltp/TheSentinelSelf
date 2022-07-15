@@ -28,14 +28,14 @@ public class ethernetValues : MonoBehaviour
 
 
     public float pulseGradient;
-    private KuramotoSentinelAgent agent;
+    private KuramotoAffecterAgent agent;
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     public int bias = 3;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponentInParent<KuramotoSentinelAgent>();
+        agent = GetComponentInParent<KuramotoAffecterAgent>();
 
     }
 

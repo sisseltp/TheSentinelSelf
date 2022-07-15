@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class GeneticMovementSentinel : MonoBehaviour
 {
+    [Tooltip("How many cycles to contain")]
     [SerializeField]
     private int cycleLength = 10; // number of steps in cylcle
+    [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
     private float genSpeedScl = 0.5f; // sclr for the speed
+    [Tooltip("Scaler for the target speed")]
     [SerializeField]
     private float targetSpeedScl = 1.5f; // sclr for the speed
+    [HideInInspector]
     public Vector3[] geneticMovement; // list to hold vels in
 
-    public Vector3 thisGenVel;
+    private Vector3 thisGenVel;
 
-    private KuramotoSentinelAgent sentinel; // sentinel obj
+    private KuramotoAffecterAgent sentinel; // sentinel obj
 
     private Rigidbody rb;// rigidbody
 
@@ -30,7 +34,7 @@ public class GeneticMovementSentinel : MonoBehaviour
     void Start()
     {
         // gets the sentinels kurmto
-        sentinel = GetComponent<KuramotoSentinelAgent>();
+        sentinel = GetComponent<KuramotoAffecterAgent>();
         // gets this rb
         rb = GetComponent<Rigidbody>();
         // sets it to a new vec3 list for vels
@@ -94,7 +98,6 @@ public class GeneticMovementSentinel : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-        print(collision.gameObject.tag);
         if (collision.gameObject.tag == "Lymphonde")
         {
             int indx = Random.Range(0, manager.PathogenEmitters.Length);

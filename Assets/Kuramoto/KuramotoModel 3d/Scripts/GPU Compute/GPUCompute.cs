@@ -17,12 +17,12 @@ public class GPUCompute : MonoBehaviour
 
     private SentinelManager.GPUData[] sentinelData;
 
-    private BiomeManager.GPUData[] biomeData;
+    private PathogenManager.GPUData[] pathogenData;
 
     private PlasticManager.GPUData[] plasticData;
 
     private SentinelManager[] sentinels;
-    private BiomeManager[] biome;
+    private PathogenManager[] pathogen;
     private PlasticManager[] plastics;
     private TCellManager[] tcells;
 
@@ -33,7 +33,7 @@ public class GPUCompute : MonoBehaviour
     {
         sentinels = GetComponentsInChildren<SentinelManager>();
 
-        biome = GetComponentsInChildren<BiomeManager>();
+        pathogen = GetComponentsInChildren<PathogenManager>();
 
         plastics = GetComponentsInChildren<PlasticManager>();
 
@@ -54,13 +54,13 @@ public class GPUCompute : MonoBehaviour
     {
         int bioOffset = 0;
 
-        for (int i = 0; i < biome.Length; i++)
+        for (int i = 0; i < pathogen.Length; i++)
         {
-            if (biome[i].GPUStruct != null)
+            if (pathogen[i].GPUStruct != null)
             {
 
-                biome[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset,  biome[i].GPUStruct.Length);
-                bioOffset += biome[i].GPUStruct.Length;
+                pathogen[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset,  pathogen[i].GPUStruct.Length);
+                bioOffset += pathogen[i].GPUStruct.Length;
             }
         }
 
@@ -68,7 +68,7 @@ public class GPUCompute : MonoBehaviour
         {
             if (tcells[i].GPUStruct != null)
             {
-                tcells[i].GPUStruct = Extensions.SubArray(biomeData, bioOffset, tcells[i].GPUStruct.Length);
+                tcells[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset, tcells[i].GPUStruct.Length);
 
                 bioOffset += tcells[i].GPUStruct.Length;
             }
@@ -116,13 +116,13 @@ public class GPUCompute : MonoBehaviour
         sentinelData = sentData.ToArray();
 
 
-        List<BiomeManager.GPUData> bioData = new List<BiomeManager.GPUData>();
+        List<PathogenManager.GPUData> bioData = new List<PathogenManager.GPUData>();
 
-        for (int i = 0; i < biome.Length; i++)
+        for (int i = 0; i < pathogen.Length; i++)
         {
-            if (biome[i].GPUStruct != null)
+            if (pathogen[i].GPUStruct != null)
             {
-                bioData.AddRange(biome[i].GPUStruct);
+                bioData.AddRange(pathogen[i].GPUStruct);
             }
         }
 
@@ -134,7 +134,7 @@ public class GPUCompute : MonoBehaviour
             }
         }
 
-        biomeData = bioData.ToArray();
+        pathogenData = bioData.ToArray();
 
         List<PlasticManager.GPUData> plasData = new List<PlasticManager.GPUData>();
 
@@ -148,7 +148,7 @@ public class GPUCompute : MonoBehaviour
 
         plasticData = plasData.ToArray();
 
-        TexResolution = biomeData.Length + sentinelData.Length + plasticData.Length;
+        TexResolution = pathogenData.Length + sentinelData.Length + plasticData.Length;
         
     }
 
@@ -163,8 +163,8 @@ public class GPUCompute : MonoBehaviour
         ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(SentinelManager.GPUData)));
         sentinelBuffer.SetData(sentinelData);
 
-        ComputeBuffer BiomeBuffer = new ComputeBuffer(biomeData.Length, Marshal.SizeOf(typeof(BiomeManager.GPUData)));
-        BiomeBuffer.SetData(biomeData);
+        ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(PathogenManager.GPUData)));
+        BiomeBuffer.SetData(pathogenData);
 
         ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager.GPUData)));
         plasticBuffer.SetData(plasticData);
@@ -184,7 +184,7 @@ public class GPUCompute : MonoBehaviour
         shader.Dispatch(UpdateBiome, TexResolution , 1 , 1);
         //shader.Dispatch(UpdateSentinel, TexResolution, 1, 1);
 
-        BiomeBuffer.GetData(biomeData);
+        BiomeBuffer.GetData(pathogenData);
         sentinelBuffer.GetData(sentinelData);
         plasticBuffer.GetData(plasticData);
       //  Debug.Log(plasticData[0].phase);
