@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Toolbar" src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsToolbar.uxml?fileID=9197481963319205126&amp;guid=cdd135d7c7a3ea04eae5cbdddf24d3ba&amp;type=3#CausticsToolbar" />
+    <Style src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsAbout.uss?fileID=7433441132597879392&amp;guid=a80b232636f88314db8351b9a639862e&amp;type=3#CausticsAbout" />
+    <ui:Instance template="Toolbar" />
+    <ui:Label text="Water Caustics For URP" style="-unity-text-align: upper-center; margin-bottom: 10px; margin-top: 10px;" />
+    <ui:Label text="Version 1.1.0 (May 2022)" style="margin-bottom: 10px; margin-top: 10px; -unity-text-align: upper-center;" />
+    <ui:Label text="Designed &amp; Developed by Alexander Ameye" style="-unity-text-align: upper-center; margin-bottom: 10px; margin-top: 10px;" />
+</ui:UXML>

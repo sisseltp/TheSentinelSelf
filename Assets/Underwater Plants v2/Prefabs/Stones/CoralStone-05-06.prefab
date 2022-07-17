@@ -221,7 +221,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 035e110fd17159146bcedd9b29c40648, type: 2}
+  - {fileID: 2100000, guid: e61785e777ed83545887701761d5a42f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -254,6 +254,7 @@ GameObject:
   - component: {fileID: 496194}
   - component: {fileID: 20543616}
   - component: {fileID: 6431434}
+  - component: {fileID: 7382028421380926552}
   m_Layer: 0
   m_Name: CoralStone-05-06
   m_TagString: Untagged
@@ -270,7 +271,7 @@ Transform:
   m_GameObject: {fileID: 187300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 401796}
   - {fileID: 442526}
@@ -312,10 +313,24 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187300}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 48bbde3049f29b247a56af17d2b0381f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: f92da9b56b3647d4d824ad645ec9c91b, type: 3}
+--- !u!182 &7382028421380926552
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 187300}
+  m_Enabled: 1
+  m_Mode: 0
+  m_Radius: 20
+  m_WindMain: 1
+  m_WindTurbulence: 1
+  m_WindPulseMagnitude: 0.5
+  m_WindPulseFrequency: 0.01

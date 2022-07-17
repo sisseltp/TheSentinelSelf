@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Toolbar" src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsToolbar.uxml?fileID=9197481963319205126&amp;guid=cdd135d7c7a3ea04eae5cbdddf24d3ba&amp;type=3#Toolbar" />
+    <Style src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsAcknowledgements.uss?fileID=7433441132597879392&amp;guid=eed0e9ce7887dfb4fa7cf408af2f5673&amp;type=3#Acknowledgements" />
+    <ui:Instance template="Toolbar" />
+    <ui:Label text="Thank you to everyone who uses this asset.&#10;I appreciate you :)" class="acknowledgement" style="margin-top: 10px; margin-bottom: 10px; -unity-text-align: upper-center;" />
+    <ui:Label class="acknowledgement" style="margin-top: 10px; margin-bottom: 10px; -unity-text-align: upper-center;" />
+    <ui:Label text="Icons made by Pixel perfect, Smashicons&#10;and Freepik from www.flaticon.com" class="acknowledgement" style="margin-top: 10px; margin-bottom: 10px; -unity-text-align: upper-center;" />
+</ui:UXML>

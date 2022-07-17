@@ -1,0 +1,47 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="Toolbar" src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsToolbar.uxml?fileID=9197481963319205126&amp;guid=cdd135d7c7a3ea04eae5cbdddf24d3ba&amp;type=3#Toolbar" />
+    <Style src="project://database/Assets/Water%20Caustics%20for%20URP/Scripts/UI/CausticsSupport.uss?fileID=7433441132597879392&amp;guid=ad6ce95bc4c934f47acfff1630b868fa&amp;type=3#Support" />
+    <ui:Instance template="Toolbar" name="Toolbar" />
+    <ui:VisualElement name="Support Content" focusable="false" style="opacity: 1; background-color: rgba(75, 75, 75, 0); -unity-background-image-tint-color: rgb(255, 255, 255); flex-direction: row; justify-content: center; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-top: 20px; padding-bottom: 20px; color: rgb(0, 0, 0); align-items: flex-start; flex-grow: 0; flex-shrink: 1; -unity-text-align: upper-left;">
+        <ui:VisualElement name="Column 1" style="align-items: stretch; justify-content: flex-start; padding-left: 15px; padding-right: 10px;">
+            <ui:Button name="Manual" class="support-section-button" style="margin-left: 3px; padding-left: 6px; padding-top: 10px; padding-bottom: 10px; margin-bottom: 4px; margin-top: 4px;">
+                <ui:VisualElement name="Button Content" style="flex-direction: row; align-items: center;">
+                    <ui:VisualElement name="Icon" class="support-section-button-icon button-icon" style="background-image: resource(&apos;Icons/Manual&apos;);" />
+                    <ui:VisualElement name="Text">
+                        <ui:Label text="Manual" name="Title" class="button-title" />
+                        <ui:Label text="Learn more" name="Description" class="button-description" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:Button>
+            <ui:Button name="Forum" style="margin-left: 3px; padding-left: 6px; padding-top: 10px; padding-bottom: 10px; margin-bottom: 4px; margin-top: 4px;">
+                <ui:VisualElement name="Button Content" style="flex-direction: row; align-items: center;">
+                    <ui:VisualElement name="Icon" class="support-section-button-icon button-icon" style="background-image: resource(&apos;Icons/Forum&apos;);" />
+                    <ui:VisualElement name="Text" class="support-section-button-text">
+                        <ui:Label text="Forum" name="Title" class="button-title" />
+                        <ui:Label text="Request features" name="Description" class="button-description" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:Button>
+        </ui:VisualElement>
+        <ui:VisualElement name="Column 1" style="align-items: stretch; justify-content: flex-start; padding-left: 10px; padding-right: 15px;">
+            <ui:Button name="Review" style="margin-left: 3px; padding-left: 6px; padding-top: 10px; padding-bottom: 10px; margin-bottom: 4px; margin-top: 4px;">
+                <ui:VisualElement name="Button Content" style="flex-direction: row; align-items: center;">
+                    <ui:VisualElement name="Icon" class="support-section-button-icon button-icon" style="background-image: resource(&apos;Icons/Review&apos;);" />
+                    <ui:VisualElement name="Text">
+                        <ui:Label text="Review" name="Title" class="button-title" />
+                        <ui:Label text="Leave a review" name="Description" class="button-description" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:Button>
+            <ui:Button name="Website" class="support-section-button" style="margin-left: 3px; padding-left: 6px; padding-top: 10px; padding-bottom: 10px; margin-bottom: 4px; margin-top: 4px;">
+                <ui:VisualElement name="Button Content" style="flex-direction: row; align-items: center;">
+                    <ui:VisualElement name="Icon" class="support-section-button-icon button-icon" style="background-image: resource(&apos;Icons/Website&apos;);" />
+                    <ui:VisualElement name="Text">
+                        <ui:Label text="Website" name="Title" class="button-title" />
+                        <ui:Label text="See my work" name="Description" class="button-description" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
