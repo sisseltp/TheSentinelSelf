@@ -27,41 +27,41 @@ public class ethernetValues : MonoBehaviour
     public float sentinel4Pulse;
 
 
-    public float pulseGradient;
-    private KuramotoAffecterAgent agent;
-    private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
-    public int bias = 3;
+    //public float pulseGradient;
+    //private KuramotoAffecterAgent agent;
+    //private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
+    //public int bias = 3;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponentInParent<KuramotoAffecterAgent>();
+        //agent = GetComponentInParent<KuramotoAffecterAgent>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (sentinel1Rate != 0)
-        {
-            float step = (float)sentinel1Rate / 60;
-            step *= Time.deltaTime;
-            pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
-            pulseGradient = Mathf.Clamp01(pulseGradient);
+        //if (sentinel1Rate != 0)
+        //{
+        //    float step = (float)sentinel1Rate / 60;
+        //    step *= Time.deltaTime;
+        //    pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
+        //    pulseGradient = Mathf.Clamp01(pulseGradient);
 
-            if (sentinel1Pulse == 1)
-            {
-                pulseGradient = 0;
-            }
+        //    if (sentinel1Pulse == 1)
+        //    {
+        //        pulseGradient = 0;
+        //    }
 
-            float theta = pulseGradient * CIRCLE_IN_RADIAN;
-            // get this sentinels x,y pos
-            float thisX = Mathf.Cos(theta);
-            float thisY = Mathf.Sin(theta);
+        //    float theta = pulseGradient * CIRCLE_IN_RADIAN;
+        //    // get this sentinels x,y pos
+        //    float thisX = Mathf.Cos(theta);
+        //    float thisY = Mathf.Sin(theta);
 
-            //agent.AddOsiclation(thisX, thisY, bias);
-            agent.phase = pulseGradient;
-        }
+        //    //agent.AddOsiclation(thisX, thisY, bias);
+        //    agent.phase = pulseGradient;
+        //}
     }
     
 
