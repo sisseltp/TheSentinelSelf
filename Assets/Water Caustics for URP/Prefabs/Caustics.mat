@@ -8,8 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Caustics
-  m_Shader: {fileID: 4800000, guid: aebc0a42f737b40fbb9daa8ef0c7bd53, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 280be7d4dbccd034c8adccfda5a6efe8, type: 3}
+  m_ShaderKeywords: LIGHT_DIRECTION_FIXED
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -24,15 +24,17 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - LIGHT_DIRECTION: 1
     - _CausticsFadeAmount: 0.957
     - _CausticsFadeHardness: 0.73
     - _CausticsNdotLMaskStrength: 0
-    - _CausticsScale: 0.44
+    - _CausticsScale: 4
     - _CausticsSceneLuminanceMaskStrength: 0
-    - _CausticsSpeed: 0.1
+    - _CausticsSpeed: 0.018
     - _CausticsSplit: 0.442
-    - _CausticsStrength: 0.022
-    m_Colors: []
+    - _CausticsStrength: 0.012
+    m_Colors:
+    - _FixedDirection: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &5069349641695361168
 MonoBehaviour:

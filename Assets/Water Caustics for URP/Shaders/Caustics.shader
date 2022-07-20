@@ -11,6 +11,9 @@ Shader "Ameye/Water Caustics for URP"
         _CausticsSceneLuminanceMaskStrength("_CausticsSceneLuminanceMaskStrength", Range(0.0, 1.0)) = 0.0
         _CausticsFadeAmount("_CausticsFadeAmount", Range(0.0, 1.0)) = 0.5
         _CausticsFadeHardness("_CausticsFadeHardness", Range(0.5, 1.0)) = 1.0
+        _FixedDirection("_FixedDirection", Vector) = (0.0, 0.0, 0.0, 0.0)
+        
+        [KeywordEnum(MainLight, Fixed)] LIGHT_DIRECTION ("Light direction", Float) = 1
 
         //[Header(Blending)]
         //[Enum(UnityEngine.Rendering.BlendMode)] _SrcBlend("_ScrBlend", float) = 2.0
@@ -42,7 +45,8 @@ Shader "Ameye/Water Caustics for URP"
             #pragma fragment frag
 
             #pragma multi_compile_fog
-            #pragma shader_feature FIXED_LIGHT_DIRECTION
+            #pragma shader_feature __ LIGHT_DIRECTION_MAIN_LIGHT
+            #pragma shader_feature __ LIGHT_DIRECTION_FIXED
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -127,7 +131,7 @@ Shader "Ameye/Water Caustics for URP"
                 float3 positionWS = ComputeWorldSpacePosition(positionNDC, depth, UNITY_MATRIX_I_VP);
 
                 // calculate caustics texture UV coordinates (influenced by light direction)
-                #if FIXED_LIGHT_DIRECTION
+                #if defined(LIGHT_DIRECTION_FIXED)
                 half2 uv = mul(positionWS.xyz, _FixedLightDirection).xy;
                 #else
                 half2 uv = mul(positionWS.xyz, _MainLightDirection).xy;

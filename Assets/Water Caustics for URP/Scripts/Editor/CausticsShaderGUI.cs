@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Rendering;
@@ -6,16 +7,6 @@ namespace WaterCausticsForURP
 {
     public class CausticsShaderGUI : ShaderGUI
     {
-        public enum LightDirection
-        {
-            DirectionalLight,
-            Fixed,
-        }
-
-        private LightDirection lightDirection;
-        private Vector3 fixedDirection;
-        private SerializedProperty lightDirectionProperty;
-
         private bool showTextureSettings, showVisualsSettings, showLightInfluenceSettings, showEdgeFadingSettings;
 
         private delegate void DrawSettingsMethod(MaterialEditor materialEditor, MaterialProperty[] properties);
@@ -38,7 +29,7 @@ namespace WaterCausticsForURP
         {
             targetMaterial = materialEditor.target as Material;
 
-            EditorGUILayout.LabelField("Water Caustics for URP v1.0.0", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Water Caustics for URP v1.1.0", EditorStyles.boldLabel);
             if (GUILayout.Button("@alexanderameye", CenteredGreyMiniLabel))
                 Application.OpenURL("https://twitter.com/alexanderameye");
 
@@ -76,24 +67,27 @@ namespace WaterCausticsForURP
 
         void DrawLightInfluenceSettings(MaterialEditor editor, MaterialProperty[] properties)
         {
+            MaterialProperty lightDirectionSource = FindProperty("LIGHT_DIRECTION", properties);
+            
             EditorGUI.BeginChangeCheck();
-            lightDirection = (LightDirection) EditorGUILayout.EnumPopup("Light direction", lightDirection);
+            editor.ShaderProperty(lightDirectionSource, "Light direction");
             if (EditorGUI.EndChangeCheck())
             {
-                if (lightDirection == LightDirection.Fixed) targetMaterial.EnableKeyword("FIXED_LIGHT_DIRECTION");
-                else targetMaterial.DisableKeyword("FIXED_LIGHT_DIRECTION");
+                if (Array.IndexOf(targetMaterial.shaderKeywords, "LIGHT_DIRECTION_FIXED") != -1)
+                {
+                    var direction = FindProperty("_FixedDirection", properties).vectorValue;
+                    SetFixedDirection(direction);
+                }
             }
-
-            if (lightDirection == LightDirection.Fixed)
+            
+            if (Array.IndexOf(targetMaterial.shaderKeywords, "LIGHT_DIRECTION_FIXED") != -1)
             {
                 EditorGUI.BeginChangeCheck();
-                fixedDirection = EditorGUILayout.Vector3Field("Direction", fixedDirection);
+                editor.ShaderProperty(FindProperty("_FixedDirection", properties), "Direction");
                 if (EditorGUI.EndChangeCheck())
                 {
-                    Matrix4x4 fixedDirectionMatrix = Matrix4x4.TRS(Vector3.zero,
-                        Quaternion.Euler(fixedDirection.x, fixedDirection.y, fixedDirection.z),
-                        Vector3.one);
-                    targetMaterial.SetMatrix("_FixedLightDirection", fixedDirectionMatrix);
+                    var direction = FindProperty("_FixedDirection", properties).vectorValue;
+                    SetFixedDirection(direction);
                 }
             }
 
@@ -101,6 +95,14 @@ namespace WaterCausticsForURP
             editor.ShaderProperty(FindProperty("_CausticsSceneLuminanceMaskStrength", properties),
                 EditorGUIUtility.TrTextContent("Luminance Mask",
                     "How much to mask the light based on the scene luminance."));
+        }
+
+        void SetFixedDirection(Vector3 direction)
+        {
+            Matrix4x4 fixedDirectionMatrix = Matrix4x4.TRS(Vector3.zero,
+                Quaternion.Euler(direction.x, direction.y, direction.z),
+                Vector3.one);
+            targetMaterial.SetMatrix("_FixedLightDirection", fixedDirectionMatrix);
         }
 
         void DrawEdgeFadingSettings(MaterialEditor editor, MaterialProperty[] properties)
