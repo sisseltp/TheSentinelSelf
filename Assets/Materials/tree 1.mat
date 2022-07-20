@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: water distortion
-  m_Shader: {fileID: -6465566751694194690, guid: 6a9139883b1b6e74d8f8e006425f254e, type: 3}
+  m_Name: tree 1
+  m_Shader: {fileID: -6465566751694194690, guid: 3710490ffca49904491d831d0bcec67e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +19,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_:
+        m_Texture: {fileID: 2800000, guid: aba877aa446987644bbc48d7c872d4b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_9edc4a8fc902472b9b569396fd906612:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_cd0bbb74845148b58491094e505db116:
+        m_Texture: {fileID: 2800000, guid: ff50fe81c7db37e45aed605ec1eadcc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -59,12 +71,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
-        m_Texture: {fileID: 0}
+    - _SampleTexture2D_88902100365345cea2786f1244f72437_Texture_1:
+        m_Texture: {fileID: 2800000, guid: aba877aa446987644bbc48d7c872d4b4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - distortion_mask:
-        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    - _SpecGlossMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -80,6 +92,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_242992c53a044a8da0bf906aef434ec8: 0.51
+    - Vector1_29866fe5815d493cbc3497829c71b6b7: 0.24
+    - Vector1_636ab6f9efaa4e4aaa4ce2dc5fa29c77: 0.26
+    - Vector1_88e2417b239d4f8da667d2b1d2430f7e: 6.07
+    - Vector1_9e016225392f460494c105eef6bbc8fe: 1.62
+    - Vector1_a2b20358bb8543569fd1b5e54a35cdbd: 0.01
+    - Vector1_c8b6e32de46e437e8a695efdbcf87dce: 5
+    - Vector1_ce9e66bf476d4164985ca3d170eab4c0: 0.93
+    - Vector1_d4a5042e0e6b47b28b4dc27daaa6f577: 0.5
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -106,15 +127,16 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - waterdistortion_: 0.033
     m_Colors:
-    - Vector2_distortionspeeddistortionspeed_: {r: 0, g: 0.04, b: 0, a: 0}
+    - Color_12c6749eb80c4ab0ae8a06993c1f3819: {r: 0.1538804, g: 0.3584906, b: 0.2266541, a: 0}
+    - Vector2_356ad9d619344c8ba0929d3f82e237ef: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_df49839ffb9c4d808735ae0347f2b956: {r: 0.46, g: 0.72, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &2419325942653541280
+--- !u!114 &1234888451415073822
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
