@@ -21,8 +21,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: caustics
-  m_Shader: {fileID: 4800000, guid: aebc0a42f737b40fbb9daa8ef0c7bd53, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: 280be7d4dbccd034c8adccfda5a6efe8, type: 3}
+  m_ShaderKeywords: LIGHT_DIRECTION_FIXED
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
@@ -97,6 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - LIGHT_DIRECTION: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -140,5 +141,6 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FixedDirection: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
