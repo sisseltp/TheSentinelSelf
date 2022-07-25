@@ -22,8 +22,17 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float V = Input.GetAxis("Vertical");
-        float H = Input.GetAxis("Horizontal");
+        float V = Input.GetAxis("Vertical")*-1;
+        float H = Input.GetAxis("Horizontal")*-1;
+        float U = 0;
+
+        if (Input.GetMouseButton(0))
+        {
+            U += 1;
+        }
+        else if (Input.GetMouseButton(1)){
+            U -= 1;
+        }
         /*
         Vector2 mousePos =  (Vector2)Input.mousePosition;
         mousePos -= new Vector2(Screen.width / 2, Screen.height / 2);
@@ -31,14 +40,14 @@ public class Controller : MonoBehaviour
         mousePos *= new Vector2(1, -1);
         */
 
-        Vector3 forward = Vector3.Normalize(transform.position - childCam.position);
-        forward.y = 0;
-        Vector3 right = Quaternion.Euler(0,90,0) * forward;
+        Vector3 forward = transform.forward*360;
+        Vector3 vel = new Vector3(H, U, V);
 
-        rb.velocity+= forward * V * power * Time.deltaTime;
-        rb.velocity += right * H * power * Time.deltaTime;
-       // Quaternion rot = rb.rotation * Quaternion.Euler(new Vector3(mousePos.y * rotScl, mousePos.x * rotScl, 0));
-       // rb.MoveRotation(rot);
+       // vel = Quaternion.Euler(forward) * vel;
+
+        vel *= power;
+
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position - transform.forward);
 
 
 

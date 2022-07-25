@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1073697049552059809, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
+      propertyPath: power
+      value: 5.43
+      objectReference: {fileID: 0}
     - target: {fileID: 1073697049552059812, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
       propertyPath: m_Radius
       value: 1.15
@@ -63,6 +67,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7336372472639373172, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
+      propertyPath: setDistance
+      value: 19.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7336372472639373172, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
+      propertyPath: distVariation
+      value: 1.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
 --- !u!1 &9182297268019072598 stripped
@@ -77,4 +89,4 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9182297268019072598}
-  m_Enabled: 1
+  m_Enabled: 0

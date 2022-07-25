@@ -24,7 +24,6 @@ public class CameraTracker : MonoBehaviour
     private float distLimit;
     [HideInInspector]
     public Rigidbody rb;
-    [HideInInspector]
     public bool tracking = false;
     // Start is called before the first frame update
     void Start()

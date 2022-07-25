@@ -32,6 +32,7 @@ public class triggerClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // create a random threshold value
         randThreshold = UnityEngine.Random.Range(0.5f, 0.9f);
 
@@ -49,5 +50,7 @@ public class triggerClick : MonoBehaviour
             audioSource.Stop();
             isPlaying = false;
         }
+
     }
+
 }
