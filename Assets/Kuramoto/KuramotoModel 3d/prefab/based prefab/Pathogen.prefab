@@ -176,7 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c49b6f3fe9c42a445acfb8374e05e0ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  phase: 0
 --- !u!82 &1546725661753733026
 AudioSource:
   m_ObjectHideFlags: 0
@@ -198,7 +197,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0.01
-  MaxDistance: 3
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
