@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5983561103084839695}
   - component: {fileID: 8145074984584773378}
   - component: {fileID: 6378304238567403790}
+  - component: {fileID: 7903102902183674424}
   m_Layer: 0
   m_Name: Camera Tracker
   m_TagString: MainCamera
@@ -131,9 +132,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f06484d35aeaf4883a78823a604a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tracked: {fileID: 0}
+  setDistance: 0
   distVariation: 2.4
-  drag: 0.04
+  power: 0
+  rotSpeed: 0
   distLimit: 42.3
+  rb: {fileID: 0}
+  tracking: 0
 --- !u!54 &6378304238567403790
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,3 +156,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &7903102902183674424
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525624839905435421}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.11
+  m_Center: {x: 0, y: 0, z: 0}

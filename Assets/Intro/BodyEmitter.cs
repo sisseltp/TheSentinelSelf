@@ -42,7 +42,7 @@ public class BodyEmitter : MonoBehaviour
         {
            CameraTracker camTrack =  Camera.main.GetComponent<CameraTracker>();
 
-            camTrack.FindTracked("Body");
+            camTrack.FindScreenTracked("Body");
             camTrack.enabled = true;
 
          
