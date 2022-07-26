@@ -7,14 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1073697049552059809, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1073697049552059810, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1073697049552059812, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
       propertyPath: m_Radius
       value: 1.15
@@ -71,35 +63,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5644897473517363051, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7336372472639373172, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
---- !u!1 &4602167718571863175 stripped
+--- !u!1 &9182297268019072598 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 5644897473517363051, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
   m_PrefabInstance: {fileID: 8180959628469629932}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8802070511998683451
-MonoBehaviour:
+--- !u!81 &-7354146197273226018
+AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4602167718571863175}
+  m_GameObject: {fileID: 9182297268019072598}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618b0e3f6c65dd247a4a016150006c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LookSpeedController: 120
-  m_LookSpeedMouse: 4
-  m_MoveSpeed: 10
-  m_MoveSpeedIncrement: 2.5
-  m_Turbo: 10
