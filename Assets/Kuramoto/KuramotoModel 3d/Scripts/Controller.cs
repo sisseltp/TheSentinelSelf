@@ -41,10 +41,14 @@ public class Controller : MonoBehaviour
         */
 
         Vector3 forward = transform.forward*360;
-        Vector3 vel = new Vector3(H, U, V);
+        Vector3 vel = Vector3.zero;
 
-       // vel = Quaternion.Euler(forward) * vel;
+        // vel = Quaternion.Euler(forward) * vel;
 
+        vel += forward * V;
+        vel += transform.right * H;
+        vel += transform.up * U;
+        vel = Vector3.Normalize(vel);
         vel *= power;
 
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position - transform.forward);
