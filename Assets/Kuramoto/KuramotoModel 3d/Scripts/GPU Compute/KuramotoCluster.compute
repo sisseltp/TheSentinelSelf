@@ -7,7 +7,7 @@
 
 struct Sentinel
 {
-	int age;
+	float age;
 	int connections;
 	int played;
 	float speed;
@@ -276,7 +276,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		else {
 			float thisNoise = sentinelData[id.x].noiseScl * Noise(sentinelData[id.x].pos);
 			p += dt * (sentinelData[id.x].speed + abs(thisNoise));
-			sentinelData[id.x].age ++;
+			sentinelData[id.x].age += dt;
 		}
 	
 		// subtract its intiger to leave it as a 0. someting
@@ -350,7 +350,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			biomeData[indx].age = 0;
 		}
 		else {
-			biomeData[indx].age++;
+			biomeData[indx].age+= dt;
 		}
 		// subtract its intiger to leave it as a 0. someting
 		p -= float(floor(p));

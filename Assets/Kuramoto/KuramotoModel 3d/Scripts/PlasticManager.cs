@@ -44,7 +44,7 @@ public class PlasticManager : MonoBehaviour
     // struct to hold data maybe for gpu acceleration
     public struct GPUData
     {
-        public int age;
+        public float age;
         public int connections;
         public int played;
         public float speed;

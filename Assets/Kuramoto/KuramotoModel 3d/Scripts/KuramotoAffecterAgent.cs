@@ -30,7 +30,7 @@ public class KuramotoAffecterAgent : MonoBehaviour
     public bool dead = false;// dead trigger
     public float fitness = 0;// fitness rating for the agent
     public int played = 0;
-    public int age = 0;
+    public float age = 0;
     public float sumX = 0f;
     public float sumY = 0f;
 

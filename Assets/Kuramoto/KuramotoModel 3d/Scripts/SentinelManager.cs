@@ -59,7 +59,7 @@ public class SentinelManager : MonoBehaviour
     // struct to hold all the sentinels data potential gpu compute
     public struct GPUData
     {
-        public int age;
+        public float age;
         public int connections;
         public int played;
         public float speed;

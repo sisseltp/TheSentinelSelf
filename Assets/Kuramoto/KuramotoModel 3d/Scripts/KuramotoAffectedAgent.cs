@@ -34,7 +34,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
     public int played = 0; // if the player has been in contact
     public bool dead = false; // collision killer
     public float fitness=0; // holds this agents fitness value
-    public int age = 0; // holds this agents age
+    public float age = 0; // holds this agents age
     // holds the x,y position of the phase
     public float sumx = 0f;
     public float sumy = 0f;
@@ -48,27 +48,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
         // attach the renderer component
         rendr = GetComponent<Renderer>();
 
-        // get the parent (sentinel managers) transform
-        Transform parent = transform.parent;
-        // get the number of children (sentinels)
-        int nChild = parent.childCount;
-        // create a new list of transforms 1 less than the nChild
-        sentinals = new Transform[nChild -1];
 
-
-        int sub = 0; // Connections to hold indx
-        for (int i = 0; i < nChild; i++) // loop for num child
-        {
-            // get the i child
-            Transform child = parent.transform.GetChild(i);
-            if ( child.GetInstanceID() != transform.GetInstanceID()) // if the child isnt this object
-            {
-                sentinals[sub] = child;// set it to the list
-                sub++; //add to the indx
-            }
-            
-
-        }
     }
 
     public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, Vector2 attractionSclRange, float thisSpeedVariation = 0.1f)

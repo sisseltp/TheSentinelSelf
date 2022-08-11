@@ -171,6 +171,8 @@ public class TCellManager : MonoBehaviour
         for ( int i=0; i<toRemove.Count; i++)
         {
             int indx = toRemove[i];
+            Destroy(sentinels[indx]);
+
             if (i != toRemove.Count-1)
             {
                  nxtIndx = toRemove[i+1];
