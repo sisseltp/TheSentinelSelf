@@ -146,6 +146,31 @@ public class GeneticMovementTcell : MonoBehaviour
            
             
         }
+        else if (collision.gameObject.tag == "Pathogen")
+        {
+            // get keys from children
+            GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
+
+            // if there are any keys
+            if (Antigens.Length > 0)
+            {
+                // get matches from children
+                AntigenKeys[] results = Compare(Antigens);
+
+                // run over results
+                for (int i = 1; i < results.Length; i++)
+                {
+                    // if it has a connection
+                    if (results[i].hit > 0)
+                    {
+                        // add fitness
+                        Antigens[i - 1].antigen.fitness++;
+                        Destroy(collision.gameObject);
+
+                    }
+                }
+            }
+        }
     }
     private struct AntigenKeys
     {
