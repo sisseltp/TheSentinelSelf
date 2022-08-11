@@ -13,7 +13,7 @@ public class GeneticMovementPathogen : MonoBehaviour
     [HideInInspector]
     public Vector3[] geneticMovement; // list to hold the vels
 
-    private KuramotoAffectedAgent sentinel; // kurmto to get the phase val
+    private KuramotoAffectedAgent pathogen; // kurmto to get the phase val
 
     private Rigidbody rb; // rigidbody to add velocity to
 
@@ -28,7 +28,7 @@ public class GeneticMovementPathogen : MonoBehaviour
     void Start()
     {
         // get the kurmto component
-        sentinel = GetComponent<KuramotoAffectedAgent>();
+        pathogen = GetComponent<KuramotoAffectedAgent>();
         // get the rb component
         rb = GetComponent<Rigidbody>();
         // creat a new list to hold the vels
@@ -46,7 +46,7 @@ public class GeneticMovementPathogen : MonoBehaviour
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (sentinel.phase > lastPhase) { 
+        if (pathogen.phase > lastPhase) { 
             step++; //go to the next step
 
             if (step >= cycleLength)// if longer than cycle go back to 0
@@ -55,13 +55,13 @@ public class GeneticMovementPathogen : MonoBehaviour
             }
         }
         // get this steps vel from the list and mult it by phase and scl it
-        Vector3 vel = geneticMovement[step] * sentinel.phase * speedScl;
+        Vector3 vel = geneticMovement[step] * pathogen.phase * speedScl;
 
         // ad it to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
         // set last phase to phase
-        lastPhase = sentinel.phase;
+        lastPhase = pathogen.phase;
     }
     // reset randomize the list of vels
     public void Reset()
@@ -76,9 +76,9 @@ public class GeneticMovementPathogen : MonoBehaviour
     {
         if (collision.gameObject.tag == "Kill" )
         {
-            sentinel.dead = true;
+            pathogen.dead = true;
         }
-        else if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Tcell")
+        else if (collision.gameObject.tag == "Player" )
         {
             Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
 
@@ -90,7 +90,8 @@ public class GeneticMovementPathogen : MonoBehaviour
             attached.transform.localScale = transform.localScale;
             attached.transform.parent = collision.transform;
             
-            sentinel.dead = true;
+            pathogen.dead = true;
         }
+        
     }
 }
