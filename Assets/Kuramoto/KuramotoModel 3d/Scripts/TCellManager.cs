@@ -257,7 +257,7 @@ public class TCellManager : MonoBehaviour
 
     public void AddTCell(GameObject TCell)
     {
-        if (RealNumSentinels < MaxSentinels)
+        if (RealNumSentinels < MaxSentinels-1)
         {
             RealNumSentinels++;
 
