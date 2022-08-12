@@ -4776,6 +4776,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: MaxAge
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: emitionTimer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3850774877735049676, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 273.7
@@ -4819,6 +4827,14 @@ PrefabInstance:
     - target: {fileID: 3850774878269333505, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.z
       value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774878269333507, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: MaxAge
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774878269333507, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: emitionTimer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3850774878269333507, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: noiseSclRange.x
