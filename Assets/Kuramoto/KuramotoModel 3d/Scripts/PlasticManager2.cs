@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PathogenManager : MonoBehaviour
+public class PlasticManager2 : MonoBehaviour
 {
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
@@ -12,7 +12,11 @@ public class PathogenManager : MonoBehaviour
     [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
-    public int nSentinels = 10; // number of them to be made
+    public int startingNumAgents = 10; // number of them to be made
+    public int MaxSentinels = 15;
+    public float emitionSpeed = 10;
+    public int RealNumSentinels = 0;
+    private float timeGate = 0;
 
     [Tooltip("radius to be spawned in from this obects transform")]
     [Range(0.1f, 1000f)]
@@ -20,7 +24,7 @@ public class PathogenManager : MonoBehaviour
     private float spawnArea = 1.0f; // area to spawn in 
     [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
     [SerializeField]
-    private Vector2 speedRange = new Vector2(90, 100); // variation of speed for them to have
+    private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have  
     [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
     [SerializeField]
     private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
@@ -38,10 +42,12 @@ public class PathogenManager : MonoBehaviour
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
     public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
-
+    
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
-   
+
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
+
+
     [Tooltip("Max age the agents will reach")]
     [SerializeField]
     private float MaxAge = 1000; // age limit to kill sentinels
@@ -49,13 +55,6 @@ public class PathogenManager : MonoBehaviour
     [SerializeField]
     private float speedScl = 3f;
 
-
-    public int RealNumPathogens = 0;
-    [SerializeField]
-    private float emitionTimer = 1.0f;
-    private float timeGate = 0;
-
-    // struct to hold data maybe for gpu acceleration
     public struct GPUData
     {
         public float age;
@@ -73,141 +72,109 @@ public class PathogenManager : MonoBehaviour
         public Vector3 vel;
         public Vector3 pos;
 
-        
-        public void SetFromKuramoto(KuramotoAffectedAgent kuramoto)
+
+
+
+        public void SetFromKuramoto(KuramotoPlasticAgent kuramoto)
         {
+
             speed = kuramoto.speed;
             phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
             coherenceRadius = kuramoto.coherenceRadius;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
             attractionScl = kuramoto.attractionSclr;
             age = 0;
             fittness = 0;
         }
 
-        public void SetPos(Vector3 Pos)
-        {
-            pos=Pos;
-            age = 0;
-        }
+
+
+
+
     }
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
+        //MaxSentinels = Mathf.FloorToInt(startingNumAgents * 1.5f);
+
+
         // create list to hold object
-        sentinels = new GameObject[nSentinels];
+        sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUData[nSentinels];
+        GPUStruct = new GPUData[MaxSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
+       
 
-        // loop over the nsentinels
-        for(int i=0; i<10; i++)
+
+
+        // loop over the startingNumAgents
+        for (int i=0; i<startingNumAgents; i++)
         {
 
-            AddPathogen(i);
-
-        }
+            RealNumSentinels++;
 
 
-    }
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
-    private void AddPathogen(int i)
-    {
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
-
-        // instantiate a new sentinel as child and at pos
-        GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
-
-        // get its kurmto component
-        KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-        kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-
-        // add the object to the list
-        sentinels[RealNumPathogens] = thisSentinel;
-
-        // set data in the struct
-        GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
-        GPUStruct[RealNumPathogens].pos = sentinels[i].transform.position;
-
-        RealNumPathogens++;
-    }
-
-    private void DuplicatePathogen( GameObject pathogen, int duplications=2)
-    {
-
-        for (int l = 0; l < duplications; l++)
-        {
             // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(pathogen, pathogen.transform.position, Quaternion.identity, this.transform);
+            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+            KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-            
+
             // add the object to the list
-            sentinels[RealNumPathogens] = thisSentinel;
+            sentinels[i] = thisSentinel;
 
             // set data in the struct
-            GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
-            GPUStruct[RealNumPathogens].pos = sentinels[RealNumPathogens].transform.position;
+            GPUStruct[i].SetFromKuramoto(kuramoto);
+            GPUStruct[i].pos = sentinels[i].transform.position;
+            
 
-            RealNumPathogens++;
         }
+        //Debug.Log(GPUStruct.Length);
     }
 
     private void Update()
     {
-        if(Time.time > emitionTimer + timeGate && RealNumPathogens < nSentinels)
+        //Debug.Log(RealNumSentinels);
+        List<int> toRemove = new List<int>();
+        // loop over the n sentinels
+
+        if (emitionSpeed + timeGate < Time.time)
         {
-
             timeGate = Time.time;
-            AddPathogen(RealNumPathogens);
-
-
+            AddCell();
         }
 
-        List<int> toRemove = new List<int>();
 
-        // loop over the n sentinels
-        for (int i = 0; i < RealNumPathogens; i++)
+        for (int i = 0; i < RealNumSentinels; i++)
         {
-            if (sentinels[i] == null) { 
-                Debug.Log(i); 
-            }
+
+            if(sentinels[i] == null) { continue; }
             // get the kurmto
-            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
+            KuramotoPlasticAgent kuramoto = sentinels[i].GetComponent<KuramotoPlasticAgent>();
             
-            // if older than age 
-            if (kuramoto.dead ) {
-
-                toRemove.Add(i);
-            }
-            else  if (GPUStruct[i].age > MaxAge )
+            if( GPUStruct[i].age > MaxAge || kuramoto.dead)
             {
-                if (RealNumPathogens < nSentinels - 2)
-                {
-                    
-                    DuplicatePathogen( sentinels[i],2);
-                    
-                }
-
                 toRemove.Add(i);
+
+            
 
             }
             else
             {
+
                 kuramoto.fitness = GPUStruct[i].fittness;
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
-                kuramoto.Connections = GPUStruct[i].connections;
-                kuramoto.played = GPUStruct[i].played;
+               
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel* Time.deltaTime * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
                 
                 GPUStruct[i].pos = sentinels[i].transform.position;
@@ -226,46 +193,41 @@ public class PathogenManager : MonoBehaviour
 
         }
 
-        int nxtIndx = -1;
 
-        //loops over agents to remove
-        for (int i = 0; i < toRemove.Count; i++)
+
+        int nxtIndx = -1;
+        
+        for ( int i=0; i<toRemove.Count; i++)
         {
-            // index of the agent to remove
             int indx = toRemove[i];
             Destroy(sentinels[indx]);
-            // if its not the last agent in the remove list
-            if (i != toRemove.Count - 1)
+
+            if (i != toRemove.Count-1)
             {
-                // set the next index from the remove list
-                nxtIndx = toRemove[i + 1];
+                 nxtIndx = toRemove[i+1];
             }
             else
             {
-                // set the next indx with the limit of agents
-                nxtIndx = RealNumPathogens;
+                nxtIndx = RealNumSentinels;
             }
-            // loop from this indx+1 to the next index  
-            for (int p = indx + 1; p <= nxtIndx; p++)
-            {
-                GPUStruct[p - (i + 1)] = GPUStruct[p];
-                sentinels[p - (i + 1)] = sentinels[p];
 
-            }
+            for (int p = indx+1; p <= nxtIndx ; p++)
+            {
+                GPUStruct[p - (i+1)] = GPUStruct[p];
+                sentinels[p - (i+1)] = sentinels[p];
+
+            }            
 
         }
-
-        RealNumPathogens -= toRemove.Count;
-       
-        if (nxtIndx != -1)
-        {
+        RealNumSentinels -= toRemove.Count;
+        
+        if (nxtIndx != -1) {
             GPUStruct[nxtIndx] = new GPUData();
             sentinels[nxtIndx] = null;
 
         }
-    }
 
-   
+    }
    
     public void ResetSentinel(int i)
     {
@@ -283,11 +245,13 @@ public class PathogenManager : MonoBehaviour
         if (GenKurLib.Count < 500)
         {
             // add random new sentinel
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+            KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-
-            GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
+            
+            GeneticMovementPlastic genVel = thisSentinel.GetComponent<GeneticMovementPlastic>();
             genVel.Reset();
+
+            
         }
         else
         {
@@ -299,8 +263,9 @@ public class PathogenManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.SetupData(Settings);
+            KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
+            //kuramoto.SetupData(Settings);
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
             Genetics.GenVel genVel1 = GenVelLib[rand];
@@ -309,13 +274,38 @@ public class PathogenManager : MonoBehaviour
 
             Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
 
-            GeneticMovementPathogen genMov = thisSentinel.GetComponent<GeneticMovementPathogen>();
+            GeneticMovementPlastic genMov = thisSentinel.GetComponent<GeneticMovementPlastic>();
             genMov.Reset();
             genMov.geneticMovement = genVel1.BlendAttributes(Vels);
+
+            
+
 
 
         }
         
+    }
+
+    public void AddCell()
+    {
+        if (RealNumSentinels < MaxSentinels-1)
+        {
+            RealNumSentinels++;
+
+            GameObject thisAgent =  Instantiate(sentinel, transform);
+            // add the object to the list
+            sentinels[RealNumSentinels-1] = thisAgent;
+            KuramotoPlasticAgent kuramoto = thisAgent.GetComponent<KuramotoPlasticAgent>();
+
+            ResetSentinel(RealNumSentinels - 1);
+
+            // set data in the struct
+            GPUData gpuStruct = new GPUData();
+            gpuStruct.SetFromKuramoto(kuramoto);
+            gpuStruct.pos = thisAgent.transform.position;
+            GPUStruct[RealNumSentinels-1] = gpuStruct;
+        }
+
     }
 
 

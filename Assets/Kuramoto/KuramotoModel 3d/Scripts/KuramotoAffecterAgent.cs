@@ -34,9 +34,6 @@ public class KuramotoAffecterAgent : MonoBehaviour
     public float sumX = 0f;
     public float sumY = 0f;
 
-
-    //holds the sentinel manager
-    private PathogenManager pathogenManager;
     // holds the sentinels
     private GameObject[] sentinels;
 
@@ -59,6 +56,7 @@ public class KuramotoAffecterAgent : MonoBehaviour
     public void SetupData(float[] settingsData, float thisSpeedVariation = 0.1f)
     {
         speedBPM = settingsData[0];
+        speed = speedBPM / 60;
         noiseScl = settingsData[1];
         couplingRange = settingsData[3];
         coupling = settingsData[2];
@@ -74,23 +72,16 @@ public class KuramotoAffecterAgent : MonoBehaviour
     void Start()
     {
         // hook up rendr component
-        rendr = GetComponent<Renderer>();
-        // find the sentinel maker
-        pathogenManager = GameObject.FindGameObjectWithTag("PathogenEmitter").GetComponent<PathogenManager>();
-        
-        // link the sentinels as a list
-        sentinels = pathogenManager.sentinels ;
+        rendr = GetComponentInChildren<Renderer>();
+       
+       
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        // if the num of sentinels changes relink them
-        if (pathogenManager.nSentinels != sentinels.Length)
-        {
-            sentinels = pathogenManager.sentinels;
-        }
+        
         
 
         // ad the amount of partners * sclr to the fitness

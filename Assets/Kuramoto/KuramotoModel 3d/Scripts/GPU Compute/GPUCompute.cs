@@ -19,11 +19,11 @@ public class GPUCompute : MonoBehaviour
 
     private PathogenManager.GPUData[] pathogenData;
 
-    private PlasticManager.GPUData[] plasticData;
+    private PlasticManager2.GPUData[] plasticData;
 
     private SentinelManager[] sentinels;
     private PathogenManager[] pathogen;
-    private PlasticManager[] plastics;
+    private PlasticManager2[] plastics;
     private TCellManager[] tcells;
 
 
@@ -35,7 +35,7 @@ public class GPUCompute : MonoBehaviour
 
         pathogen = GetComponentsInChildren<PathogenManager>();
 
-        plastics = GetComponentsInChildren<PlasticManager>();
+        plastics = GetComponentsInChildren<PlasticManager2>();
 
         tcells = GetComponentsInChildren<TCellManager>();
 
@@ -136,7 +136,7 @@ public class GPUCompute : MonoBehaviour
 
         pathogenData = bioData.ToArray();
 
-        List<PlasticManager.GPUData> plasData = new List<PlasticManager.GPUData>();
+        List<PlasticManager2.GPUData> plasData = new List<PlasticManager2.GPUData>();
 
         for (int i = 0; i < plastics.Length; i++)
         {
@@ -166,7 +166,7 @@ public class GPUCompute : MonoBehaviour
         ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(PathogenManager.GPUData)));
         BiomeBuffer.SetData(pathogenData);
 
-        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager.GPUData)));
+        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager2.GPUData)));
         plasticBuffer.SetData(plasticData);
 
       //  Debug.Log("start");

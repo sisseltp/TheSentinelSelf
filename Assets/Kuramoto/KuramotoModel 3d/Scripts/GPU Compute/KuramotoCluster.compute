@@ -381,6 +381,20 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		// set the new phase value
 		plasticData[indx].phase = p;
 
+		plasticData[indx].vel = float3(0, 0, 0);
+
+		for (int s = 0; s < int(sentinelData.Length); s++)
+		{
+
+			// get the distance between the two agents
+			float dist = distance(sentinelData[s].pos, plasticData[indx].pos);
+
+			// if less than coupling range
+			if (dist < plasticData[indx].couplingRange)
+			{
+				plasticData[indx].vel += (sentinelData[s].pos - plasticData[indx].pos) * plasticData[indx].attractionScl ;
+			}
+		}
 	}
 
 }

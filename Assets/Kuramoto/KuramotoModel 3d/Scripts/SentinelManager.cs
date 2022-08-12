@@ -9,9 +9,8 @@ public class SentinelManager : MonoBehaviour
     [Tooltip("Main sentinel agent")]
     [SerializeField]
     private GameObject sentinel; // the sentinel game object
-    [Tooltip("Main sentinel agent camera varient")]
-    [SerializeField]
-    private GameObject sentinelCam; // the sentinel game object
+   
+   
     [Tooltip("Number of agents to produce")]
     [Range(1, 3000)]
     [SerializeField]
@@ -115,13 +114,9 @@ public class SentinelManager : MonoBehaviour
             // create a new sentinel asa child and at pos
             GameObject thisSentinel;
 
-            if (i == 0) {
-                thisSentinel = Instantiate(sentinelCam, pos, Quaternion.identity, this.transform);
-            }
-            else
-            {
+           
                 thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
-            }
+            
             // get the kuramoto sentinel
             KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
             kuramoto.Setup(noiseSclRange,couplingRange,speedRange, couplingSclRange, attractionSclRange,  0.2f);// setup its setting to randomize them
@@ -177,12 +172,14 @@ public class SentinelManager : MonoBehaviour
             }
             else
             {
+
                 kuramoto.fitness = GPUStruct[i].fittness;
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
                 kuramoto.Connections = GPUStruct[i].connections;
                 kuramoto.played = GPUStruct[i].played;
                 //sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel;
+                GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
                 GPUStruct[i].pos = sentinels[i].transform.position;
             }
 
