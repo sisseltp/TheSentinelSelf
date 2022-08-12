@@ -265,10 +265,12 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			// get the noise
 			float thisNoise = sentinelData[id.x].noiseScl * Noise(sentinelData[id.x].pos);// *PlasticConnects;
 			thisNoise *= sentinelData[id.x].played;
+
 			// not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
 			float calc = sin((cphi - p) * CIRCLE_IN_RADIAN);
 			// second phase (scaler * distTo0 * lastClac)
 			calc = sentinelData[id.x].coupling * crad * calc;
+
 			// add the speed noise and calc together and times by delta time, and add to Phase
 			p += dt * (sentinelData[id.x].speed + abs(thisNoise) + calc);
 			sentinelData[id.x].age = 0;
