@@ -3026,6 +3026,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 116eacdbcb66749638b834ebaeb5f97d, type: 3}
+--- !u!1 &623254477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3850774877875054860, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+  m_PrefabInstance: {fileID: 1144778774}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &623254480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 623254477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247c6fecfcf946d4a9eb33a49f73cb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 6554403188448632226, guid: a971c47e729eab141a6eafdab00ce418, type: 3}
+  startingNumAgents: 118
+  MaxSentinels: 215
+  emitionSpeed: 10
+  RealNumSentinels: 0
+  spawnArea: 39
+  speedRange: {x: 40, y: 60}
+  couplingRange: {x: 30, y: 40}
+  noiseSclRange: {x: 0.001, y: 0.005}
+  couplingSclRange: {x: 7, y: 15}
+  attractionSclRange: {x: 0.2, y: 1}
+  sentinels: []
+  MaxAge: 100
+  speedScl: 8
 --- !u!1 &644833083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,7 +4206,7 @@ GameObject:
   - component: {fileID: 970190320}
   m_Layer: 0
   m_Name: small terrain (1)
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -5037,7 +5068,7 @@ PrefabInstance:
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: sentinel
       value: 
-      objectReference: {fileID: 5847784545933103348, guid: 4e669c0af6b5d4a40afec0119b1298d6, type: 3}
+      objectReference: {fileID: 1585444582935257604, guid: 7d6806d7f91a6de42b463668b971a3f8, type: 3}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: nSentinels
       value: 20
@@ -5046,9 +5077,21 @@ PrefabInstance:
       propertyPath: sentinelCam
       value: 
       objectReference: {fileID: 9182297268019072598, guid: 2ecdc0a1f08bb5942830f6a40fc9ccda, type: 3}
+    - target: {fileID: 3850774877875054862, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 272.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 41
+      value: 15.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -94.8
       objectReference: {fileID: 0}
     - target: {fileID: 3850774878269333505, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11199,6 +11242,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 76724663803412436, guid: 3154122115e107b4bb08f3de37522f1e, type: 3}
   m_PrefabInstance: {fileID: 3969156841282432874}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4057863771628467785
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 483.8239
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45.81637
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 292.13092
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3550327565580688996, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3559582817055775195, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+      propertyPath: m_Name
+      value: fosil
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
 --- !u!1001 &7742008000925562521
 PrefabInstance:
   m_ObjectHideFlags: 0

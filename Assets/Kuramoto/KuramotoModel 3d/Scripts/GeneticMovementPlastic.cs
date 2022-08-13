@@ -24,6 +24,9 @@ public class GeneticMovementPlastic : MonoBehaviour
     [SerializeField]
     private GameObject attachedGO;
 
+    [HideInInspector]
+    public Vector3 origin;
+
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +60,7 @@ public class GeneticMovementPlastic : MonoBehaviour
     // reset randomize the list of vels
     public void Reset()
     {
+        origin = transform.position;
         // get the kurmto component
         plastic = GetComponent<KuramotoPlasticAgent>();
         // get the rb component
@@ -69,14 +73,14 @@ public class GeneticMovementPlastic : MonoBehaviour
             geneticMovement[i] = Random.insideUnitSphere;
         }
     }
-
+    private bool full = false;
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Kill")
         {
             plastic.dead = true;
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Player" && !full)
         {
             plastic = GetComponent<KuramotoPlasticAgent>();
             
@@ -87,10 +91,15 @@ public class GeneticMovementPlastic : MonoBehaviour
             Instantiate(attachedGO, transform.position, transform.rotation, collision.transform);
 
             collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
-            collision.gameObject.GetComponent<Rigidbody>().drag *= 1.2f;
+            collision.gameObject.GetComponent<Rigidbody>().drag += 0.1f;
             
-            
+            if (collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed < 0.2f)
+            {
+                collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                full = true;
+            }
         }
+       
 
     }
 }

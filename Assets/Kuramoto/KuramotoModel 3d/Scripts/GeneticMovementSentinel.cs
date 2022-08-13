@@ -119,6 +119,10 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             target = manager.Lymphondes[indx];
         }
+        else if (collision.gameObject.tag == "Terrain" && rb.useGravity)
+        {
+            GetComponent<Fosilising>().enabled = true;
+        }
     }
 
 }

@@ -171,6 +171,12 @@ public class GeneticMovementTcell : MonoBehaviour
                 }
             }
         }
+        else if(collision.gameObject.tag == "Plastic")
+        {
+            Debug.Log("plasticTcellHit");
+
+            target =  collision.gameObject.GetComponent<GeneticMovementPlastic>().origin;
+        }
     }
     private struct AntigenKeys
     {
