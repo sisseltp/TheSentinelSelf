@@ -55,7 +55,7 @@ public class Fosilising : MonoBehaviour
         IEnumerator coroutine = TimedDisolve(fadeTime);
 
         Bounds B =  GetMaxBounds(gameObject);
-        fosil.transform.localScale = B.size *1.5f;
+        fosil.transform.localScale = B.size *1.1f;
         fosil = Instantiate(fosil, transform.position - new Vector3(0,-0.75f,0), new Quaternion(0, 0, 0, 0));
         StartCoroutine(coroutine);
     }

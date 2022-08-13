@@ -9,6 +9,9 @@ public class PlasticManager2 : MonoBehaviour
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
     private GameObject sentinel; // holds the sentinel prefab
+    [Tooltip("The object to emit from")]
+    [SerializeField]
+    private Transform emitionOrigin;
     [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
@@ -120,7 +123,7 @@ public class PlasticManager2 : MonoBehaviour
             RealNumSentinels++;
 
 
-            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
+            Vector3 pos = emitionOrigin.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
             // instantiate a new sentinel as child and at pos
             GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
@@ -237,7 +240,7 @@ public class PlasticManager2 : MonoBehaviour
 
 
 
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+        Vector3 pos = emitionOrigin.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 
