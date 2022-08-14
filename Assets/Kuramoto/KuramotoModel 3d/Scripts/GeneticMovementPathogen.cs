@@ -85,10 +85,8 @@ public class GeneticMovementPathogen : MonoBehaviour
 
             GameObject newObj = transform.GetChild(0).gameObject;
 
-            GameObject attached = Instantiate(newObj, newObj.transform.position, rot, collision.transform);
-            attached.transform.position -= (newObj.transform.position - collision.transform.position) * 0.3f;
-            attached.transform.localScale = transform.localScale;
-            attached.transform.parent = collision.transform;
+            GameObject attached = Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
+            
             
             pathogen.dead = true;
         }

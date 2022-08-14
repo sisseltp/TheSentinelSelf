@@ -42,11 +42,12 @@ GameObject:
   - component: {fileID: 2110906049226356926}
   - component: {fileID: 1928042717935989267}
   - component: {fileID: 1928042717935989268}
-  - component: {fileID: 185645521}
   - component: {fileID: 185645519}
   - component: {fileID: 185645520}
   - component: {fileID: 4976171079601211309}
   - component: {fileID: 6989231262262274070}
+  - component: {fileID: 5310200212669412430}
+  - component: {fileID: -1499884562612122432}
   m_Layer: 0
   m_Name: daphnia-with-arms
   m_TagString: Player
@@ -108,20 +109,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 1928042719502502979}
     m_Active: 1
   m_Effectors: []
---- !u!136 &185645521
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585444582935257604}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.89
-  m_Height: 3.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &185645519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  genSpeedScl: 8
-  targetSpeedScl: 30
+  genSpeedScl: 4
+  targetSpeedScl: 20
   geneticMovement: []
 --- !u!114 &185645520
 MonoBehaviour:
@@ -178,13 +165,13 @@ Rigidbody:
   m_GameObject: {fileID: 1585444582935257604}
   serializedVersion: 2
   m_Mass: 0.2
-  m_Drag: 0.1
-  m_AngularDrag: 0.3
+  m_Drag: 0.2
+  m_AngularDrag: 0.4
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!114 &6989231262262274070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +187,33 @@ MonoBehaviour:
   fadeTime: 2
   steps: 10
   fosil: {fileID: 3559582817055775195, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+--- !u!136 &5310200212669412430
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585444582935257604}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.51
+  m_Height: 1.95
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.09, z: 0.09}
+--- !u!135 &-1499884562612122432
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585444582935257604}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.57
+  m_Center: {x: 0, y: 1.49, z: -0.17}
 --- !u!1 &1928042717941713881
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.77
   m_Data:
     m_ConstrainedObject: {fileID: 515672898910368219}
     m_Source: {fileID: 438196943517218676}
@@ -295,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.78
   m_Data:
     m_ConstrainedObject: {fileID: 3005896273826505567}
     m_Source: {fileID: 438196943517218676}
@@ -347,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.82
   m_Data:
     m_ConstrainedObject: {fileID: 2101941393915507332}
     m_Source: {fileID: 6734919383899769401}
@@ -399,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.82
   m_Data:
     m_ConstrainedObject: {fileID: 438196943517218676}
     m_Source: {fileID: 8888845118230745360}
@@ -451,7 +465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.83
   m_Data:
     m_ConstrainedObject: {fileID: 6734919383899769401}
     m_Source: {fileID: 438196943517218676}
@@ -511,7 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.83
   m_Effectors: []
 --- !u!1 &1928042719822137939
 GameObject:
@@ -556,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.8
   m_Data:
     m_ConstrainedObject: {fileID: 4471682514007231115}
     m_Source: {fileID: 438196943517218676}
@@ -608,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b37cffab30b939469bac076fdd82c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0.76
   m_Data:
     m_ConstrainedObject: {fileID: 8632411757436439041}
     m_Source: {fileID: 438196943517218676}
@@ -768,7 +782,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3203915801951149285}
   m_LocalRotation: {x: 0.91949755, y: 0.00000014058202, z: 0.000000328838, w: 0.39309573}
-  m_LocalPosition: {x: -1.2722492e-18, y: 0.002102642, z: 0.005729701}
+  m_LocalPosition: {x: -1.272249e-18, y: 0.002102642, z: 0.0078}
   m_LocalScale: {x: 1, y: 1, z: 1.0000001}
   m_Children:
   - {fileID: 9022874420962285435}
