@@ -45,6 +45,12 @@ public class CameraTracker : MonoBehaviour
     private ethernetValues heartbeatSensor;
     private IntroBeginner introCntrl;
 
+    [SerializeField]
+    private float nScale = 0.1f;
+    [SerializeField]
+    private float driftPower = 5f;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -96,9 +102,12 @@ public class CameraTracker : MonoBehaviour
                 FindScreenTracked("Player");
                
             }
-           
 
-           
+            float x = Mathf.PerlinNoise(transform.position.x * nScale + 1, transform.position.y * nScale + 1);
+            float y = Mathf.PerlinNoise(transform.position.x * nScale + 2, transform.position.y * nScale + 2);
+            float z = Mathf.PerlinNoise(transform.position.x * nScale, transform.position.y * nScale);
+            rb.AddForce(transform.right * driftPower * Time.deltaTime);
+
         }
      
 
