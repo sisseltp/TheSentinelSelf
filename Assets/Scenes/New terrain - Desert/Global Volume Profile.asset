@@ -32,11 +32,11 @@ MonoBehaviour:
   active: 1
   m_AdvancedMode: 0
   type:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 8
   intensity:
     m_OverrideState: 1
-    m_Value: 0.95
+    m_Value: 1
     min: 0
     max: 1
   response:
@@ -86,7 +86,7 @@ MonoBehaviour:
     min: 0.1
   aperture:
     m_OverrideState: 1
-    m_Value: 7.4
+    m_Value: 5.3
     min: 1
     max: 32
   focalLength:
@@ -216,7 +216,7 @@ MonoBehaviour:
     min: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 1.67
+    m_Value: 0.53
     min: 0
   scatter:
     m_OverrideState: 1
@@ -325,7 +325,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.45916545, g: 0.49056602, b: 0.45585614, a: 1}
+    m_Value: {r: 0.26326093, g: 0.2735849, b: 0.26197046, a: 1}
     hdr: 0
     showAlpha: 0
     showEyeDropper: 1
@@ -334,12 +334,12 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0.517
     min: 0
     max: 1
   smoothness:
-    m_OverrideState: 0
-    m_Value: 0.2
+    m_OverrideState: 1
+    m_Value: 0.323
     min: 0.01
     max: 1
   rounded:
