@@ -178,7 +178,10 @@ public class CameraTracker : MonoBehaviour
         look = bodies[indx].transform;
 
         tracked = bodies[indx].transform;
-        heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
+        if (heartbeatSensor != null)
+        {
+            heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
+        }
     }
 
     public void FindSceneLook(string tag)
