@@ -41,6 +41,8 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float fadePeriod = 2;
 
+    private ethernetValues heartbeatSensor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +55,7 @@ public class CameraTracker : MonoBehaviour
         origRot = transform.rotation;
         faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
 
+        heartbeatSensor = GetComponentInChildren<ethernetValues>();
     }
 
     // Update is called once per frame
@@ -86,6 +89,7 @@ public class CameraTracker : MonoBehaviour
             {
                 lastChange = Time.time;
                 FindScreenTracked("Player");
+                heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
             }
            
 

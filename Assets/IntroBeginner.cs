@@ -36,14 +36,11 @@ public class IntroBeginner : MonoBehaviour
     {
         if (Input.GetMouseButton(0)==true)
         {
-            camTrack.FindScreenTracked("BodyAlign");
-            camTrack.enabled = true;
-            floating = false;
+            Begin();
         }
         else if( Input.GetMouseButton(1)== true)
         {
-            camTrack.ReturnToOrigin();
-            floating = true;
+            Restart();
         }
 
         if (floating)
@@ -54,5 +51,17 @@ public class IntroBeginner : MonoBehaviour
             rb.AddForce(new Vector3(x, y, z)* driftPower * Time.deltaTime);
 
         }
+    }
+
+    public void Begin()
+    {
+        camTrack.FindScreenTracked("BodyAlign");
+        camTrack.enabled = true;
+        floating = false;
+    }
+    public void Restart()
+    {
+        camTrack.ReturnToOrigin();
+        floating = true;
     }
 }

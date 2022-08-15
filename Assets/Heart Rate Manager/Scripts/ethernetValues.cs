@@ -27,43 +27,79 @@ public class ethernetValues : MonoBehaviour
     public float sentinel4Pulse;
 
 
-    //public float pulseGradient;
-    //private KuramotoAffecterAgent agent;
-    //private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
-    //public int bias = 3;
+    public float pulseGradient;
+    private KuramotoAffecterAgent agent;
+    private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
+    public int bias = 3;
 
+    private bool playing = false;
+    private bool reading = false;
+    [SerializeField]
+    private float beginTimer = 2;
+    [SerializeField]
+    private float restartTimer = 5;
+
+    private float TimerGate = 0;
+
+    private IntroBeginner IntroControl;
     // Start is called before the first frame update
     void Start()
     {
-        //agent = GetComponentInParent<KuramotoAffecterAgent>();
-
+        IntroControl = GetComponentInParent<IntroBeginner>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (sentinel1Rate != 0)
-        //{
-        //    float step = (float)sentinel1Rate / 60;
-        //    step *= Time.deltaTime;
-        //    pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
-        //    pulseGradient = Mathf.Clamp01(pulseGradient);
+        if (sentinel1Rate != 0)
+        {
+            if (!reading)
+            {
+                reading = true;
+                TimerGate = Time.time;
+            }
+            else if(!playing && TimerGate + beginTimer<Time.time)
+            {
+                playing = true;
+                IntroControl.Begin();
+            }
 
-        //    if (sentinel1Pulse == 1)
-        //    {
-        //        pulseGradient = 0;
-        //    }
+            float step = (float)sentinel1Rate / 60;
+            step *= Time.deltaTime;
+            pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
+            pulseGradient = Mathf.Clamp01(pulseGradient);
 
-        //    float theta = pulseGradient * CIRCLE_IN_RADIAN;
-        //    // get this sentinels x,y pos
-        //    float thisX = Mathf.Cos(theta);
-        //    float thisY = Mathf.Sin(theta);
+            if (sentinel1Pulse == 1)
+            {
+                pulseGradient = 0;
+            }
 
-        //    //agent.AddOsiclation(thisX, thisY, bias);
-        //    agent.phase = pulseGradient;
-        //}
+            float theta = pulseGradient * CIRCLE_IN_RADIAN;
+            // get this sentinels x,y pos
+            float thisX = Mathf.Cos(theta);
+            float thisY = Mathf.Sin(theta);
+
+            //agent.AddOsiclation(thisX, thisY, bias);
+            if (agent != null)
+            {
+                agent.phase = pulseGradient;
+            }
+        }
+        else if (reading)
+        {
+            reading = false;
+            TimerGate = Time.time;
+        }
+        else if(playing && TimerGate + restartTimer < Time.time)
+        {
+            IntroControl.Restart();
+        }
     }
     
+    public void setSentinelAgent(KuramotoAffecterAgent thisAgent)
+    {
+        agent = thisAgent;
+    }
 
 
     public void setSentinel1Rate(int value)
