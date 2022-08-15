@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CameraTracker : MonoBehaviour
 {
     public Transform tracked;
+    public Transform look;
     [SerializeField]
     private float setDistance;
 
@@ -42,6 +43,7 @@ public class CameraTracker : MonoBehaviour
     private float fadePeriod = 2;
 
     private ethernetValues heartbeatSensor;
+    private IntroBeginner introCntrl;
 
     // Start is called before the first frame update
     void Start()
@@ -56,6 +58,7 @@ public class CameraTracker : MonoBehaviour
         faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
 
         heartbeatSensor = GetComponentInChildren<ethernetValues>();
+        introCntrl = GetComponent<IntroBeginner>();
     }
 
     // Update is called once per frame
@@ -64,9 +67,10 @@ public class CameraTracker : MonoBehaviour
 
 
         Vector3 dif = tracked.position - transform.position;
-        float dist = Vector3.Distance(tracked.position, transform.position);
 
-        var targetRotation = Quaternion.LookRotation(dif);
+        Vector3 lookDif = look.position - transform.position;
+
+        var targetRotation = Quaternion.LookRotation(lookDif);
 
         // Smoothly rotate towards the target point.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
@@ -74,6 +78,7 @@ public class CameraTracker : MonoBehaviour
         if (tracking)
         {
 
+            float dist = Vector3.Distance(tracked.position, transform.position);
 
             //rb.MoveRotation(Quaternion.LookRotation(dif*0.1f, transform.up));
 
@@ -89,7 +94,7 @@ public class CameraTracker : MonoBehaviour
             {
                 lastChange = Time.time;
                 FindScreenTracked("Player");
-                heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
+               
             }
            
 
@@ -105,17 +110,22 @@ public class CameraTracker : MonoBehaviour
     public void ReturnToOrigin()
     {
         faderImage.CrossFadeAlpha(1, fadePeriod, false);
+        
         StartCoroutine(ReturnCallback());
     }
 
     IEnumerator ReturnCallback()
     {
-
+        rb.velocity = Vector3.zero;
+        tracking = false;
+        
+        Debug.Log("fading");
         yield return new WaitForSecondsRealtime(fadePeriod);
+        Debug.Log("Faded");
 
         tracked = null;
-        tracking = false;
         enabled = false;
+        introCntrl.floating = true;
         transform.position = origin;
         transform.rotation = origRot;
         faderImage.CrossFadeAlpha(0, fadePeriod, false);
@@ -155,10 +165,35 @@ public class CameraTracker : MonoBehaviour
                 }
             }
         }
-
-
+        
+        look = bodies[indx].transform;
 
         tracked = bodies[indx].transform;
+        heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
+    }
+
+    public void FindSceneLook(string tag)
+    {
+        GameObject[] bodies = GameObject.FindGameObjectsWithTag(tag);
+
+        float dist = float.PositiveInfinity;
+
+        int indx = -1;
+
+        for (int i = 0; i < bodies.Length; i++)
+        {
+            if (bodies[i].GetInstanceID() != tracked.GetInstanceID())
+            {
+                float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
+                if (thisDist < dist)
+                {
+                    indx = i;
+                    dist = thisDist;
+                }
+            }
+        }
+
+        look = bodies[indx].transform;
     }
 
     /*
@@ -199,7 +234,7 @@ private void OnTriggerExit(Collider collision)
             }
         }
 
-
+        look = bodies[indx].transform;
 
         tracked = bodies[indx].transform;
     }

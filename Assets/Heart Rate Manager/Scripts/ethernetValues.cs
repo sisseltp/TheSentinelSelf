@@ -42,6 +42,15 @@ public class ethernetValues : MonoBehaviour
     private float TimerGate = 0;
 
     private IntroBeginner IntroControl;
+
+    [SerializeField]
+    private float avrgDrag = 0.6f;
+    private float avrgRate = 0;
+    private float lastAvrgRate = 0;
+    [SerializeField]
+    private float changeGate = 10;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +60,14 @@ public class ethernetValues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (sentinel1Rate != 0)
+
+        avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
+
+        float avrgChange = Mathf.Abs(sentinel1Rate - lastAvrgRate);
+
+       
+
+        if (avrgRate > 50 && avrgRate < 150 && avrgChange < changeGate)
         {
             if (!reading)
             {
@@ -64,9 +80,9 @@ public class ethernetValues : MonoBehaviour
                 IntroControl.Begin();
             }
 
-            float step = (float)sentinel1Rate / 60;
+            float step = (float)sentinel1Rate / 30;
             step *= Time.deltaTime;
-            pulseGradient += step; // *1.4f; I realised the division above was wron so should be perfect now
+            pulseGradient += step;// *f; I realised the division above was wron so should be perfect now
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
             if (sentinel1Pulse == 1)
@@ -93,7 +109,10 @@ public class ethernetValues : MonoBehaviour
         else if(playing && TimerGate + restartTimer < Time.time)
         {
             IntroControl.Restart();
+            playing = false;
         }
+
+        lastAvrgRate = avrgRate;
     }
     
     public void setSentinelAgent(KuramotoAffecterAgent thisAgent)
