@@ -257,6 +257,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 763207998433013378, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 763207998433013382, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -265,13 +269,29 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 763207999372241596, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: avrgDrag
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 763207999372241596, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: beginTimer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 763207999372241596, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: changeGate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 763207999372241596, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
+      propertyPath: restartTimer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 763207999372241597, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
       propertyPath: m_Name
       value: Heart Rate Manager
       objectReference: {fileID: 0}
     - target: {fileID: 763207999372241597, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 763207999372241599, guid: a7a57238d7adfdc469ed497aee4ce8ce, type: 3}
       propertyPath: m_RootOrder
@@ -971,8 +991,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9030bf12cbf3b48adc0b104d6e3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floating: 1
   driftPower: 170
   nScale: 0.001
+  movementScl: 3
 --- !u!114 &166114222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,8 +1290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9030bf12cbf3b48adc0b104d6e3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floating: 1
   driftPower: 170
-  nScale: 0.001
+  nScale: 0.15
+  movementScl: 30
 --- !u!135 &180126330
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1296,6 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracked: {fileID: 0}
+  look: {fileID: 0}
   setDistance: 9
   distVariation: 2.4
   power: 0.6
@@ -1305,7 +1330,7 @@ MonoBehaviour:
   tracking: 0
   ChangeTrackTimer: 40
   underWaterJumpDist: 150
-  fadePeriod: 2
+  fadePeriod: 4
 --- !u!54 &180126332
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5692,6 +5717,14 @@ PrefabInstance:
       propertyPath: sentinelCam
       value: 
       objectReference: {fileID: 9182297268019072598, guid: 2ecdc0a1f08bb5942830f6a40fc9ccda, type: 3}
+    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedRange.x
+      value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedRange.y
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054862, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -12380,7 +12413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127139967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00075, y: -0.00014, z: 0.00055}
+  m_LocalPosition: {x: -0.00108, y: -0.00014, z: 0.00061}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1947506980}
