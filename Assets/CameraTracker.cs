@@ -182,6 +182,7 @@ public class CameraTracker : MonoBehaviour
         {
             heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
         }
+        GetComponent<BreathingObjects>().SetFocus(tracked);
     }
 
     public void FindSceneLook(string tag)
@@ -249,6 +250,8 @@ private void OnTriggerExit(Collider collision)
         look = bodies[indx].transform;
 
         tracked = bodies[indx].transform;
+
+        GetComponent<BreathingObjects>().SetFocus(tracked);
     }
 
     
