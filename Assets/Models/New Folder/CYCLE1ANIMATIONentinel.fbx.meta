@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 6fa205b55b83b4b4eb47165990bd6b2b
 ModelImporter:
-  serializedVersion: 20200
+  serializedVersion: 20300
   internalIDToNameTable:
   - first:
       74: -6333809740904400131
@@ -24,7 +24,57 @@ ModelImporter:
   - first:
       74: -243898708896917524
     second: Armature|cycle1
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cornea
+    second: {fileID: 2100000, guid: ececdedd183497a4ba4726c472ecda1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeMoisture
+    second: {fileID: 2100000, guid: 2c32cce398c479b43a9a1c345ed13d32, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EyeMoisture.003
+    second: {fileID: 2100000, guid: d62ae5c5138d51c4abc5e12e287f5463, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eyelashes.001
+    second: {fileID: 2100000, guid: 279fa4175bce2dd4c8fd1ca91fd089cf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Irises
+    second: {fileID: 2100000, guid: 978bc9aa476b75945a6c6e458cfcb075, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: acbff206329595446b3f5cc06a9d65a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mouth
+    second: {fileID: 2100000, guid: 919092fc550036e4d9b2a124373fa7b7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pupils
+    second: {fileID: 2100000, guid: f89a98bad32c65a45b62dc22af64a39b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sclera
+    second: {fileID: 2100000, guid: 624b031725f7a6e41a22a9a957ed5882, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Torso
+    second: {fileID: 2100000, guid: 0a7e26e566ba5b945a427596bebfddba, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -117,6 +167,7 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

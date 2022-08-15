@@ -88,7 +88,7 @@ public class GeneticMovementPlastic : MonoBehaviour
             plastic.dead = true;
 
             
-            Instantiate(attachedGO, transform.position, transform.rotation, collision.transform);
+            Instantiate(attachedGO, collision.GetContact(0).point, transform.rotation, collision.transform);
 
             collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
             collision.gameObject.GetComponent<Rigidbody>().drag += 0.1f;
