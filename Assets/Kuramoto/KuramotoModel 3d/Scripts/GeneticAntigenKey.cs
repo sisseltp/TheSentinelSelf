@@ -45,14 +45,14 @@ public class GeneticAntigenKey : MonoBehaviour
 
     private IEnumerator TimedDisolve(float waitTime)
     {
-        waitTime += UnityEngine.Random.Range(-fadeTimeVarience, fadeTimeVarience);
+       // waitTime += UnityEngine.Random.Range(-fadeTimeVarience, fadeTimeVarience);
         float finish = Time.time + waitTime;
         float step = transform.localScale.x / waitTime;
         float scl = transform.localScale.x;
         while (Time.time<finish)
         {
             scl -= step;
-            if (scl <= 0) { Destroy(gameObject); }
+            if (scl <= step*2) { Destroy(gameObject); }
             transform.localScale = new Vector3(scl, scl, scl);
             yield return new WaitForSeconds(waitTime / 10);
             //print("WaitAndPrint " + Time.time);

@@ -8,13 +8,18 @@ public class IntroBeginner : MonoBehaviour
 
     CameraTracker camTrack;
 
-    private bool floating = true;
+    [HideInInspector]
+    public bool floating = true;
 
     [SerializeField]
     private float driftPower = 3.5f;
     [SerializeField]
     private float nScale = 3.5f;
     private Rigidbody rb;
+
+    [SerializeField]
+    private float movementScl = 3f;
+    private Vector3 origin;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +34,7 @@ public class IntroBeginner : MonoBehaviour
         faderImage.CrossFadeAlpha(0f, 2, true);
 
         rb = GetComponent<Rigidbody>();
+        origin = transform.position;
     }
 
     // Update is called once per frame
@@ -45,23 +51,29 @@ public class IntroBeginner : MonoBehaviour
 
         if (floating)
         {
+            /*
             float x =  Mathf.PerlinNoise(transform.position.x* nScale +1, transform.position.y* nScale +1);
             float y = Mathf.PerlinNoise(transform.position.x*nScale + 2, transform.position.y* nScale + 2);
             float z = Mathf.PerlinNoise(transform.position.x* nScale, transform.position.y* nScale);
             rb.AddForce(new Vector3(x, y, z)* driftPower * Time.deltaTime);
-
+            */
+            float x = Mathf.PerlinNoise(Time.time * nScale + 1, Time.time * nScale + 2);
+            float y = Mathf.PerlinNoise(Time.time * nScale + 2, Time.time * nScale + 3);
+            float z = Mathf.PerlinNoise(Time.time * nScale + 3, Time.time * nScale + 4);
+            rb.position = origin + new Vector3(x, y, z) * movementScl;
         }
     }
 
     public void Begin()
     {
         camTrack.FindScreenTracked("BodyAlign");
+        camTrack.FindSceneLook("Body");
         camTrack.enabled = true;
         floating = false;
     }
     public void Restart()
     {
         camTrack.ReturnToOrigin();
-        floating = true;
+       
     }
 }

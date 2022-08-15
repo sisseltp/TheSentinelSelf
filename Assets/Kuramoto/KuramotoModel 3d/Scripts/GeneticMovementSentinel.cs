@@ -104,14 +104,21 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             target = manager.PathogenEmitters[indx];
 
-            GeneticAntigenKey[] keys =  GetComponentsInChildren<GeneticAntigenKey>();
 
-            foreach(GeneticAntigenKey key in keys)
+            int numChild = transform.childCount;
+
+            for(int i=0; i<numChild; i++)
             {
-
-                key.TimeOut();
-
+                Transform child = transform.GetChild(i);
+                GeneticAntigenKey key = child.GetComponent<GeneticAntigenKey>();
+                if (key != null)
+                {
+                    key.TimeOut();
+                }
             }
+            
+
+         
         }
         else if (collision.gameObject.tag == "PathogenEmitter")
         {

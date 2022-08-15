@@ -83,8 +83,8 @@ public class GeneticMovementPlastic : MonoBehaviour
         else if (collision.gameObject.tag == "Player" && !full)
         {
             plastic = GetComponent<KuramotoPlasticAgent>();
-            
-            
+
+            Debug.Log("Plastic");
             plastic.dead = true;
 
             
