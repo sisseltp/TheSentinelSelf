@@ -30,6 +30,9 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float ChangeTrackTimer = 10;
     private float lastChange = 0;
+
+    [SerializeField]
+    private float underWaterJumpDist = 10;
     
 
     private Vector3 origin;
@@ -120,6 +123,7 @@ public class CameraTracker : MonoBehaviour
 
             FindSceneTracked("Player");
             tracking = true;
+            rb.position -= new Vector3(0, underWaterJumpDist, 0);
         } else if (collision.transform.tag == "BodyAlign")
         {
             FindScreenTracked("Body");
