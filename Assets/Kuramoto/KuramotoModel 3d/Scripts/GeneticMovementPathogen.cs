@@ -58,7 +58,7 @@ public class GeneticMovementPathogen : MonoBehaviour
         Vector3 vel = geneticMovement[step] * pathogen.phase * speedScl;
 
         // ad it to the rb
-        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position - transform.up);
 
         // set last phase to phase
         lastPhase = pathogen.phase;

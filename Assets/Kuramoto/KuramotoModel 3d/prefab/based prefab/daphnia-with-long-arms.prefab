@@ -135,6 +135,11 @@ GameObject:
   - component: {fileID: 2997443138887393680}
   - component: {fileID: 3320199497720174054}
   - component: {fileID: 3320199497720174073}
+  - component: {fileID: 6456862398551589228}
+  - component: {fileID: 6711512467612625668}
+  - component: {fileID: -5812643933173890603}
+  - component: {fileID: 5535286013920393949}
+  - component: {fileID: -2861812288990496928}
   m_Layer: 0
   m_Name: daphnia-with-long-arms
   m_TagString: Untagged
@@ -196,6 +201,97 @@ MonoBehaviour:
   - m_Rig: {fileID: 3320199497299129827}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &6456862398551589228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509312084670479146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cycleLength: 10
+  genSpeedScl: 4
+  targetSpeedScl: 20
+  geneticMovement: []
+--- !u!114 &6711512467612625668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509312084670479146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  col0: {r: 0.21340132, g: 1, b: 0, a: 0}
+  col1: {r: 1, g: 0.9708301, b: 0, a: 0}
+  speedBPM: 0
+  speed: 0
+  phase: 0
+  cohPhi: 0
+  coherenceRadius: 0
+  couplingRange: 5
+  noiseScl: 0.1
+  coupling: 1.62
+  speedVariation: 0.43
+  attractionSclr: 0.5
+  Connections: 0
+  dead: 0
+  fitness: 0
+  played: 0
+  age: 0
+  sumX: 0
+  sumY: 0
+--- !u!54 &-5812643933173890603
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509312084670479146}
+  serializedVersion: 2
+  m_Mass: 0.2
+  m_Drag: 0.2
+  m_AngularDrag: 5
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 3
+--- !u!114 &5535286013920393949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509312084670479146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb937e370985d348bd3b6f0a450fcdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 2
+  steps: 10
+  fosil: {fileID: 3559582817055775195, guid: 1823a8af0344bd14fb5442c4f4245ff2, type: 3}
+--- !u!135 &-2861812288990496928
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2509312084670479146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.57
+  m_Center: {x: 0, y: 1.49, z: 0.01}
 --- !u!1 &3320199497299129826
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,11 +388,11 @@ MonoBehaviour:
   m_Data:
     m_ConstrainedObject: {fileID: 3658812636286283354}
     m_Source: {fileID: 5731387923498485822}
-    m_DampPosition: 0.5
+    m_DampPosition: 0.629
     m_DampRotation: 0.5
     m_MaintainAim: 1
   m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
+  m_SettingsGUIToggle: 1
 --- !u!1 &3320199497829664222
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,11 +440,11 @@ MonoBehaviour:
   m_Data:
     m_ConstrainedObject: {fileID: 3024703672237517738}
     m_Source: {fileID: 7612563340450173719}
-    m_DampPosition: 0.5
+    m_DampPosition: 0.651
     m_DampRotation: 0.5
     m_MaintainAim: 1
   m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
+  m_SettingsGUIToggle: 1
 --- !u!1 &3320199498137833868
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,11 +522,11 @@ MonoBehaviour:
   m_Data:
     m_ConstrainedObject: {fileID: 7612563340450173719}
     m_Source: {fileID: 3658812636286283354}
-    m_DampPosition: 0.5
+    m_DampPosition: 0.636
     m_DampRotation: 0.5
     m_MaintainAim: 1
   m_SourceObjectsGUIToggle: 1
-  m_SettingsGUIToggle: 0
+  m_SettingsGUIToggle: 1
 --- !u!1 &5743797784118311748
 GameObject:
   m_ObjectHideFlags: 0

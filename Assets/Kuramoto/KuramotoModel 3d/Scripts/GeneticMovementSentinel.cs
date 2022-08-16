@@ -83,7 +83,9 @@ public class GeneticMovementSentinel : MonoBehaviour
         // add the vel to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position +transform.forward);
 
-       // set last phase to phase
+       // rb.MoveRotation(  Quaternion.Euler(0,1,0));
+
+        // set last phase to phase
         lastPhase = sentinel.phase;
     }
 
