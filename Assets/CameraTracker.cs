@@ -103,9 +103,7 @@ public class CameraTracker : MonoBehaviour
                
             }
 
-            float x = Mathf.PerlinNoise(transform.position.x * nScale + 1, transform.position.y * nScale + 1);
-            float y = Mathf.PerlinNoise(transform.position.x * nScale + 2, transform.position.y * nScale + 2);
-            float z = Mathf.PerlinNoise(transform.position.x * nScale, transform.position.y * nScale);
+           
             rb.AddForce(transform.right * driftPower * Time.deltaTime);
 
         }
@@ -135,6 +133,7 @@ public class CameraTracker : MonoBehaviour
         tracked = null;
         enabled = false;
         introCntrl.floating = true;
+        introCntrl.alongPath.enabled = true;
         transform.position = origin;
         transform.rotation = origRot;
         faderImage.CrossFadeAlpha(0, fadePeriod, false);

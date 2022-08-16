@@ -20,6 +20,17 @@ public class IntroBeginner : MonoBehaviour
     [SerializeField]
     private float movementScl = 3f;
     private Vector3 origin;
+
+    [SerializeField]
+    private Transform look;
+
+    [SerializeField]
+    private float rotSpeed = 1;
+
+    [HideInInspector]
+    public Romi.PathTools.MoveAlongPath alongPath;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +46,8 @@ public class IntroBeginner : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         origin = transform.position;
+
+        alongPath = GetComponent<Romi.PathTools.MoveAlongPath>();
     }
 
     // Update is called once per frame
@@ -61,6 +74,13 @@ public class IntroBeginner : MonoBehaviour
             float y = Mathf.PerlinNoise(Time.time * nScale + 2, Time.time * nScale + 3);
             float z = Mathf.PerlinNoise(Time.time * nScale + 3, Time.time * nScale + 4);
             rb.position = origin + new Vector3(x, y, z) * movementScl;
+
+            Vector3 lookDif = look.position - transform.position;
+
+            var targetRotation = Quaternion.LookRotation(lookDif);
+
+            // Smoothly rotate towards the target point.
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
         }
     }
 
@@ -70,6 +90,7 @@ public class IntroBeginner : MonoBehaviour
         camTrack.FindSceneLook("Body");
         camTrack.enabled = true;
         floating = false;
+        alongPath.enabled = false;
     }
     public void Restart()
     {
