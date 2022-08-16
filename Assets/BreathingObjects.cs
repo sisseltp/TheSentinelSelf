@@ -21,7 +21,6 @@ public class BreathingObjects : MonoBehaviour
             {
                 breath.material.SetFloat(id, phaseFocus.phase);
             }
-            Debug.Log(phaseFocus.phase);
         }
     }
     public void SetFocus(Transform focus)
