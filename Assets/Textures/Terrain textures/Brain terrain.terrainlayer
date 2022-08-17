@@ -8,13 +8,13 @@ TerrainLayer:
   m_PrefabAsset: {fileID: 0}
   m_Name: Brain terrain
   m_DiffuseTexture: {fileID: 2800000, guid: b1b6b7a63890a41b4a8767622f3cb3cf, type: 3}
-  m_NormalMapTexture: {fileID: 2800000, guid: d8846ab4d86944b5ba677a9321edae6e, type: 3}
+  m_NormalMapTexture: {fileID: 2800000, guid: e549dba1ecd2e4c3dabe577d35ef4106, type: 3}
   m_MaskMapTexture: {fileID: 0}
-  m_TileSize: {x: 30, y: 30}
+  m_TileSize: {x: 40, y: 40}
   m_TileOffset: {x: 0, y: 0}
   m_Specular: {r: 0, g: 0, b: 0, a: 0}
-  m_Metallic: 0.497
-  m_Smoothness: 0.454
+  m_Metallic: 0.303
+  m_Smoothness: 0.654
   m_NormalScale: 1
   m_DiffuseRemapMin: {x: 0, y: 0, z: 0, w: 0}
   m_DiffuseRemapMax: {x: 1, y: 1, z: 1, w: 1}
