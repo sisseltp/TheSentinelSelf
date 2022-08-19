@@ -10653,18 +10653,23 @@ MonoBehaviour:
     rightHandle: {x: -443.95898, y: -204.95183, z: 521.5791}
     orientation: 0
     tangentType: 0
-  - localPos: {x: -240.07156, y: -258.24936, z: -431.86954}
-    leftHandle: {x: 15.178612, y: -260.7177, z: -131.16695}
-    rightHandle: {x: -514.53143, y: -255.59525, z: -755.2025}
+  - localPos: {x: -11.723228, y: -263.67743, z: -334.6756}
+    leftHandle: {x: 243.52707, y: -266.14578, z: -33.972992}
+    rightHandle: {x: -286.15768, y: -261.02356, z: -657.97845}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -383.05927, y: -312.8056, z: -222.34962}
+    leftHandle: {x: -379.7274, y: -218.26443, z: -144.42305}
+    rightHandle: {x: -388.32132, y: -462.11536, z: -345.4198}
     orientation: 0
     tangentType: 0
   selectedId: 0
   handleMulti: 19.36
   closeLoop: 1
   showUpVector: 1
-  lastPos: {x: -566.9894, y: -252.1149, z: 217.08524}
-  lastLeftHandlePos: {x: -863.36945, y: -257.45193, z: -61.028442}
-  lastRightHandlePos: {x: -351.93854, y: -248.24239, z: 418.88214}
+  lastPos: {x: -383.05927, y: -312.8056, z: -222.34962}
+  lastLeftHandlePos: {x: -379.7274, y: -218.26443, z: -144.42305}
+  lastRightHandlePos: {x: -395.64572, y: -462.11505, z: -366.8947}
 --- !u!4 &1683609628
 Transform:
   m_ObjectHideFlags: 0
