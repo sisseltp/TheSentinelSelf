@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6464906403244711049
+--- !u!114 &-1690106266449968530
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32,20 +32,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_2112e93317384962991d888e43c59bfe:
-        m_Texture: {fileID: 2800000, guid: aeec127150c58f843be018a3e55f3295, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_434ddbfc23f942d1ab0904915048149a:
-        m_Texture: {fileID: 2800000, guid: 3eb4b78d429807543a1c8724a52cce70, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - Texture2D_aa495e8c8f9c4642833e4e954438e670:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3a0c59a2d9ca10f49801e44a45bc99cf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d5567a461bc8b6a4f92fdc0e586a33e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -69,7 +61,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d5567a461bc8b6a4f92fdc0e586a33e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -109,11 +101,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Phase: 1.91
-    - Vector1_3eddbe5c2c29476e9c9b22579295e28e: 7.35
-    - Vector1_556b9eb6480c47debe0aee32d37e9dae: -0.02
-    - Vector1_99c1daa1b1c242be9be328fa92c5c5cb: 0.7
-    - Vector1_fbdf56743d834f6ab5cfd032222871e4: 0.2
+    - Vector1_3eddbe5c2c29476e9c9b22579295e28e: 1.33
+    - Vector1_99c1daa1b1c242be9be328fa92c5c5cb: 0.07
+    - Vector1_ca23219f42bc4460af232205484f72b5: 127.28
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -128,7 +118,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _Metallic: 0.779
+    - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -143,7 +133,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.6415094, g: 0.33233532, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
