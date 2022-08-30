@@ -21,7 +21,8 @@ public class GeneticMovementPathogen : MonoBehaviour
 
     private float lastPhase = 0; // holds the last phase pos
 
-
+    [SerializeField]
+    private int maxKeys = 10;
 
 
     // Start is called before the first frame update
@@ -80,15 +81,18 @@ public class GeneticMovementPathogen : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Player" )
         {
-            Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
+            int numkeys = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>().Length;
+            if (numkeys < maxKeys)
+            {
+                Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
+
+                GameObject newObj = transform.GetChild(0).gameObject;
+
+                Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
 
 
-            GameObject newObj = transform.GetChild(0).gameObject;
-
-            GameObject attached = Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
-            
-            
-            pathogen.dead = true;
+                pathogen.dead = true;
+            }
         }
         
     }

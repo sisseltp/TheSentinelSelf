@@ -30,7 +30,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
     public float coupling = 0.5f; // coupling scaler
     public float speedVariation = 0.1f; // amount to randomize data
     public float attractionSclr = 0.5f;// Scales Attraction
-    public int Connections = 0; // num neighbors
+    public float Connections = 0; // num neighbors
     public int played = 0; // if the player has been in contact
     public bool dead = false; // collision killer
     public float fitness=0; // holds this agents fitness value
@@ -38,6 +38,8 @@ public class KuramotoAffectedAgent : MonoBehaviour
     // holds the x,y position of the phase
     public float sumx = 0f;
     public float sumy = 0f;
+
+   
 
     // Start is called before the first frame update
     void Start()
@@ -87,7 +89,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
 
         // set the material to lerp between the the 2 cols by the phase
         rendr.material.color = Color.Lerp(col0, col1, phase);
-
+        rendr.material.SetFloat("Phase", phase);
      
 
     }

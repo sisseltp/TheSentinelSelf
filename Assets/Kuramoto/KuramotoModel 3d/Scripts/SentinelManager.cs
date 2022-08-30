@@ -19,6 +19,9 @@ public class SentinelManager : MonoBehaviour
     [Range(0.1f, 100f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to be spawned in
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float speedScl = 2;
 
     [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
     [SerializeField]
@@ -52,6 +55,8 @@ public class SentinelManager : MonoBehaviour
     public Vector3[] Lymphondes;
     [HideInInspector]
     public Vector3[] PathogenEmitters;
+    [HideInInspector]
+    public PathogenManager[] pathogenManagers;
 
 
 
@@ -59,7 +64,7 @@ public class SentinelManager : MonoBehaviour
     public struct GPUData
     {
         public float age;
-        public int connections;
+        public float connections;
         public int played;
         public float speed;
         public float phase;
@@ -139,10 +144,12 @@ public class SentinelManager : MonoBehaviour
 
         GameObject[] pathogens = GameObject.FindGameObjectsWithTag("PathogenEmitter");
         PathogenEmitters = new Vector3[pathogens.Length];
+        pathogenManagers = new PathogenManager[pathogens.Length];
 
         for (int i = 0; i < pathogens.Length; i++)
         {
             PathogenEmitters[i] = pathogens[i].transform.position;
+            pathogenManagers[i] = pathogens[i].GetComponent<PathogenManager>();
         }
 
 
@@ -178,7 +185,7 @@ public class SentinelManager : MonoBehaviour
                 kuramoto.phase = GPUStruct[i].phase;
                 kuramoto.Connections = GPUStruct[i].connections;
                 kuramoto.played = GPUStruct[i].played;
-                //sentinels[i].GetComponent<Rigidbody>().velocity += sentinelsStruct[i].vel;
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up); 
                 GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
                 GPUStruct[i].pos = sentinels[i].transform.position;
             }
@@ -191,11 +198,10 @@ public class SentinelManager : MonoBehaviour
         {
             // reorder on fitness
             Debug.Log("Resize");
-            Debug.Log(GenVelLib[0].fitness);
             // negative selection
             GenVelLib = Genetics.NegativeSelection(GenVelLib);
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
-            Debug.Log(GenVelLib[0].fitness);
+            
 
         }
     }

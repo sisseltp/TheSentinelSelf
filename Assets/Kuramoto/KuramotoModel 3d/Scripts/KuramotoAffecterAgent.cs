@@ -26,7 +26,7 @@ public class KuramotoAffecterAgent : MonoBehaviour
     public float coupling = 0.5f; // scales the coupling effect
     public float speedVariation = 0.1f; // variation to randomise speed
     public float attractionSclr = 0.5f;
-    public int Connections = 0; // counts how many links it has within the range
+    public float Connections = 0; // counts how many links it has within the range
     public bool dead = false;// dead trigger
     public float fitness = 0;// fitness rating for the agent
     public int played = 0;
@@ -89,7 +89,7 @@ public class KuramotoAffecterAgent : MonoBehaviour
 
         //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
         rendr.material.color = Color.Lerp(col0, col1, phase);
-
+        rendr.material.SetFloat("Phase", phase);
     }
 
     // if it collides with the surrounding area it dies

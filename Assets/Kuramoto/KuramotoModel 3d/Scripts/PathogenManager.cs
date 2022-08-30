@@ -59,7 +59,7 @@ public class PathogenManager : MonoBehaviour
     public struct GPUData
     {
         public float age;
-        public int connections;
+        public float connections;
         public int played;
         public float speed;
         public float phase;
@@ -178,9 +178,7 @@ public class PathogenManager : MonoBehaviour
         // loop over the n sentinels
         for (int i = 0; i < RealNumPathogens; i++)
         {
-            if (sentinels[i] == null) { 
-                Debug.Log(i); 
-            }
+            
             // get the kurmto
             KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
@@ -208,7 +206,7 @@ public class PathogenManager : MonoBehaviour
                 kuramoto.phase = GPUStruct[i].phase;
                 kuramoto.Connections = GPUStruct[i].connections;
                 kuramoto.played = GPUStruct[i].played;
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel* Time.deltaTime * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
                 
                 GPUStruct[i].pos = sentinels[i].transform.position;
 

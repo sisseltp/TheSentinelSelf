@@ -36,7 +36,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private GeneticAntigenKey thisAnti;
 
-
+    bool notKeyed = true;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
 
         manager = GetComponentInParent<TCellManager>();
-        target = Vector3.zero;
+        target = transform.parent.position;
 
          thisAnti = gameObject.GetComponent<GeneticAntigenKey>();
         
@@ -84,8 +84,9 @@ public class GeneticMovementTcell : MonoBehaviour
 
          // get vel from this steps genmov, mult by phase and scl
         Vector3 vel =   thisGenVel * sentinel.phase * genSpeedScl;
-        if (target != Vector3.zero) {
-            vel += Vector3.Normalize(target - transform.position) * sentinel.phase * targetSpeedScl; }
+        
+            vel += Vector3.Normalize(target - transform.position) * sentinel.phase * targetSpeedScl;
+        
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
@@ -117,7 +118,7 @@ public class GeneticMovementTcell : MonoBehaviour
         else if (collision.gameObject.tag == "Player")
         {
             // get keys from children
-            GeneticAntigenKey[] Antigens =  collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
+            GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
 
             // if there are any keys
             if (Antigens.Length > 0)
@@ -126,25 +127,26 @@ public class GeneticMovementTcell : MonoBehaviour
                 AntigenKeys[] results = Compare(Antigens);
 
                 // run over results
-                for(int i=1; i<results.Length; i++) 
+                for (int i = 1; i < results.Length; i++)
                 {
                     // if it has a connection
                     if (results[i].hit > 0)
                     {
+                        
+                        notKeyed = false;
                         // add fitness
-                        Antigens[i-1].antigen.fitness++;
+                        Antigens[i - 1].antigen.fitness++;
                         // set the target from the origin
-                        target = Antigens[i-1].origin;
+                        target = Antigens[i - 1].origin;
                         // create a replica
-                        GameObject replica =  Instantiate(this.gameObject, transform.parent);
+                        GameObject replica = Instantiate(this.gameObject, transform.parent);
                         // add new tcell to manager
                         manager.AddTCell(replica);
-                        
                     }
                 }
             }
-           
-            
+
+
         }
         else if (collision.gameObject.tag == "Pathogen")
         {
@@ -171,13 +173,32 @@ public class GeneticMovementTcell : MonoBehaviour
                 }
             }
         }
-        else if(collision.gameObject.tag == "Plastic")
+        else if (collision.gameObject.tag == "Plastic")
         {
             Debug.Log("plasticTcellHit");
 
-            target =  collision.gameObject.GetComponent<GeneticMovementPlastic>().origin;
+            target = collision.gameObject.GetComponent<GeneticMovementPlastic>().origin;
+            notKeyed = false;
+        }
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Lymphonde" && notKeyed)
+        {
+
+            target = transform.parent.position+(UnityEngine.Random.onUnitSphere * 100);
+
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "LymphOuter" && notKeyed )
+        {
+            target = transform.parent.position;
+        }
+    }
+
     private struct AntigenKeys
     {
         public int key1;

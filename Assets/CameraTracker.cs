@@ -50,6 +50,10 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float driftPower = 5f;
 
+    [SerializeField]
+    private float restReset = 10;
+
+    public float restTimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +70,8 @@ public class CameraTracker : MonoBehaviour
         heartbeatSensor = GetComponentInChildren<ethernetValues>();
         introCntrl = GetComponent<IntroBeginner>();
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -94,6 +100,20 @@ public class CameraTracker : MonoBehaviour
             }
             else if (dist < setDistance + distVariation)
             {
+                if (AbsMagnitude(rb.velocity) < 3)
+                {
+                    restTimer += Time.deltaTime;
+                    if (restTimer > restReset)
+                    {
+                        
+                        FindScreenTracked("Player");
+                        restTimer = 0;
+                    }
+                }
+                else
+                {
+                    restTimer = 0;
+                }
                 return;
             }
              if (Time.time-lastChange>ChangeTrackTimer)
@@ -111,7 +131,15 @@ public class CameraTracker : MonoBehaviour
 
         rb.velocity += dif * power * Time.deltaTime;
 
+       
 
+    }
+
+    private float AbsMagnitude(Vector3 vec)
+    {
+        return Mathf.Abs(vec.x) + Mathf.Abs(vec.y)+  Mathf.Abs(vec.z);
+
+         
     }
 
     public void ReturnToOrigin()
@@ -157,7 +185,7 @@ public class CameraTracker : MonoBehaviour
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tag);
 
-        float dist = float.PositiveInfinity;
+        int max = 0;
 
         int indx = -1;
 
@@ -165,11 +193,29 @@ public class CameraTracker : MonoBehaviour
         {
             if (bodies[i].GetInstanceID() != tracked.GetInstanceID())
             {
-                float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
-                if (thisDist < dist)
+                int numPlastics =  bodies[i].GetComponentsInChildren<GeneticMovementPlastic>().Length;
+
+                if (max < numPlastics)
                 {
                     indx = i;
-                    dist = thisDist;
+                    max = numPlastics;
+                }
+            }
+        }
+
+        if (indx == -1)
+        {
+            float dist = float.PositiveInfinity;
+            for (int i = 0; i < bodies.Length; i++)
+            {
+                if (bodies[i].GetInstanceID() != tracked.GetInstanceID())
+                {
+                    float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
+                    if (thisDist < dist)
+                    {
+                        indx = i;
+                        dist = thisDist;
+                    }
                 }
             }
         }
@@ -208,22 +254,7 @@ public class CameraTracker : MonoBehaviour
         look = bodies[indx].transform;
     }
 
-    /*
-private void OnTriggerExit(Collider collision)
-{
-   Debug.Log(collision.tag);
-   if (collision.transform.tag == "Body")
-   {
-       Transform parent = collision.transform.parent.parent;
-       Destroy(parent.gameObject);
 
-   }
-   else if (collision.transform.tag == "Layer")
-   {
-       Destroy(collision.gameObject);
-   }
-}
-*/
     public void FindScreenTracked(string tag)
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tag);

@@ -162,8 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  speedScl: 2
+  speedScl: 10
   geneticMovement: []
+  maxKeys: 10
 --- !u!114 &1986335170899891946
 MonoBehaviour:
   m_ObjectHideFlags: 0

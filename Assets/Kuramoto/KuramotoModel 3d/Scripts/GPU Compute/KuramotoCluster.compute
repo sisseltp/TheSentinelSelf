@@ -8,7 +8,7 @@
 struct Sentinel
 {
 	float age;
-	int connections;
+	float connections;
 	int played;
 	float speed;
 	float phase;
@@ -70,7 +70,7 @@ void Bio2BioCOHERENCE(int id) {
 				sumx += thisX;
 				sumy += thisY;
 				// add one to the Connections
-				biomeData[id].connections = biomeData[id].connections + 1;
+				biomeData[id].connections += 1.0;
 
 				// find the distance between the two cycles (between 0-2 as its sin/cos positions)
 				float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
@@ -79,7 +79,7 @@ void Bio2BioCOHERENCE(int id) {
 				// invert
 				sigDst *= -1;
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += (biomeData[b].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl * biomeData[b].attractionScl;
+				biomeData[id].vel += (biomeData[b].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl ;
 
 				
 			}
@@ -109,10 +109,10 @@ void Bio2SenCOHERENCE(int id) {
 				float thisX = cos(theta);
 				float thisY = sin(theta);
 				// add to oscilation values to sums (total) 
-				sumx += thisX ;
-				sumy += thisY ;
+				sumx += thisX*2 ;
+				sumy += thisY*2 ;
 				// add one to the Connections
-				biomeData[id].connections ++;
+				biomeData[id].connections +=2;
 
 				// find the distance between the two cycles (between 0-2 as its sin/cos positions)
 				float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
@@ -121,7 +121,7 @@ void Bio2SenCOHERENCE(int id) {
 				// invert
 				sigDst *= -1;
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += (sentinelData[s].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl * sentinelData[s].attractionScl;
+				biomeData[id].vel += ((sentinelData[s].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl)*2;
 				// add to played data
 				biomeData[id].played += 1;
 
@@ -161,8 +161,17 @@ void Plas2SenCOHERENCE(int id) {
 			sumy += thisY;
 			sumx += thisX;
 
+			// find the distance between the two cycles (between 0-2 as its sin/cos positions)
+			float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
+			// minus 1 so betwenn -1-1
+			sigDst -= 1;
+			// invert
+			sigDst *= -1;
+
+			sentinelData[id].vel += (plasticData[b].pos - sentinelData[id].pos) * sigDst *  plasticData[b].attractionScl;
+
 			// add one to the Connections
-			sentinelData[id].connections += 1 ;// = round(normDist);
+			sentinelData[id].connections += 1.0 ;// = round(normDist);
 			sentinelData[id].played += 1;
 		}
 
@@ -194,7 +203,7 @@ void Sen2BioCOHERENCE(int id) {
 			sumx += thisX;
 			sumy += thisY;
 			// add one to the Connections
-			sentinelData[id].connections += 1;
+			sentinelData[id].connections += 1.0;
 
 			// find the distance between the two cycles (between 0-2 as its sin/cos positions)
 			float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
@@ -203,8 +212,8 @@ void Sen2BioCOHERENCE(int id) {
 			// invert
 			sigDst *= -1;
 			// add the vector between the two * the distance in cycles
-			//biomeData[b].vel += (biomeData[b].pos - sentinelData[id].pos) * sigDst * sentinelData[id].attractionScl;
-			
+			sentinelData[id].vel += (biomeData[b].pos - sentinelData[id].pos) * sigDst * sentinelData[id].attractionScl ;
+
 
 		}
 
@@ -222,7 +231,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 {
 	 sumx = 0;
 	 sumy = 0;
-	 Conects = 0;
+	 Conects = 0 ;
 	 
 	 // if in sentinel range
 	if (int(id.x) < int(sentinelData.Length)) {
@@ -233,6 +242,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		// get phase value
 		float p = sentinelData[id.x].phase;
 
+		sentinelData[id.x].vel = float3(0, 0, 0);
+		
 		// times the points value by 2*Pi
 		float theta = p * CIRCLE_IN_RADIAN;
 		// get this agents phase x,y
@@ -251,6 +262,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			// average the values over total num connections 
 			sumx /= float( sentinelData[id.x].connections);
 			sumy /= float(sentinelData[id.x].connections);
+
+			sentinelData[id.x].vel /= sentinelData[id.x].connections;;
 
 			// angle to x,y pos to positive x axis
 			sentinelData[id.x].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
@@ -289,8 +302,10 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 
 		// add the vel to the rigid body, scaled by the phase to make it pulse movement
 		//sentinelData[id.x].vel *= p;
-		sentinelData[id.x].fittness += biomeData[id.x].connections * dt;
-
+		sentinelData[id.x].fittness += sentinelData[id.x].connections * dt;
+		
+		sentinelData[id.x].vel *= dt;
+		sentinelData[id.x].vel *= p;
 	}// if in biome section
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
 		// set the offseted index
@@ -341,6 +356,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			calc = biomeData[indx].coupling * crad * calc;
 			// add the speed noise and calc together and times by delta time, and add to P
 			p += dt * (biomeData[indx].speed + abs(thisNoise) + calc);
+
+		
 		}
 		else {
 			// if no connects just add speed + noise * delta time
@@ -360,18 +377,21 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		// set the new phase value
 		biomeData[indx].phase = p;
 
+		
 		// add the vel to the rigid body, scaled by the phase to make it pulse movement
+		
 		biomeData[indx].vel *= p;
+		biomeData[indx].vel *= dt;
 
 		// ad the amount of partners * sclr to the fitness
 		biomeData[indx].fittness += biomeData[indx].connections * dt;
-		// ad the amount of partners * sclr to the fitness
-		biomeData[indx].fittness += biomeData[indx].played * dt * 10;
+		
 	}
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length + plasticData.Length)) {
 
 		int indx = id.x - int(biomeData.Length) - int(sentinelData.Length);
 
+		
 		
 		float p = plasticData[indx].phase;
 		float thisNoise = plasticData[indx].noiseScl * Noise(plasticData[indx].pos);
@@ -384,6 +404,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		plasticData[indx].phase = p;
 
 		plasticData[indx].vel = float3(0, 0, 0);
+		plasticData[indx].connections = 0;
 
 		for (int s = 0; s < int(sentinelData.Length); s++)
 		{
@@ -395,8 +416,14 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			if (dist < plasticData[indx].couplingRange)
 			{
 				plasticData[indx].vel += (sentinelData[s].pos - plasticData[indx].pos) * plasticData[indx].attractionScl ;
+				plasticData[indx].connections +=1.0;
 			}
 		}
+		if (plasticData[indx].connections > 0) {
+			plasticData[indx].vel /= plasticData[indx].connections;
+		}
+		plasticData[indx].vel *= p;
+		plasticData[indx].vel *= dt;
 	}
 
 }

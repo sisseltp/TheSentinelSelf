@@ -27,8 +27,11 @@ public class GeneticMovementSentinel : MonoBehaviour
     private float lastPhase = 0;// holds the last phase
 
     private Vector3 target;
+    private bool targeting = true;
 
     private SentinelManager manager;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -73,13 +76,17 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         thisGenVel = geneticMovement[step];
 
-         // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel =   thisGenVel * sentinel.phase * genSpeedScl;
-        vel += Vector3.Normalize(target - transform.position) * sentinel.phase* targetSpeedScl;
+        // get vel from this steps genmov, mult by phase and scl
+        Vector3 vel = thisGenVel;
+        if (targeting)
+        {
+            vel += Vector3.Normalize(target - transform.position);
+        }
+        vel *= sentinel.phase * genSpeedScl;
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
-        
+
         // add the vel to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position +transform.forward);
 
@@ -98,18 +105,64 @@ public class GeneticMovementSentinel : MonoBehaviour
         }
         
     }
+    private int tcellHits = 0;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Tcell")
+        {
+            tcellHits++;
+        }
+    }
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Lymphonde")
+         if (collision.gameObject.tag == "Terrain" && rb.useGravity)
         {
-            int indx = Random.Range(0, manager.PathogenEmitters.Length);
+            GetComponent<Fosilising>().enabled = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+
+
+        if (collision.gameObject.tag == "PathogenEmitter")
+        {
+            int numkeys = GetComponentsInChildren<GeneticAntigenKey>().Length;
+            if (numkeys > 4)
+            {
+                int indx = Random.Range(0, manager.Lymphondes.Length);
+
+                target = manager.Lymphondes[indx];
+                targeting = true;
+                tcellHits = 0;
+            }
+            else
+            {
+                targeting = false;
+            }
+        }
+        else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10)
+        {
+            int indx = 0;
+            int length = 0;
+
+            for (int i = 0; i < manager.pathogenManagers.Length; i++)
+            {
+                int numpathogens = manager.pathogenManagers[i].RealNumPathogens;
+
+                if (numpathogens > length)
+                {
+                    length = numpathogens;
+                    indx = i;
+                }
+            }
 
             target = manager.PathogenEmitters[indx];
 
 
             int numChild = transform.childCount;
 
-            for(int i=0; i<numChild; i++)
+            for (int i = 0; i < numChild; i++)
             {
                 Transform child = transform.GetChild(i);
                 GeneticAntigenKey key = child.GetComponent<GeneticAntigenKey>();
@@ -118,20 +171,16 @@ public class GeneticMovementSentinel : MonoBehaviour
                     key.TimeOut();
                 }
             }
-            
 
-         
-        }
-        else if (collision.gameObject.tag == "PathogenEmitter")
-        {
-            int indx = Random.Range(0, manager.Lymphondes.Length);
 
-            target = manager.Lymphondes[indx];
+
         }
-        else if (collision.gameObject.tag == "Terrain" && rb.useGravity)
-        {
-            GetComponent<Fosilising>().enabled = true;
-        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        targeting = true;
     }
 
 }

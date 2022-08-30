@@ -144,10 +144,10 @@ public class TCellManager : MonoBehaviour
                 kuramoto.fitness = GPUStruct[i].fittness;
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
-                kuramoto.Connections = GPUStruct[i].connections;
+                kuramoto.Connections =  GPUStruct[i].connections;
                 kuramoto.played = GPUStruct[i].played;
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel* Time.deltaTime * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
-                
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+
                 GPUStruct[i].pos = sentinels[i].transform.position;
 
             }

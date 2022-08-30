@@ -61,7 +61,7 @@ public class PlasticManager2 : MonoBehaviour
     public struct GPUData
     {
         public float age;
-        public int connections;
+        public float connections;
         public int played;
         public float speed;
         public float phase;
@@ -178,7 +178,7 @@ public class PlasticManager2 : MonoBehaviour
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
                
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel* Time.deltaTime * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
                 
                 GPUStruct[i].pos = sentinels[i].transform.position;
 
