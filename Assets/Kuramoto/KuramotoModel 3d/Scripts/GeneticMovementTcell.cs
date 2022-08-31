@@ -134,14 +134,19 @@ public class GeneticMovementTcell : MonoBehaviour
                     {
                         
                         notKeyed = false;
+                        GetComponent<Renderer>().material.SetFloat("KeyTrigger", 1);
+
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
                         // set the target from the origin
                         target = Antigens[i - 1].origin;
-                        // create a replica
-                        GameObject replica = Instantiate(this.gameObject, transform.parent);
-                        // add new tcell to manager
-                        manager.AddTCell(replica);
+                        for (int j = 0; j < 3; j++)
+                        {
+                            // create a replica
+                            GameObject replica = Instantiate(this.gameObject, transform.parent);
+                            // add new tcell to manager
+                            manager.AddTCell(replica);
+                        }
                     }
                 }
             }
@@ -179,6 +184,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
             target = collision.gameObject.GetComponent<GeneticMovementPlastic>().origin;
             notKeyed = false;
+            GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
         }
 
     }
