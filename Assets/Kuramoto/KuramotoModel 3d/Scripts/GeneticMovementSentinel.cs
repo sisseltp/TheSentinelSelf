@@ -31,7 +31,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private SentinelManager manager;
 
-    
+    public int keys = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -58,8 +58,6 @@ public class GeneticMovementSentinel : MonoBehaviour
         
         target = manager.PathogenEmitters[indx];
 
-       
-
     }
     
     // Update is called once per frame
@@ -77,12 +75,12 @@ public class GeneticMovementSentinel : MonoBehaviour
         thisGenVel = geneticMovement[step];
 
         // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel = thisGenVel;
+        Vector3 vel = thisGenVel * genSpeedScl;
         if (targeting)
         {
-            vel += Vector3.Normalize(target - transform.position);
+            vel += Vector3.Normalize(target - transform.position)* targetSpeedScl;
         }
-        vel *= sentinel.phase * genSpeedScl;
+        vel *= sentinel.phase ;
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
@@ -127,8 +125,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         if (collision.gameObject.tag == "PathogenEmitter")
         {
-            int numkeys = GetComponentsInChildren<GeneticAntigenKey>().Length;
-            if (numkeys > 4)
+            if (keys >= 3)
             {
                 int indx = Random.Range(0, manager.Lymphondes.Length);
 
@@ -171,7 +168,7 @@ public class GeneticMovementSentinel : MonoBehaviour
                     key.TimeOut();
                 }
             }
-
+            keys = 0;
 
 
         }

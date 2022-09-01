@@ -70,7 +70,7 @@ void Bio2BioCOHERENCE(int id) {
 				sumx += thisX;
 				sumy += thisY;
 				// add one to the Connections
-				biomeData[id].connections += 1.0;
+				biomeData[id].connections += 1;
 
 				// find the distance between the two cycles (between 0-2 as its sin/cos positions)
 				float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
@@ -100,7 +100,7 @@ void Bio2SenCOHERENCE(int id) {
 			float dist = distance(sentinelData[s].pos, biomeData[id].pos);
 
 			// if less than coupling range
-			if (dist < biomeData[id].couplingRange)
+			if (dist < sentinelData[s].couplingRange)
 			{
 
 				// times the points value by 2*Pi
@@ -121,7 +121,7 @@ void Bio2SenCOHERENCE(int id) {
 				// invert
 				sigDst *= -1;
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += ((sentinelData[s].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl)*2;
+				biomeData[id].vel += ((sentinelData[s].pos - biomeData[id].pos) * sigDst * sentinelData[s].attractionScl)*2;
 				// add to played data
 				biomeData[id].played += 1;
 
@@ -182,6 +182,9 @@ void Plas2SenCOHERENCE(int id) {
 
 void Sen2BioCOHERENCE(int id) {
 
+	int indx = -1;
+
+	float minDist = 1000000000;
 
 	// loop over biome 
 	for (int b = 0; b < int(biomeData.Length); b++)
@@ -190,33 +193,52 @@ void Sen2BioCOHERENCE(int id) {
 		// get the distance between the two agents
 		float dist = distance(biomeData[b].pos, sentinelData[id].pos);
 
+
 		// if less than sentinel coupling range
 		if (dist < sentinelData[id].couplingRange)
 		{
 
-			// times the points value by 2*Pi
-			float theta = biomeData[b].phase * CIRCLE_IN_RADIAN;
+			float theta = biomeData[indx].phase * CIRCLE_IN_RADIAN;
 			// get this phases x,y pos
 			float thisX = cos(theta);
 			float thisY = sin(theta);
 			// add to oscilation values to sums (total) 
 			sumx += thisX;
 			sumy += thisY;
-			// add one to the Connections
-			sentinelData[id].connections += 1.0;
+
 
 			// find the distance between the two cycles (between 0-2 as its sin/cos positions)
 			float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
-			// minus 1 so betwenn -1-1
-			sigDst -= 1;
-			// invert
-			sigDst *= -1;
-			// add the vector between the two * the distance in cycles
-			sentinelData[id].vel += (biomeData[b].pos - sentinelData[id].pos) * sigDst * sentinelData[id].attractionScl ;
 
-
+			if (sigDst < minDist) {
+				indx = b;
+				minDist = sigDst;
+			}
 		}
 
+	}
+
+	if (indx != -1) {
+		// times the points value by 2*Pi
+		float theta = biomeData[indx].phase * CIRCLE_IN_RADIAN;
+		// get this phases x,y pos
+		float thisX = cos(theta);
+		float thisY = sin(theta);
+		// add to oscilation values to sums (total) 
+		sumx += thisX;
+		sumy += thisY;
+		// add one to the Connections
+		sentinelData[id].connections += 1.0;
+
+		// find the distance between the two cycles (between 0-2 as its sin/cos positions)
+		float sigDst = distance(float2(phaseX, phaseY), float2(thisX, thisY));
+		// minus 1 so betwenn -1-1
+		sigDst -= 1;
+		// invert
+		//sigDst *= -1;
+
+
+		sentinelData[id].vel = (biomeData[indx].pos - sentinelData[id].pos) * sigDst * sentinelData[id].attractionScl;
 	}
 }
 
@@ -265,6 +287,9 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 
 			sentinelData[id.x].vel /= sentinelData[id.x].connections;;
 
+			sentinelData[id.x].vel *= dt;
+			sentinelData[id.x].vel *= p;
+
 			// angle to x,y pos to positive x axis
 			sentinelData[id.x].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
 			// distance to 0
@@ -304,8 +329,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		//sentinelData[id.x].vel *= p;
 		sentinelData[id.x].fittness += sentinelData[id.x].connections * dt;
 		
-		sentinelData[id.x].vel *= dt;
-		sentinelData[id.x].vel *= p;
+		
+
 	}// if in biome section
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
 		// set the offseted index

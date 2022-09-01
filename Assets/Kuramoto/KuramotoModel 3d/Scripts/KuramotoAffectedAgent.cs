@@ -10,6 +10,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
     // to hold the renderer component
 
     private Renderer rendr;
+
     [Tooltip("colour 1 to lerp between")]
     [SerializeField]
     private Color col0;// phase col1

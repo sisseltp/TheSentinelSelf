@@ -90,10 +90,20 @@ public class GeneticMovementPathogen : MonoBehaviour
 
                 Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
 
-
+                collision.gameObject.GetComponent<GeneticMovementSentinel>().keys++;
                 pathogen.dead = true;
             }
         }
         
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.tag == "PathogenEmitter")
+        {
+            transform.position = transform.parent.position;
+           // GetComponentInParent<PathogenManager>().AddPathogen(1);
+        }
     }
 }

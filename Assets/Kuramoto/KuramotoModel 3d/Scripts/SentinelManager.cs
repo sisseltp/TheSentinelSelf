@@ -188,6 +188,7 @@ public class SentinelManager : MonoBehaviour
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up); 
                 GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
                 GPUStruct[i].pos = sentinels[i].transform.position;
+                GPUStruct[i].couplingRange = kuramoto.couplingRange;
             }
 
         }

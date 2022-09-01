@@ -118,7 +118,7 @@ public class PathogenManager : MonoBehaviour
 
     }
 
-    private void AddPathogen(int i)
+    public void AddPathogen(int i)
     {
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
