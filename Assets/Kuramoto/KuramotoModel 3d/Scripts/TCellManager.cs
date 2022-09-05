@@ -135,7 +135,7 @@ public class TCellManager : MonoBehaviour
                 ResetSentinel(i);
                 
                 GPUStruct[i].SetFromKuramoto(kuramoto);
-                GPUStruct[i].pos = sentinels[i].transform.position;
+                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
             }
             else
@@ -206,7 +206,7 @@ public class TCellManager : MonoBehaviour
         // get i sentinel
         GameObject thisSentinel = sentinels[i];
 
-
+        thisSentinel.GetComponent<Renderer>().material.SetFloat("KeyTrigger", 0);
 
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 

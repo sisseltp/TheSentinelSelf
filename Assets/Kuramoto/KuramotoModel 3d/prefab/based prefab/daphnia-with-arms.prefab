@@ -122,8 +122,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cycleLength: 10
   genSpeedScl: 20
-  targetSpeedScl: 17
+  targetSpeedScl: 25
   geneticMovement: []
+  keys: 0
 --- !u!114 &185645520
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -143,8 +143,8 @@ public class GeneticMovementTcell : MonoBehaviour
                         for (int j = 0; j < 3; j++)
                         {
                             // create a replica
-                            GameObject replica = Instantiate(this.gameObject, transform.parent);
-                            replica.GetComponent<GeneticMovementTcell>().target =  Antigens[i - 1].origin;
+                            GameObject replica = Instantiate(gameObject, transform.parent);
+                            
                             // add new tcell to manager
                             manager.AddTCell(replica);
                         }

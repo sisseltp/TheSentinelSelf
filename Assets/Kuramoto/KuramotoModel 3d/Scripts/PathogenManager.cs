@@ -87,6 +87,7 @@ public class PathogenManager : MonoBehaviour
             attractionScl = kuramoto.attractionSclr;
             age = 0;
             fittness = 0;
+            played = 1;
         }
 
         public void SetPos(Vector3 Pos)
@@ -209,8 +210,8 @@ public class PathogenManager : MonoBehaviour
                 kuramoto.played = GPUStruct[i].played;
                 float sinSpdScl = Mathf.Sin(Mathf.Deg2Rad * (kuramoto.phase * 360)) * speedScl;
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * sinSpdScl, sentinels[i].transform.position - sentinels[i].transform.up);
-                
-                GPUStruct[i].pos = sentinels[i].transform.position;
+
+                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
             }
 

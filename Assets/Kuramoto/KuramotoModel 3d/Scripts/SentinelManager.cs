@@ -19,7 +19,7 @@ public class SentinelManager : MonoBehaviour
     [Range(0.1f, 100f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to be spawned in
-    [Range(0f, 1f)]
+    [Range(0f, 20f)]
     [SerializeField]
     private float speedScl = 2;
 
@@ -175,7 +175,7 @@ public class SentinelManager : MonoBehaviour
                 ResetSentinel(i);
 
                 GPUStruct[i].SetFromKuramoto(kuramoto);
-                GPUStruct[i].pos = sentinels[i].transform.position;
+                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
             }
             else
             {

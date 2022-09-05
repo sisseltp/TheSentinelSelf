@@ -70,25 +70,29 @@ public class GeneticMovementSentinel : MonoBehaviour
             {
                 step = 0;
             }
+            thisGenVel = geneticMovement[step];
         }
 
-        thisGenVel = geneticMovement[step];
+        
 
         // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel = thisGenVel * genSpeedScl;
+        
         if (targeting)
         {
+            Vector3 vel = thisGenVel * genSpeedScl;
             vel += Vector3.Normalize(target - transform.position)* targetSpeedScl;
+            vel *= sentinel.phase;
+            rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
+
         }
-        vel *= sentinel.phase ;
+
 
         // more than one sentinel contact scl it up
         //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
 
         // add the vel to the rb
-        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position +transform.forward);
 
-       // rb.MoveRotation(  Quaternion.Euler(0,1,0));
+        // rb.MoveRotation(  Quaternion.Euler(0,1,0));
 
         // set last phase to phase
         lastPhase = sentinel.phase;
@@ -136,6 +140,7 @@ public class GeneticMovementSentinel : MonoBehaviour
             else
             {
                 targeting = false;
+                
             }
         }
         else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10)

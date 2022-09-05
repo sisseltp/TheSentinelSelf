@@ -82,6 +82,7 @@ public class PlasticManager : MonoBehaviour
             attractionScl = kuramoto.attractionSclr;
             age = 0;
             fittness = 0;
+            played = 1;
         }
 
 
@@ -111,35 +112,6 @@ public class PlasticManager : MonoBehaviour
             GeneticMovementPlastic genVel = thisSentinel.GetComponent<GeneticMovementPlastic>();
             genVel.Reset();
         
-        /*
-        else
-        {
-            // add random sentinel from lib
-            int rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            Genetics.GenKurmto kurData1 = GenKurLib[rand];
-            rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            Genetics.GenKurmto kurData2 = GenKurLib[rand];
-
-            float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
-
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
-            kuramoto.SetupData(Settings);
-
-
-            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            Genetics.GenVel genVel1 = GenVelLib[rand];
-            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            Genetics.GenVel genVel2 = GenVelLib[rand];
-
-            Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
-
-            GeneticMovementSentinel genMov = thisSentinel.GetComponent<GeneticMovementSentinel>();
-            genMov.Reset();
-            genMov.geneticMovement = genVel1.BlendAttributes(Vels);
-
-
-        }
-        */
     }
 
     // Start is called before the first frame update
@@ -194,8 +166,8 @@ public class PlasticManager : MonoBehaviour
             // if older than age 
             
             if (kuramoto.dead || kuramoto.age > age) {
-                Debug.Log("Dead");
-                Debug.Log(i);
+                
+
                 // add data to lib
                 Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
                 GenKurLib.Add(genKurm);

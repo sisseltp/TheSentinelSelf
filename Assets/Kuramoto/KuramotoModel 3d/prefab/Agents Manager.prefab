@@ -1,5 +1,483 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &317070651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 317070652}
+  - component: {fileID: 317070654}
+  - component: {fileID: 317070653}
+  m_Layer: 0
+  m_Name: Pathogen Emitter (3)
+  m_TagString: PathogenEmitter
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &317070652
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317070651}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 528, y: 8.1, z: -18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &317070654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317070651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  nSentinels: 181
+  spawnArea: 10
+  speedRange: {x: 90, y: 100}
+  couplingRange: {x: 4, y: 8}
+  noiseSclRange: {x: 0.0001, y: 0.001}
+  couplingSclRange: {x: 0.2, y: 4}
+  attractionSclRange: {x: 0.2, y: 0.45}
+  sentinels: []
+  MaxAge: 50
+  speedScl: 17.1
+  RealNumPathogens: 0
+  emitionTimer: 20
+--- !u!135 &317070653
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317070651}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &630483497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 630483498}
+  - component: {fileID: 630483499}
+  m_Layer: 0
+  m_Name: outerTrigger
+  m_TagString: LymphOuter
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &630483498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630483497}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774876664968189}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &630483499
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 630483497}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &696109265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 696109266}
+  - component: {fileID: 696109267}
+  m_Layer: 0
+  m_Name: Sentinel Manager (1)
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &696109266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696109265}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 273.7, y: 17.3, z: -16.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &696109267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696109265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 2509312084670479146, guid: f365992f0c7ba49ea9fd9f8038cf6402, type: 3}
+  nSentinels: 20
+  spawnArea: 20
+  speedScl: 2
+  speedRange: {x: 55, y: 70}
+  couplingRange: {x: 10, y: 15}
+  noiseSclRange: {x: 0.0001, y: 0.001}
+  couplingSclRange: {x: 8, y: 15}
+  attractionSclRange: {x: 20, y: 30}
+  sentinels: []
+  MaxAge: 21000
+  Lymphondes: []
+  PathogenEmitters: []
+  pathogenManagers: []
+--- !u!1 &774287594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 774287595}
+  - component: {fileID: 774287597}
+  - component: {fileID: 774287596}
+  m_Layer: 0
+  m_Name: Lymphonde (2)
+  m_TagString: Lymphonde
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &774287595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774287594}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 620.2, y: 83, z: 530.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &774287597
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774287594}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &774287596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 774287594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 469515181713269573, guid: f37a9511e788bfe408438a0207f3ca42, type: 3}
+  nSentinels: 256
+  spawnArea: 23
+  speedRange: {x: 110, y: 120}
+  couplingRange: {x: 1, y: 10}
+  noiseSclRange: {x: 0.01, y: 0.02}
+  couplingSclRange: {x: 0.2, y: 5}
+  attractionSclRange: {x: 0.2, y: 1}
+  sentinels: []
+  MaxAge: 5000
+  speedScl: 3
+--- !u!1 &1479484035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1479484036}
+  - component: {fileID: 1479484037}
+  m_Layer: 0
+  m_Name: Sentinel Manager (2)
+  m_TagString: Respawn
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1479484036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479484035}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 273.7, y: 17.3, z: -16.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1479484037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479484035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
+  nSentinels: 20
+  spawnArea: 20
+  speedScl: 2
+  speedRange: {x: 55, y: 70}
+  couplingRange: {x: 10, y: 15}
+  noiseSclRange: {x: 0.0001, y: 0.001}
+  couplingSclRange: {x: 8, y: 15}
+  attractionSclRange: {x: 20, y: 30}
+  sentinels: []
+  MaxAge: 21000
+  Lymphondes: []
+  PathogenEmitters: []
+  pathogenManagers: []
+--- !u!1 &1829635988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1829635989}
+  - component: {fileID: 1829635991}
+  - component: {fileID: 1829635990}
+  m_Layer: 0
+  m_Name: Lymphonde (3)
+  m_TagString: Lymphonde
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1829635989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829635988}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 670, y: 1, z: 44.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1829635991
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829635988}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1829635990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829635988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 469515181713269573, guid: f37a9511e788bfe408438a0207f3ca42, type: 3}
+  nSentinels: 256
+  spawnArea: 23
+  speedRange: {x: 110, y: 120}
+  couplingRange: {x: 1, y: 10}
+  noiseSclRange: {x: 0.01, y: 0.02}
+  couplingSclRange: {x: 0.2, y: 5}
+  attractionSclRange: {x: 0.2, y: 1}
+  sentinels: []
+  MaxAge: 5000
+  speedScl: 3
+--- !u!1 &1892645551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1892645552}
+  - component: {fileID: 1892645553}
+  m_Layer: 0
+  m_Name: outerTrigger
+  m_TagString: LymphOuter
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1892645552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892645551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774877178959534}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1892645553
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892645551}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &2046352910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2046352911}
+  - component: {fileID: 2046352913}
+  - component: {fileID: 2046352912}
+  m_Layer: 0
+  m_Name: Pathogen Emitter (2)
+  m_TagString: PathogenEmitter
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2046352911
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046352910}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4, y: 15.7, z: 645.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3850774878344472471}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2046352913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046352910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  nSentinels: 215
+  spawnArea: 10
+  speedRange: {x: 90, y: 100}
+  couplingRange: {x: 4, y: 8}
+  noiseSclRange: {x: 0.01, y: 0.02}
+  couplingSclRange: {x: 0.2, y: 4}
+  attractionSclRange: {x: 0.2, y: 0.45}
+  sentinels: []
+  MaxAge: 5
+  speedScl: 17.1
+  RealNumPathogens: 0
+  emitionTimer: 5
+--- !u!135 &2046352912
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046352910}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3850774876664968186
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,9 +504,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774876664968186}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 167.6, y: -56.62, z: 17.7}
+  m_LocalPosition: {x: -323, y: 59.7, z: 209}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 630483498}
   m_Father: {fileID: 3850774878344472471}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43,7 +522,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.68
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3850774876664968191
 MonoBehaviour:
@@ -57,18 +536,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 585651276018421984, guid: 4b1466869323e7a4b9a799a64c020d83, type: 3}
+  sentinel: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   nSentinels: 256
   spawnArea: 23
   speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 10}
-  noiseSclRange: {x: 0.01, y: 0.02}
-  couplingSclRange: {x: 0.2, y: 5}
-  attractionSclRange: {x: 0.2, y: 1}
+  couplingRange: {x: 1, y: 4}
+  noiseSclRange: {x: 0.1, y: 0.2}
+  couplingSclRange: {x: 1, y: 3}
+  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 2000
-  speedScl: 3
-  yOffset: 20
+  MaxAge: 5000
+  speedScl: -0.5
 --- !u!1 &3850774877178959535
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,9 +573,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774877178959535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40.1, y: -44.42, z: -28.93}
+  m_LocalPosition: {x: -256.3, y: 144, z: -146.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1892645552}
   m_Father: {fileID: 3850774878344472471}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -112,7 +591,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3850774877178959697
 MonoBehaviour:
@@ -126,18 +605,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 585651276018421984, guid: 4b1466869323e7a4b9a799a64c020d83, type: 3}
+  sentinel: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   nSentinels: 256
   spawnArea: 20
   speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 10}
-  noiseSclRange: {x: 0.01, y: 0.02}
-  couplingSclRange: {x: 0.2, y: 5}
-  attractionSclRange: {x: 0.2, y: 1}
+  couplingRange: {x: 1, y: 4}
+  noiseSclRange: {x: 0.1, y: 0.2}
+  couplingSclRange: {x: 1, y: 3}
+  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 2000
-  speedScl: 3
-  yOffset: 15
+  MaxAge: 4000
+  speedScl: -0.5
 --- !u!1 &3850774877639536773
 GameObject:
   m_ObjectHideFlags: 0
@@ -164,7 +642,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774877639536773}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 123.9, y: -47.59, z: -198.4}
+  m_LocalPosition: {x: 263, y: 36.5, z: -125.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3850774878344472471}
@@ -182,17 +660,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 610433536846796970, guid: 5b74a5c89d4facd4eb3ca2ebdd59c835, type: 3}
-  nSentinels: 181
-  spawnArea: 10
+  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  nSentinels: 200
+  spawnArea: 11
   speedRange: {x: 90, y: 100}
-  couplingRange: {x: 4, y: 8}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 0.2, y: 4}
-  attractionSclRange: {x: 0.2, y: 0.45}
+  couplingRange: {x: 5, y: 8}
+  noiseSclRange: {x: 0.01, y: 0.1}
+  couplingSclRange: {x: 2, y: 3}
+  attractionSclRange: {x: 5, y: 6}
   sentinels: []
-  MaxAge: 1000
-  speedScl: 17.1
+  MaxAge: 6
+  speedScl: -0.2
+  RealNumPathogens: 0
+  emitionTimer: 10
 --- !u!135 &3850774877639536774
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -204,7 +684,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3850774877735049677
 GameObject:
@@ -231,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774877735049677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 120.5, y: -38.7, z: -223.6}
+  m_LocalPosition: {x: 273.7, y: 17.3, z: -16.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3850774878344472471}
@@ -249,20 +729,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 3438557043950093338, guid: a46c7fce370501e46a17b9e22b759827, type: 3}
-  sentinelCam: {fileID: 1073697049552059834, guid: e10ed99f3e28efd4981601d4aceab44a, type: 3}
-  nSentinels: 11
+  sentinel: {fileID: 1585444582935257604, guid: 7d6806d7f91a6de42b463668b971a3f8, type: 3}
+  nSentinels: 20
   spawnArea: 20
-  yOffset: 15
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 10, y: 15}
+  speedScl: 1.2
+  speedRange: {x: 70, y: 80}
+  couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 8, y: 15}
+  couplingSclRange: {x: 10, y: 20}
   attractionSclRange: {x: 20, y: 30}
   sentinels: []
   MaxAge: 21000
   Lymphondes: []
   PathogenEmitters: []
+  pathogenManagers: []
 --- !u!1 &3850774877875054860
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3850774877875054863}
   - component: {fileID: 3850774877875054862}
+  - component: {fileID: 623254480}
   m_Layer: 0
   m_Name: Plastic Manager
   m_TagString: Untagged
@@ -288,7 +769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774877875054860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 272.4, y: 15.8, z: -94.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3850774878344472471}
@@ -301,7 +782,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774877875054860}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2677e7c670842346805e8c239e5bb7e, type: 3}
   m_Name: 
@@ -310,12 +791,40 @@ MonoBehaviour:
   nPlastic: 4
   spawnArea: 281
   speedRange: {x: 40, y: 60}
-  couplingRange: {x: 30, y: 40}
+  couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.001, y: 0.001}
   couplingSclRange: {x: 7, y: 15}
+  attractionSclRange: {x: 0.2, y: 1}
   plastics: []
-  age: 1000
   speedScl: 3
+  age: 1000
+--- !u!114 &623254480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774877875054860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247c6fecfcf946d4a9eb33a49f73cb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinel: {fileID: 6554403188448632226, guid: a971c47e729eab141a6eafdab00ce418, type: 3}
+  emitionOrigin: {fileID: 0}
+  startingNumAgents: 5
+  MaxSentinels: 500
+  emitionSpeed: 1
+  RealNumSentinels: 0
+  spawnArea: 10
+  speedRange: {x: 40, y: 60}
+  couplingRange: {x: 30, y: 40}
+  noiseSclRange: {x: 0.001, y: 0.005}
+  couplingSclRange: {x: 7, y: 15}
+  attractionSclRange: {x: 0.2, y: 1}
+  sentinels: []
+  MaxAge: 50
+  speedScl: 8
 --- !u!1 &3850774878269333534
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +851,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3850774878269333534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 47.2, y: -47.46, z: -55}
+  m_LocalPosition: {x: -58, y: 10.7, z: 19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3850774878344472471}
@@ -360,17 +869,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 610433536846796970, guid: 5b74a5c89d4facd4eb3ca2ebdd59c835, type: 3}
-  nSentinels: 215
-  spawnArea: 10
+  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  nSentinels: 200
+  spawnArea: 11
   speedRange: {x: 90, y: 100}
-  couplingRange: {x: 4, y: 8}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 0.2, y: 4}
-  attractionSclRange: {x: 0.2, y: 0.45}
+  couplingRange: {x: 0.1, y: 2}
+  noiseSclRange: {x: 0.1, y: 0.5}
+  couplingSclRange: {x: 1, y: 4}
+  attractionSclRange: {x: 0.2, y: 1}
   sentinels: []
-  MaxAge: 1000
-  speedScl: 17.1
+  MaxAge: 3
+  speedScl: 5.52
+  RealNumPathogens: 0
+  emitionTimer: 5
 --- !u!135 &3850774878269333504
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -382,7 +893,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3850774878344472468
 GameObject:
@@ -418,6 +929,12 @@ Transform:
   - {fileID: 3850774877875054863}
   - {fileID: 3850774876664968189}
   - {fileID: 3850774877178959534}
+  - {fileID: 2046352911}
+  - {fileID: 317070652}
+  - {fileID: 774287595}
+  - {fileID: 1829635989}
+  - {fileID: 696109266}
+  - {fileID: 1479484036}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

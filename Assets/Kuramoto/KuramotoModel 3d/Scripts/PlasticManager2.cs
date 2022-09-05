@@ -76,8 +76,6 @@ public class PlasticManager2 : MonoBehaviour
         public Vector3 pos;
 
 
-
-
         public void SetFromKuramoto(KuramotoPlasticAgent kuramoto)
         {
 
@@ -90,6 +88,7 @@ public class PlasticManager2 : MonoBehaviour
             attractionScl = kuramoto.attractionSclr;
             age = 0;
             fittness = 0;
+            played = 1;
         }
 
 
@@ -178,14 +177,17 @@ public class PlasticManager2 : MonoBehaviour
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
                
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
                 
-                GPUStruct[i].pos = sentinels[i].transform.position;
+
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+
+                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
             }
 
           
         }
+
 
         // if the lib is greater than ...
         if (GenVelLib.Count > 1000)
