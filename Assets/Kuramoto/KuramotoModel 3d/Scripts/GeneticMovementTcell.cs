@@ -26,7 +26,7 @@ public class GeneticMovementTcell : MonoBehaviour
     private int step = 0;// to hold the steps number
 
     private float lastPhase = 0;// holds the last phase for a gate
-    [HideInInspector]
+   // [HideInInspector]
     public Vector3 target;// the target to aim for
 
     private TCellManager manager;//its manager
@@ -35,8 +35,8 @@ public class GeneticMovementTcell : MonoBehaviour
     private ComputeShader compare;
 
     private GeneticAntigenKey thisAnti;
-
-    bool notKeyed = true;
+    
+    public bool notKeyed = true;
 
     // Start is called before the first frame update
     void Start()
@@ -58,8 +58,11 @@ public class GeneticMovementTcell : MonoBehaviour
 
 
         manager = GetComponentInParent<TCellManager>();
-        target = transform.parent.position;
-
+        if (notKeyed)
+        {
+            target = transform.parent.position;
+        }
+        
          thisAnti = gameObject.GetComponent<GeneticAntigenKey>();
         
 
@@ -83,14 +86,12 @@ public class GeneticMovementTcell : MonoBehaviour
         thisGenVel = geneticMovement[step];
 
          // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel =   thisGenVel * sentinel.phase * genSpeedScl;
+        Vector3 vel =   thisGenVel * genSpeedScl;
         
-            vel += Vector3.Normalize(target - transform.position) * sentinel.phase * targetSpeedScl;
-        
+        vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
+        vel *= sentinel.phase;
 
-        // more than one sentinel contact scl it up
-        //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
-
+       
         // add the vel to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
@@ -144,7 +145,8 @@ public class GeneticMovementTcell : MonoBehaviour
                         {
                             // create a replica
                             GameObject replica = Instantiate(gameObject, transform.parent);
-                            
+                            replica.GetComponent<GeneticMovementTcell>().notKeyed = false;
+                            replica.GetComponent<GeneticMovementTcell>().target = target;
                             // add new tcell to manager
                             manager.AddTCell(replica);
                         }
