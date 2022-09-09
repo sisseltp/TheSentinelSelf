@@ -49,7 +49,7 @@ public class PathogenManager : MonoBehaviour
     [SerializeField]
     private float speedScl = 3f;
 
-
+    [HideInInspector]
     public int RealNumPathogens = 0;
     [SerializeField]
     private float emitionTimer = 1.0f;

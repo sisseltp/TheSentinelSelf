@@ -14,7 +14,8 @@ public class TCellManager : MonoBehaviour
     [SerializeField]
     public int nSentinels = 10; // number of them to be made
     private int MaxSentinels = 15;
-    private int RealNumSentinels = 0;
+    [HideInInspector]
+    public int RealNumSentinels = 0;
 
     [Tooltip("radius to be spawned in from this obects transform")]
     [Range(0.1f, 1000f)]

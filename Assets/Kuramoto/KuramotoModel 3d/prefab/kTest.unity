@@ -299,11 +299,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1429786826 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-  m_PrefabInstance: {fileID: 1835907638}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1835907638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -311,74 +306,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: speedScl
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: emitionOrigin
-      value: 
-      objectReference: {fileID: 1429786826}
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: couplingRange.x
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: couplingRange.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: attractionSclRange.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: attractionSclRange.y
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774876664968186, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877178959534, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 480
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877178959534, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: MaxAge
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: speedScl
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: nSentinels
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: attractionSclRange.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: attractionSclRange.y
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 319.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -70.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3850774878269333534, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3850774878344472468, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_Name
       value: Agents Manager
