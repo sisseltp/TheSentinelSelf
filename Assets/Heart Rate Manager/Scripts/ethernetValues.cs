@@ -92,10 +92,7 @@ public class ethernetValues : MonoBehaviour
                 pulseGradient = 0;
             }
 
-            float theta = pulseGradient * CIRCLE_IN_RADIAN;
-            // get this sentinels x,y pos
-            float thisX = Mathf.Cos(theta);
-            float thisY = Mathf.Sin(theta);
+          
 
             //agent.AddOsiclation(thisX, thisY, bias);
             if (agent != null)
