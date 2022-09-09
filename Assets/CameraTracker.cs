@@ -154,9 +154,7 @@ public class CameraTracker : MonoBehaviour
         rb.velocity = Vector3.zero;
         tracking = false;
         
-        Debug.Log("fading");
         yield return new WaitForSecondsRealtime(fadePeriod);
-        Debug.Log("Faded");
 
         tracked = null;
         enabled = false;

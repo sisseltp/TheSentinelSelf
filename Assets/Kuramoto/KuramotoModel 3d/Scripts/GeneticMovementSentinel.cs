@@ -33,6 +33,8 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     public int keys = 0;
 
+    public int NumKeysToCollect = 4;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,6 +122,10 @@ public class GeneticMovementSentinel : MonoBehaviour
          if (collision.gameObject.tag == "Terrain" && rb.useGravity)
         {
             GetComponent<Fosilising>().enabled = true;
+        }else if(collision.gameObject.tag == "PathogenEmmiter")
+        {
+            targeting = false;
+
         }
     }
 
@@ -129,7 +135,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         if (collision.gameObject.tag == "PathogenEmitter")
         {
-            if (keys >= 3)
+            if (keys >= NumKeysToCollect)
             {
                 int indx = Random.Range(0, manager.Lymphondes.Length);
 
@@ -137,11 +143,7 @@ public class GeneticMovementSentinel : MonoBehaviour
                 targeting = true;
                 tcellHits = 0;
             }
-            else
-            {
-                targeting = false;
-                
-            }
+
         }
         else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10)
         {
@@ -161,18 +163,13 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             target = manager.PathogenEmitters[indx];
 
-
-            int numChild = transform.childCount;
-
-            for (int i = 0; i < numChild; i++)
+            GeneticAntigenKey[] genKeys = GetComponentsInChildren<GeneticAntigenKey>();
+            foreach(GeneticAntigenKey key in genKeys)
             {
-                Transform child = transform.GetChild(i);
-                GeneticAntigenKey key = child.GetComponent<GeneticAntigenKey>();
-                if (key != null)
-                {
-                    key.TimeOut();
-                }
+                key.TimeOut();
             }
+            
+            
             keys = 0;
 
 
@@ -184,5 +181,6 @@ public class GeneticMovementSentinel : MonoBehaviour
     {
         targeting = true;
     }
+
 
 }

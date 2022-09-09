@@ -79,10 +79,10 @@ public class GeneticMovementPathogen : MonoBehaviour
         {
             pathogen.dead = true;
         }
-        else if (collision.gameObject.tag == "Player" )
+        else if (collision.gameObject.tag == "Player" )// if hit by player
         {
             int numkeys = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>().Length;
-            if (numkeys < maxKeys)
+            if (numkeys < collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect+maxKeys)// if less than max num, pick up key
             {
                 Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
 
@@ -103,7 +103,6 @@ public class GeneticMovementPathogen : MonoBehaviour
         if(other.gameObject.tag == "PathogenEmitter")
         {
             transform.position = transform.parent.position;
-           // GetComponentInParent<PathogenManager>().AddPathogen(1);
         }
     }
 }

@@ -17105,6 +17105,22 @@ PrefabInstance:
       propertyPath: emitionOrigin
       value: 
       objectReference: {fileID: 543450651829103487}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedScl
+      value: -0.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536774, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: m_Radius
+      value: 22.9859
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536774, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: m_Center.z
+      value: 7.985901
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedScl
+      value: -0.29
+      objectReference: {fileID: 0}
     - target: {fileID: 3850774878344472468, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_Name
       value: Agents Manager
@@ -25407,6 +25423,18 @@ PrefabInstance:
     - target: {fileID: 656543096509181157, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 7.007004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6169456976549353376, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: path

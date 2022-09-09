@@ -184,7 +184,7 @@ public class PathogenManager : MonoBehaviour
             // get the kurmto
             KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
-            // if older than age 
+            // if dead remove
             if (kuramoto.dead ) {
 
                 toRemove.Add(i);

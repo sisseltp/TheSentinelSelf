@@ -37,7 +37,7 @@ public class InternalVisualizer : MonoBehaviour
         }
 
         float variation = numTCells + numPathogens;
-        variation = numPathogens / variation;
+        variation = numTCells / variation;
 
         draggedVarience += (variation - draggedVarience) * 0.05f;
         rndr.materials[1].SetFloat("ChangeTextures", draggedVarience);

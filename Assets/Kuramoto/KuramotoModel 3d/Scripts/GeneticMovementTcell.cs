@@ -38,6 +38,8 @@ public class GeneticMovementTcell : MonoBehaviour
     
     public bool notKeyed = true;
 
+    private bool targeting = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -87,11 +89,13 @@ public class GeneticMovementTcell : MonoBehaviour
 
          // get vel from this steps genmov, mult by phase and scl
         Vector3 vel =   thisGenVel * genSpeedScl;
-        
-        vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
-        vel *= sentinel.phase;
+        if (targeting)
+        {
+            vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
+        }
 
-       
+        vel *= sentinel.phase;
+               
         // add the vel to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
@@ -116,25 +120,26 @@ public class GeneticMovementTcell : MonoBehaviour
         {
             sentinel.dead = true;
         }
-        else if (collision.gameObject.tag == "Player")
+        else if (collision.gameObject.tag == "Player")//if hits player
         {
             // get keys from children
             GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
 
             // if there are any keys
-            if (Antigens.Length > 0)
+            if (Antigens.Length > 0) // if it had antigens?
             {
                 // get matches from children
-                AntigenKeys[] results = Compare(Antigens);
+                AntigenKeys[] results = Compare(Antigens);// gpu accelerated key compare
 
                 // run over results
                 for (int i = 1; i < results.Length; i++)
                 {
-                    // if it has a connection
+                    // if it has a match
                     if (results[i].hit > 0)
                     {
-                        
+                        // set movement gate to false
                         notKeyed = false;
+                        // sett render value
                         GetComponent<Renderer>().material.SetFloat("KeyTrigger", 1);
 
                         // add fitness
@@ -156,7 +161,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
 
         }
-        else if (collision.gameObject.tag == "Pathogen")
+        else if (collision.gameObject.tag == "Lymphonde")
         {
             // get keys from children
             GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
@@ -175,8 +180,7 @@ public class GeneticMovementTcell : MonoBehaviour
                     {
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
-                        Destroy(collision.gameObject);
-
+                        collision.gameObject.GetComponent<KuramotoAffectedAgent>().dead = true;
                     }
                 }
             }
@@ -190,7 +194,7 @@ public class GeneticMovementTcell : MonoBehaviour
             GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
             GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
         }
-
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -199,6 +203,11 @@ public class GeneticMovementTcell : MonoBehaviour
 
             target = transform.parent.position+(UnityEngine.Random.onUnitSphere * 100);
 
+        }
+        else if (other.gameObject.tag == "PathogenEmitter")
+        {
+            
+            StartCoroutine(TargetTimeout(15));
         }
     }
     private void OnTriggerExit(Collider other)
@@ -209,6 +218,22 @@ public class GeneticMovementTcell : MonoBehaviour
         }
     }
 
+
+    private IEnumerator TargetTimeout(float waitTime)
+    {
+
+        
+        yield return new WaitForSeconds(waitTime);
+        targeting = false;
+
+
+    }
+
+
+
+    /// <summary>
+    ///  GPu accelerating bits
+    /// </summary>
     private struct AntigenKeys
     {
         public int key1;
