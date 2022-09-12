@@ -135,14 +135,14 @@ GameObject:
   - component: {fileID: 3360782961789915637}
   - component: {fileID: 2966006494253890919}
   - component: {fileID: 2966006494253890916}
-  - component: {fileID: -597836406014707452}
-  - component: {fileID: 7502662942962108499}
-  - component: {fileID: -1721870998927699586}
-  - component: {fileID: -3809540293957077703}
-  - component: {fileID: -174566394397602439}
+  - component: {fileID: -2003108449324412811}
+  - component: {fileID: 5728314670031916521}
+  - component: {fileID: 1911477723890854107}
+  - component: {fileID: -747346939756499596}
+  - component: {fileID: -3267567115046901525}
   m_Layer: 0
   m_Name: daphnia-with-octopus-arms-guts
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   - m_Rig: {fileID: 2966006493892358945}
     m_Active: 1
   m_Effectors: []
---- !u!114 &-597836406014707452
+--- !u!114 &-2003108449324412811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,10 +217,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  genSpeedScl: 4
-  targetSpeedScl: 20
+  genSpeedScl: 20
+  targetSpeedScl: 25
   geneticMovement: []
---- !u!114 &7502662942962108499
+  keys: 0
+  NumKeysToCollect: 4
+  debugging: 0
+--- !u!114 &5728314670031916521
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,7 +254,7 @@ MonoBehaviour:
   age: 0
   sumX: 0
   sumY: 0
---- !u!54 &-1721870998927699586
+--- !u!54 &1911477723890854107
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,9 +268,9 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 3
---- !u!114 &-3809540293957077703
+--- !u!114 &-747346939756499596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,7 +285,7 @@ MonoBehaviour:
   fadeTime: 2
   steps: 10
   fosil: {fileID: 7604624934126687443, guid: 98140312dd3311a4ebef808da992c488, type: 3}
---- !u!135 &-174566394397602439
+--- !u!135 &-3267567115046901525
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

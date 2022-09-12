@@ -125,6 +125,8 @@ MonoBehaviour:
   targetSpeedScl: 25
   geneticMovement: []
   keys: 0
+  NumKeysToCollect: 4
+  debugging: 0
 --- !u!114 &185645520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +172,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!114 &6989231262262274070
 MonoBehaviour:
