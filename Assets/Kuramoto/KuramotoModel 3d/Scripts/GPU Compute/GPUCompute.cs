@@ -181,7 +181,7 @@ public class GPUCompute : MonoBehaviour
         shader.SetBuffer(UpdateBiome, "plasticData", plasticBuffer);
         shader.SetFloat("dt", Time.deltaTime);
         
-        shader.Dispatch(UpdateBiome, TexResolution , 1 , 1);
+        shader.Dispatch(UpdateBiome, TexResolution , 1, 1);
         //shader.Dispatch(UpdateSentinel, TexResolution, 1, 1);
 
         BiomeBuffer.GetData(pathogenData);
