@@ -35,6 +35,9 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     public int NumKeysToCollect = 4;
 
+    [SerializeField]
+    private bool debugging = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -119,15 +122,32 @@ public class GeneticMovementSentinel : MonoBehaviour
     }
     private void OnTriggerEnter(Collider collision)
     {
-         if (collision.gameObject.tag == "Terrain" && rb.useGravity)
+
+      
+
+        if (collision.gameObject.tag == "Terrain" && rb.useGravity)
         {
             GetComponent<Fosilising>().enabled = true;
-        }else if(collision.gameObject.tag == "PathogenEmmiter")
+        }
+        else if (collision.gameObject.tag == "PathogenEmitter")
         {
             targeting = false;
+            if (debugging)
+            {
+                Debug.Log(collision.gameObject.tag);
+            }
 
         }
-    }
+        else if (collision.gameObject.tag == "Lymphonde")
+        {
+            targeting = false;
+            if (debugging)
+            {
+                Debug.Log(collision.gameObject.tag);
+            }
+        }
+
+        }
 
     private void OnTriggerStay(Collider collision)
     {
@@ -135,17 +155,21 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         if (collision.gameObject.tag == "PathogenEmitter")
         {
-            if (keys >= NumKeysToCollect)
+            if (keys >= NumKeysToCollect && !targeting)
             {
                 int indx = Random.Range(0, manager.Lymphondes.Length);
 
                 target = manager.Lymphondes[indx];
                 targeting = true;
                 tcellHits = 0;
+                if (debugging)
+                {
+                    Debug.Log("Leaving");
+                }
             }
 
         }
-        else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10)
+        else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10 && !targeting)
         {
             int indx = 0;
             int length = 0;
@@ -160,6 +184,8 @@ public class GeneticMovementSentinel : MonoBehaviour
                     indx = i;
                 }
             }
+
+            targeting = true;
 
             target = manager.PathogenEmitters[indx];
 
