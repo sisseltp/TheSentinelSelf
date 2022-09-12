@@ -105,8 +105,8 @@ public class CameraTracker : MonoBehaviour
                     restTimer += Time.deltaTime;
                     if (restTimer > restReset)
                     {
-                        
-                        FindScreenTracked("Player");
+
+                        FindSceneTracked("Player");
                         restTimer = 0;
                     }
                 }
@@ -119,19 +119,24 @@ public class CameraTracker : MonoBehaviour
              if (Time.time-lastChange>ChangeTrackTimer)
             {
                 lastChange = Time.time;
-                FindScreenTracked("Player");
-               
+                FindSceneTracked("Player");
+                Debug.Log("Timeout");
+                return;
             }
 
            
             rb.AddForce(transform.right * driftPower * Time.deltaTime);
 
         }
-     
+
+        KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();
+
+        if (kA != null)
+        {
+            dif *= kA.phase;
+        }
 
         rb.velocity += dif * power * Time.deltaTime;
-
-       
 
     }
 
@@ -151,6 +156,7 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ReturnCallback()
     {
+
         rb.velocity = Vector3.zero;
         tracking = false;
         
@@ -163,6 +169,7 @@ public class CameraTracker : MonoBehaviour
         transform.position = origin;
         transform.rotation = origRot;
         faderImage.CrossFadeAlpha(0, fadePeriod, false);
+
     }
     private void OnTriggerEnter(Collider collision)
     {
@@ -203,24 +210,32 @@ public class CameraTracker : MonoBehaviour
 
         if (indx == -1)
         {
-            float dist = float.PositiveInfinity;
+            float dist = 0;
             for (int i = 0; i < bodies.Length; i++)
             {
                 if (bodies[i].GetInstanceID() != tracked.GetInstanceID())
                 {
                     float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
-                    if (thisDist < dist)
+                    if (thisDist > dist && bodies[i].GetComponentInChildren<Renderer>().isVisible)
                     {
+                        
                         indx = i;
                         dist = thisDist;
                     }
                 }
             }
         }
-        
-        look = bodies[indx].transform;
 
-        tracked = bodies[indx].transform;
+        if (indx != -1)
+        {
+            look = bodies[indx].transform;
+
+            tracked = bodies[indx].transform;
+        }
+        else
+        {
+            driftPower *= -1;
+        }
         if (heartbeatSensor != null)
         {
             heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
