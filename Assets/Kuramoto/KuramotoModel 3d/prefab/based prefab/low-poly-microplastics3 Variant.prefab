@@ -12,6 +12,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1179.7896
       objectReference: {fileID: 0}
@@ -82,6 +94,23 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
+--- !u!114 &2351948123429560839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038299800857035272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3772cc60de9de8418908ad8e52c6147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cycleLength: 10
+  speedScl: 0.5
+  geneticMovement: []
+  attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
+  origin: {x: 0, y: 0, z: 0}
 --- !u!114 &5425442252488360563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,20 +137,3 @@ MonoBehaviour:
   dead: 0
   age: 0
   fitness: 0
---- !u!114 &2351948123429560839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9038299800857035272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3772cc60de9de8418908ad8e52c6147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycleLength: 10
-  speedScl: 0.5
-  geneticMovement: []
-  attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
-  origin: {x: 0, y: 0, z: 0}
