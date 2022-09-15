@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: 3710490ffca49904491d831d0bcec67e, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -21,6 +21,10 @@ Material:
     m_TexEnvs:
     - Texture2D_:
         m_Texture: {fileID: 2800000, guid: aba877aa446987644bbc48d7c872d4b4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_1cba391548ee414bb32f416c666ff263:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_9edc4a8fc902472b9b569396fd906612:
@@ -133,6 +137,7 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - leaf_speed_: 0.5
     m_Colors:
     - Color_12c6749eb80c4ab0ae8a06993c1f3819: {r: 0, g: 0, b: 0, a: 0}
     - Vector2_356ad9d619344c8ba0929d3f82e237ef: {r: 1, g: 0, b: 0, a: 0}
