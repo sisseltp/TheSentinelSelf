@@ -66,6 +66,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
         fitness = 0;
         age = 0;
         dead = false;
+        played = 1;
     }
 
     public void SetupData(float[] settingsData, float thisSpeedVariation = 0.1f)

@@ -98,12 +98,11 @@ public class TCellManager : MonoBehaviour
             
 
         }
-        //Debug.Log(GPUStruct.Length);
     }
 
     private void Update()
     {
-        //Debug.Log(RealNumSentinels);
+        
         List<int> toRemove = new List<int>();
         // loop over the n sentinels
        
@@ -116,7 +115,6 @@ public class TCellManager : MonoBehaviour
             
             // if older than age 
             if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
-
                 if (i > nSentinels)
                 {
                     toRemove.Add(i);
@@ -146,7 +144,7 @@ public class TCellManager : MonoBehaviour
                 kuramoto.age = GPUStruct[i].age;
                 kuramoto.phase = GPUStruct[i].phase;
                 kuramoto.Connections =  GPUStruct[i].connections;
-                kuramoto.played = GPUStruct[i].played;
+                GPUStruct[i].played = kuramoto.played;
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].transform.position;
@@ -191,6 +189,7 @@ public class TCellManager : MonoBehaviour
             }            
 
         }
+        
         RealNumSentinels -= toRemove.Count;
         
         if (nxtIndx != -1) {

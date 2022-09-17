@@ -80,9 +80,6 @@ public class GeneticMovementTcell : MonoBehaviour
             {
                 step = 0;
             }
-        }else if(lastPhase== sentinel.phase) { 
-            Destroy(gameObject);
-            return;
         }
 
         thisGenVel = geneticMovement[step];
@@ -141,7 +138,7 @@ public class GeneticMovementTcell : MonoBehaviour
                         notKeyed = false;
                         // sett render value
                         GetComponent<Renderer>().material.SetFloat("KeyTrigger", 1);
-
+                        GetComponent<KuramotoAffectedAgent>().played = 2;
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
                         // set the target from the origin
@@ -292,4 +289,5 @@ public class GeneticMovementTcell : MonoBehaviour
         return  keys;
     }
 
+ 
 }
