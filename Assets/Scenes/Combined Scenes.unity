@@ -12718,8 +12718,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1874007846}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: pathLength
-      value: 6178.1597
+      value: 5741.614
       objectReference: {fileID: 0}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: customUpVector.x
@@ -26123,6 +26127,10 @@ PrefabInstance:
       propertyPath: path
       value: 
       objectReference: {fileID: 24512550}
+    - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: pathLength
       value: 6178.1597

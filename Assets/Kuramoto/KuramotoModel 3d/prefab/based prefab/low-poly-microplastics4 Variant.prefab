@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: low-poly-microplastics4 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c344af6cefe9130438fa7965b30b36a3, type: 3}
+      propertyPath: m_TagString
+      value: Plastic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c344af6cefe9130438fa7965b30b36a3, type: 3}
 --- !u!1 &5605911857460781528 stripped
@@ -82,23 +86,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
---- !u!114 &1953010219907036393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5605911857460781528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3772cc60de9de8418908ad8e52c6147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycleLength: 10
-  speedScl: 0.5
-  geneticMovement: []
-  attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
-  origin: {x: 0, y: 0, z: 0}
 --- !u!114 &1459947666868029901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,3 +112,20 @@ MonoBehaviour:
   dead: 0
   age: 0
   fitness: 0
+--- !u!114 &1953010219907036393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605911857460781528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3772cc60de9de8418908ad8e52c6147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cycleLength: 10
+  speedScl: 0.5
+  geneticMovement: []
+  attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
+  origin: {x: 0, y: 0, z: 0}

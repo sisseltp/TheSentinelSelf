@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: low-poly-microplastics2 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 04c0b24aae6e0544c947899e56b70742, type: 3}
+      propertyPath: m_TagString
+      value: Plastic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04c0b24aae6e0544c947899e56b70742, type: 3}
 --- !u!1 &633732160084852480 stripped
@@ -66,6 +70,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 04c0b24aae6e0544c947899e56b70742, type: 3}
   m_PrefabInstance: {fileID: 291064759700423249}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &-3689538967726745111
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633732160084852480}
+  serializedVersion: 2
+  m_Mass: 0.2
+  m_Drag: 0.2
+  m_AngularDrag: 5
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!114 &-7484527206766598608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,19 +129,3 @@ MonoBehaviour:
   geneticMovement: []
   attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
   origin: {x: 0, y: 0, z: 0}
---- !u!54 &-3689538967726745111
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633732160084852480}
-  serializedVersion: 2
-  m_Mass: 0.2
-  m_Drag: 0.2
-  m_AngularDrag: 5
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 80
-  m_CollisionDetection: 3

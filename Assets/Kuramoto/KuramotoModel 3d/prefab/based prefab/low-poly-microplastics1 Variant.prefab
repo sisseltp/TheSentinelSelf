@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: low-poly-microplastics1 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 41e7d08415007974c948c89925e3890d, type: 3}
+      propertyPath: m_TagString
+      value: Plastic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41e7d08415007974c948c89925e3890d, type: 3}
 --- !u!1 &3072722809738276359 stripped
