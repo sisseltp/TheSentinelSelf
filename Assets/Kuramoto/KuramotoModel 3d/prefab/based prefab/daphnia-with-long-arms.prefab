@@ -215,8 +215,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cycleLength: 10
   genSpeedScl: 4
-  targetSpeedScl: 20
+  targetSpeedScl: 30
   geneticMovement: []
+  keys: 0
+  NumKeysToCollect: 4
+  debugging: 0
 --- !u!114 &6711512467612625668
 MonoBehaviour:
   m_ObjectHideFlags: 0

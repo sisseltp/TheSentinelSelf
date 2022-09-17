@@ -294,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: daphnia-with-long-arms-guts Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1713654515785297386, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -354,6 +358,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
+--- !u!135 &-9068871142690439057
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014643093506636781}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.57
+  m_Center: {x: 0, y: 1.49, z: -0.17}
 --- !u!95 &2129739941
 Animator:
   serializedVersion: 3
@@ -449,21 +466,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cycleLength: 10
   genSpeedScl: 20
-  targetSpeedScl: 25
+  targetSpeedScl: 30
   geneticMovement: []
   keys: 0
   NumKeysToCollect: 4
   debugging: 0
---- !u!135 &-9068871142690439057
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014643093506636781}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.57
-  m_Center: {x: 0, y: 1.49, z: -0.17}

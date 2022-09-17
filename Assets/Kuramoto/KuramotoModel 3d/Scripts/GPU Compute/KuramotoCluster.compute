@@ -79,7 +79,7 @@ void Bio2BioCOHERENCE(int id) {
 	for (int b = 0; b < int( biomeData.Length); b++)
 	{
 		// if not this agent and being played
-		if (int(b) != int(id) && biomeData[b].played ==1) {
+		if (int(b) != int(id) && biomeData[b].played >0) {
 
 			// get the distance between the two agents
 			float dist = distance(biomeData[b].pos, biomeData[id].pos);
@@ -105,7 +105,7 @@ void Bio2SenCOHERENCE(int id) {
 	// loop over sentinels 
 	for (int s = 0; s < int(sentinelData.Length); s++)
 	{
-		
+		if (biomeData[id].played ==1) {
 			// get the distance between the two agents
 			float dist = distance(sentinelData[s].pos, biomeData[id].pos);
 
@@ -118,11 +118,11 @@ void Bio2SenCOHERENCE(int id) {
 				//add two connections
 				biomeData[id].connections += 2;
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += (normalize(sentinelData[s].pos - biomeData[id].pos) * sigDst * sentinelData[s].attractionScl)*2;
-				
+				biomeData[id].vel += (normalize(sentinelData[s].pos - biomeData[id].pos) * sigDst * sentinelData[s].attractionScl) * 2;
+
 
 			}
-		
+		}
 	}
 
 }
@@ -295,61 +295,61 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
 		// set the offseted index
 		int indx = id.x - int(sentinelData.Length) ;
+		if (biomeData[indx].played > 0) {
+			// reset the vel
+			biomeData[indx].vel = float3(0, 0, 0);
 
-		// reset the vel
-		biomeData[indx].vel = float3(0, 0, 0);
+			// reset num connections
+			biomeData[indx].connections = 0;
 
-		// reset num connections
-		biomeData[indx].connections = 0;
+			// set the global phases
+			SetPhases(biomeData[indx].phase);
 
-		// set the global phases
-		SetPhases(biomeData[indx].phase);
+			// biome 2 biome function
+			Bio2BioCOHERENCE(indx);
+			// biome to sentinel funtion
+			Bio2SenCOHERENCE(indx);
 
-		// biome 2 biome function
-		Bio2BioCOHERENCE(indx);
-		// biome to sentinel funtion
-		Bio2SenCOHERENCE(indx);
+			// if the count is 0 (its connected)
+			if (biomeData[indx].connections != 0) {
 
-		// if the count is 0 (its connected)
-		if (biomeData[indx].connections != 0) {
+				// average the values over total num neighbors 
+				sumx /= float(biomeData[indx].connections);
+				sumy /= float(biomeData[indx].connections);
+				biomeData[indx].vel /= biomeData[indx].connections;
 
-			// average the values over total num neighbors 
-			sumx /= float(biomeData[indx].connections);
-			sumy /= float(biomeData[indx].connections);
-			biomeData[indx].vel /= biomeData[indx].connections;
+				// angle to x,y pos to positive x axis
+				biomeData[indx].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
+				// distance to 0
+				biomeData[indx].coherenceRadius = sqrt(sumx * sumx + sumy * sumy);
 
-			// angle to x,y pos to positive x axis
-			biomeData[indx].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
-			// distance to 0
-			biomeData[indx].coherenceRadius = sqrt(sumx * sumx + sumy * sumy);
+				// get the noise
+				float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
+				// not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
+				float calc = sin((biomeData[indx].cohPhi - biomeData[indx].phase) * CIRCLE_IN_RADIAN);
+				// second phase (scaler * distTo0 * lastClac)
+				calc = biomeData[indx].coupling * biomeData[indx].coherenceRadius * calc;
+				// add the speed noise and calc together and times by delta time, and add to P
+				biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise) + calc);
 
-			// get the noise
-			float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
-			// not sure but im guessing the main distance to phase function sin((angleDistToX-phase) * (2*Pi))
-			float calc = sin((biomeData[indx].cohPhi - biomeData[indx].phase) * CIRCLE_IN_RADIAN);
-			// second phase (scaler * distTo0 * lastClac)
-			calc = biomeData[indx].coupling * biomeData[indx].coherenceRadius * calc;
-			// add the speed noise and calc together and times by delta time, and add to P
-			biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise) + calc);
-		
+			}
+			else {
+				// else no connects just add speed + noise * delta time
+				float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
+				biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise));
+			}
+
+			// add dt to the age
+			biomeData[indx].age += dt;
+
+			// subtract its intiger to leave it as a 0. someting
+			biomeData[indx].phase -= float(floor(biomeData[indx].phase));
+
+			//scaled by the phase to make it pulse movement
+			biomeData[indx].vel *= biomeData[indx].phase;
+			// mult by dt
+			biomeData[indx].vel *= dt;
 		}
-		else {
-			// else no connects just add speed + noise * delta time
-			float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
-			biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise));
-		}
-
-		// add dt to the age
-		biomeData[indx].age += dt;
-		
-		// subtract its intiger to leave it as a 0. someting
-		biomeData[indx].phase -= float(floor(biomeData[indx].phase));
-
-		//scaled by the phase to make it pulse movement
-		biomeData[indx].vel *= biomeData[indx].phase;
-		// mult by dt
-		biomeData[indx].vel *= dt;
-
 		
 	} // else if plasitcs
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length + plasticData.Length)) {

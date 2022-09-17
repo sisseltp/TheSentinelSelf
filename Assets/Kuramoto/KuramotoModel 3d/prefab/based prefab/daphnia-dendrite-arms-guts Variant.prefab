@@ -298,6 +298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: daphnia-dendrite-arms-guts Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1713654515785297386, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -369,7 +373,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241660613132810289}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -441,6 +445,25 @@ MonoBehaviour:
   age: 0
   sumX: 0
   sumY: 0
+--- !u!114 &7003511296015800859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241660613132810289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cycleLength: 10
+  genSpeedScl: 20
+  targetSpeedScl: 30
+  geneticMovement: []
+  keys: 0
+  NumKeysToCollect: 4
+  debugging: 0
 --- !u!114 &8066729109672978145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,22 +479,3 @@ MonoBehaviour:
   fadeTime: 2
   steps: 10
   fosil: {fileID: 7604624934126687443, guid: 98140312dd3311a4ebef808da992c488, type: 3}
---- !u!114 &7003511296015800859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241660613132810289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycleLength: 10
-  genSpeedScl: 20
-  targetSpeedScl: 25
-  geneticMovement: []
-  keys: 0
-  NumKeysToCollect: 4
-  debugging: 0

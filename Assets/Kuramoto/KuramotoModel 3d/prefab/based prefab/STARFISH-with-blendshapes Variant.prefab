@@ -64,6 +64,38 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_DirtyAABB
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Center.x
+      value: -0.000012636185
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Center.y
+      value: -0.65183794
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Center.z
+      value: 0.005969107
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Extent.x
+      value: 2.2325947
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Extent.y
+      value: 2.5734954
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+      propertyPath: m_AABB.m_Extent.z
+      value: 1.6236174
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c8aa6488d808a03468dc48fa74cc7f19, type: 2}
@@ -138,6 +170,7 @@ MonoBehaviour:
   geneticMovement: []
   target: {x: 0, y: 0, z: 0}
   compare: {fileID: 7200000, guid: 3f6cf722db9dba94a9d5581c53aa8c38, type: 3}
+  notKeyed: 1
 --- !u!114 &1106587717428591582
 MonoBehaviour:
   m_ObjectHideFlags: 0

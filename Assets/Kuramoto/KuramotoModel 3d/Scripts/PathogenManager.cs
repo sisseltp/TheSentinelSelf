@@ -121,46 +121,51 @@ public class PathogenManager : MonoBehaviour
 
     public void AddPathogen(int i)
     {
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
-
-        // instantiate a new sentinel as child and at pos
-
-        GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
-
-        // get its kurmto component
-        KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-        kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-
-        // add the object to the list
-        sentinels[RealNumPathogens] = thisSentinel;
-
-        // set data in the struct
-        GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
-        GPUStruct[RealNumPathogens].pos = sentinels[i].transform.position;
-
-        RealNumPathogens++;
-    }
-
-    private void DuplicatePathogen( GameObject pathogen, int duplications=2)
-    {
-
-        for (int l = 0; l < duplications; l++)
+        if (nSentinels-2 > RealNumPathogens)
         {
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+
             // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(pathogen, pathogen.transform.position, pathogen.transform.rotation, this.transform);
+
+            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-            
+
             // add the object to the list
             sentinels[RealNumPathogens] = thisSentinel;
 
             // set data in the struct
             GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
-            GPUStruct[RealNumPathogens].pos = sentinels[RealNumPathogens].transform.position;
+            GPUStruct[RealNumPathogens].pos = sentinels[i].transform.position;
 
             RealNumPathogens++;
+        }
+    }
+
+    private void DuplicatePathogen( GameObject pathogen, int duplications=2)
+    {
+        if (nSentinels-2 > RealNumPathogens)
+        {
+            for (int l = 0; l < duplications; l++)
+            {
+                // instantiate a new sentinel as child and at pos
+                GameObject thisSentinel = Instantiate(pathogen, pathogen.transform.position, pathogen.transform.rotation, this.transform);
+
+                // get its kurmto component
+                KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+                kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+
+                // add the object to the list
+                sentinels[RealNumPathogens] = thisSentinel;
+
+                // set data in the struct
+                GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
+                GPUStruct[RealNumPathogens].pos = sentinels[RealNumPathogens].transform.position;
+
+                RealNumPathogens++;
+            }
         }
     }
 
@@ -191,14 +196,17 @@ public class PathogenManager : MonoBehaviour
             }
             else  if (GPUStruct[i].age > MaxAge )
             {
-                if (RealNumPathogens < nSentinels - 2)
-                {
-                    
-                    DuplicatePathogen( sentinels[i],2);
-                    
-                }
 
-                toRemove.Add(i);
+                GPUStruct[i].age = 0;
+                kuramoto.age = 0;
+
+               
+                    
+                    DuplicatePathogen( sentinels[i],1);
+                    
+                
+
+                //toRemove.Add(i);
 
             }
             else
@@ -244,7 +252,7 @@ public class PathogenManager : MonoBehaviour
             else
             {
                 // set the next indx with the limit of agents
-                nxtIndx = RealNumPathogens;
+                nxtIndx = Mathf.Clamp( RealNumPathogens,0, nSentinels);
             }
             // loop from this indx+1 to the next index  
             for (int p = indx + 1; p <= nxtIndx; p++)

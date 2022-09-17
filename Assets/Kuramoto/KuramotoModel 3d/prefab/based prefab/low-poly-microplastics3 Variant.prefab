@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: low-poly-microplastics3 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
+      propertyPath: m_TagString
+      value: Plastic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
 --- !u!1 &9038299800857035272 stripped
@@ -94,6 +98,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
+--- !u!135 &6987167822598116882
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038299800857035272}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.02
+  m_Center: {x: -0.00038149813, y: 0.00019115253, z: 0.0023625789}
 --- !u!114 &2351948123429560839
 MonoBehaviour:
   m_ObjectHideFlags: 0

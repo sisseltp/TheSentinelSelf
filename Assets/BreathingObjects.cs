@@ -12,14 +12,20 @@ public class BreathingObjects : MonoBehaviour
 
     private KuramotoAffecterAgent phaseFocus;
 
+    private float phaseSmoothed = 0;
 
     // Update is called once per frame
     void Update()
     {
+
+        
         if (phaseFocus != null) {
+            
+            phaseSmoothed += (phaseFocus.phase - phaseSmoothed) * 0.3f;
+
             foreach (Renderer breath in BreathingMaterials)
             {
-                breath.material.SetFloat(id, phaseFocus.phase);
+                breath.material.SetFloat(id, phaseSmoothed);
             }
         }
     }
