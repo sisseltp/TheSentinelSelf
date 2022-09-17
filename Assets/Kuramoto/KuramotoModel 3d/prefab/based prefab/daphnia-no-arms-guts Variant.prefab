@@ -324,6 +324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: daphnia-no-arms-guts Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1713654515785297386, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -342,24 +346,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 61ce0c9741c3446c0927c4c1da58658b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
---- !u!1 &4107442386137540623 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
-  m_PrefabInstance: {fileID: 3873650689927370078}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &3624062592599470773 stripped
+--- !u!4 &3615168855765547151 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
-  m_PrefabInstance: {fileID: 3873650689927370078}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6078652155981191963 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -2190353428470133179, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
-  m_PrefabInstance: {fileID: 3873650689927370078}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &2960265356548078975 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -7145803656613320671, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+  m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
   m_PrefabInstance: {fileID: 3873650689927370078}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &8248075652936040498 stripped
@@ -367,11 +356,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4055784088070761108, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
   m_PrefabInstance: {fileID: 3873650689927370078}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3615168855765547151 stripped
+--- !u!4 &2960265356548078975 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+  m_CorrespondingSourceObject: {fileID: -7145803656613320671, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
   m_PrefabInstance: {fileID: 3873650689927370078}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &6078652155981191963 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2190353428470133179, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+  m_PrefabInstance: {fileID: 3873650689927370078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3624062592599470773 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+  m_PrefabInstance: {fileID: 3873650689927370078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4107442386137540623 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+  m_PrefabInstance: {fileID: 3873650689927370078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &4113551697681944078
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4107442386137540623}
+  serializedVersion: 2
+  m_Mass: 0.2
+  m_Drag: 0.2
+  m_AngularDrag: 5
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!135 &-1879920604082762162
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -485,19 +505,3 @@ MonoBehaviour:
   keys: 0
   NumKeysToCollect: 4
   debugging: 0
---- !u!54 &4113551697681944078
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107442386137540623}
-  serializedVersion: 2
-  m_Mass: 0.2
-  m_Drag: 0.2
-  m_AngularDrag: 5
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 80
-  m_CollisionDetection: 3

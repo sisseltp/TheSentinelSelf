@@ -298,6 +298,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: daphnia-dendrite-arms-guts Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1713654515785297386, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -316,24 +320,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 61ce0c9741c3446c0927c4c1da58658b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
---- !u!1 &1241660613132810289 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
-  m_PrefabInstance: {fileID: 2160085623838524768}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1905184353733812875 stripped
+--- !u!4 &1878135472035096753 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
-  m_PrefabInstance: {fileID: 2160085623838524768}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8962276814418889509 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -2190353428470133179, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
-  m_PrefabInstance: {fileID: 2160085623838524768}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &85334201535229249 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -7145803656613320671, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+  m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
   m_PrefabInstance: {fileID: 2160085623838524768}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &6506821518944538636 stripped
@@ -341,9 +330,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4055784088070761108, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
   m_PrefabInstance: {fileID: 2160085623838524768}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1878135472035096753 stripped
+--- !u!4 &85334201535229249 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+  m_CorrespondingSourceObject: {fileID: -7145803656613320671, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+  m_PrefabInstance: {fileID: 2160085623838524768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8962276814418889509 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2190353428470133179, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+  m_PrefabInstance: {fileID: 2160085623838524768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1905184353733812875 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
+  m_PrefabInstance: {fileID: 2160085623838524768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1241660613132810289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b1b769104e903e54884877ecf77f2cb5, type: 3}
   m_PrefabInstance: {fileID: 2160085623838524768}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &726525994250580958
@@ -441,21 +445,6 @@ MonoBehaviour:
   age: 0
   sumX: 0
   sumY: 0
---- !u!114 &8066729109672978145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1241660613132810289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb937e370985d348bd3b6f0a450fcdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeTime: 2
-  steps: 10
-  fosil: {fileID: 7604624934126687443, guid: 98140312dd3311a4ebef808da992c488, type: 3}
 --- !u!114 &7003511296015800859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,3 +464,18 @@ MonoBehaviour:
   keys: 0
   NumKeysToCollect: 4
   debugging: 0
+--- !u!114 &8066729109672978145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241660613132810289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb937e370985d348bd3b6f0a450fcdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 2
+  steps: 10
+  fosil: {fileID: 7604624934126687443, guid: 98140312dd3311a4ebef808da992c488, type: 3}
