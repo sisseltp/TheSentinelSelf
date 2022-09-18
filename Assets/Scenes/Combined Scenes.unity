@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6882997, g: 0.46895534, b: 0.4336893, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -454,50 +454,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8066569361955794875, guid: 6f22151068fad3c41b69ef750edf9328, type: 3}
   m_PrefabInstance: {fileID: 49919869}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &54789526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 54789527}
-  - component: {fileID: 54789528}
-  m_Layer: 0
-  m_Name: alignCollider2
-  m_TagString: Body
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &54789527
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54789526}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.81, z: 0.33}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 310550321}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &54789528
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54789526}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &55445099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1905,7 @@ MonoBehaviour:
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
   MaxAge: 4000
-  speedScl: -0.5
+  speedScl: 1.2
 --- !u!135 &266421744
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -12118,11 +12074,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fa205b55b83b4b4eb47165990bd6b2b, type: 3}
   m_PrefabInstance: {fileID: 791987649}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &310550321 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6fa205b55b83b4b4eb47165990bd6b2b, type: 3}
-  m_PrefabInstance: {fileID: 791987649}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &310550322
 Animator:
   serializedVersion: 3
@@ -12258,7 +12209,7 @@ MonoBehaviour:
   sentinel: {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1
+  speedScl: 1.1
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
@@ -12718,12 +12669,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1874007846}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
-      propertyPath: speed
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: pathLength
-      value: 5741.614
+      value: 6178.1597
       objectReference: {fileID: 0}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: customUpVector.x
@@ -16479,7 +16426,7 @@ MonoBehaviour:
   attractionSclRange: {x: 5, y: 6}
   sentinels: []
   MaxAge: 4
-  speedScl: -0.3
+  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!23 &953953812 stripped
@@ -17465,7 +17412,7 @@ MonoBehaviour:
   attractionSclRange: {x: 5, y: 6}
   sentinels: []
   MaxAge: 4
-  speedScl: -0.3
+  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &1105928081
@@ -17514,7 +17461,7 @@ MonoBehaviour:
   sentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1
+  speedScl: 1.1
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
@@ -17641,9 +17588,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 501.9
       objectReference: {fileID: 0}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedScl
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
-      value: -0.3
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: sentinel
@@ -17651,7 +17602,7 @@ PrefabInstance:
       objectReference: {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
-      value: 1
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054862, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: plastic
@@ -18742,7 +18693,7 @@ MonoBehaviour:
   sentinel: {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1
+  speedScl: 1.1
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
@@ -22183,50 +22134,6 @@ Transform:
   m_Father: {fileID: 23368313}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1680667092
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1680667093}
-  - component: {fileID: 1680667094}
-  m_Layer: 0
-  m_Name: alignColider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1680667093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680667092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.37, z: 0.29}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 310550321}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1680667094
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680667092}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1681553203
 GameObject:
   m_ObjectHideFlags: 0
@@ -24422,7 +24329,7 @@ MonoBehaviour:
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
   MaxAge: 4000
-  speedScl: -0.5
+  speedScl: 1.2
 --- !u!135 &1986580660
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24890,7 +24797,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066025141}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -26229,10 +26136,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 24512550}
     - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
-      propertyPath: speed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6095874854580695503, guid: ea6010bde12894218bba71684dd20ab7, type: 3}
       propertyPath: pathLength
       value: 6178.1597
       objectReference: {fileID: 0}
@@ -26332,6 +26235,14 @@ PrefabInstance:
     - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_Radius
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+    - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}

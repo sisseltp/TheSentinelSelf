@@ -169,8 +169,9 @@ public class CameraTracker : MonoBehaviour
         transform.position = origin;
         transform.rotation = origRot;
         faderImage.CrossFadeAlpha(0, fadePeriod, false);
-
+        GetComponent<SphereCollider>().isTrigger = true;
     }
+   
     private void OnTriggerEnter(Collider collision)
     {
         
@@ -179,7 +180,10 @@ public class CameraTracker : MonoBehaviour
             FindSceneTracked("Player");
             tracking = true;
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
-        } else if (collision.transform.tag == "BodyAlign")
+            GetComponent<SphereCollider>().isTrigger = false;
+
+        }
+        else if (collision.transform.tag == "BodyAlign")
         {
             FindScreenTracked("Body");
         }

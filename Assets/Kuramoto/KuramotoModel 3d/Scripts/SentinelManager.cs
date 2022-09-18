@@ -185,9 +185,10 @@ public class SentinelManager : MonoBehaviour
                 kuramoto.phase = GPUStruct[i].phase;
                 kuramoto.Connections = GPUStruct[i].connections;
                 kuramoto.played = GPUStruct[i].played;
+               
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up); 
                 GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
-                GPUStruct[i].pos = sentinels[i].transform.position;
+                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
                 GPUStruct[i].couplingRange = kuramoto.couplingRange;
             }
 
@@ -212,11 +213,15 @@ public class SentinelManager : MonoBehaviour
     {
         // get the sentinel
         GameObject thisSentinel = sentinels[i];
-        
+
+       
+
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 
+        thisSentinel.GetComponent<Fosilising>().enabled = false;
+        thisSentinel.SetActive(true);
 
         // lib count is bellow 500
         if (GenKurLib.Count < 500)
@@ -251,9 +256,9 @@ public class SentinelManager : MonoBehaviour
 
             GeneticMovementSentinel genMov = thisSentinel.GetComponent<GeneticMovementSentinel>();
             genMov.Reset();
-            genMov.geneticMovement = genVel1.BlendAttributes(Vels);
+            genMov.geneticMovement = Vels;
 
-
+            
         }
         
     }

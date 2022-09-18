@@ -84,9 +84,9 @@ public class GeneticMovementPlastic : MonoBehaviour
         {
             plastic = GetComponent<KuramotoPlasticAgent>();
 
-            Debug.Log("Plastic");
             plastic.dead = true;
 
+            Debug.Log("Plastic");
             
             Instantiate(attachedGO, collision.GetContact(0).point, transform.rotation, collision.transform);
 

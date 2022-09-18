@@ -53,15 +53,14 @@ public class Fosilising : MonoBehaviour
     public void TimeOut()
     {
         IEnumerator coroutine = TimedDisolve(fadeTime);
-
-        Bounds B =  GetMaxBounds(gameObject);
-        fosil.transform.localScale = B.size *1.1f;
-        fosil = Instantiate(fosil, transform.position - new Vector3(0,-0.75f,0), new Quaternion(0, 0, 0, 0));
         StartCoroutine(coroutine);
     }
 
     private IEnumerator TimedDisolve(float waitTime)
     {
+        Bounds B = GetMaxBounds(gameObject);
+        GameObject thisFosil = Instantiate(fosil, transform.position - new Vector3(0, -0.75f, 0), new Quaternion(0, 0, 0, 0));
+        thisFosil.transform.localScale = B.size * 1.1f;
 
         float finish = Time.time + waitTime;
 
@@ -73,30 +72,36 @@ public class Fosilising : MonoBehaviour
            
 
             fadeIn += 1 / steps;
-            if (fadeIn > 1 - (1 / steps))
-            {
-                int numChild = transform.childCount;
+          
 
-                for(int i = 0; i < numChild; i++)
-                {
-                    Transform child = transform.GetChild(i);
-                    if(child.tag == "Plastic")
-                    {
-                        Destroy(child.gameObject);
-
-                    }
-
-                }
-                GetComponent<KuramotoAffecterAgent>().dead = true;
-                rb.useGravity = false;
-                rb.drag = originalDrag;
-            }
-
-            fosil.GetComponent<Renderer>().material.SetFloat("fadeVal", fadeIn);
+            thisFosil.GetComponent<Renderer>().material.SetFloat("fadeVal", fadeIn);
 
             yield return new WaitForSeconds(step);
         }
-        
+
+        GeneticMovementPlastic[] plastics = GetComponentsInChildren<GeneticMovementPlastic>();
+
+        foreach (GeneticMovementPlastic p in plastics)
+        {
+            Destroy(p.gameObject);
+        }
+
+        GeneticAntigenKey[] antigens = GetComponentsInChildren<GeneticAntigenKey>();
+
+        foreach (GeneticAntigenKey K in antigens)
+        {
+            Destroy(K.gameObject);
+        }
+
+
+        gameObject.SetActive(false);
+        GetComponent<KuramotoAffecterAgent>().dead = true;
+        rb.useGravity = false;
+        rb.drag = originalDrag;
+        this.enabled = false;
+        collided = false;
 
     }
+
+
 }

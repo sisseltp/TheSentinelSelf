@@ -36,7 +36,10 @@ public class GeneticMovementSentinel : MonoBehaviour
     public int NumKeysToCollect = 4;
 
     [SerializeField]
-    private bool debugging = false;
+    public bool debugging = false;
+
+    public float origDrag = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         sentinel = GetComponent<KuramotoAffecterAgent>();
         // gets this rb
         rb = GetComponent<Rigidbody>();
+        origDrag = rb.drag;
         // sets it to a new vec3 list for vels
         geneticMovement = new Vector3[cycleLength];
 
@@ -88,6 +92,7 @@ public class GeneticMovementSentinel : MonoBehaviour
             vel += Vector3.Normalize(target - transform.position)* targetSpeedScl;
             vel *= sentinel.phase;
             rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
+            
 
         }
 
@@ -110,6 +115,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         {
             geneticMovement[i] = Random.insideUnitSphere;
         }
+        rb.drag = origDrag;
         
     }
     private int tcellHits = 0;
@@ -147,11 +153,11 @@ public class GeneticMovementSentinel : MonoBehaviour
             }
         }
 
-        }
+    }
 
+   
     private void OnTriggerStay(Collider collision)
     {
-
 
         if (collision.gameObject.tag == "PathogenEmitter")
         {
@@ -167,7 +173,11 @@ public class GeneticMovementSentinel : MonoBehaviour
                     Debug.Log("Leaving");
                 }
             }
-
+            else if( keys< NumKeysToCollect)
+            {
+                targeting = false;
+            }
+            
         }
         else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10 && !targeting)
         {
@@ -206,6 +216,15 @@ public class GeneticMovementSentinel : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         targeting = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (debugging)
+        {
+
+            Gizmos.DrawLine(GetComponent<Rigidbody>().position, target);
+        }
     }
 
 

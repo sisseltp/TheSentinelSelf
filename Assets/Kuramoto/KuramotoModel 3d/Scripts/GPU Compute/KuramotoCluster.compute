@@ -148,7 +148,7 @@ void Plas2SenCOHERENCE(int id) {
 				AddOscilations(plasticData[b].phase);
 
 				// add the vector between the two * the distance in cycles * 2
-				sentinelData[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl)*2;
+				sentinelData[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
 
 				// add two to the Connections
 				sentinelData[id].connections += 2.0;;
@@ -158,7 +158,7 @@ void Plas2SenCOHERENCE(int id) {
 
 }
 
-// sentinels to biome coherence function
+// sentinels to biome function
 void Sen2BioCOHERENCE(int id) {
 
 	senVel = float3(0, 0, 0);
@@ -179,14 +179,8 @@ void Sen2BioCOHERENCE(int id) {
 			// get the distance between the two agents
 			float dist = distance(biomeData[b].pos, sentinelData[id].pos);
 
-			// if less than sentinel coupling range
 			if (dist < sentinelData[id].couplingRange)
 			{
-
-				// add the oscilation
-				float sigDist = AddOscilations(biomeData[b].phase);
-				// add a connection
-				sentinelData[id].connections += 1.0;
 
 				// if it is the shortest difference in oscilation
 				if (dist < minDist) {
@@ -242,7 +236,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		Sen2BioCOHERENCE(int(id.x));
 		// plastic to sentinel interaction
 		Plas2SenCOHERENCE(int(id.x));
-
+		
 
 		// if the count is not 0 (its connected)
 		if (sentinelData[id.x].connections != 0) {
@@ -253,10 +247,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 
 			// average vel over connections
 			sentinelData[id.x].vel /= sentinelData[id.x].connections;
-			sentinelData[id.x].vel += senVel;
-			// times vel by detla time and phase
-			sentinelData[id.x].vel *= dt;
-			sentinelData[id.x].vel *= sentinelData[id.x].phase;
+			
 
 			
 
@@ -289,7 +280,10 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		// subtract its intiger to leave it as a 0-1
 		sentinelData[id.x].phase -= float(floor(sentinelData[id.x].phase));
 
-		
+		sentinelData[id.x].vel += senVel;
+		// times vel by detla time and phase
+		sentinelData[id.x].vel *= dt;
+		sentinelData[id.x].vel *= sentinelData[id.x].phase;
 
 	}// if in biome section
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
@@ -353,55 +347,55 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		
 	} // else if plasitcs
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length + plasticData.Length)) {
-
+	
 		// set the offset indx		
 		int indx = id.x - int(biomeData.Length) - int(sentinelData.Length);
+		if (plasticData[indx].played == 1) {
+			float thisNoise = plasticData[indx].noiseScl * Noise(plasticData[indx].pos);
+			plasticData[indx].phase += dt * (plasticData[indx].speed + abs(thisNoise));
 
-		float thisNoise = plasticData[indx].noiseScl * Noise(plasticData[indx].pos);
-		plasticData[indx].phase += dt* (plasticData[indx].speed + abs(thisNoise));
-	
-		// subtract its intiger to leave it as a 0. someting
-		plasticData[indx].phase -= float(floor(plasticData[indx].phase));
+			// subtract its intiger to leave it as a 0. someting
+			plasticData[indx].phase -= float(floor(plasticData[indx].phase));
 
-		// reset vel
-		plasticData[indx].vel = float3(0, 0, 0);
+			// reset vel
+			plasticData[indx].vel = float3(0, 0, 0);
 
-		// set min dist to a high number
-		float minDist = 1000000;
-		// set closest indx to -1 as a gate
-		int closestIndx = -1;
-		 
-		// loop over plastics
-		for (int s = 0; s < int(sentinelData.Length); s++)
-		{
-			if (plasticData[indx].played == 1) {
+			// set min dist to a high number
+			float minDist = 1000000;
+			// set closest indx to -1 as a gate
+			int closestIndx = -1;
 
-				// get the distance between the two agents
-				float dist = distance(sentinelData[s].pos, plasticData[indx].pos);
+			// loop over plastics
+			for (int s = 0; s < int(sentinelData.Length); s++)
+			{
+				if (plasticData[indx].played == 1) {
 
-				// if less than coupling range and less than mindist
-				if (dist < plasticData[indx].couplingRange ) {
-					if (dist < minDist) {
-						minDist = dist; //set the mindist from distance 
-						closestIndx = s; // set the index
+					// get the distance between the two agents
+					float dist = distance(sentinelData[s].pos, plasticData[indx].pos);
+
+					// if less than coupling range and less than mindist
+					if (dist < plasticData[indx].couplingRange) {
+						if (dist < minDist) {
+							minDist = dist; //set the mindist from distance 
+							closestIndx = s; // set the index
+						}
 					}
 				}
 			}
-		}
 
-		//if there has been connected
-		if (closestIndx !=-1) {
-			// add the velocity
-			plasticData[indx].vel = normalize(sentinelData[closestIndx].pos - plasticData[indx].pos) * plasticData[indx].attractionScl;
-			// mult by phase
-			plasticData[indx].vel *= plasticData[indx].phase;
-			// mult by dt
-			plasticData[indx].vel *= dt;
+			//if there has been connected
+			if (closestIndx != -1) {
+				// add the velocity
+				plasticData[indx].vel = normalize(sentinelData[closestIndx].pos - plasticData[indx].pos) * plasticData[indx].attractionScl;
+				// mult by phase
+				plasticData[indx].vel *= plasticData[indx].phase;
+				// mult by dt
+				plasticData[indx].vel *= dt;
+			}
+			else {
+				plasticData[indx].vel = float3(0, 0, 0);
+			}
 		}
-		else {
-			plasticData[indx].vel = float3(0, 0, 0);
-		}
-		
 	}
 
 }

@@ -204,10 +204,7 @@ public class PathogenManager : MonoBehaviour
                     
                     DuplicatePathogen( sentinels[i],1);
                     
-                
-
-                //toRemove.Add(i);
-
+               
             }
             else
             {
