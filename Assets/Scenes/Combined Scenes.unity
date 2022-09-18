@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.6882997, g: 0.46895534, b: 0.4336893, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12209,7 +12209,7 @@ MonoBehaviour:
   sentinel: {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1.1
+  speedScl: 0.9
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
@@ -17461,7 +17461,7 @@ MonoBehaviour:
   sentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1.1
+  speedScl: 0.9
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
@@ -17602,7 +17602,7 @@ PrefabInstance:
       objectReference: {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
-      value: 1.1
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054862, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: plastic
@@ -18693,7 +18693,7 @@ MonoBehaviour:
   sentinel: {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   nSentinels: 10
   spawnArea: 20
-  speedScl: 1.1
+  speedScl: 0.9
   speedRange: {x: 70, y: 80}
   couplingRange: {x: 10, y: 20}
   noiseSclRange: {x: 0.0001, y: 0.001}
