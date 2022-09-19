@@ -8,6 +8,8 @@ public class IntroBeginner : MonoBehaviour
 
     CameraTracker camTrack;
 
+    AudioSource audioSource;
+
     [HideInInspector]
     public bool floating = true;
 
@@ -27,6 +29,14 @@ public class IntroBeginner : MonoBehaviour
     [SerializeField]
     private float rotSpeed = 1;
 
+    [SerializeField]
+    private AudioClip enterBodyClip;
+
+    [SerializeField]
+    private AudioClip exitBodyClip;
+
+
+
     [HideInInspector]
     public Romi.PathTools.MoveAlongPath alongPath;
 
@@ -35,6 +45,7 @@ public class IntroBeginner : MonoBehaviour
     void Start()
     {
         camTrack = GetComponent<CameraTracker>();
+        audioSource = GetComponent<AudioSource>();
         Image  faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
         //Make the alpha 1
         Color fixedColor = faderImage.color;
@@ -86,6 +97,11 @@ public class IntroBeginner : MonoBehaviour
 
     public void Begin()
     {
+        Debug.Log("BEGIN!");
+        audioSource.clip = enterBodyClip;
+        audioSource.Play();
+
+
         camTrack.FindScreenTracked("BodyAlign");
         camTrack.FindSceneLook("Body");
         camTrack.enabled = true;
@@ -94,7 +110,11 @@ public class IntroBeginner : MonoBehaviour
     }
     public void Restart()
     {
+        Debug.Log("RESTART!");
         camTrack.ReturnToOrigin();
-       
+
+        audioSource.clip = exitBodyClip;
+        audioSource.Play();
+
     }
 }
