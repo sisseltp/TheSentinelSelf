@@ -78,6 +78,9 @@ public class CameraTracker : MonoBehaviour
     {
 
 
+
+
+
         Vector3 dif = tracked.position - transform.position;
 
         Vector3 lookDif = look.position - transform.position;

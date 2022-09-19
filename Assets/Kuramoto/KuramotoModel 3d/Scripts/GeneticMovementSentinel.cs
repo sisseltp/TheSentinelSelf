@@ -40,10 +40,20 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     public float origDrag = 0;
 
+    public Transform rootBone;
+
+    [HideInInspector]
+    public List<GeneticAntigenKey> digestAntigens;
+    [HideInInspector]
+    public List<Transform> plastics;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        digestAntigens = new List<GeneticAntigenKey>();
+        plastics = new List<Transform>();
+
         // gets the sentinels kurmto
         sentinel = GetComponent<KuramotoAffecterAgent>();
         // gets this rb
@@ -205,13 +215,12 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             target = manager.PathogenEmitters[indx];
 
-            GeneticAntigenKey[] genKeys = GetComponentsInChildren<GeneticAntigenKey>();
-            foreach(GeneticAntigenKey key in genKeys)
+            foreach(GeneticAntigenKey key in digestAntigens)
             {
                 key.TimeOut();
             }
-            
-            
+
+            digestAntigens.Clear();
             keys = 0;
 
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 

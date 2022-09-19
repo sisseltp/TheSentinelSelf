@@ -13,7 +13,6 @@ public class Fosilising : MonoBehaviour
     [SerializeField]
     private GameObject fosil;
 
-    private float fadeIn = 0;
 
     private bool collided = false;
 
@@ -24,15 +23,14 @@ public class Fosilising : MonoBehaviour
 
     private void Start()
     {
-        fadeIn = 0;
         rb = GetComponent<Rigidbody>();
         originalDrag = rb.drag;
         this.enabled = false;
     }
 
-
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
+  
         if(collision.gameObject.tag == "Terrain" && !collided)
         {
             TimeOut();
@@ -55,46 +53,37 @@ public class Fosilising : MonoBehaviour
     {
         IEnumerator coroutine = TimedDisolve(fadeTime);
         StartCoroutine(coroutine);
-        rb.isKinematic = true;
+        
     }
 
     private IEnumerator TimedDisolve(float waitTime)
     {
+        rb.isKinematic = true;
         Bounds B = GetMaxBounds(gameObject);
         GameObject thisFosil = Instantiate(fosil, transform.position - new Vector3(0, -0.75f, 0), new Quaternion(0, 0, 0, 0));
         thisFosil.transform.localScale = B.size * 1.1f;
 
-        float finish = Time.time + waitTime;
 
-        float step = waitTime / steps;
 
-        while (Time.time <= finish)
-        {
-           
-           
+        yield return new WaitForSeconds(waitTime);
+        
+       
 
-            fadeIn += 1 / steps;
-          
-
-            thisFosil.GetComponentInChildren<Renderer>().material.SetFloat("fadeVal", fadeIn);
-
-            yield return new WaitForSeconds(step);
-        }
-
-        GeneticMovementPlastic[] plastics = GetComponentsInChildren<GeneticMovementPlastic>();
-
-        foreach (GeneticMovementPlastic p in plastics)
+        foreach (Transform p in GetComponent<GeneticMovementSentinel>().plastics)
         {
             Destroy(p.gameObject);
         }
 
+        GetComponent<GeneticMovementSentinel>().plastics.Clear();
+
         GeneticAntigenKey[] antigens = GetComponentsInChildren<GeneticAntigenKey>();
 
-        foreach (GeneticAntigenKey K in antigens)
+        foreach (GeneticAntigenKey K in GetComponent<GeneticMovementSentinel>().digestAntigens)
         {
             Destroy(K.gameObject);
         }
 
+        GetComponent<GeneticMovementSentinel>().digestAntigens.Clear();
 
         gameObject.SetActive(false);
         GetComponent<KuramotoAffecterAgent>().dead = true;

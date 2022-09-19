@@ -120,13 +120,30 @@ public class GeneticMovementTcell : MonoBehaviour
         else if (collision.gameObject.tag == "Player")//if hits player
         {
             // get keys from children
-            GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
+           List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
 
-            // if there are any keys
-            if (Antigens.Length > 0) // if it had antigens?
+
+
+            List<Transform> plastics = collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics;
+
+            if (plastics.Count > 0)
+            {
+                Debug.Log("plasticTcellHit");
+
+                int rndIndx = Random.Range(0, plastics.Count);
+
+                target = plastics[rndIndx].GetComponent<Digestion>().origin;
+                notKeyed = false;
+                GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
+                GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+                GetComponent<KuramotoAffectedAgent>().played = 2;
+
+                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plasic and gets lost
+
+            } else if (Antigens.Count > 0) // if it had antigens?
             {
                 // get matches from children
-                AntigenKeys[] results = Compare(Antigens);// gpu accelerated key compare
+                AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
 
                 // run over results
                 for (int i = 1; i < results.Length; i++)
@@ -159,6 +176,7 @@ public class GeneticMovementTcell : MonoBehaviour
             }
 
 
+
         }
         else if (collision.gameObject.tag == "Pathogen")
         {
@@ -186,18 +204,7 @@ public class GeneticMovementTcell : MonoBehaviour
                 }
             }
         }
-        else if (collision.gameObject.tag == "Plastic")
-        {
-            Debug.Log("plasticTcellHit");
-
-            target = collision.gameObject.GetComponent<GeneticMovementPlastic>().origin;
-            notKeyed = false;
-            GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
-            GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
-
-            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
-
-        }
+     
 
     }
     private void OnTriggerEnter(Collider other)

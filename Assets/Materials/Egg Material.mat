@@ -80,6 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_fadeVal: 0
     - Vector1_fe7ff7448d924f11b010c221df67761f: 3.15
     - _AlphaClip: 0
     - _Blend: 0
@@ -107,6 +108,7 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - fadeVal: 0.69
     m_Colors:
     - Color_1f35c264abaa47e0b81957db679418c9: {r: 0, g: 1.0579867, b: 0.32402393, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

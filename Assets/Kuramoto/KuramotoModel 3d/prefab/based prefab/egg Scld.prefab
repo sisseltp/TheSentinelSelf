@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8874018341170759111}
   m_Layer: 0
   m_Name: egg Scld
-  m_TagString: Untagged
+  m_TagString: Eggs
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,8 +100,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98140312dd3311a4ebef808da992c488, type: 3}
+--- !u!1 &3351864348240285814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7604624934126687443, guid: 98140312dd3311a4ebef808da992c488, type: 3}
+  m_PrefabInstance: {fileID: 5119810798278640805}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2724649673638333132 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7116495254630649449, guid: 98140312dd3311a4ebef808da992c488, type: 3}
   m_PrefabInstance: {fileID: 5119810798278640805}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9016952582627017177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351864348240285814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901ee4fd8926ea3479840cf9234d8952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 4
+  steps: 150
+  waitTimeS: 360
+  fadeVal: 0

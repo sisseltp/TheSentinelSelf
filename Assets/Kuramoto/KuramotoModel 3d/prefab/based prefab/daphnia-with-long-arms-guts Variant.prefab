@@ -507,8 +507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb937e370985d348bd3b6f0a450fcdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 2
-  steps: 10
+  fadeTime: 10
+  steps: 20
   fosil: {fileID: 578608192284748201, guid: ed1f485a83e511c4882c6eb87889255e, type: 3}
 --- !u!114 &2129739940
 MonoBehaviour:

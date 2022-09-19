@@ -88,9 +88,10 @@ public class GeneticMovementPathogen : MonoBehaviour
 
                 GameObject newObj = transform.GetChild(0).gameObject;
 
-                Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
-
+                newObj = Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
+                newObj.GetComponent<Digestion>().enabled = true;
                 collision.gameObject.GetComponent<GeneticMovementSentinel>().keys++;
+                collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens.Add(newObj.GetComponent<GeneticAntigenKey>());
                 pathogen.dead = true;
             }
         }
@@ -105,4 +106,5 @@ public class GeneticMovementPathogen : MonoBehaviour
             transform.position = transform.parent.position;
         }
     }
+
 }
