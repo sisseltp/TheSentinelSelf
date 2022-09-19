@@ -151,6 +151,8 @@ public class GeneticMovementTcell : MonoBehaviour
                             replica.GetComponent<GeneticMovementTcell>().target = target;
                             // add new tcell to manager
                             manager.AddTCell(replica);
+
+                            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
                         }
                     }
                 }
@@ -158,7 +160,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
 
         }
-        else if (collision.gameObject.tag == "Lymphonde")
+        else if (collision.gameObject.tag == "Pathogen")
         {
             // get keys from children
             GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
@@ -178,6 +180,8 @@ public class GeneticMovementTcell : MonoBehaviour
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
                         collision.gameObject.GetComponent<KuramotoAffectedAgent>().dead = true;
+                        //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and kils pathogen
+
                     }
                 }
             }
@@ -190,8 +194,11 @@ public class GeneticMovementTcell : MonoBehaviour
             notKeyed = false;
             GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
             GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
+
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
+
         }
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -205,6 +212,8 @@ public class GeneticMovementTcell : MonoBehaviour
         {
             
             StartCoroutine(TargetTimeout(15));
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< tcell reaches the pathogen emitter
+
         }
     }
     private void OnTriggerExit(Collider other)

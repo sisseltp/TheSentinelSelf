@@ -142,6 +142,7 @@ public class GeneticMovementSentinel : MonoBehaviour
             {
                 Debug.Log(collision.gameObject.tag);
             }
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the pathogen emitter
 
         }
         else if (collision.gameObject.tag == "Lymphonde")
@@ -151,6 +152,8 @@ public class GeneticMovementSentinel : MonoBehaviour
             {
                 Debug.Log(collision.gameObject.tag);
             }
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the lymphonode 
+
         }
 
     }
@@ -172,6 +175,8 @@ public class GeneticMovementSentinel : MonoBehaviour
                 {
                     Debug.Log("Leaving");
                 }
+                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
+
             }
             else if( keys< NumKeysToCollect)
             {
@@ -208,9 +213,11 @@ public class GeneticMovementSentinel : MonoBehaviour
             
             keys = 0;
 
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
+
 
         }
-        
+
     }
 
     private void OnTriggerExit(Collider other)
