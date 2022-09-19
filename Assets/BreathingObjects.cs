@@ -21,11 +21,10 @@ public class BreathingObjects : MonoBehaviour
         
         if (phaseFocus != null) {
             
-            phaseSmoothed += (phaseFocus.phase - phaseSmoothed) * 0.3f;
 
             foreach (Renderer breath in BreathingMaterials)
             {
-                breath.material.SetFloat(id, phaseSmoothed);
+                breath.material.SetFloat(id, phaseFocus.phase);
             }
         }
     }

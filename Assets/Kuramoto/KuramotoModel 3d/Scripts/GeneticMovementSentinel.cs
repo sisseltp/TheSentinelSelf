@@ -116,7 +116,8 @@ public class GeneticMovementSentinel : MonoBehaviour
             geneticMovement[i] = Random.insideUnitSphere;
         }
         rb.drag = origDrag;
-        
+        GetComponent<Fosilising>().enabled = false;
+
     }
     private int tcellHits = 0;
     private void OnCollisionEnter(Collision collision)

@@ -91,9 +91,9 @@ public class GeneticMovementPlastic : MonoBehaviour
             Instantiate(attachedGO, collision.GetContact(0).point, transform.rotation, collision.transform);
 
             collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
-            collision.gameObject.GetComponent<Rigidbody>().drag += 0.1f;
+            collision.gameObject.GetComponent<Rigidbody>().drag += 0.05f;
             
-            if (collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed < 0.2f)
+            if (collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed < 0.4f)
             {
                 collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
                 full = true;
