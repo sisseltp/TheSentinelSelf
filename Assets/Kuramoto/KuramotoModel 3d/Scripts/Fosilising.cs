@@ -27,6 +27,7 @@ public class Fosilising : MonoBehaviour
         fadeIn = 0;
         rb = GetComponent<Rigidbody>();
         originalDrag = rb.drag;
+        this.enabled = false;
     }
 
 
@@ -54,6 +55,7 @@ public class Fosilising : MonoBehaviour
     {
         IEnumerator coroutine = TimedDisolve(fadeTime);
         StartCoroutine(coroutine);
+        rb.isKinematic = true;
     }
 
     private IEnumerator TimedDisolve(float waitTime)
@@ -74,7 +76,7 @@ public class Fosilising : MonoBehaviour
             fadeIn += 1 / steps;
           
 
-            thisFosil.GetComponent<Renderer>().material.SetFloat("fadeVal", fadeIn);
+            thisFosil.GetComponentInChildren<Renderer>().material.SetFloat("fadeVal", fadeIn);
 
             yield return new WaitForSeconds(step);
         }
@@ -100,6 +102,7 @@ public class Fosilising : MonoBehaviour
         rb.drag = originalDrag;
         this.enabled = false;
         collided = false;
+        rb.isKinematic = false;
 
     }
 

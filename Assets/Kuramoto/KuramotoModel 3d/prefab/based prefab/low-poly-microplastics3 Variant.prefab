@@ -13,15 +13,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_LocalPosition.x
@@ -126,7 +126,7 @@ MonoBehaviour:
   cycleLength: 10
   speedScl: 0.5
   geneticMovement: []
-  attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
+  attachedGO: {fileID: 3010071362858964238, guid: d65dc05cfc2798f4cb97bfb5731e0937, type: 3}
   origin: {x: 0, y: 0, z: 0}
 --- !u!114 &5425442252488360563
 MonoBehaviour:
