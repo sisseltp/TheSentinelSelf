@@ -16608,7 +16608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  pathogens: []
   nSentinels: 200
   spawnArea: 11
   speedRange: {x: 90, y: 100}
@@ -17594,7 +17594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  pathogens: []
   nSentinels: 200
   spawnArea: 11
   speedRange: {x: 90, y: 100}
@@ -17873,6 +17873,14 @@ PrefabInstance:
       propertyPath: emitionOrigin
       value: 
       objectReference: {fileID: 450411941}
+    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: plastics.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: plastics.Array.data[0]
+      value: 
+      objectReference: {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
     - target: {fileID: 3850774877178959534, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 601.6
@@ -17897,6 +17905,14 @@ PrefabInstance:
       propertyPath: speedScl
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: pathogens.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: pathogens.Array.data[0]
+      value: 
+      objectReference: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
     - target: {fileID: 3850774877735049679, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: sentinel
       value: 

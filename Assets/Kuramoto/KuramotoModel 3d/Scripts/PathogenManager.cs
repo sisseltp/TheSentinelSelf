@@ -8,7 +8,7 @@ public class PathogenManager : MonoBehaviour
 {
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
-    private GameObject sentinel; // holds the sentinel prefab
+    private GameObject[] pathogens; // holds the sentinel prefab
     [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
@@ -127,7 +127,9 @@ public class PathogenManager : MonoBehaviour
 
             // instantiate a new sentinel as child and at pos
 
-            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            int randindx = UnityEngine.Random.Range(0, pathogens.Length);
+
+            GameObject thisSentinel = Instantiate(pathogens[randindx], pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();

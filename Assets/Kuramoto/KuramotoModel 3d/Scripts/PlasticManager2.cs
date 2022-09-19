@@ -8,7 +8,7 @@ public class PlasticManager2 : MonoBehaviour
 {
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
-    private GameObject sentinel; // holds the sentinel prefab
+    private GameObject[] plastics; // holds the sentinel prefab
     [Tooltip("The object to emit from")]
     [SerializeField]
     private Transform emitionOrigin;
@@ -124,8 +124,10 @@ public class PlasticManager2 : MonoBehaviour
 
             Vector3 pos = emitionOrigin.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
+            int randIndx = UnityEngine.Random.Range(0,plastics.Length);
+
             // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            GameObject thisSentinel = Instantiate(plastics[randIndx], pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
@@ -297,7 +299,9 @@ public class PlasticManager2 : MonoBehaviour
         {
             RealNumSentinels++;
 
-            GameObject thisAgent =  Instantiate(sentinel, transform);
+            int randIndx = UnityEngine.Random.Range(0, plastics.Length);
+
+            GameObject thisAgent =  Instantiate(plastics[randIndx], transform);
             // add the object to the list
             sentinels[RealNumSentinels-1] = thisAgent;
             KuramotoPlasticAgent kuramoto = thisAgent.GetComponent<KuramotoPlasticAgent>();
