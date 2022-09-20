@@ -107,8 +107,10 @@ public class ethernetValues : MonoBehaviour
         }
         else if (playing && TimerGate + restartTimer < Time.time)
         {
-            IntroControl.Restart();
-            playing = false;
+            if (IntroControl.Restart())
+            {
+                playing = false;
+            }
         }
 
         lastAvrgRate = avrgRate;

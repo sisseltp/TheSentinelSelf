@@ -55,6 +55,9 @@ public class CameraTracker : MonoBehaviour
 
     public float restTimer = 0;
 
+    [HideInInspector]
+    public bool Introing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -152,9 +155,12 @@ public class CameraTracker : MonoBehaviour
 
     public void ReturnToOrigin()
     {
-        faderImage.CrossFadeAlpha(1, fadePeriod, false);
-        
-        StartCoroutine(ReturnCallback());
+        if (!Introing)
+        {
+            faderImage.CrossFadeAlpha(1, fadePeriod, false);
+
+            StartCoroutine(ReturnCallback());
+        }
     }
 
     IEnumerator ReturnCallback()
@@ -184,7 +190,7 @@ public class CameraTracker : MonoBehaviour
             tracking = true;
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
             GetComponent<SphereCollider>().isTrigger = false;
-
+            Introing = false;
         }
         else if (collision.transform.tag == "BodyAlign")
         {

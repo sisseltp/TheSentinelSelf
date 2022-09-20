@@ -101,20 +101,27 @@ public class IntroBeginner : MonoBehaviour
         audioSource.clip = enterBodyClip;
         audioSource.Play();
 
-
+        camTrack.Introing = true;
         camTrack.FindScreenTracked("BodyAlign");
         camTrack.FindSceneLook("Body");
         camTrack.enabled = true;
         floating = false;
         alongPath.enabled = false;
     }
-    public void Restart()
+    public bool Restart()
     {
-        Debug.Log("RESTART!");
-        camTrack.ReturnToOrigin();
+        if (!camTrack.Introing)
+        {
+            Debug.Log("RESTART!");
+            camTrack.ReturnToOrigin();
 
-        audioSource.clip = exitBodyClip;
-        audioSource.Play();
-
+            audioSource.clip = exitBodyClip;
+            audioSource.Play();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
