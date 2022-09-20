@@ -319,7 +319,7 @@ PrefabInstance:
     - target: {fileID: -6314305391257924309, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: d48cc0089966c5e46970c493875cb0db, type: 2}
+      objectReference: {fileID: 2100000, guid: 991fb9b0354d8004f8ae5a3b24fc3000, type: 2}
     - target: {fileID: -6190243848880276678, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -347,7 +347,7 @@ PrefabInstance:
     - target: {fileID: 1713654515785297386, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: db599572c01a541c6af9bc90e114b5dd, type: 2}
+      objectReference: {fileID: 2100000, guid: b4e4ba7afa94e264c870298e3f41a224, type: 2}
     - target: {fileID: 1809170018066076210, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -359,7 +359,7 @@ PrefabInstance:
     - target: {fileID: 4606573522729555865, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -6478536213147159724, guid: 80dfa4f774ab76847bab6e49c2ec9503, type: 3}
+      objectReference: {fileID: 2100000, guid: 2ee82e2ef8356894784b25e02f2af383, type: 2}
     - target: {fileID: 6197511093359025539, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -656,3 +656,6 @@ MonoBehaviour:
   NumKeysToCollect: 4
   debugging: 0
   origDrag: 0
+  rootBone: {fileID: 0}
+  digestAntigens: []
+  plastics: []

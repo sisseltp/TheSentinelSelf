@@ -225,6 +225,9 @@ MonoBehaviour:
   NumKeysToCollect: 4
   debugging: 0
   origDrag: 0
+  rootBone: {fileID: 0}
+  digestAntigens: []
+  plastics: []
 --- !u!114 &5728314670031916521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +789,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5514bcf9251805438c26e4396d7e6ed, type: 2}
+  - {fileID: 2100000, guid: b4e4ba7afa94e264c870298e3f41a224, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1139,7 +1142,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c14b26f41e0272745b897b5d715de495, type: 2}
+  - {fileID: 2100000, guid: 2ee82e2ef8356894784b25e02f2af383, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

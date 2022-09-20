@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8035206115533538153, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2ee82e2ef8356894784b25e02f2af383, type: 2}
     - target: {fileID: -4455452734695638102, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -301,11 +305,15 @@ PrefabInstance:
     - target: {fileID: 1713654515785297386, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: db599572c01a541c6af9bc90e114b5dd, type: 2}
+      objectReference: {fileID: 2100000, guid: b4e4ba7afa94e264c870298e3f41a224, type: 2}
     - target: {fileID: 1809170018066076210, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: faf8c5bd0ce3c418481a0dc391fe3886, type: 2}
+    - target: {fileID: 4606573522729555865, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 991fb9b0354d8004f8ae5a3b24fc3000, type: 2}
     - target: {fileID: 6197511093359025539, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -577,3 +585,6 @@ MonoBehaviour:
   NumKeysToCollect: 4
   debugging: 0
   origDrag: 0
+  rootBone: {fileID: 0}
+  digestAntigens: []
+  plastics: []
