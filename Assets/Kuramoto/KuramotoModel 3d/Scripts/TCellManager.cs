@@ -8,7 +8,7 @@ public class TCellManager : MonoBehaviour
 {
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
-    private GameObject sentinel; // holds the sentinel prefab
+    private GameObject[] tCell; // holds the sentinel prefab
     [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
@@ -82,8 +82,10 @@ public class TCellManager : MonoBehaviour
 
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
+            int randindx = UnityEngine.Random.Range(0, tCell.Length);
+
             // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            GameObject thisSentinel = Instantiate(tCell[randindx], pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
@@ -257,10 +259,18 @@ public class TCellManager : MonoBehaviour
         
     }
 
+    public bool CanAddCell()
+    {
+        if (RealNumSentinels < MaxSentinels - 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void AddTCell(GameObject TCell)
     {
-        if (RealNumSentinels < MaxSentinels-1)
-        {
+        
             RealNumSentinels++;
 
 
@@ -273,7 +283,7 @@ public class TCellManager : MonoBehaviour
             gpuStruct.SetFromKuramoto(kuramoto);
             gpuStruct.SetPos(TCell.transform.position);
             GPUStruct[RealNumSentinels] = gpuStruct;
-        }
+        
 
     }
 

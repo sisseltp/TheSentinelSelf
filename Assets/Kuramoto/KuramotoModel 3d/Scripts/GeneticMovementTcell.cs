@@ -162,12 +162,19 @@ public class GeneticMovementTcell : MonoBehaviour
                         target = Antigens[i - 1].origin;
                         for (int j = 0; j < 3; j++)
                         {
-                            // create a replica
-                            GameObject replica = Instantiate(gameObject, transform.parent);
-                            replica.GetComponent<GeneticMovementTcell>().notKeyed = false;
-                            replica.GetComponent<GeneticMovementTcell>().target = target;
-                            // add new tcell to manager
-                            manager.AddTCell(replica);
+                            if (manager.CanAddCell())
+                            {
+                                // create a replica
+                                GameObject replica = Instantiate(gameObject, transform.parent);
+                                replica.GetComponent<GeneticMovementTcell>().notKeyed = false;
+                                replica.GetComponent<GeneticMovementTcell>().target = target;
+                                // add new tcell to manager
+                                manager.AddTCell(replica);
+                            }
+                            else
+                            {
+                                return;
+                            }
 
                             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
                         }

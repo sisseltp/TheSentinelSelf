@@ -1894,7 +1894,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
+  tCell:
+  - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   nSentinels: 256
   RealNumSentinels: 0
   spawnArea: 20
@@ -16764,7 +16765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathogens: []
+  pathogens:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   nSentinels: 200
   spawnArea: 11
   speedRange: {x: 90, y: 100}
@@ -17752,7 +17754,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathogens: []
+  pathogens:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   nSentinels: 200
   spawnArea: 11
   speedRange: {x: 90, y: 100}
@@ -18078,6 +18081,14 @@ PrefabInstance:
       propertyPath: speedScl
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: tCell.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: tCell.Array.data[0]
+      value: 
+      objectReference: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
     - target: {fileID: 3850774877639536773, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -25382,7 +25393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sentinel: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
+  tCell:
+  - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   nSentinels: 256
   RealNumSentinels: 0
   spawnArea: 20
