@@ -62,20 +62,9 @@ public class GeneticMovementSentinel : MonoBehaviour
         // sets it to a new vec3 list for vels
         geneticMovement = new Vector3[cycleLength];
 
-        // set the vels of the list
-        for(int i=0; i<cycleLength; i++)
-        {
-            // random vec
-            geneticMovement[i] = Random.insideUnitSphere;
-           
-
-        }
-
-
         manager = GetComponentInParent<SentinelManager>();
-        int indx = Random.Range(0, manager.PathogenEmitters.Length);
-        
-        target = manager.PathogenEmitters[indx];
+
+        Reset();
 
     }
     
@@ -127,6 +116,10 @@ public class GeneticMovementSentinel : MonoBehaviour
         }
         rb.drag = origDrag;
         GetComponent<Fosilising>().enabled = false;
+
+        int indx = Random.Range(0, manager.PathogenEmitters.Length);
+
+        target = manager.PathogenEmitters[indx];
 
     }
     private int tcellHits = 0;

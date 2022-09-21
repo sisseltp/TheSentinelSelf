@@ -74,13 +74,16 @@ public class GeneticMovementTcell : MonoBehaviour
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (sentinel.phase < lastPhase) { 
+        if (sentinel.phase < lastPhase) {
             step++;// add a step
             if (step >= cycleLength)// if greater than list length, back to 0
             {
                 step = 0;
             }
-        }
+        } else if (sentinel.phase == lastPhase)
+            {
+            Destroy(gameObject);
+            }
 
         thisGenVel = geneticMovement[step];
 
@@ -160,7 +163,7 @@ public class GeneticMovementTcell : MonoBehaviour
                         Antigens[i - 1].antigen.fitness++;
                         // set the target from the origin
                         target = Antigens[i - 1].origin;
-                        for (int j = 0; j < 3; j++)
+                        for (int j = 0; j < 2; j++)
                         {
                             if (manager.CanAddCell())
                             {

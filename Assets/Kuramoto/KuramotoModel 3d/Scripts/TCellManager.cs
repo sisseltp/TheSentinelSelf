@@ -77,7 +77,7 @@ public class TCellManager : MonoBehaviour
         for (int i=0; i<nSentinels; i++)
         {
 
-            RealNumSentinels++;
+            
 
 
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
@@ -100,6 +100,7 @@ public class TCellManager : MonoBehaviour
             
 
         }
+        RealNumSentinels = nSentinels;
     }
 
     private void Update()
@@ -288,35 +289,5 @@ public class TCellManager : MonoBehaviour
     }
 
 
-    // functions bellow are for ui to change settings in debug
-    public void setRange(float range)
-    {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
-            kuramoto.couplingRange = range;
-
-        }
-    }
-
-    public void setCoupling(float range)
-    {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
-            kuramoto.coupling = range;
-
-        }
-    }
-
-    public void setNoise(float range)
-    {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
-            kuramoto.noiseScl = range;
-
-        }
-    }
 
 }
