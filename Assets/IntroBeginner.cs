@@ -101,12 +101,11 @@ public class IntroBeginner : MonoBehaviour
         audioSource.clip = enterBodyClip;
         audioSource.Play();
 
-        camTrack.Introing = true;
-        camTrack.FindScreenTracked("BodyAlign");
-        camTrack.FindSceneLook("Body");
+        camTrack.BeginTracking();
         camTrack.enabled = true;
         floating = false;
         alongPath.enabled = false;
+        
     }
     public bool Restart()
     {
