@@ -18083,7 +18083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: tCell.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: tCell.Array.data[0]
@@ -18092,7 +18092,11 @@ PrefabInstance:
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: tCell.Array.data[1]
       value: 
-      objectReference: {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
+      objectReference: {fileID: 1572213459868576536, guid: 420046bcbc163b842a314487e0bc9181, type: 3}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: tCell.Array.data[2]
+      value: 
+      objectReference: {fileID: 1572213459868576536, guid: 420046bcbc163b842a314487e0bc9181, type: 3}
     - target: {fileID: 3850774877639536773, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_IsActive
       value: 1
