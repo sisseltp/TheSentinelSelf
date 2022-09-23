@@ -1198,7 +1198,7 @@
     "m_ActiveSubTarget": {
         "m_Id": "aa6a255541914eb68bb07cd1d8a115f4"
     },
-    "m_SurfaceType": 0,
+    "m_SurfaceType": 1,
     "m_AlphaMode": 0,
     "m_TwoSided": false,
     "m_AlphaClip": true,
@@ -1665,7 +1665,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "AlphaClipThreshold",
     "m_StageCapability": 2,
-    "m_Value": 0.5,
+    "m_Value": 0.5099999904632568,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }
@@ -3147,7 +3147,7 @@
     "m_ShaderOutputName": "Edge2",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.8199999928474426,
+        "x": 0.9800000190734863,
         "y": 1.0,
         "z": 1.0,
         "w": 1.0
@@ -3195,7 +3195,7 @@
     "m_ShaderOutputName": "Edge1",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.47999998927116396,
+        "x": 0.25,
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
@@ -3412,7 +3412,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Alpha",
     "m_StageCapability": 2,
-    "m_Value": 1.0,
+    "m_Value": 0.7099999785423279,
     "m_DefaultValue": 1.0,
     "m_Labels": []
 }
@@ -4160,12 +4160,12 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "r": 0.33210134506225588,
-        "g": 0.5849056243896484,
-        "b": 0.28914201259613039,
+        "r": 0.32156863808631899,
+        "g": 1.0196079015731812,
+        "b": 0.20392157137393952,
         "a": 0.0
     },
-    "m_ColorMode": 0
+    "m_ColorMode": 1
 }
 
 {
