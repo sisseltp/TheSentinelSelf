@@ -12250,7 +12250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &334618063
 Transform:
   m_ObjectHideFlags: 0
@@ -14824,7 +14824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &685113647
 Transform:
   m_ObjectHideFlags: 0
@@ -16620,7 +16620,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &943453297
 Transform:
   m_ObjectHideFlags: 0
@@ -17616,7 +17616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1105279491
 Transform:
   m_ObjectHideFlags: 0
@@ -17686,7 +17686,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1105928082
 Transform:
   m_ObjectHideFlags: 0
@@ -21946,7 +21946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1504007424
 Transform:
   m_ObjectHideFlags: 0
@@ -22893,16 +22893,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   excitement: 0
   shouting: 0
-  mellowClipsPath: wavs/sentinelsongs/Mellow
-  excitedClipsPath: wavs/sentinelsongs/Excited
-  shoutClipsPath: wavs/sentinelsongs/Shouts
+  mellowClipsPath: wavs/bodysongs/Mellow
+  excitedClipsPath: wavs/bodysongs/Excited
+  shoutClipsPath: wavs/bodysongs/Shouts
   sentinels:
-  - gameObject: {fileID: 1884440734}
-    sources: []
-  - gameObject: {fileID: 310550320}
-    sources: []
-  - gameObject: {fileID: 2047506843}
-    sources: []
+  - {fileID: 1884440734}
+  - {fileID: 2047506843}
+  - {fileID: 310550320}
   mellowClips: []
   excitedClips: []
   shoutClips: []
@@ -25598,7 +25595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2035026501
 Transform:
   m_ObjectHideFlags: 0

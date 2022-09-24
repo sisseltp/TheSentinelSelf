@@ -20,6 +20,8 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private KuramotoAffecterAgent sentinel; // sentinel obj
 
+    private APCSong song;
+
     private Rigidbody rb;// rigidbody
 
     private int step = 0;// to hold the steps number
@@ -56,6 +58,10 @@ public class GeneticMovementSentinel : MonoBehaviour
 
         // gets the sentinels kurmto
         sentinel = GetComponent<KuramotoAffecterAgent>();
+
+        // get song manager
+        song = GetComponent<APCSong>();
+
         // gets this rb
         rb = GetComponent<Rigidbody>();
         origDrag = rb.drag;
@@ -147,7 +153,6 @@ public class GeneticMovementSentinel : MonoBehaviour
                 Debug.Log(collision.gameObject.tag);
             }
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the pathogen emitter
-
         }
         else if (collision.gameObject.tag == "Lymphonde")
         {
@@ -179,6 +184,7 @@ public class GeneticMovementSentinel : MonoBehaviour
                 {
                     Debug.Log("Leaving");
                 }
+                song.setState(APCState.CarryingAntigens);
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
 
             }
@@ -215,7 +221,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             digestAntigens.Clear();
             keys = 0;
-
+            song.setState(APCState.SeekingPathogens);
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
 
 

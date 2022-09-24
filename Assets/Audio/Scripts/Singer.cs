@@ -4,15 +4,31 @@ using UnityEngine;
 [System.Serializable]
 public class Singer
 {
-    public GameObject gameObject;
+    private GameObject gameObject;
 
     public List<AudioSource> sources = new List<AudioSource>();
 
     private int activeSource = -1;
 
+    public static AudioClip GetRandomClip(List<AudioClip>acList)
+    {
+        int randomNum = Random.Range(0, acList.Count);
+        return acList[randomNum];
+    }    
+
+
+    public Singer(GameObject target) {
+        gameObject = target;
+    }
+
     public AudioSource GetActiveSource() {
         return sources[activeSource];
     }
+
+    public void setGameObject(GameObject go) {
+        Debug.Log("Setting Game Object " + go);
+        gameObject = go;
+    } 
 
 
     // Play the next AudioSource in the sequence of AudioSources
@@ -23,7 +39,7 @@ public class Singer
             nextSource = 0;
         }
 
-        Debug.Log("Play Source: nextSource -- " + gameObject);
+        Debug.Log("Play Next: " + sources[nextSource].clip + "  Object: " + gameObject);
         sources[nextSource].Play();
         activeSource = nextSource;
     }
@@ -38,6 +54,12 @@ public class Singer
         sources[nextSource].clip = ac;
     }
 
+    public string ToString() {
+        var res = "Singer: " + gameObject;
+        return res;
+    }
+
+
     public AudioSource AddSource(
         AudioClip clip=null, 
         float spatialBlend=1.0f, 
@@ -47,6 +69,7 @@ public class Singer
         float minDistance=10.0f,
         AudioRolloffMode rolloff=AudioRolloffMode.Logarithmic
         ) {
+            Debug.Log("Singer.AddSource to >> " + gameObject);
             AudioSource newSource = gameObject.AddComponent<AudioSource>();
             newSource.clip = clip;
             newSource.spatialBlend = spatialBlend;
@@ -55,7 +78,6 @@ public class Singer
             newSource.minDistance = minDistance;
             newSource.dopplerLevel = doppler;
             sources.Add(newSource);
-
             return newSource;
     }
 

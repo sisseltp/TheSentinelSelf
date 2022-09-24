@@ -3,7 +3,7 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class SentinelSongs : MonoBehaviour
+public class BodySongs : MonoBehaviour
 {
     [Range(0.0f, 1.0f)]
     public float excitement;
@@ -15,7 +15,9 @@ public class SentinelSongs : MonoBehaviour
     public string excitedClipsPath;
     public string shoutClipsPath;
 
-    public Singer[] sentinels;
+    public GameObject[] sentinels;
+
+    private List<Singer> singers = new List<Singer>();
 
     public List<AudioClip> mellowClips = new List<AudioClip>();
     public List<AudioClip> excitedClips = new List<AudioClip>();
@@ -25,7 +27,6 @@ public class SentinelSongs : MonoBehaviour
     // Use for initialization...
     // Called before Start (e.g. before the first frame will be run)
     void Awake() {
-
         foreach(AudioClip ac in Resources.LoadAll(mellowClipsPath, typeof(AudioClip))) {
             mellowClips.Add(ac);
         }
@@ -37,21 +38,20 @@ public class SentinelSongs : MonoBehaviour
         }
 
         // Initialize 2x AudioSource components on Sentinel game objects.
-        foreach (Singer s in sentinels) {
-
-            // Create some audio sources for each singer..
-            // TODO: option parameters?
-            s.AddSource(clip: GetRandomClip(mellowClips), spatialBlend: 1.0f, loop: false);
-            s.AddSource(clip: GetRandomClip(mellowClips), spatialBlend: 1.0f, loop: false);
-
-            s.PlayNextSource(); // start playing...
+        foreach (GameObject s in sentinels) {
+            Singer singer = new Singer(s);
+            singers.Add(singer);
+            singer.AddSource(clip: Singer.GetRandomClip(mellowClips), spatialBlend: 1.0f, loop: false, rolloff: AudioRolloffMode.Linear, maxDistance: 500);
+            singer.AddSource(clip: Singer.GetRandomClip(mellowClips), spatialBlend: 1.0f, loop: false, rolloff: AudioRolloffMode.Linear, maxDistance: 500);
         }
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        foreach (Singer s in singers) {
+            s.PlayNextSource(); // start playing...
+        }
     }
 
     // Update is called once per frame
@@ -65,20 +65,15 @@ public class SentinelSongs : MonoBehaviour
     void FixedUpdate() {
         // Go through each sentinel and check if audio is playing
         // if not, play next clip and cue following clip in audiosource
-        foreach(Singer s in sentinels) {
+        foreach(Singer s in singers) {
             if (! s.GetActiveSource().isPlaying ) {
                 s.PlayNextSource();
 
                 // Optionally: cue a random clip to play next
-                s.CueClip(GetRandomClip(mellowClips));
+                s.CueClip(Singer.GetRandomClip(mellowClips));
             }
 
         }
     }
 
-    public AudioClip GetRandomClip(List<AudioClip>acList)
-    {
-        int randomNum = Random.Range(0, acList.Count);
-        return acList[randomNum];
-    }    
 }
