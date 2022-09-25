@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 4872389133939868052}
   - component: {fileID: -5416354910346406675}
   - component: {fileID: 7986584347249604642}
-  - component: {fileID: 1986335170899891946}
   - component: {fileID: -2629601526590107559}
+  - component: {fileID: 677060231279357479}
   m_Layer: 0
   m_Name: PathogenFinal
   m_TagString: Pathogen
@@ -165,18 +165,6 @@ MonoBehaviour:
   speedScl: 15
   geneticMovement: []
   maxKeys: 10
---- !u!114 &1986335170899891946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4021970835733115310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49b6f3fe9c42a445acfb8374e05e0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &-2629601526590107559
 AudioSource:
   m_ObjectHideFlags: 0
@@ -187,18 +175,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 813e446fbf0b7b546bf9960e75f70f83, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a75a8db6c80039beea19cd458885308e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 256
   DopplerLevel: 1
-  MinDistance: 0.01
-  MaxDistance: 15
+  MinDistance: 0.1
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -216,6 +204,24 @@ AudioSource:
       weightedMode: 0
       inWeight: 0
       outWeight: 0.1658325
+    - serializedVersion: 3
+      time: 0.12912157
+      value: 0.45986795
+      inSlope: -3.5587993
+      outSlope: -3.5587993
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.69704026
+    - serializedVersion: 3
+      time: 0.264363
+      value: 0.20870247
+      inSlope: -0.91715264
+      outSlope: -0.91715264
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0
@@ -273,6 +279,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &677060231279357479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021970835733115310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 078c843a2d0b821f4b6ccf16f6379e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gain: 1
+  pitchRange:
+  - 0.74915355
+  - 0.8408964
+  - 1
+  - 1.3348398
+  - 1.4983071
+  - 1.8877486
+  pitch: 1
 --- !u!1001 &540398960029899901
 PrefabInstance:
   m_ObjectHideFlags: 0

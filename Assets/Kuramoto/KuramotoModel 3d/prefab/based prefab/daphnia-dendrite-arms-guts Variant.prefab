@@ -452,9 +452,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 120d57fe5fc86fddda6dda34a0724b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clipsPath: wavs/apcsongs/01
-  seekingPathogenClips: []
-  carryingAntigenClips: []
+  seekingClipsPath: wavs/apcsongs/seeking/01
+  carryingClipsPath: wavs/apcsongs/carrying/01
+  minDistance: 1
+  maxDistance: 60
+  rolloff: 0
+  state: 0
 --- !u!114 &222121819
 MonoBehaviour:
   m_ObjectHideFlags: 0

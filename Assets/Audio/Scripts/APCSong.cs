@@ -8,15 +8,24 @@ public enum APCState { SeekingPathogens, CarryingAntigens }
 public class APCSong : MonoBehaviour
 {
     
-    public string clipsPath;
+    [SerializeField]
+    private string seekingClipsPath;
+
+    [SerializeField]
+    private string carryingClipsPath;
+
+    public float minDistance = 1.0f;
+    public float maxDistance = 50.0f;
+    public AudioRolloffMode rolloff = AudioRolloffMode.Logarithmic;
 
     private Singer singer;
 
-    private APCState state = APCState.SeekingPathogens;
+    public APCState state = APCState.SeekingPathogens;
 
-    public List<AudioClip> seekingPathogenClips = new List<AudioClip>();
-    public List<AudioClip> carryingAntigenClips = new List<AudioClip>();
-    private List<AudioClip> clipSource;
+    private List<AudioClip> seekingPathogenClips = new List<AudioClip>();
+    private List<AudioClip> carryingAntigenClips = new List<AudioClip>();
+    
+    private List<AudioClip> currentClipSource;
 
     // Use for initialization...
     // Called before Start (e.g. before the first frame will be run)
@@ -24,17 +33,35 @@ public class APCSong : MonoBehaviour
         singer = new Singer(gameObject);
 
         // TODO: randomly choose 3 from each category
-        foreach(AudioClip ac in Resources.LoadAll(clipsPath + "/seeking", typeof(AudioClip))) {
+        foreach(AudioClip ac in Resources.LoadAll(seekingClipsPath, typeof(AudioClip))) {
             seekingPathogenClips.Add(ac);
         }
-        foreach(AudioClip ac in Resources.LoadAll(clipsPath + "/carrying", typeof(AudioClip))) {
+        foreach(AudioClip ac in Resources.LoadAll(carryingClipsPath, typeof(AudioClip))) {
             carryingAntigenClips.Add(ac);
         }
 
-        clipSource = seekingPathogenClips;
+        Debug.Assert(seekingPathogenClips.Count > 0, "No audio files found in seeking path!");
+        Debug.Assert(carryingAntigenClips.Count > 0, "No audio files found in carrying path!");
+
+
+        currentClipSource = seekingPathogenClips;
         // Initialize 2x AudioSource components on APC game object.
-        singer.AddSource(clip: Singer.GetRandomClip(clipSource), spatialBlend: 1.0f, loop: false, maxDistance: 50, minDistance: 1, rolloff: AudioRolloffMode.Logarithmic);
-        singer.AddSource(clip: Singer.GetRandomClip(clipSource), spatialBlend: 1.0f, loop: false, maxDistance: 50, minDistance: 1, rolloff: AudioRolloffMode.Logarithmic);
+        singer.AddSource(
+            clip: Singer.GetRandomClip(currentClipSource), 
+            spatialBlend: 1.0f, 
+            loop: false, 
+            maxDistance: maxDistance, 
+            minDistance: minDistance, 
+            rolloff: rolloff
+        );
+        singer.AddSource(
+            clip: Singer.GetRandomClip(currentClipSource), 
+            spatialBlend: 1.0f, 
+            loop: false, 
+            maxDistance: maxDistance, 
+            minDistance: minDistance, 
+            rolloff: rolloff
+        );
     }
 
     // Start is called before the first frame update
@@ -54,16 +81,16 @@ public class APCSong : MonoBehaviour
         switch(newState) {
 
             case APCState.SeekingPathogens:
-                clipSource = seekingPathogenClips;
+                currentClipSource = seekingPathogenClips;
                 break;
             case APCState.CarryingAntigens:
-                clipSource = carryingAntigenClips;
+                currentClipSource = carryingAntigenClips;
                 break;
             default:
                 Debug.LogError("Unknown APCState: " + newState);
                 break;
         }
-        singer.CueClip(Singer.GetRandomClip(clipSource));
+        singer.CueClip(Singer.GetRandomClip(currentClipSource));
         PlayNext();
         Debug.Log("Change State: " + newState + " in " + gameObject);
         state = newState;
@@ -81,7 +108,7 @@ public class APCSong : MonoBehaviour
 
     void PlayNext() {
         singer.PlayNextSource();
-        singer.CueClip(Singer.GetRandomClip(clipSource));
+        singer.CueClip(Singer.GetRandomClip(currentClipSource));
     }
   
 }
