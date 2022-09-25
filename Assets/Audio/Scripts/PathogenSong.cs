@@ -3,12 +3,24 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
+public enum KuramotoSongBehavior { Swelling, Shouting }    
+
 public class PathogenSong : MonoBehaviour
 {
-    private AudioSource audioSource;
-    private KuramotoAffectedAgent kuramoto;
+    [Tooltip("Kuramoto behavior swelling / shouting")]
+    public KuramotoSongBehavior behavior = KuramotoSongBehavior.Shouting;
 
-    public float gain = 1.0f;
+    [Tooltip("At what value of the kuramoto phase to shout (only if shouting)")]
+    [SerializeField]
+    private float shoutAtKuramotoPhase = 0.0f;
+
+    [Tooltip("Possible pitch multipliers, chosen randomly on Awake")]
+    [SerializeField]    
+    private float[] pitchMultipliers = new float[] { 0.6299605249486f, 0.6674199270861f, 0.74915353843921f, 0.8408964152543f, 0.94387431268191f, 1.0f, 1.1224620483089f, 1.2599210498937f };
+    
+    [Tooltip("Chance of disabling AudioSource on Awake (useful if there are very many Pathogens singing)")]
+    [SerializeField]
+    private float percentDisabled = 0.5f;
 
     /*
 
@@ -34,34 +46,74 @@ public class PathogenSong : MonoBehaviour
 
     */
 
-    public float[] pitchRange = new float[] { 0.6299605249486f, 0.6674199270861f, 0.74915353843921f, 0.8408964152543f, 0.94387431268191f, 1.0f, 1.1224620483089f, 1.2599210498937f };
-    public float pitch = 1.0f;
+    [Header("Debugging Attributes (don't edit these, just look!)")]
+
+    [Tooltip("The pitch multiplier assigned to this singer")]    
+    [SerializeField]
+    private float pitchMultiplier = 1.0f;
+
+    [Tooltip("Current gain/volume")]    
+    [SerializeField]
+    private float volume = 1.0f;
+
+    private bool shoutTriggered = false;
+    private float lastPhase = 0.0f;
+    private AudioSource audioSource;
+    private KuramotoAffectedAgent kuramoto;
 
     // Use for initialization...
     // Called before Start (e.g. before the first frame will be run)
     void Awake() {
-
         audioSource = GetComponent<AudioSource>();
-        audioSource.loop = true;
-        pitch =  pitchRange[Random.Range(0, pitchRange.Length)];
-        audioSource.pitch = pitch;
-        kuramoto = GetComponent<KuramotoAffectedAgent>();
+        if(Random.value <= percentDisabled) {
+            // Disable this singer.
+            audioSource.enabled = false;
+            this.enabled = false;
+        } else {
+            // Continue on as if nothing existentially significant had happened.
+            kuramoto = GetComponent<KuramotoAffectedAgent>();
+            audioSource.loop = false;
+            
+            // Choose a random pitch multiplier
+            pitchMultiplier =  pitchMultipliers[Random.Range(0, pitchMultipliers.Length)];
+            audioSource.pitch = pitchMultiplier;
+
+        }
+
+
+
 
     }
 
     // Start is called before the first frame update
     void Start() {
-
-        audioSource.Play(); // start playing...
+        if(behavior == KuramotoSongBehavior.Swelling) {
+            // Play and loop.
+            audioSource.loop = true;
+            audioSource.Play();
+        }
 
     }
 
     // Update is called once per animation frame
-    // Since the kuramoto model is running at frame-rate
+    // Since the kuramoto model is running at frame-rate (I think?)
     // we do sound synchronization with kuramoto oscillation here.
     void Update() {
-        gain = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
-        audioSource.volume = gain;
+
+        if(behavior == KuramotoSongBehavior.Swelling) {
+            // Swelling behavior
+            volume = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
+            audioSource.volume = volume;
+        } else { // Shouting behavior
+            if( kuramoto.phase - lastPhase < 0.0f  ) { shoutTriggered = false; }
+
+            if(kuramoto.phase >= shoutAtKuramotoPhase && shoutTriggered == false) {
+                audioSource.Play();
+                shoutTriggered = true;
+            }
+
+            lastPhase = kuramoto.phase;
+        }
 
     }
 

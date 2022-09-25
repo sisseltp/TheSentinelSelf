@@ -46,6 +46,7 @@ public class PathogenManager : MonoBehaviour
     [SerializeField]
     private float MaxAge = 1000; // age limit to kill sentinels
 
+    [Tooltip("Kuramoto Speed Scaler")]
     [SerializeField]
     private float speedScl = 3f;
 

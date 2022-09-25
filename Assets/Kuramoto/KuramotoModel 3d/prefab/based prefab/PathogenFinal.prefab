@@ -175,18 +175,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a75a8db6c80039beea19cd458885308e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 604f6632f9717d526818b79a7d71fb67, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 256
-  DopplerLevel: 1
+  DopplerLevel: 0.36
   MinDistance: 0.1
-  MaxDistance: 100
+  MaxDistance: 70
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -291,15 +291,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078c843a2d0b821f4b6ccf16f6379e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gain: 1
-  pitchRange:
+  behavior: 0
+  shoutAtKuramotoPhase: 0
+  pitchMultipliers:
+  - 0.62996054
+  - 0.6674199
   - 0.74915355
   - 0.8408964
+  - 0.9438743
   - 1
-  - 1.3348398
-  - 1.4983071
-  - 1.8877486
-  pitch: 1
+  - 1.122462
+  - 1.2599211
+  percentDisabled: 0.5
+  pitchMultiplier: 1
+  volume: 1
 --- !u!1001 &540398960029899901
 PrefabInstance:
   m_ObjectHideFlags: 0

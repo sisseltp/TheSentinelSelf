@@ -12741,8 +12741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d4065ac0064a667888e21035fade95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  apcSong: {fileID: 0}
-  apcSongClips: []
 --- !u!1001 &381285764
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18024,7 +18022,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
-      value: -0.5
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: spawnArea
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedRange.x
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: speedRange.y
+      value: 110
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: couplingRange.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: couplingRange.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: noiseSclRange.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: attractionSclRange.y
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877639536775, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: pathogens.Array.size
