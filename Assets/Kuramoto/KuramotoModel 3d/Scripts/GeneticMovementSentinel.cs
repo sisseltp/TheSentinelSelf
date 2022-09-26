@@ -184,7 +184,8 @@ public class GeneticMovementSentinel : MonoBehaviour
                 {
                     Debug.Log("Leaving");
                 }
-                song.setState(APCState.CarryingAntigens);
+               
+                //song.setState(APCState.CarryingAntigens);
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
 
             }
@@ -221,7 +222,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             digestAntigens.Clear();
             keys = 0;
-            song.setState(APCState.SeekingPathogens);
+           // song.setState(APCState.SeekingPathogens);
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
 
 
