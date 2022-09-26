@@ -58,6 +58,10 @@ public class Fosilising : MonoBehaviour
 
     private IEnumerator TimedDisolve(float waitTime)
     {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
         rb.isKinematic = true;
         Bounds B = GetMaxBounds(gameObject);
         GameObject thisFosil = Instantiate(fosil, transform.position - new Vector3(0, -0.75f, 0), new Quaternion(0, 0, 0, 0));
