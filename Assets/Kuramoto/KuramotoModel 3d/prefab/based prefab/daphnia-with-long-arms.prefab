@@ -214,11 +214,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  genSpeedScl: 4
-  targetSpeedScl: 30
+  genSpeedScl: 35
+  targetSpeedScl: 40
   geneticMovement: []
   keys: 0
-  NumKeysToCollect: 4
+  NumKeysToCollect: 12
   debugging: 0
   origDrag: 0
   rootBone: {fileID: 3658812636286283354}
@@ -293,7 +293,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2509312084670479146}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

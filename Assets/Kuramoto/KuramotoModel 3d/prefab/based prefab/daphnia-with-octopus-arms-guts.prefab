@@ -217,11 +217,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cycleLength: 10
-  genSpeedScl: 20
-  targetSpeedScl: 30
+  genSpeedScl: 35
+  targetSpeedScl: 40
   geneticMovement: []
   keys: 0
-  NumKeysToCollect: 4
+  NumKeysToCollect: 12
   debugging: 0
   origDrag: 0
   rootBone: {fileID: 3890087937688280639}

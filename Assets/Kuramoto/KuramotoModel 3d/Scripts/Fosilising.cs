@@ -31,7 +31,7 @@ public class Fosilising : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
   
-        if(collision.gameObject.tag == "Terrain" && !collided)
+        if(collision.gameObject.tag == "Terrain" && !collided && this.enabled)
         {
             TimeOut();
             collided = true;

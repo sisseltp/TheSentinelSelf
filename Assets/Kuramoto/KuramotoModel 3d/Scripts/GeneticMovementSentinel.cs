@@ -73,7 +73,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         Reset();
 
     }
-    
+    Vector3 point;
     // Update is called once per frame
     void Update()
     {
@@ -93,9 +93,24 @@ public class GeneticMovementSentinel : MonoBehaviour
         
         if (targeting)
         {
-            Vector3 vel = thisGenVel * genSpeedScl;
-            vel += Vector3.Normalize(target - transform.position)* targetSpeedScl;
+
+
+
+            Vector3 vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
             vel *= sentinel.phase;
+
+            Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
+
+            RaycastHit hit;
+            if (Physics.Raycast(forward,  out hit, 20))
+            {
+                if(hit.transform.tag == "Terrain")
+                {
+                    vel += Vector3.up*targetSpeedScl*3;
+                }
+            }
+            vel += thisGenVel * genSpeedScl;
+
             rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
             
 
