@@ -45,6 +45,8 @@ public class CameraTracker : MonoBehaviour
     private ethernetValues heartbeatSensor;
     private IntroBeginner introCntrl;
 
+    private SoundFXManager soundFx;
+
     
     [SerializeField]
     private float driftPower = 5f;
@@ -67,6 +69,7 @@ public class CameraTracker : MonoBehaviour
         //tracked = transform.parent;
         //        setDistance = Vector3.Distance(tracked.position, transform.position);
         rb = GetComponent<Rigidbody>();
+        soundFx = GetComponent<SoundFXManager>();
 
         origin = transform.position;
         origRot = transform.rotation;
@@ -82,17 +85,10 @@ public class CameraTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
-
-
         Vector3 dif = tracked.position - transform.position;
-
 
         lookPos += (look.position - lookPos) * 0.2f;
     
-
         Vector3 lookDif = lookPos - transform.position;
 
         var targetRotation = Quaternion.LookRotation(lookDif);
@@ -118,7 +114,6 @@ public class CameraTracker : MonoBehaviour
                     restTimer += Time.deltaTime;
                     if (restTimer > restReset)
                     {
-
                         FindSceneTracked("Player");
                         restTimer = 0;
                     }
@@ -130,10 +125,7 @@ public class CameraTracker : MonoBehaviour
                 return;
             }
           
-
-           
             rb.AddForce(transform.right * driftPower * Time.deltaTime);
-
         }
 
         KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();
@@ -153,9 +145,7 @@ public class CameraTracker : MonoBehaviour
 
     private float AbsMagnitude(Vector3 vec)
     {
-        return Mathf.Abs(vec.x) + Mathf.Abs(vec.y)+  Mathf.Abs(vec.z);
-
-         
+        return Mathf.Abs(vec.x) + Mathf.Abs(vec.y)+  Mathf.Abs(vec.z);         
     }
 
     public void BeginTracking()
@@ -177,7 +167,6 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ReturnCallback()
     {
-
         rb.velocity = Vector3.zero;
         tracking = false;
         
@@ -194,9 +183,10 @@ public class CameraTracker : MonoBehaviour
     }
    
     private void OnTriggerEnter(Collider collision)
-    {
-        
+    {        
         if (collision.transform.tag == "Body") {
+            // Camera is entering the body, into the inner world.
+            soundFx.Play("EnterBody");
 
             FindSceneTracked("Player");
             tracking = true;
@@ -207,26 +197,23 @@ public class CameraTracker : MonoBehaviour
             StartCoroutine(ChangeOrientation(ChangeTrackTimer * 0.666f));
         }
         else if (collision.transform.tag == "BodyAlign")
-        {
+        { 
+            // camera is aligned and looking down at the body
             FindScreenTracked("Body");
         }
-
     }
+
     private int lastIndx = -1;
     private void FindSceneTracked(string tag)
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tag);
-
         int max = 0;
-
         int indx = -1;
-
         for (int i = 0; i < bodies.Length; i++)
         {
             if (i!= lastIndx)
             {
                 int numPlastics =  bodies[i].GetComponentsInChildren<GeneticMovementPlastic>().Length;
-
                 if (max < numPlastics)
                 {
                     indx = i;
@@ -259,10 +246,7 @@ public class CameraTracker : MonoBehaviour
         }
 
         lastIndx = indx;
-
-        
         look = bodies[indx].transform;
-
         tracked = bodies[indx].transform;
 
         if (heartbeatSensor != null)
@@ -328,18 +312,14 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ChangeCharacter(float Timer)
     {
-
-
         while (tracking)
         {
-
             yield return new WaitForSeconds(Timer);
             if (tracking)
             {
                 FindSceneTracked("Player");
             }
         }
-
     }
 
     IEnumerator ChangeOrientation(float Timer)

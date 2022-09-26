@@ -141,7 +141,7 @@ public class GeneticMovementTcell : MonoBehaviour
                 GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
                 GetComponent<KuramotoAffectedAgent>().played = 2;
 
-                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plasic and gets lost
+                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
 
             } else if (Antigens.Count > 0) // if it had antigens?
             {

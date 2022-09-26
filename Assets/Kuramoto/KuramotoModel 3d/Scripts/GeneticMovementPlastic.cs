@@ -9,11 +9,11 @@ public class GeneticMovementPlastic : MonoBehaviour
     private int cycleLength = 10; // length of movment list
     [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
-    private float speedScl = 0.5f; // scl for the speed
+    private float speedScl = 0.5f; // speed scale factor
     [HideInInspector]
-    public Vector3[] geneticMovement; // list to hold the vels
+    public Vector3[] geneticMovement; // list to hold the velocities
 
-    private KuramotoPlasticAgent plastic; // kurmto to get the phase val
+    private KuramotoPlasticAgent plastic; // kuramoto to get the phase value
 
     private Rigidbody rb; // rigidbody to add velocity to
 
@@ -51,7 +51,7 @@ public class GeneticMovementPlastic : MonoBehaviour
         // get this steps vel from the list and mult it by phase and scl it
         Vector3 vel = geneticMovement[step] * plastic.phase * speedScl;
 
-        // ad it to the rb
+        // add it to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
         // set last phase to phase

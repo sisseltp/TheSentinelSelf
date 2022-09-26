@@ -39,7 +39,6 @@ public class Singer
             nextSource = 0;
         }
 
-        Debug.Log("Play Next: " + sources[nextSource].clip + "  Object: " + gameObject);
         sources[nextSource].Play();
         activeSource = nextSource;
     }
@@ -69,7 +68,6 @@ public class Singer
         float minDistance=10.0f,
         AudioRolloffMode rolloff=AudioRolloffMode.Logarithmic
         ) {
-            Debug.Log("Singer.AddSource to >> " + gameObject);
             AudioSource newSource = gameObject.AddComponent<AudioSource>();
             newSource.clip = clip;
             newSource.spatialBlend = spatialBlend;

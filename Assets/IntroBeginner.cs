@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class IntroBeginner : MonoBehaviour
 {
-
     CameraTracker camTrack;
 
-    AudioSource audioSource;
+    private SoundFXManager soundFx;
 
     [HideInInspector]
     public bool floating = true;
@@ -29,23 +28,14 @@ public class IntroBeginner : MonoBehaviour
     [SerializeField]
     private float rotSpeed = 1;
 
-    [SerializeField]
-    private AudioClip enterBodyClip;
-
-    [SerializeField]
-    private AudioClip exitBodyClip;
-
-
-
     [HideInInspector]
     public Romi.PathTools.MoveAlongPath alongPath;
-
 
     // Start is called before the first frame update
     void Start()
     {
         camTrack = GetComponent<CameraTracker>();
-        audioSource = GetComponent<AudioSource>();
+        soundFx = GetComponent<SoundFXManager>();
         Image  faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
         //Make the alpha 1
         Color fixedColor = faderImage.color;
@@ -104,11 +94,10 @@ public class IntroBeginner : MonoBehaviour
         }
     }
 
+    // Called when visitor touches the biosensor, begins approach to body.
     public void Begin()
     {
-        Debug.Log("BEGIN!");
-        audioSource.clip = enterBodyClip;
-        audioSource.Play();
+        soundFx.Play("ApproachBody");
 
         camTrack.BeginTracking();
         camTrack.enabled = true;
@@ -116,15 +105,16 @@ public class IntroBeginner : MonoBehaviour
         alongPath.enabled = false;
         
     }
+
+    // Called when visitor disconnects, return to the outer world.
     public bool Restart()
     {
+
+        soundFx.Play("ExitBody");
+
         if (!camTrack.Introing)
         {
-            Debug.Log("RESTART!");
             camTrack.ReturnToOrigin();
-
-            audioSource.clip = exitBodyClip;
-            audioSource.Play();
             return true;
         }
         else
