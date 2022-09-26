@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 5728314670031916521}
   - component: {fileID: 1911477723890854107}
   - component: {fileID: -747346939756499596}
-  - component: {fileID: -3267567115046901525}
+  - component: {fileID: 3408627365277564685}
   m_Layer: 0
   m_Name: daphnia-with-octopus-arms-guts
   m_TagString: Player
@@ -289,7 +289,7 @@ MonoBehaviour:
   fadeTime: 10
   steps: 20
   fosil: {fileID: 578608192284748201, guid: ed1f485a83e511c4882c6eb87889255e, type: 3}
---- !u!135 &-3267567115046901525
+--- !u!135 &3408627365277564685
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -301,7 +301,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.57
-  m_Center: {x: 0, y: 1.49, z: -0.17}
+  m_Center: {x: 0, y: 0, z: -0.27}
 --- !u!1 &2966006493748706069
 GameObject:
   m_ObjectHideFlags: 0
