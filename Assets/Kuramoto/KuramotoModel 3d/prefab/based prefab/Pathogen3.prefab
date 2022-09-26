@@ -15,10 +15,9 @@ GameObject:
   - component: {fileID: 8248767815715416310}
   - component: {fileID: 4927627963102326671}
   - component: {fileID: 6624178250083583635}
-  - component: {fileID: 4172167506222468039}
   m_Layer: 0
   m_Name: Pathogen3
-  m_TagString: Untagged
+  m_TagString: Pathogen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +128,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.77
-  m_Height: 6.07
+  m_Height: 2.2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: -0.01}
 --- !u!54 &4927627963102326671
@@ -164,18 +163,6 @@ MonoBehaviour:
   speedScl: 15
   geneticMovement: []
   maxKeys: 10
---- !u!114 &4172167506222468039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407712276408811383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49b6f3fe9c42a445acfb8374e05e0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5762408658362383093
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -249,8 +236,30 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: be6639181b4f2402aa79467c358265af, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
+--- !u!1 &4253433555454930807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8430469588508808578, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
+  m_PrefabInstance: {fileID: 5762408658362383093}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2478335348395593661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7898435213921547592, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
   m_PrefabInstance: {fileID: 5762408658362383093}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7205269296724412601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253433555454930807}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff85bc418143434bb34071fdbc9fca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  digestTime: 2
+  digestSphere: 0.8
+  swallowTimer: 1
+  swallowSteps: 60
+  origin: {x: 0, y: 0, z: 0}
