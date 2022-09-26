@@ -64,13 +64,10 @@ public class IntroBeginner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0)==true)
+        if (Input.GetMouseButtonDown(0)==true)
         {
-            Begin();
-        }
-        else if( Input.GetMouseButton(1)== true)
-        {
-            Restart();
+
+            ChangeStates();
         }
 
         if (floating)
@@ -92,6 +89,18 @@ public class IntroBeginner : MonoBehaviour
 
             // Smoothly rotate towards the target point.
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
+        }
+    }
+
+    public void ChangeStates()
+    {
+        if (camTrack.tracking)
+        {
+            Restart();
+        }
+        else
+        {
+            Begin();
         }
     }
 

@@ -29,16 +29,7 @@ public class AutomateUser : MonoBehaviour
         while (true)
         {
 
-            if (playing)
-            {
-                introBeginner.Restart();
-                playing = false;
-            }
-            else
-            {
-                introBeginner.Begin();
-                playing = true;
-            }
+            introBeginner.ChangeStates();
 
 
             yield return new WaitForSeconds(delay);
