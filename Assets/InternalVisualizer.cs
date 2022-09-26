@@ -8,6 +8,8 @@ public class InternalVisualizer : MonoBehaviour
     private PathogenManager[] pathogens;
     [SerializeField]
     private Renderer rndr;
+    [SerializeField]
+    private Renderer[] growingObjs;
 
     private float draggedVarience=0;
     // Start is called before the first frame update
@@ -39,7 +41,14 @@ public class InternalVisualizer : MonoBehaviour
         float variation = numTCells + numPathogens;
         variation = numTCells / variation;
 
+        
+
         draggedVarience += (variation - draggedVarience) * 0.05f;
         rndr.materials[1].SetFloat("ChangeTextures", draggedVarience);
+
+        foreach(Renderer rnd in growingObjs)
+        {
+            rnd.material.SetFloat("Grow", 1-draggedVarience);
+        }
     }
 }
