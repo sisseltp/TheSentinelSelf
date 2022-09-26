@@ -27,6 +27,8 @@ public class APCSong : MonoBehaviour
     
     private List<AudioClip> currentClipSource;
 
+    public AudioMixerGroup audioMixerGroup;
+
     // Use for initialization...
     // Called before Start (e.g. before the first frame will be run)
     void Awake() {
@@ -52,7 +54,8 @@ public class APCSong : MonoBehaviour
             loop: false, 
             maxDistance: maxDistance, 
             minDistance: minDistance, 
-            rolloff: rolloff
+            rolloff: rolloff,
+            audioMixerGroup: audioMixerGroup
         );
         singer.AddSource(
             clip: Singer.GetRandomClip(currentClipSource), 
@@ -60,7 +63,8 @@ public class APCSong : MonoBehaviour
             loop: false, 
             maxDistance: maxDistance, 
             minDistance: minDistance, 
-            rolloff: rolloff
+            rolloff: rolloff,
+            audioMixerGroup: audioMixerGroup
         );
     }
 

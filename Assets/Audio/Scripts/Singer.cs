@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class Singer
@@ -66,7 +67,8 @@ public class Singer
         float doppler=0.2f, 
         float maxDistance=300.0f, 
         float minDistance=10.0f,
-        AudioRolloffMode rolloff=AudioRolloffMode.Logarithmic
+        AudioRolloffMode rolloff=AudioRolloffMode.Logarithmic,
+        AudioMixerGroup audioMixerGroup=null
         ) {
             AudioSource newSource = gameObject.AddComponent<AudioSource>();
             newSource.clip = clip;
@@ -75,6 +77,7 @@ public class Singer
             newSource.maxDistance = maxDistance;
             newSource.minDistance = minDistance;
             newSource.dopplerLevel = doppler;
+            newSource.outputAudioMixerGroup = audioMixerGroup;
             sources.Add(newSource);
             return newSource;
     }

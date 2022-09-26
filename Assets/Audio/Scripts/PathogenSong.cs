@@ -79,10 +79,6 @@ public class PathogenSong : MonoBehaviour
             audioSource.pitch = pitchMultiplier;
 
         }
-
-
-
-
     }
 
     // Start is called before the first frame update
