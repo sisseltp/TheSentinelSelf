@@ -5,7 +5,7 @@ using UnityEngine;
 public class AlgyController : MonoBehaviour
 {
 
-    private ParticleSystem.MainModule PSyst ;
+    private ParticleSystem.MainModule PSyst;
     private ParticleSystem.EmissionModule PSystm;
 
     [SerializeField]
@@ -53,9 +53,9 @@ public class AlgyController : MonoBehaviour
         while (true)
         {
             GameObject[] eggs = GameObject.FindGameObjectsWithTag("Eggs");
-
+            
             float eggScl = eggs.Length;
-
+            
             eggScl /= (float)MaxSclr;
 
             Color lerp1 = Color.Lerp(healthy1, unhealthy1, eggScl);

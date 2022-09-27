@@ -12,12 +12,39 @@ public class InternalVisualizer : MonoBehaviour
     private Renderer[] growingObjs;
 
     private float draggedVarience=0;
+
+    [Tooltip("How often to update the status of the simulation (in seconds)")]
+    public float updateStatsEvery = 10.0f;
+
+    [Header("Status Markers of the State of Internal Simulation")]
+
+    [Tooltip("Ratio Healthy to Infectious agents > Tcells / (Tcells + Pathogens)")]    
+    public float health = 1.0f;
+
+    [Tooltip("Number of fossilized APCs currently in the simulation")]    
+    public int numEggs = 0;
+
+    [Tooltip("Number of microplastics currently in the simulation")]    
+    public int numPlastics = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-
         tcells = GetComponentsInChildren<TCellManager>();
         pathogens = GetComponentsInChildren<PathogenManager>();
+        
+        StartCoroutine(checkWorld(updateStatsEvery));
+    }
+
+        IEnumerator checkWorld(float time)
+    {
+        while (true)
+        {
+            numEggs = GameObject.FindGameObjectsWithTag("Eggs").Length;
+            numPlastics = GameObject.FindGameObjectsWithTag("Plastic").Length;
+            yield return new WaitForSeconds(time);
+        }
+
 
     }
     
@@ -25,25 +52,21 @@ public class InternalVisualizer : MonoBehaviour
     void Update()
     {
         int numTCells = 0;
-
         foreach(TCellManager manager in tcells)
         {
             numTCells += manager.RealNumSentinels;
         }
 
         int numPathogens = 0;
-
         foreach (PathogenManager manager in pathogens)
         {
             numPathogens += manager.RealNumPathogens;
         }
 
         float variation = numTCells + numPathogens;
-        variation = numTCells / variation;
+        health = numTCells / variation;
 
-        
-
-        draggedVarience += (variation - draggedVarience) * 0.05f;
+        draggedVarience += (health - draggedVarience) * 0.05f;
         rndr.materials[1].SetFloat("ChangeTextures", draggedVarience);
 
         foreach(Renderer rnd in growingObjs)
