@@ -16,13 +16,22 @@ public class InternalVisualizer : MonoBehaviour
     [Tooltip("How often to update the status of the simulation (in seconds)")]
     public float updateStatsEvery = 10.0f;
 
-    [Header("Status Markers of the State of Internal Simulation")]
+    [Header("Simulation Status")]
 
     [Tooltip("Ratio Healthy to Infectious agents > Tcells / (Tcells + Pathogens)")]    
     public float health = 1.0f;
 
+    [Tooltip("Number of APCs currently in the simulation")]    
+    public int numApcs = 0;
+
     [Tooltip("Number of fossilized APCs currently in the simulation")]    
     public int numEggs = 0;
+
+    [Tooltip("Number of Tcells currently in the simulation")]    
+    public int numTcells = 0;
+
+    [Tooltip("Number of pathogens currently in the simulation")]    
+    public int numPathogens = 0;
 
     [Tooltip("Number of microplastics currently in the simulation")]    
     public int numPlastics = 0;
@@ -40,7 +49,10 @@ public class InternalVisualizer : MonoBehaviour
     {
         while (true)
         {
+            numApcs = GameObject.FindGameObjectsWithTag("Player").Length;
             numEggs = GameObject.FindGameObjectsWithTag("Eggs").Length;
+            numTcells = GameObject.FindGameObjectsWithTag("Tcell").Length;
+            numPathogens = GameObject.FindGameObjectsWithTag("Pathogen").Length;
             numPlastics = GameObject.FindGameObjectsWithTag("Plastic").Length;
             yield return new WaitForSeconds(time);
         }
