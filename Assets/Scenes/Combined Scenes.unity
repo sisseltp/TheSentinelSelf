@@ -1868,7 +1868,7 @@ GameObject:
   - component: {fileID: 266720326}
   - component: {fileID: 266720327}
   m_Layer: 0
-  m_Name: Inworld Bed 2
+  m_Name: Lymphnode Bed 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1882,7 +1882,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266720325}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -98.99652, y: -1727.0034, z: -214.5}
+  m_LocalPosition: {x: -602, y: -1802.6, z: -326.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 395950733}
@@ -1898,7 +1898,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6609427df34ecd000bb8b6a10bfd957d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d92cd042f372713c6a0056585ebe8dc9, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1909,9 +1909,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 0.28
   MinDistance: 50
-  MaxDistance: 200
+  MaxDistance: 150
   Pan2D: 0
-  rolloffMode: 1
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1928,8 +1928,8 @@ AudioSource:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.20524228
-      value: 0.23413324
+      time: 0.7068597
+      value: 0.78412104
       inSlope: -1.001608
       outSlope: -1.001608
       tangentMode: 0
@@ -1968,7 +1968,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.38333333
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -12759,6 +12759,15 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
+      time: 0.551798
+      value: 0.75954795
+      inSlope: -1.367053
+      outSlope: -1.367053
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
       time: 1
       value: 0
       inSlope: 0
@@ -12790,7 +12799,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.41111112
+      value: 0.30833334
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14887,7 +14896,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &685113647
 Transform:
   m_ObjectHideFlags: 0
@@ -17747,7 +17756,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1105928082
 Transform:
   m_ObjectHideFlags: 0
@@ -19317,9 +19326,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 0.42
+  DopplerLevel: 1.93
   MinDistance: 1
-  MaxDistance: 622.8672
+  MaxDistance: 600
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -19378,7 +19387,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.05277778
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -19544,7 +19553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1233575351
 Transform:
   m_ObjectHideFlags: 0
@@ -21357,9 +21366,9 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 0.87
+  DopplerLevel: 1.82
   MinDistance: 1
-  MaxDistance: 622.8672
+  MaxDistance: 600
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -21418,7 +21427,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.06111111
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -22186,7 +22195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1504007424
 Transform:
   m_ObjectHideFlags: 0
@@ -22326,7 +22335,7 @@ GameObject:
   - component: {fileID: 1533201663}
   - component: {fileID: 1533201664}
   m_Layer: 0
-  m_Name: Inworld Bed 1
+  m_Name: Lymphnode Bed 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22693,7 +22702,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553125100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5, y: 0, z: -19}
+  m_LocalPosition: {x: 199, y: 0, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 372819394}
@@ -22719,10 +22728,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0.5
-  MinDistance: 1
-  MaxDistance: 800
+  MinDistance: 400
+  MaxDistance: 600
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -24218,7 +24227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1738273539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -555, y: 0, z: 294}
+  m_LocalPosition: {x: -381, y: 0, z: 294}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 372819394}
@@ -24244,10 +24253,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0.64
-  MinDistance: 1
+  MinDistance: 400
   MaxDistance: 600
   Pan2D: 0
-  rolloffMode: 2
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -26113,7 +26122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2035026501
 Transform:
   m_ObjectHideFlags: 0

@@ -62,7 +62,10 @@ public class Singer
 
     public AudioSource AddSource(
         AudioClip clip=null, 
-        float spatialBlend=1.0f, 
+        float spatialBlend=1.0f,
+        float spread=0.0f,
+        float pitch=1.0f,
+        int priority = 127,
         bool loop=false, 
         float doppler=0.2f, 
         float maxDistance=300.0f, 
@@ -71,13 +74,19 @@ public class Singer
         AudioMixerGroup audioMixerGroup=null
         ) {
             AudioSource newSource = gameObject.AddComponent<AudioSource>();
-            newSource.clip = clip;
+            newSource.playOnAwake = false;
+            newSource.priority = priority;
             newSource.spatialBlend = spatialBlend;
+            newSource.spread = spread;
+            newSource.pitch = pitch;
             newSource.loop = loop; 
+            newSource.rolloffMode = rolloff;
             newSource.maxDistance = maxDistance;
             newSource.minDistance = minDistance;
             newSource.dopplerLevel = doppler;
             newSource.outputAudioMixerGroup = audioMixerGroup;
+
+            newSource.clip = clip;
             sources.Add(newSource);
             return newSource;
     }

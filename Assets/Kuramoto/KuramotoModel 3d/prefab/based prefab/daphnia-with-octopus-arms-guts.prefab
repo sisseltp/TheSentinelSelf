@@ -317,9 +317,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seekingClipsPath: wavs/apcsongs/seeking/03
   carryingClipsPath: wavs/apcsongs/carrying/03
-  minDistance: 1
+  minDistance: 20
   maxDistance: 50
-  rolloff: 0
+  rolloff: 1
   state: 0
   audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
 --- !u!1 &2966006493748706069

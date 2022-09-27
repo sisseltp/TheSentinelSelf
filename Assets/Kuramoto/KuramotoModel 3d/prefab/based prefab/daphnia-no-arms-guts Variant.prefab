@@ -491,6 +491,25 @@ MonoBehaviour:
   - m_Rig: {fileID: 683993586}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &2292574942483036190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4107442386137540623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 120d57fe5fc86fddda6dda34a0724b31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seekingClipsPath: wavs/apcsongs/seeking/04
+  carryingClipsPath: wavs/apcsongs/carrying/04
+  minDistance: 20
+  maxDistance: 50
+  rolloff: 1
+  state: 0
+  audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
 --- !u!114 &4817124049808930682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,22 +564,3 @@ MonoBehaviour:
   rootBone: {fileID: 2960265356548078975}
   digestAntigens: []
   plastics: []
---- !u!114 &2292574942483036190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4107442386137540623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 120d57fe5fc86fddda6dda34a0724b31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seekingClipsPath: wavs/apcsongs/seeking/04
-  carryingClipsPath: wavs/apcsongs/carrying/04
-  minDistance: 1
-  maxDistance: 50
-  rolloff: 0
-  state: 0
-  audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}

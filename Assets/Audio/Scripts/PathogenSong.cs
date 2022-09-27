@@ -52,9 +52,13 @@ public class PathogenSong : MonoBehaviour
     [SerializeField]
     private float pitchMultiplier = 1.0f;
 
-    [Tooltip("Current gain/volume")]    
+    [Tooltip("Maximum volume level per pathogen")]    
     [SerializeField]
-    private float volume = 1.0f;
+    private float maxVolume = 1.0f;
+
+    [Tooltip("Current volume of this pathogen")]    
+    [SerializeField]
+    private float currentVolume = 1.0f;
 
     private bool shoutTriggered = false;
     private float lastPhase = 0.0f;
@@ -65,6 +69,7 @@ public class PathogenSong : MonoBehaviour
     // Called before Start (e.g. before the first frame will be run)
     void Awake() {
         audioSource = GetComponent<AudioSource>();
+        maxVolume = audioSource.volume;
         if(Random.value <= percentDisabled) {
             // Disable this singer.
             audioSource.enabled = false;
@@ -98,8 +103,8 @@ public class PathogenSong : MonoBehaviour
 
         if(behavior == KuramotoSongBehavior.Swelling) {
             // Swelling behavior
-            volume = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
-            audioSource.volume = volume;
+            currentVolume = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
+            audioSource.volume = currentVolume * maxVolume;
         } else { // Shouting behavior
             if( kuramoto.phase - lastPhase < 0.0f  ) { shoutTriggered = false; }
 

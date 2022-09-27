@@ -184,7 +184,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 256
-  DopplerLevel: 0.36
+  DopplerLevel: 1.06
   MinDistance: 0.1
   MaxDistance: 70
   Pan2D: 0
@@ -302,9 +302,10 @@ MonoBehaviour:
   - 1
   - 1.122462
   - 1.2599211
-  percentDisabled: 0.5
+  percentDisabled: 0.8
   pitchMultiplier: 1
-  volume: 1
+  maxVolume: 1
+  currentVolume: 1
 --- !u!1001 &540398960029899901
 PrefabInstance:
   m_ObjectHideFlags: 0

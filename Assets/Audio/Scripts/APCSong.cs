@@ -14,13 +14,14 @@ public class APCSong : MonoBehaviour
     [SerializeField]
     private string carryingClipsPath;
 
-    public float minDistance = 1.0f;
+    [Header("Debugging Attributes (generally these are set to good values!)")]
+    public float minDistance = 20.0f;
     public float maxDistance = 50.0f;
-    public AudioRolloffMode rolloff = AudioRolloffMode.Logarithmic;
+    public AudioRolloffMode rolloff = AudioRolloffMode.Linear;
+    public APCState state = APCState.SeekingPathogens;
+
 
     private Singer singer;
-
-    public APCState state = APCState.SeekingPathogens;
 
     private List<AudioClip> seekingPathogenClips = new List<AudioClip>();
     private List<AudioClip> carryingAntigenClips = new List<AudioClip>();
@@ -33,6 +34,14 @@ public class APCSong : MonoBehaviour
     // Called before Start (e.g. before the first frame will be run)
     void Awake() {
         singer = new Singer(gameObject);
+
+        // These values have been tweaked to make sure the
+        // APC songs are not audible in the outer world
+        // Setting them here makes sure they are uniform across all APC prefabs
+        // TODO: better to make sure that the inner world mixer fades in/out between scenes
+        // minDistance = 10.0f;
+        // maxDistance = 50.0f;
+        // rolloff = AudioRolloffMode.Linear;
 
         // TODO: randomly choose 3 from each category
         foreach(AudioClip ac in Resources.LoadAll(seekingClipsPath, typeof(AudioClip))) {
@@ -50,7 +59,8 @@ public class APCSong : MonoBehaviour
         // Initialize 2x AudioSource components on APC game object.
         singer.AddSource(
             clip: Singer.GetRandomClip(currentClipSource), 
-            spatialBlend: 1.0f, 
+            spatialBlend: 1.0f, // full 3D
+            spread: 20.0f,
             loop: false, 
             maxDistance: maxDistance, 
             minDistance: minDistance, 
@@ -60,6 +70,7 @@ public class APCSong : MonoBehaviour
         singer.AddSource(
             clip: Singer.GetRandomClip(currentClipSource), 
             spatialBlend: 1.0f, 
+            spread: 20,
             loop: false, 
             maxDistance: maxDistance, 
             minDistance: minDistance, 
