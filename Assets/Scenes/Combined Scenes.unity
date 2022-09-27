@@ -631,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3788875892319765058, guid: 70b7cf7da210945508716bd6f6e33ced, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4602426069498370296, guid: 70b7cf7da210945508716bd6f6e33ced, type: 3}
       propertyPath: m_RootOrder
@@ -15134,7 +15134,7 @@ MonoBehaviour:
   couplingSclRange: {x: 1, y: 3}
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 4000
+  MaxAge: 2500
   speedScl: 1.2
   emitionRate: 4
 --- !u!135 &685113649
@@ -18395,7 +18395,7 @@ PrefabInstance:
     - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: emitionOrigin
       value: 
-      objectReference: {fileID: 1492779146}
+      objectReference: {fileID: 543450651829103487}
     - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: startingNumAgents
       value: 76
@@ -18427,6 +18427,10 @@ PrefabInstance:
     - target: {fileID: 3850774877178959535, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: MaxAge
+      value: 2500
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
@@ -26458,7 +26462,7 @@ MonoBehaviour:
   couplingSclRange: {x: 1, y: 3}
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 4000
+  MaxAge: 2500
   speedScl: 1.2
   emitionRate: 4
 --- !u!135 &2035026503
