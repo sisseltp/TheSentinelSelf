@@ -48,7 +48,7 @@ public class InternalVisualizer : MonoBehaviour
 
         foreach(Renderer rnd in growingObjs)
         {
-            rnd.material.SetFloat("Grow", 1-draggedVarience);
+            rnd.material.SetFloat("Grow", draggedVarience);
         }
     }
 }
