@@ -128,6 +128,8 @@ MonoBehaviour:
   geneticMovement: []
   attachedGO: {fileID: 3010071362858964238, guid: d65dc05cfc2798f4cb97bfb5731e0937, type: 3}
   origin: {x: 0, y: 0, z: 0}
+  numToKill: 20
+  maxDrag: 0.8
 --- !u!114 &5425442252488360563
 MonoBehaviour:
   m_ObjectHideFlags: 0

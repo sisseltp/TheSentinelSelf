@@ -29,7 +29,9 @@ public class GeneticMovementSentinel : MonoBehaviour
     private float lastPhase = 0;// holds the last phase
 
     private Vector3 target;
-    private bool targeting = true;
+
+    [HideInInspector]
+    public bool targeting = true;
 
     private SentinelManager manager;
 
@@ -37,8 +39,6 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     public int NumKeysToCollect = 4;
 
-    [SerializeField]
-    public bool debugging = false;
 
     public float origDrag = 0;
 
@@ -87,17 +87,17 @@ public class GeneticMovementSentinel : MonoBehaviour
             thisGenVel = geneticMovement[step];
         }
 
-        
+        Vector3 vel = Vector3.zero ;
 
         // get vel from this steps genmov, mult by phase and scl
-        
+
         if (targeting)
         {
 
 
-
-            Vector3 vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
-            vel *= sentinel.phase;
+            // if theres an object in the way add upward force
+            vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
+            
 
             Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
 
@@ -109,21 +109,17 @@ public class GeneticMovementSentinel : MonoBehaviour
                     vel += Vector3.up*targetSpeedScl*3;
                 }
             }
-            vel += thisGenVel * genSpeedScl;
+           
 
-            rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
+            
             
 
         }
 
+        vel += thisGenVel * genSpeedScl;
+        vel *= sentinel.phase;
 
-        // more than one sentinel contact scl it up
-        //if (sentinel.Connections > 2) { vel*=Mathf.Sqrt(sentinel.Connections)*0.6f; }
-
-        // add the vel to the rb
-
-        // rb.MoveRotation(  Quaternion.Euler(0,1,0));
-
+        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
         // set last phase to phase
         lastPhase = sentinel.phase;
     }
@@ -136,11 +132,12 @@ public class GeneticMovementSentinel : MonoBehaviour
             geneticMovement[i] = Random.insideUnitSphere;
         }
         rb.drag = origDrag;
-        GetComponent<Fosilising>().enabled = false;
+        
 
         int indx = Random.Range(0, manager.PathogenEmitters.Length);
 
         target = manager.PathogenEmitters[indx];
+        targeting = true;
 
     }
     private int tcellHits = 0;
@@ -149,6 +146,10 @@ public class GeneticMovementSentinel : MonoBehaviour
         if(collision.gameObject.tag == "Tcell")
         {
             tcellHits++;
+        }else if (collision.gameObject.tag == "Terrain" && rb.useGravity)
+        {
+            GetComponent<Fosilising>().enabled = true;
+            Debug.Log("fosil on hit terrain");
         }
     }
     private void OnTriggerEnter(Collider collision)
@@ -156,26 +157,17 @@ public class GeneticMovementSentinel : MonoBehaviour
 
       
 
-        if (collision.gameObject.tag == "Terrain" && rb.useGravity)
-        {
-            GetComponent<Fosilising>().enabled = true;
-        }
-        else if (collision.gameObject.tag == "PathogenEmitter")
+        
+         if (collision.gameObject.tag == "PathogenEmitter")
         {
             targeting = false;
-            if (debugging)
-            {
-                Debug.Log(collision.gameObject.tag);
-            }
+        
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the pathogen emitter
         }
         else if (collision.gameObject.tag == "Lymphonde")
         {
             targeting = false;
-            if (debugging)
-            {
-                Debug.Log(collision.gameObject.tag);
-            }
+         
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the lymphonode 
 
         }
@@ -195,10 +187,7 @@ public class GeneticMovementSentinel : MonoBehaviour
                 target = manager.Lymphondes[indx];
                 targeting = true;
                 tcellHits = 0;
-                if (debugging)
-                {
-                    Debug.Log("Leaving");
-                }
+          
                
                 //song.setState(APCState.CarryingAntigens);
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
@@ -248,15 +237,6 @@ public class GeneticMovementSentinel : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         targeting = true;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (debugging)
-        {
-
-            Gizmos.DrawLine(GetComponent<Rigidbody>().position, target);
-        }
     }
 
 

@@ -333,9 +333,13 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 				biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise));
 			}
 
-			// add dt to the age
-			biomeData[indx].age += dt;
-
+			if (biomeData[indx].played == 3) {
+				biomeData[indx].age += dt * 3;
+			}
+			else {
+				// add dt to the age
+				biomeData[indx].age += dt * float(biomeData[indx].played);
+			}
 			// subtract its intiger to leave it as a 0. someting
 			biomeData[indx].phase -= float(floor(biomeData[indx].phase));
 

@@ -54,8 +54,9 @@ public class TCellManager : MonoBehaviour
     [SerializeField]
     private float speedScl = 3f;
 
+    [SerializeField]
+    private float emitionRate = 4;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -101,8 +102,33 @@ public class TCellManager : MonoBehaviour
 
         }
         RealNumSentinels = nSentinels;
-    }
 
+        StartCoroutine(emition(emitionRate));
+    }
+    IEnumerator emition( float rate)
+    {
+        while (true)
+        {
+            if (CanAddCell())
+            {
+                Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+
+                int randindx = UnityEngine.Random.Range(0, tCell.Length);
+
+                // instantiate a new sentinel as child and at pos
+                GameObject thisSentinel = Instantiate(tCell[randindx], pos, Quaternion.identity, this.transform);
+
+                // get its kurmto component
+                KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+                kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+
+                AddTCell(thisSentinel);
+            }
+
+            yield return new WaitForSeconds(rate);
+
+        }
+    }
     private void Update()
     {
         
@@ -120,6 +146,7 @@ public class TCellManager : MonoBehaviour
             if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
                 if (i > nSentinels)
                 {
+
                     toRemove.Add(i);
                     
                     continue;

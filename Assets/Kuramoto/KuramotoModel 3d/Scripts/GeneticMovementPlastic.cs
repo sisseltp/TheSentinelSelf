@@ -27,12 +27,21 @@ public class GeneticMovementPlastic : MonoBehaviour
     [HideInInspector]
     public Vector3 origin;
 
+    [SerializeField]
+    private int numToKill = 10;
+
+    [SerializeField]
+    private float maxDrag = 0.4f;
+
+    private float dragItter = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         
         Reset();
+
+        dragItter = (maxDrag - rb.drag) / (float)numToKill;
     }
 
     // Update is called once per frame
@@ -80,7 +89,7 @@ public class GeneticMovementPlastic : MonoBehaviour
         {
             plastic.dead = true;
         }
-        else if (collision.gameObject.tag == "Player" && !full)
+        else if (collision.gameObject.tag == "Player" )
         {
             plastic = GetComponent<KuramotoPlasticAgent>();
 
@@ -88,18 +97,33 @@ public class GeneticMovementPlastic : MonoBehaviour
 
             GameObject plast =  Instantiate(attachedGO, collision.GetContact(0).point, transform.rotation, collision.transform);
 
-            collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
-            collision.gameObject.GetComponent<Rigidbody>().drag += 0.05f;
-
-            collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics.Add(plast.transform);
             
-            if (collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed < 0.4f)
+            collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics.Add(plast.transform);
+
+            if (!full)
             {
-                collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
-                full = true;
+                collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
+                collision.gameObject.GetComponent<Rigidbody>().drag += dragItter;
+
+                if (collision.gameObject.GetComponent<Rigidbody>().drag > maxDrag)
+                {
+
+                    collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    full = true;
+                }
             }
         }
        
 
+    }
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.transform.tag == "PlasticMover" && rb != null)
+        {
+            // add it to the rb
+            rb.AddForceAtPosition(Vector3.down * Time.deltaTime * 10, transform.position + transform.up);
+        }
     }
 }
