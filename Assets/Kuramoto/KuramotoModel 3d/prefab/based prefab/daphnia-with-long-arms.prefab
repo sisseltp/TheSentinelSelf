@@ -71,6 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7612563340450173719}
+  - component: {fileID: 8728825515410593292}
   m_Layer: 0
   m_Name: spine2
   m_TagString: Untagged
@@ -93,6 +94,19 @@ Transform:
   m_Father: {fileID: 3658812636286283354}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8728825515410593292
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104370720251723741}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.008
+  m_Center: {x: 0, y: 0, z: -0.002}
 --- !u!1 &2211979981065042298
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3024703672237517738}
+  - component: {fileID: 1151240645872639517}
   m_Layer: 0
   m_Name: spine3
   m_TagString: Untagged
@@ -124,6 +139,19 @@ Transform:
   m_Father: {fileID: 7612563340450173719}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1151240645872639517
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2211979981065042298}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009
+  m_Center: {x: 0, y: 0, z: -0.002}
 --- !u!1 &2509312084670479146
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,9 +246,9 @@ MonoBehaviour:
   genSpeedScl: 35
   targetSpeedScl: 40
   geneticMovement: []
+  targeting: 1
   keys: 0
   NumKeysToCollect: 12
-  debugging: 0
   origDrag: 0
   rootBone: {fileID: 3658812636286283354}
   digestAntigens: []

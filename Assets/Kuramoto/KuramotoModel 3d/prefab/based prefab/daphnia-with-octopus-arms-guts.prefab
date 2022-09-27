@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3369553566216068047}
+  - component: {fileID: 516464809109505351}
   m_Layer: 0
   m_Name: spine3
   m_TagString: Untagged
@@ -31,6 +32,19 @@ Transform:
   m_Father: {fileID: 7971277800668488562}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &516464809109505351
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839827073679804703}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009
+  m_Center: {x: 0, y: 0, z: -0.002}
 --- !u!1 &1877670015162568632
 GameObject:
   m_ObjectHideFlags: 0
@@ -40,6 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7971277800668488562}
+  - component: {fileID: 1831215286454028158}
   m_Layer: 0
   m_Name: spine2
   m_TagString: Untagged
@@ -62,6 +77,19 @@ Transform:
   m_Father: {fileID: 3890087937688280639}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1831215286454028158
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877670015162568632}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.007
+  m_Center: {x: 0, y: 0, z: -0.001}
 --- !u!1 &2278275918113764782
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,9 +249,9 @@ MonoBehaviour:
   genSpeedScl: 35
   targetSpeedScl: 40
   geneticMovement: []
+  targeting: 1
   keys: 0
   NumKeysToCollect: 12
-  debugging: 0
   origDrag: 0
   rootBone: {fileID: 3890087937688280639}
   digestAntigens: []
@@ -302,7 +330,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.57
-  m_Center: {x: 0, y: 0, z: -0.27}
+  m_Center: {x: 0, y: 1.35, z: -0.27}
 --- !u!114 &3917101715563697206
 MonoBehaviour:
   m_ObjectHideFlags: 0

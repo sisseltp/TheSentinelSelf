@@ -57,7 +57,8 @@ public class SentinelManager : MonoBehaviour
     public Vector3[] PathogenEmitters;
     [HideInInspector]
     public PathogenManager[] pathogenManagers;
-
+    [HideInInspector]
+    public TCellManager[] tcellManagers;
 
 
     // struct to hold all the sentinels data potential gpu compute
@@ -136,9 +137,10 @@ public class SentinelManager : MonoBehaviour
 
         GameObject[] lymphs = GameObject.FindGameObjectsWithTag("Lymphonde");
         Lymphondes = new Vector3[lymphs.Length];
-
+        tcellManagers = new TCellManager[lymphs.Length];
         for (int i = 0; i < lymphs.Length; i++)
         {
+            tcellManagers[i] = lymphs[i].GetComponent<TCellManager>();
             Lymphondes[i] = lymphs[i].transform.position;
         }
 

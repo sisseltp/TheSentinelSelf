@@ -12318,6 +12318,7 @@ MonoBehaviour:
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
+  tcellManagers: []
 --- !u!1 &335496620
 GameObject:
   m_ObjectHideFlags: 0
@@ -18030,6 +18031,7 @@ MonoBehaviour:
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
+  tcellManagers: []
 --- !u!1 &1127644777
 GameObject:
   m_ObjectHideFlags: 0
@@ -18354,8 +18356,8 @@ MonoBehaviour:
   unhealthy2: {r: 0.12917407, g: 0.35347465, b: 0.38679248, a: 1}
   unhealthySizeMin: 4
   unhealthySizeMax: 5
-  healthyEmmisionRate: 20
-  unhealthyEmmisionRate: 50
+  healthyEmmisionRate: 50
+  unhealthyEmmisionRate: 100
 --- !u!114 &1136528595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18387,9 +18389,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
     - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: emitionSpeed
+      value: 0.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: emitionOrigin
       value: 
-      objectReference: {fileID: 543450651829103487}
+      objectReference: {fileID: 1492779146}
+    - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
+      propertyPath: startingNumAgents
+      value: 76
+      objectReference: {fileID: 0}
     - target: {fileID: 623254480, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: plastics.Array.size
       value: 1
@@ -18508,11 +18518,11 @@ PrefabInstance:
       objectReference: {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
     - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 367
+      value: 153
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 531.6
+      value: 55.600006
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877875054863, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18590,7 +18600,10 @@ MonoBehaviour:
   - {fileID: 1831704468}
   updateStatsEvery: 10
   health: 1
+  numApcs: 0
   numEggs: 0
+  numTcells: 0
+  numPathogens: 0
   numPlastics: 0
 --- !u!4 &1144778778 stripped
 Transform:
@@ -19857,6 +19870,7 @@ MonoBehaviour:
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
+  tcellManagers: []
 --- !u!1001 &1243791059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22307,8 +22321,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10000, y: 2527.1702, z: 10000}
-  m_Center: {x: 0, y: 969.5939, z: 0}
+  m_Size: {x: 10000, y: 2099.0442, z: 10000}
+  m_Center: {x: 0, y: 1183.6569, z: 0}
 --- !u!1 &1476112770
 GameObject:
   m_ObjectHideFlags: 0
@@ -28177,6 +28191,14 @@ PrefabInstance:
       value: 7.007004
       objectReference: {fileID: 0}
     - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.8
       objectReference: {fileID: 0}
@@ -28203,6 +28225,10 @@ PrefabInstance:
     - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: InitialModule.startSizeZ.minMaxState
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169456976427463184, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 6169456976549353376, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: path
