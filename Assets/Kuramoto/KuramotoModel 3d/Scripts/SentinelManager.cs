@@ -221,6 +221,7 @@ public class SentinelManager : MonoBehaviour
         thisSentinel.transform.position = pos;
 
         thisSentinel.GetComponent<Fosilising>().enabled = false;
+        Debug.Log("reset sentinel");
         thisSentinel.SetActive(true);
 
         // lib count is bellow 500

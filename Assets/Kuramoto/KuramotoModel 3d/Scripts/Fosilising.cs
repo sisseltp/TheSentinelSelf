@@ -20,6 +20,7 @@ public class Fosilising : MonoBehaviour
 
     private float originalDrag;
 
+    
 
     private void Start()
     {
@@ -58,15 +59,16 @@ public class Fosilising : MonoBehaviour
 
     private IEnumerator TimedDisolve(float waitTime)
     {
+        
         if (rb == null)
         {
             rb = GetComponent<Rigidbody>();
         }
         rb.isKinematic = true;
         Bounds B = GetMaxBounds(gameObject);
-        GameObject thisFosil = Instantiate(fosil, transform.position - new Vector3(0, -0.75f, 0), new Quaternion(0, 0, 0, 0));
-        thisFosil.transform.localScale = B.size * 1.1f;
-
+        GameObject thisFosil = Instantiate(fosil, B.center - new Vector3(0, -0.5f, 0), new Quaternion(0, 0, 0, 0));
+        thisFosil.transform.localScale = B.size * 1.2f;
+        
 
 
         yield return new WaitForSeconds(waitTime);

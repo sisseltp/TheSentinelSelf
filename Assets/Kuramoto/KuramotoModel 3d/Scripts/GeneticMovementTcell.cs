@@ -131,15 +131,13 @@ public class GeneticMovementTcell : MonoBehaviour
 
             if (plastics.Count > 0)
             {
-                Debug.Log("plasticTcellHit");
-
                 int rndIndx = Random.Range(0, plastics.Count);
 
                 target = plastics[rndIndx].GetComponent<Digestion>().origin;
                 notKeyed = false;
                 GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
                 GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
-                GetComponent<KuramotoAffectedAgent>().played = 2;
+                GetComponent<KuramotoAffectedAgent>().played = 3;
 
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
 
