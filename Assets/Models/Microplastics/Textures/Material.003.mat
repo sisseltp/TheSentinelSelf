@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-574312418549600657
+--- !u!114 &-3981280795530781481
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,11 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: breathingPhasetissue
-  m_Shader: {fileID: -6465566751694194690, guid: cd574eaccf5cfab42afd198830198e51, type: 3}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 2
-  m_EnableInstancingVariants: 1
+  m_Name: Material.003
+  m_Shader: {fileID: -6465566751694194690, guid: 98a3ad290935547388e27fa0c8882a70, type: 3}
+  m_ShaderKeywords: _NORMALMAP _PARALLAXMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -32,20 +32,28 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_2112e93317384962991d888e43c59bfe:
-        m_Texture: {fileID: 2800000, guid: bac1be36aba56dd4293b21e10cb6df5a, type: 3}
+    - Texture2D_4439fcd10d8142ae973f649d72685812:
+        m_Texture: {fileID: 2800000, guid: 83c4a97e8ddda1248bf1325dd4f93836, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - Texture2D_434ddbfc23f942d1ab0904915048149a:
-        m_Texture: {fileID: 2800000, guid: 3c6d6d82a23c446418ea4a94cbe8a552, type: 3}
+    - Texture2D_46338664f7b047f7b19d8d978d1014cb:
+        m_Texture: {fileID: 2800000, guid: b1f62d5b1b105d64ab3cb82659c3729d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_65643eed0a8c40c9a3f24ee2773f9e20:
+        m_Texture: {fileID: 2800000, guid: c3c918c50aabe2348bd587de3c43b76f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_aca6fade522344a8a199ef34f476b291:
+        m_Texture: {fileID: 2800000, guid: d0d21c4b23e7955419dbea5641c918e1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: b1f62d5b1b105d64ab3cb82659c3729d, type: 3}
+        m_Scale: {x: -2.22, y: -2.22}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 69bc1cf9c035ad44ba7e1af3e2904ca5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -65,8 +73,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: b1f62d5b1b105d64ab3cb82659c3729d, type: 3}
+        m_Scale: {x: -2.22, y: -2.22}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -77,7 +85,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 47915abc9d938ec448a44e231f60faab, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -97,11 +105,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Phase: 1.91
-    - Phase_1: 2.5
-    - Vector1_556b9eb6480c47debe0aee32d37e9dae: 0.002
-    - Vector1_693be5642cf148e0aaf395419d46810b: -128.3
-    - Vector1_fbdf56743d834f6ab5cfd032222871e4: 0.02
+    - Phase: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -113,12 +117,13 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 0
+    - _GlossMapScale: 1
     - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _GlossyReflections: 1
     - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
+    - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -126,13 +131,13 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - phase: 1.91
     m_Colors:
-    - Color_613c1b40353b4d7fa933b7c63312e4b5: {r: 2.383864, g: 0, b: 0.07151529, a: 0}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - Color_25132b9953ee4d45ada1bd1ce0df8ca1: {r: 1.391282, g: 3.851229, b: 0.02016351, a: 0}
+    - _BaseColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
+    - _Color: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
