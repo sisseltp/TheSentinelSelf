@@ -99,6 +99,7 @@ public class CameraTracker : MonoBehaviour
         if (tracking)
         {
 
+
             float dist = Vector3.Distance(tracked.position, transform.position);
 
             //rb.MoveRotation(Quaternion.LookRotation(dif*0.1f, transform.up));
@@ -126,6 +127,17 @@ public class CameraTracker : MonoBehaviour
             }
           
             rb.AddForce(transform.right * driftPower * Time.deltaTime);
+
+            Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
+
+            RaycastHit hit;
+            if (Physics.Raycast(forward, out hit, 20))
+            {
+                if (hit.transform.tag == "Terrain")
+                {
+                    vel += Vector3.up * power *3;
+                }
+            }
         }
 
         KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();

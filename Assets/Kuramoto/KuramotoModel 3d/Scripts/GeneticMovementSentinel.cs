@@ -99,21 +99,17 @@ public class GeneticMovementSentinel : MonoBehaviour
             vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
             
 
-            Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
+        }
 
-            RaycastHit hit;
-            if (Physics.Raycast(forward,  out hit, 20))
+        Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
+
+        RaycastHit hit;
+        if (Physics.Raycast(forward, out hit, 20))
+        {
+            if (hit.transform.tag == "Terrain")
             {
-                if(hit.transform.tag == "Terrain")
-                {
-                    vel += Vector3.up*targetSpeedScl*3;
-                }
+                vel += Vector3.up * targetSpeedScl * 3;
             }
-           
-
-            
-            
-
         }
 
         vel += thisGenVel * genSpeedScl;
