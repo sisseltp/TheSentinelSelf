@@ -168,19 +168,8 @@ public class GeneticMovementSentinel : MonoBehaviour
         {
             if (keys >= NumKeysToCollect && !targeting)
             {
-                int indx = 0;
-                int length = 0;
-
-                for (int i = 0; i < manager.tcellManagers.Length; i++)
-                {
-                    int numpathogens = manager.tcellManagers[i].RealNumSentinels;
-
-                    if (numpathogens > length)
-                    {
-                        length = numpathogens;
-                        indx = i;
-                    }
-                }
+                int indx = Random.Range(0, manager.Lymphondes.Length);
+                
 
                 target = manager.Lymphondes[indx];
                 targeting = true;
