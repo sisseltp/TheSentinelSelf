@@ -46,6 +46,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     [HideInInspector]
     public List<GeneticAntigenKey> digestAntigens;
+    
     [HideInInspector]
     public List<Transform> plastics;
 

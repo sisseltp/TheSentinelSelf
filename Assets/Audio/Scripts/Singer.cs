@@ -54,7 +54,7 @@ public class Singer
         sources[nextSource].clip = ac;
     }
 
-    public string ToString() {
+    public override string ToString() {
         var res = "Singer: " + gameObject;
         return res;
     }

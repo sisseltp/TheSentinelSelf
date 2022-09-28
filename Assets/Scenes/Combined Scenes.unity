@@ -18380,13 +18380,16 @@ MonoBehaviour:
   rndr: {fileID: 1218618672}
   growingObjs:
   - {fileID: 1831704468}
-  updateStatsEvery: 10
+  updateStatsEvery: 5
   health: 1
-  numApcs: 0
-  numEggs: 0
-  numTcells: 0
-  numPathogens: 0
-  numPlastics: 0
+  apcs: 0
+  digestedAntigens: 0
+  eggs: 0
+  tcells: 0
+  confusedTcells: 0
+  pathogens: 0
+  plastics: 0
+  digestedPlastics: 0
 --- !u!4 &1144778778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3850774878344472471, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
