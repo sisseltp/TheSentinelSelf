@@ -142,10 +142,7 @@ public class CameraTracker : MonoBehaviour
 
         KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();
 
-        if (kA != null)
-        {
-            dif *= kA.phase;
-        }
+        
 
         vel += dif * power * Time.deltaTime;
 
