@@ -74,7 +74,6 @@ public class SoundFXManager : MonoBehaviour
 
             default:
                 throw new Exception("Unknown Play tag to SoundFXManager: " + tag);
-                break;
         }
     }
 
