@@ -152,6 +152,9 @@ public class TCellManager : MonoBehaviour
                     continue;
                 }
 
+                sentinels[i].transform.position = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+
+
                 // add data to lib
                 Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
                 GenKurLib.Add(genKurm);
@@ -164,7 +167,6 @@ public class TCellManager : MonoBehaviour
                 ResetSentinel(i);
                 
                 GPUStruct[i].SetFromKuramoto(kuramoto);
-                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
             }
             else
