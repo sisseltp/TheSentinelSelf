@@ -96,13 +96,15 @@ public class SimulationStats : MonoBehaviour
                 int state = tc.GetComponent<KuramotoAffectedAgent>().played;
                 totalTcells += 1;
                 switch(state) {
-                    case 0:
-                        naiveTcells += 1;
+                    case 0: // ignore
                         break;
                     case 1:
-                        imprintedTcells += 1;
+                        naiveTcells += 1;
                         break;
                     case 2:
+                        imprintedTcells += 1;
+                        break;
+                    case 3:
                         confusedTcells += 1;
                         break;
                     default:

@@ -19,7 +19,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private Vector3 thisGenVel;// this steps velocity
 
-    private KuramotoAffectedAgent sentinel; // sentinel obj
+    private KuramotoAffectedAgent kuramoto; // kuramoto obj
 
     private Rigidbody rb;// rigidbody
 
@@ -43,8 +43,8 @@ public class GeneticMovementTcell : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // gets the sentinels kurmto
-        sentinel = GetComponent<KuramotoAffectedAgent>();
+        // gets the kuramotos kurmto
+        kuramoto = GetComponent<KuramotoAffectedAgent>();
         // gets this rb
         rb = GetComponent<Rigidbody>();
         // sets it to a new vec3 list for vels
@@ -58,49 +58,42 @@ public class GeneticMovementTcell : MonoBehaviour
 
         }
 
-
         manager = GetComponentInParent<TCellManager>();
-        if (notKeyed)
-        {
+        if (notKeyed) {
             target = transform.parent.position;
         }
         
          thisAnti = gameObject.GetComponent<GeneticAntigenKey>();
-        
-
     }
     
     // Update is called once per frame
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (sentinel.phase < lastPhase) {
+        if (kuramoto.phase < lastPhase) {
             step++;// add a step
-            if (step >= cycleLength)// if greater than list length, back to 0
-            {
+            if (step >= cycleLength) { // if greater than list length, back to 0
                 step = 0;
             }
-        } else if (sentinel.phase == lastPhase)
-            {
+        } else if (kuramoto.phase == lastPhase) {
             Destroy(gameObject);
-            }
+        }
 
         thisGenVel = geneticMovement[step];
 
          // get vel from this steps genmov, mult by phase and scl
         Vector3 vel =   thisGenVel * genSpeedScl;
-        if (targeting)
-        {
+        if (targeting) {
             vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
         }
 
-        vel *= sentinel.phase;
+        vel *= kuramoto.phase;
                
         // add the vel to the rb
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
        // set last phase to phase
-        lastPhase = sentinel.phase;
+        lastPhase = kuramoto.phase;
     }
 
     // reset randomizes the list of vels
@@ -118,19 +111,15 @@ public class GeneticMovementTcell : MonoBehaviour
         //Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Kill")
         {
-            sentinel.dead = true;
+            kuramoto.dead = true;
         }
         else if (collision.gameObject.tag == "Player")//if hits player
         {
             // get keys from children
-           List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
-
-
-
+            List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
             List<Transform> plastics = collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics;
 
-            if (plastics.Count > 0)
-            {
+            if (plastics.Count > 0) {
                 int rndIndx = Random.Range(0, plastics.Count);
 
                 target = plastics[rndIndx].GetComponent<Digestion>().origin;
@@ -138,11 +127,8 @@ public class GeneticMovementTcell : MonoBehaviour
                 GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
                 GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
                 GetComponent<KuramotoAffectedAgent>().played = 3;
-
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
-
-            } else if (Antigens.Count > 0) // if it had antigens?
-            {
+            } else if (Antigens.Count > 0) { // if it had antigens?
                 // get matches from children
                 AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
 
@@ -156,7 +142,7 @@ public class GeneticMovementTcell : MonoBehaviour
                         notKeyed = false;
                         // sett render value
                         GetComponent<Renderer>().material.SetFloat("KeyTrigger", 1);
-                        GetComponent<KuramotoAffectedAgent>().played = 2;
+                        GetComponent<KuramotoAffectedAgent>().played = 2; // I guess this means its looking for pathogens?
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
                         // set the target from the origin
@@ -176,7 +162,6 @@ public class GeneticMovementTcell : MonoBehaviour
                             {
                                 return;
                             }
-
                             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
                         }
                     }
@@ -217,18 +202,12 @@ public class GeneticMovementTcell : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Lymphonde" && notKeyed)
-        {
-
+        if (other.gameObject.tag == "Lymphonde" && notKeyed) {
             target = transform.parent.position+(UnityEngine.Random.onUnitSphere * 100);
-
         }
-        else if (other.gameObject.tag == "PathogenEmitter")
-        {
-            
+        else if (other.gameObject.tag == "PathogenEmitter") { 
             StartCoroutine(TargetTimeout(15));
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< tcell reaches the pathogen emitter
-
         }
     }
     private void OnTriggerExit(Collider other)
@@ -242,12 +221,8 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private IEnumerator TargetTimeout(float waitTime)
     {
-
-        
         yield return new WaitForSeconds(waitTime);
         targeting = false;
-
-
     }
 
 
@@ -276,9 +251,6 @@ public class GeneticMovementTcell : MonoBehaviour
     private AntigenKeys[] Compare(GeneticAntigenKey[] antigens)
     {
         AntigenKeys[] keys = new AntigenKeys[antigens.Length + 1];
-        
-        
-        
         
         keys[0].SetupKey(thisAnti.antigen.Key);
 
@@ -310,8 +282,6 @@ public class GeneticMovementTcell : MonoBehaviour
 
         keyBuffer.Dispose();
 
-        return  keys;
+        return keys;
     }
-
- 
 }
