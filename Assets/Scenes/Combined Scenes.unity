@@ -15551,7 +15551,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6fa205b55b83b4b4eb47165990bd6b2b, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6fa205b55b83b4b4eb47165990bd6b2b, type: 3}
       propertyPath: m_LocalScale.x
@@ -17325,7 +17325,7 @@ Transform:
   m_LocalScale: {x: 500, y: 500, z: 500}
   m_Children: []
   m_Father: {fileID: 1658070000}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!64 &985570817
 MeshCollider:
@@ -23407,7 +23407,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1b6e5ccd2060b4adb89f55b5356b3991, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b6e5ccd2060b4adb89f55b5356b3991, type: 3}
       propertyPath: m_LocalScale.x
@@ -24076,7 +24076,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1658070000}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0.544, y: 70.671, z: 1.593}
 --- !u!1 &1689250950
 GameObject:
@@ -25430,7 +25430,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1658070000}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0.544, y: 71.166, z: 1.593}
 --- !u!114 &1874007846
 MonoBehaviour:
@@ -26536,7 +26536,7 @@ Transform:
   m_Children:
   - {fileID: 1187019065}
   m_Father: {fileID: 1658070000}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0.108, y: -286.127, z: -0.37}
 --- !u!4 &2050826372 stripped
 Transform:
@@ -28273,7 +28273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6848046280692090961, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_Radius
