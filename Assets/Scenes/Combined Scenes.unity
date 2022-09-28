@@ -18380,16 +18380,28 @@ MonoBehaviour:
   rndr: {fileID: 1218618672}
   growingObjs:
   - {fileID: 1831704468}
+--- !u!114 &1144778777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144778775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2223ba3785f562a078938e125fba5207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   updateStatsEvery: 5
   health: 1
-  apcs: 0
-  digestedAntigens: 0
-  eggs: 0
   tcells: 0
   confusedTcells: 0
   pathogens: 0
-  plastics: 0
+  apcs: 0
+  eggs: 0
+  digestedAntigens: 0
   digestedPlastics: 0
+  plastics: 0
 --- !u!4 &1144778778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3850774878344472471, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
