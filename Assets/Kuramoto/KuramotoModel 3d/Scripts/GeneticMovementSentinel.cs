@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum APCBehavior {CarryingAntigens, SeekingPathogens}
 public class GeneticMovementSentinel : MonoBehaviour
 {
     [Tooltip("How many cycles to contain")]
@@ -18,7 +19,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private Vector3 thisGenVel;
 
-    private KuramotoAffecterAgent sentinel; // sentinel obj
+    private KuramotoAffecterAgent kuramoto; // kuramoto obj
 
     private APCSong song;
 
@@ -50,6 +51,8 @@ public class GeneticMovementSentinel : MonoBehaviour
     [HideInInspector]
     public List<Transform> plastics;
 
+    [Tooltip("Current stage of the APC in its cycle of activities")]
+    public APCBehavior currentBehavior = APCBehavior.SeekingPathogens; 
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +60,8 @@ public class GeneticMovementSentinel : MonoBehaviour
         digestAntigens = new List<GeneticAntigenKey>();
         plastics = new List<Transform>();
 
-        // gets the sentinels kurmto
-        sentinel = GetComponent<KuramotoAffecterAgent>();
+        // gets this APC's kurmto
+        kuramoto = GetComponent<KuramotoAffecterAgent>();
 
         // get song manager
         song = GetComponent<APCSong>();
@@ -72,14 +75,13 @@ public class GeneticMovementSentinel : MonoBehaviour
         manager = GetComponentInParent<SentinelManager>();
 
         Reset();
-
     }
     Vector3 point;
     // Update is called once per frame
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (sentinel.phase < lastPhase) { 
+        if (kuramoto.phase < lastPhase) { 
             step++;// add a step
             if (step >= cycleLength)// if greater than list length, back to 0
             {
@@ -91,15 +93,8 @@ public class GeneticMovementSentinel : MonoBehaviour
         Vector3 vel = Vector3.zero ;
 
         // get vel from this steps genmov, mult by phase and scl
-
-        if (targeting)
-        {
-
-
-            // if theres an object in the way add upward force
+        if (targeting) { // if theres an object in the way add upward force
             vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
-            
-
         }
 
         Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
@@ -114,11 +109,11 @@ public class GeneticMovementSentinel : MonoBehaviour
         }
 
         vel += thisGenVel * genSpeedScl;
-        vel *= sentinel.phase;
+        vel *= kuramoto.phase;
 
         rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
         // set last phase to phase
-        lastPhase = sentinel.phase;
+        lastPhase = kuramoto.phase;
     }
 
     // reset randomizes the list of vels
@@ -152,21 +147,15 @@ public class GeneticMovementSentinel : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
 
-      
-
-        
          if (collision.gameObject.tag == "PathogenEmitter")
         {
             targeting = false;
-        
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the pathogen emitter
         }
         else if (collision.gameObject.tag == "Lymphonde")
         {
             targeting = false;
-         
-            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the lymphonode 
-
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the lymph node 
         }
 
     }
@@ -194,12 +183,10 @@ public class GeneticMovementSentinel : MonoBehaviour
                 }
 
                 target = manager.Lymphondes[indx];
-
                 targeting = true;
                 tcellHits = 0;
-          
-               
-                //song.setState(APCState.CarryingAntigens);
+
+                currentBehavior = APCBehavior.CarryingAntigens;
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
 
             }
@@ -236,10 +223,8 @@ public class GeneticMovementSentinel : MonoBehaviour
 
             digestAntigens.Clear();
             keys = 0;
-           // song.setState(APCState.SeekingPathogens);
+            currentBehavior = APCBehavior.SeekingPathogens;
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
-
-
         }
 
     }

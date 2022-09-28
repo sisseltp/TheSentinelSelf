@@ -10,29 +10,32 @@ public class SimulationStats : MonoBehaviour
     public float updateStatsEvery = 5.0f;
 
     [Space(10)]
-    [Header("APC Status")]
+    [Header("Antigen Presenting Cells (APC)")]
 
     [Tooltip("APCs seeking pathogens")]    
-    public int seekingApcs = 0;
+    public int seekingPathogens = 0;
 
     [Tooltip("APCs carrying antigens to a lymph node")]    
-    public int carryingApcs = 0;
+    public int carryingToLymphNode = 0;
 
     [Tooltip("APCs that are fossilized")]    
-    public int fossilApcs = 0;
+    public int fossilized = 0;
+
+    [Space(5)]
 
     [Tooltip("Total APCs in the simulation")]    
     public int totalApcs = 0;
 
+    [Space(5)]
 
     [Tooltip("Number of antigens digested by APCs")]    
-    public int digestedAntigens = 0;
+    public int totalDigestedAntigens = 0;
 
     [Tooltip("Number of microplastics digested by APCs")]    
-    public int digestedPlastics = 0;
+    public int totalDigestedPlastics = 0;
 
     [Tooltip("Number of microplastics currently in the simulation")]    
-    public int plastics = 0;
+    public int totalPlastics = 0;
 
 
 
@@ -48,19 +51,26 @@ public class SimulationStats : MonoBehaviour
     [Tooltip("Number of Tcells that are confused by microplastics")]
     public int confusedTcells = 0;
 
+    [Space(5)]
     [Tooltip("Total Tcells currently in the simulation")]    
     public int totalTcells = 0;
 
-
     [Tooltip("Number of pathogens currently in the simulation")]    
-    public int pathogens = 0;
+    public int totalPathogens = 0;
 
 
     [Space(10)]
     [Header("General")]
 
-    [Tooltip("Ratio Healthy to Infectious agents - Tcells / (Tcells + Pathogens)")]    
-    public float health = 1.0f;
+    [Tooltip("Ratio Pathogens to Tcells -- pathogens / (Tcells + pathogens)")]    
+    public float infection = 0.0f;
+
+    [Tooltip("Total agents")]    
+    public int totalAgents = 0;
+
+    public float simulationRunningHours = 0.0f;
+    public float simulationRunningMinutes = 0.0f;
+    public float simulationRunningSeconds = 0.0f;
 
 
 
@@ -70,23 +80,33 @@ public class SimulationStats : MonoBehaviour
         StartCoroutine(checkWorld(updateStatsEvery));
     }
 
-    IEnumerator checkWorld(float time)
+    IEnumerator checkWorld(float timetowait)
     {
         while (true)
         {
             totalApcs = 0;
-            seekingApcs = 0;
-            carryingApcs = 0;
-            digestedAntigens = 0;
-            digestedPlastics = 0;
+            seekingPathogens = 0;
+            carryingToLymphNode = 0;
+            totalDigestedAntigens = 0;
+            totalDigestedPlastics = 0;
             foreach(GameObject apc in GameObject.FindGameObjectsWithTag("Player")) {
                 GeneticMovementSentinel movementScript = apc.GetComponent<GeneticMovementSentinel>();
+                switch(movementScript.currentBehavior) {
+                    case APCBehavior.SeekingPathogens:
+                        seekingPathogens += 1;
+                        break;
+                    case APCBehavior.CarryingAntigens:
+                        carryingToLymphNode += 1;
+                        break;
+                    default:
+                        throw new System.Exception("Unknown APCBehavior: " + movementScript.currentBehavior);
+                }
                 totalApcs += 1;
-                digestedAntigens += movementScript.digestAntigens.Count;
-                digestedPlastics += movementScript.plastics.Count;
+                totalDigestedAntigens += movementScript.digestAntigens.Count;
+                totalDigestedPlastics += movementScript.plastics.Count;
             }
             
-            fossilApcs = GameObject.FindGameObjectsWithTag("Eggs").Length;
+            fossilized = GameObject.FindGameObjectsWithTag("Eggs").Length;
 
             totalTcells = 0;
             naiveTcells = 0;
@@ -112,14 +132,20 @@ public class SimulationStats : MonoBehaviour
                 }
             }
             
-            pathogens = GameObject.FindGameObjectsWithTag("Pathogen").Length;
+            totalPathogens = GameObject.FindGameObjectsWithTag("Pathogen").Length;
 
-            health = totalTcells + pathogens;
-            health = totalTcells / health;
+            infection = totalTcells + totalPathogens;
+            infection = totalPathogens / infection;
 
-            plastics = GameObject.FindGameObjectsWithTag("Plastic").Length;
+            totalPlastics = GameObject.FindGameObjectsWithTag("Plastic").Length;
 
-            yield return new WaitForSeconds(time);
+            totalAgents = totalApcs + totalTcells + totalPathogens + totalPlastics;
+
+            simulationRunningSeconds = Time.time;
+            simulationRunningMinutes = simulationRunningSeconds / 60.0f;
+            simulationRunningHours = simulationRunningMinutes / 60.0f;
+
+            yield return new WaitForSeconds(timetowait);
         }
 
 

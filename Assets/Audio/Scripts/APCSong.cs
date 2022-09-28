@@ -16,7 +16,7 @@ public class APCSong : MonoBehaviour
 
     [Header("Debugging Attributes (generally these are set to good values!)")]
     public float minDistance = 20.0f;
-    public float maxDistance = 50.0f;
+    public float maxDistance = 60.0f;
     public AudioRolloffMode rolloff = AudioRolloffMode.Linear;
     public APCState state = APCState.SeekingPathogens;
 
@@ -70,7 +70,7 @@ public class APCSong : MonoBehaviour
         singer.AddSource(
             clip: Singer.GetRandomClip(currentClipSource), 
             spatialBlend: 1.0f, 
-            spread: 20,
+            spread: 20.0f,
             loop: false, 
             maxDistance: maxDistance, 
             minDistance: minDistance, 

@@ -18589,20 +18589,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2223ba3785f562a078938e125fba5207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateStatsEvery: 5
-  seekingApcs: 0
-  carryingApcs: 0
-  fossilApcs: 0
+  updateStatsEvery: 3
+  seekingPathogens: 0
+  carryingToLymphNode: 0
+  fossilized: 0
   totalApcs: 0
-  digestedAntigens: 0
-  digestedPlastics: 0
-  plastics: 0
+  totalDigestedAntigens: 0
+  totalDigestedPlastics: 0
+  totalPlastics: 0
   naiveTcells: 0
   imprintedTcells: 0
   confusedTcells: 0
   totalTcells: 0
-  pathogens: 0
-  health: 1
+  totalPathogens: 0
+  infection: 0
+  totalAgents: 0
+  simulationRunningHours: 0
+  simulationRunningMinutes: 0
+  simulationRunningSeconds: 0
 --- !u!4 &1144778778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3850774878344472471, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
