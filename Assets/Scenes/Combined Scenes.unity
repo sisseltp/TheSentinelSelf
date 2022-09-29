@@ -22649,6 +22649,55 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3579431008695193847, guid: d91e2e07d734bed43979d2f894b15b73, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d91e2e07d734bed43979d2f894b15b73, type: 3}
+--- !u!1 &1537432212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1537432214}
+  - component: {fileID: 1537432213}
+  m_Layer: 0
+  m_Name: Watchdog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1537432213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537432212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40378f3f782440398957c7a4d86df780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fpsThreshold: 22.8
+  minutesUnderThreshold: 0.1
+  behavior: 0
+  currentFps: 0
+  timerRunning: 0
+  timerTime: 0
+--- !u!4 &1537432214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537432212}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 460.49088, y: -42.493042, z: 69.437355}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1548270694
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22848,7 +22897,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: f464ab90b19293fe1b5d2ba942e555fc, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.855
-  m_Pitch: 1
+  m_Pitch: 0.91
   Loop: 1
   Mute: 0
   Spatialize: 0
