@@ -35,6 +35,7 @@ public class ethernetValues : MonoBehaviour
 
     private bool playing = false;
     private bool reading = false;
+
     [Header("Scene Threshold Values")]
     [SerializeField]
     private float beginTimer = 2;
@@ -43,6 +44,7 @@ public class ethernetValues : MonoBehaviour
 
     private float TimerGate = 0;
 
+    // Script component that manages entering & exiting the body
     private IntroBeginner IntroControl;
 
     [SerializeField]
@@ -62,22 +64,16 @@ public class ethernetValues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
-
         float avrgChange = Mathf.Abs(sentinel1Rate - lastAvrgRate);
 
-
-
-        if (avrgRate > 50 && avrgRate < 150 && avrgChange < changeGate)
+        if (avrgRate > 50 && avrgRate < 150 && (avrgChange < changeGate))
         {
-            if (!reading)
-            {
+            if (!reading) {
                 reading = true;
                 TimerGate = Time.time;
             }
-            else if (!playing && TimerGate + beginTimer < Time.time)
-            {
+            else if (!playing && (TimerGate + beginTimer < Time.time) ) {
                 playing = true;
                 IntroControl.Begin();
             }
@@ -92,23 +88,16 @@ public class ethernetValues : MonoBehaviour
                 pulseGradient = 0;
             }
 
-          
-
             //agent.AddOsiclation(thisX, thisY, bias);
             if (agent != null)
             {
                 agent.phase = pulseGradient;
             }
-        }
-        else if (reading)
-        {
+        } else if (reading) {
             reading = false;
             TimerGate = Time.time;
-        }
-        else if (playing && TimerGate + restartTimer < Time.time)
-        {
-            if (IntroControl.Restart())
-            {
+        } else if (playing && (TimerGate + restartTimer < Time.time)) {
+            if (IntroControl.Restart()) {
                 playing = false;
             }
         }

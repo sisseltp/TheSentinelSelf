@@ -8,46 +8,40 @@ public class CameraTracker : MonoBehaviour
 {
     public Transform tracked;
     public Transform look;
+    
+    [Space(10)]
+    [Header("Body Entry Animation")]
+
+    [Tooltip("Something to do with the distance to/from a target?")]
     [SerializeField]
     private float setDistance;
 
+    [Tooltip("Something to do with the distance variation to/from a target?")]
     [Range(0.1f, 10f)]
     [SerializeField]
     private float distVariation;
+    
     [Range(0f, 10f)]
     [SerializeField]
     private float power;
+    
     [Range(0f, 10f)]
     [SerializeField]
     private float rotSpeed;
+    
     [Range(5f, 50f)]
     [SerializeField]
     private float distLimit;
-    [HideInInspector]
-    public Rigidbody rb;
-    [HideInInspector]
-    public bool tracking = false;
 
     [SerializeField]
     private float ChangeTrackTimer = 10;
-    private float lastChange = 0;
 
     [SerializeField]
     private float underWaterJumpDist = 10;
-    
 
-    private Vector3 origin;
-    private Quaternion origRot;
-    private Image faderImage;
     [SerializeField]
     private float fadePeriod = 2;
 
-    private ethernetValues heartbeatSensor;
-    private IntroBeginner introCntrl;
-
-    private SoundFXManager soundFx;
-
-    
     [SerializeField]
     private float driftPower = 5f;
 
@@ -56,16 +50,36 @@ public class CameraTracker : MonoBehaviour
 
     public float restTimer = 0;
 
-    [HideInInspector]
+
+    [Space(10)]
+    [Header("Debugging")]
+
+    public bool tracking = false;
     public bool Introing = false;
 
+    private float lastChange = 0;    
+    private Vector3 origin;
+    private Quaternion origRot;
+    private Image faderImage;
     private Vector3 lookPos;
     private Vector3 vel;
+
+    [HideInInspector]
+    public Rigidbody rb;
+
+    // Heartbeat sensor script component
+    private ethernetValues heartbeatSensor;
+
+    // Enter/exit body control script component
+    private IntroBeginner introCntrl;
+
+    // Script/component manages FX sound on the camera
+    private SoundFXManager soundFx;
+
 
     // Start is called before the first frame update
     void Start()
     {
-
         //tracked = transform.parent;
         //        setDistance = Vector3.Distance(tracked.position, transform.position);
         rb = GetComponent<Rigidbody>();
@@ -77,7 +91,6 @@ public class CameraTracker : MonoBehaviour
 
         heartbeatSensor = GetComponentInChildren<ethernetValues>();
         introCntrl = GetComponent<IntroBeginner>();
-
     }
 
 
@@ -96,15 +109,12 @@ public class CameraTracker : MonoBehaviour
         // Smoothly rotate towards the target point.
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
 
-        if (tracking)
-        {
-
-
+        if (tracking) {
             float dist = Vector3.Distance(tracked.position, transform.position);
 
             //rb.MoveRotation(Quaternion.LookRotation(dif*0.1f, transform.up));
 
-            if (dist < setDistance - distVariation)
+            if (dist < setDistance - distVariation) 
             {
                 dif *= -1;
             }
@@ -142,14 +152,9 @@ public class CameraTracker : MonoBehaviour
 
         KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();
 
-        
-
         vel += dif * power * Time.deltaTime;
-
         vel *= 0.8f;
-
         rb.velocity += vel;
-
     }
 
     private float AbsMagnitude(Vector3 vec)
@@ -193,21 +198,20 @@ public class CameraTracker : MonoBehaviour
    
     private void OnTriggerEnter(Collider collision)
     {        
-        if (collision.transform.tag == "Body") {
-            // Camera is entering the body, into the inner world.
+        if (collision.transform.tag == "Body") { // Camera is entering the body, into the inner world.
             soundFx.Play("EnterBody");
 
             FindSceneTracked("Player");
+
             tracking = true;
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
             GetComponent<SphereCollider>().isTrigger = false;
             Introing = false;
+
             StartCoroutine(ChangeCharacter(ChangeTrackTimer));
             StartCoroutine(ChangeOrientation(ChangeTrackTimer * 0.666f));
-        }
-        else if (collision.transform.tag == "BodyAlign")
-        { 
-            // camera is aligned and looking down at the body
+
+        } else if (collision.transform.tag == "BodyAlign") { // camera is aligned and looking down at the body
             FindScreenTracked("Body");
         }
     }
@@ -240,8 +244,7 @@ public class CameraTracker : MonoBehaviour
                 {
                     float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
                     if (thisDist > dist && bodies[i].GetComponentInChildren<Renderer>().isVisible)
-                    {
-                        
+                    {  
                         indx = i;
                         dist = thisDist;
                     }
@@ -333,8 +336,6 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ChangeOrientation(float Timer)
     {
-
-
         while (tracking)
         {
 
@@ -360,7 +361,7 @@ public class CameraTracker : MonoBehaviour
                 {
                     rotSpeed = UnityEngine.Random.Range(0.5f, 1f);
                 }
-                Debug.Log("Changed");
+                //Debug.Log("Changed");
             }
         }
 
