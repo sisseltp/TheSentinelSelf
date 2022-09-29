@@ -84,32 +84,27 @@ public class APCSong : MonoBehaviour
         singer.PlayNextSource(); // start playing...
     }
 
-    // Update is called once per frame
-    void Update() {
-        
-    }
+    // public void setState(APCState newState) {
 
-    public void setState(APCState newState) {
+    //     singer.GetActiveSource().Stop();
 
-        singer.GetActiveSource().Stop();
+    //     switch(newState) {
 
-        switch(newState) {
-
-            case APCState.SeekingPathogens:
-                currentClipSource = seekingPathogenClips;
-                break;
-            case APCState.CarryingAntigens:
-                currentClipSource = carryingAntigenClips;
-                break;
-            default:
-                Debug.LogError("Unknown APCState: " + newState);
-                break;
-        }
-        singer.CueClip(Singer.GetRandomClip(currentClipSource));
-        PlayNext();
-        Debug.Log("Change State: " + newState + " in " + gameObject);
-        state = newState;
-    }
+    //         case APCState.SeekingPathogens:
+    //             currentClipSource = seekingPathogenClips;
+    //             break;
+    //         case APCState.CarryingAntigens:
+    //             currentClipSource = carryingAntigenClips;
+    //             break;
+    //         default:
+    //             Debug.LogError("Unknown APCState: " + newState);
+    //             break;
+    //     }
+    //     singer.CueClip(Singer.GetRandomClip(currentClipSource));
+    //     PlayNext();
+    //     Debug.Log("Change State: " + newState + " in " + gameObject);
+    //     state = newState;
+    // }
 
     // Called every ~20ms
     // See: https://gamedevplanet.com/the-difference-between-update-and-fixedupdate-in-unity/

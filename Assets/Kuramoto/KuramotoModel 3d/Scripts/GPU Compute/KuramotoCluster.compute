@@ -334,7 +334,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			}
 
 			if (biomeData[indx].played == 3) {
-				biomeData[indx].age += dt * 3;
+				biomeData[indx].age += dt * 10;
 			}
 			else {
 				// add dt to the age

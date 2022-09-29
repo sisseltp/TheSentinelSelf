@@ -455,7 +455,7 @@ MonoBehaviour:
   seekingClipsPath: wavs/apcsongs/seeking/01
   carryingClipsPath: wavs/apcsongs/carrying/01
   minDistance: 20
-  maxDistance: 50
+  maxDistance: 60
   rolloff: 1
   state: 0
   audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
@@ -522,13 +522,14 @@ MonoBehaviour:
   genSpeedScl: 35
   targetSpeedScl: 40
   geneticMovement: []
+  targeting: 1
   keys: 0
   NumKeysToCollect: 12
-  debugging: 0
   origDrag: 0
   rootBone: {fileID: 85334201535229249}
   digestAntigens: []
   plastics: []
+  currentBehavior: 1
 --- !u!114 &8066729109672978145
 MonoBehaviour:
   m_ObjectHideFlags: 0
