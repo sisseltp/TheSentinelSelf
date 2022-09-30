@@ -22678,8 +22678,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40378f3f782440398957c7a4d86df780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsThreshold: 22.8
-  minutesUnderThreshold: 0.1
+  fpsThreshold: 15
+  minutesUnderThreshold: 10
   behavior: 0
   currentFps: 0
   timerRunning: 0

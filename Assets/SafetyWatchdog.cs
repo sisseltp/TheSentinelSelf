@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /*
     RestartScene - hard reboot of the current scene.
@@ -45,6 +46,8 @@ public class SafetyWatchdog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentFps = 1000f;
+        lastFps = 1000f;
         timeThreshold = minutesUnderThreshold * 60.0f;
     }
 
@@ -55,20 +58,35 @@ public class SafetyWatchdog : MonoBehaviour
         framesTime += Time.unscaledDeltaTime;
         framesCount++;
 
-        if(timerRunning && ( timerTime >= timeThreshold )) {
-            Debug.Log("REBOOT THE SCENE!");
+        if(timerRunning && ( timerTime >= timeThreshold )) { // Trigger action
             timerRunning = false;
             timerTime = 0.0f;
-            lastFps = 100.0f;
+            lastFps = 1000.0f;
+
+            switch(behavior) {
+                case SafetyBehavior.RestartScene:
+                    Restart();
+                    break;
+                case SafetyBehavior.CleanupSimulation:
+                    Cleanup();
+                    break;
+                default:
+                    Debug.Assert(false, "Unknown Watchdog behavior: " + behavior);
+                    break;
+            }
         }
 
-        if(framesTime >= 1.0f) {
+        if(framesTime >= calculateEvery) {
+
+
             // Calculate avg fps
             lastFps = currentFps;
             currentFps = framesCount / framesTime;
             framesCount = 0;
-            framesTime -= 1.0f;
-            
+            framesTime -= calculateEvery;
+
+
+
             if(currentFps <= fpsThreshold) {
                 if(lastFps > fpsThreshold) {
                     // Start timer...
@@ -83,4 +101,19 @@ public class SafetyWatchdog : MonoBehaviour
             }
         }     
     }
+
+    public void Restart() {
+        Debug.Log("REBOOT THE SCENE!");
+            
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Cleanup() {
+        Debug.Log("CLEAN UP THE SCENE!");
+        // TODO: Not implemented
+        //       clean up scene resources
+        //       & prune unnecessary game objects
+    }
+
+
 }
