@@ -168,11 +168,8 @@ public class SentinelManager : MonoBehaviour
 
             // if the agent is dead
             if (kuramoto.dead || GPUStruct[i].age> MaxAge) {
-                // add it settings to the librarys
-                Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
-                GenKurLib.Add(genKurm);
-                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
-                GenVelLib.Add(vels);
+
+                
                 // call the reset function
                 ResetSentinel(i);
 
@@ -211,7 +208,7 @@ public class SentinelManager : MonoBehaviour
     }
 
     // resets the sentinel
-    public void ResetSentinel(int i)
+    public void ResetSentinel(int i, bool genOn= false)
     {
         // get the sentinel
         GameObject thisSentinel = sentinels[i];
@@ -226,11 +223,27 @@ public class SentinelManager : MonoBehaviour
         Debug.Log("reset sentinel");
         thisSentinel.SetActive(true);
 
-        // lib count is bellow 500
-        if (GenKurLib.Count < 500)
+        if (!genOn)
         {
             // reset bothe genetic values to random
             KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
+
+            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            genVel.Reset();
+        }
+        else if (GenKurLib.Count < 500)
+        {
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+
+
+            // add it settings to the librarys
+            Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
+            GenKurLib.Add(genKurm);
+            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
+            GenVelLib.Add(vels);
+
+            // reset bothe genetic values to random
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
             GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();

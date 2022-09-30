@@ -190,7 +190,7 @@ public class PlasticManager2 : MonoBehaviour
           
         }
 
-
+        /*
         // if the lib is greater than ...
         if (GenVelLib.Count > 1000)
         {
@@ -199,7 +199,7 @@ public class PlasticManager2 : MonoBehaviour
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
 
         }
-
+        */
 
 
         int nxtIndx = -1;
@@ -248,9 +248,7 @@ public class PlasticManager2 : MonoBehaviour
 
         thisSentinel.transform.position = pos;
 
-        // if lib less than 500
-        if (GenKurLib.Count < 500)
-        {
+       
             // add random new sentinel
             KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
@@ -258,39 +256,6 @@ public class PlasticManager2 : MonoBehaviour
             GeneticMovementPlastic genVel = thisSentinel.GetComponent<GeneticMovementPlastic>();
             genVel.Reset();
 
-            
-        }
-        else
-        {
-            // add random sentinel from lib
-            int rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            Genetics.GenKurmto kurData1 = GenKurLib[rand];
-            rand = UnityEngine.Random.Range(0, GenKurLib.Count);
-            Genetics.GenKurmto kurData2 = GenKurLib[rand];
-
-            float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
-
-            KuramotoPlasticAgent kuramoto = thisSentinel.GetComponent<KuramotoPlasticAgent>();
-            //kuramoto.SetupData(Settings);
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
-
-            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            Genetics.GenVel genVel1 = GenVelLib[rand];
-            rand = UnityEngine.Random.Range(0, GenVelLib.Count);
-            Genetics.GenVel genVel2 = GenVelLib[rand];
-
-            Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
-
-            GeneticMovementPlastic genMov = thisSentinel.GetComponent<GeneticMovementPlastic>();
-            genMov.Reset();
-            genMov.geneticMovement = genVel1.BlendAttributes(Vels);
-
-            
-
-
-
-        }
-        
     }
 
     public void AddCell()

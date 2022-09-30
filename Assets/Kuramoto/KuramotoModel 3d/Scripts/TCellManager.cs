@@ -232,7 +232,7 @@ public class TCellManager : MonoBehaviour
 
     }
    
-    public void ResetSentinel(int i)
+    public void ResetSentinel(int i ,bool genOn = false)
     {
 
         // get i sentinel
@@ -243,12 +243,26 @@ public class TCellManager : MonoBehaviour
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
-
-        // if lib less than 500
-        if (GenKurLib.Count < 500)
+        if (!genOn)
         {
+            // reset bothe genetic values to random
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
+
+            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            genVel.Reset();
+        }
+        else if (GenKurLib.Count < 500)
+        {
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+
+
+            // add it settings to the librarys
+            Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
+            GenKurLib.Add(genKurm);
+            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
+            GenVelLib.Add(vels);
             // add random new sentinel
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
             
             GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();

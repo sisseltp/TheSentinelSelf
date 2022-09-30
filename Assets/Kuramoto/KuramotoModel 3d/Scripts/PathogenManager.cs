@@ -226,6 +226,7 @@ public class PathogenManager : MonoBehaviour
           
         }
 
+        /*
         // if the lib is greater than ...
         if (GenVelLib.Count > 1000)
         {
@@ -234,6 +235,7 @@ public class PathogenManager : MonoBehaviour
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
 
         }
+        */
 
         int nxtIndx = -1;
 
@@ -276,7 +278,7 @@ public class PathogenManager : MonoBehaviour
 
    
    
-    public void ResetSentinel(int i)
+    public void ResetSentinel(int i, bool genOn = false)
     {
 
         // get i sentinel
@@ -288,11 +290,28 @@ public class PathogenManager : MonoBehaviour
 
         thisSentinel.transform.position = pos;
 
-        // if lib less than 500
-        if (GenKurLib.Count < 500)
+        if (!genOn)
         {
-            // add random new sentinel
+            // reset bothe genetic values to random
+            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
+
+            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            genVel.Reset();
+
+        }
+        else if (GenKurLib.Count < 500)
+        {
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+
+            // add it settings to the librarys
+            Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
+            GenKurLib.Add(genKurm);
+            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
+            GenVelLib.Add(vels);
+
+            // add random new sentinel
+    
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
             GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
