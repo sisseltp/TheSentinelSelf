@@ -4,10 +4,10 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 
+
 // data struct
 struct Sentinel
 {
-	float age;
 	float connections;
 	int played;
 	float speed;
@@ -18,8 +18,6 @@ struct Sentinel
 	float noiseScl;
 	float coupling;
 	float attractionScl;
-	float fittness;
-	float3 vel;
 	float3 pos;
 };
 

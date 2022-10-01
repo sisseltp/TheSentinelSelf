@@ -18,11 +18,11 @@ public class GPUCompute : MonoBehaviour
 
     private RenderTexture rt;
 
-    private SentinelManager.GPUData[] sentinelData;
+    private GPUData[] sentinelData;
 
-    private PathogenManager.GPUData[] pathogenData;
+    private GPUData[] pathogenData;
 
-    private PlasticManager2.GPUData[] plasticData;
+    private GPUData[] plasticData;
 
     private GPUOutput[] sentinelDataOut;
 
@@ -41,6 +41,67 @@ public class GPUCompute : MonoBehaviour
     private bool Pcomputed = false;
     private bool Scomputed = false;
     private bool Bcomputed = false;
+    public struct GPUData
+    {
+        public float connections;
+        public int played;
+        public float speed;
+        public float phase;
+        public float cohPhi;
+        public float coherenceRadius;
+        public float couplingRange;
+        public float noiseScl;
+        public float coupling;
+        public float attractionScl;
+        public Vector3 pos;
+
+        public void SetFromKuramoto(KuramotoPlasticAgent kuramoto)
+        {
+
+            speed = kuramoto.speed;
+            phase = kuramoto.phase;
+            coherenceRadius = kuramoto.coherenceRadius;
+            couplingRange = kuramoto.couplingRange;
+            noiseScl = kuramoto.noiseScl;
+            coupling = kuramoto.coupling;
+            attractionScl = kuramoto.attractionSclr;
+            played = 1;
+        }
+
+
+        public void SetFromKuramoto(KuramotoAffectedAgent kuramoto)
+        {
+            speed = kuramoto.speed;
+            phase = kuramoto.phase;
+            cohPhi = kuramoto.cohPhi;
+            coherenceRadius = kuramoto.coherenceRadius;
+            couplingRange = kuramoto.couplingRange;
+            noiseScl = kuramoto.noiseScl;
+            coupling = kuramoto.coupling;
+            connections = kuramoto.Connections;
+            attractionScl = kuramoto.attractionSclr;
+            played = 1;
+        }
+
+        public void SetFromKuramoto(KuramotoAffecterAgent kuramoto)
+        {
+
+
+            speed = kuramoto.speed;
+            phase = kuramoto.phase;
+            cohPhi = kuramoto.cohPhi;
+            coherenceRadius = kuramoto.coherenceRadius;
+            couplingRange = kuramoto.couplingRange;
+            noiseScl = kuramoto.noiseScl;
+            coupling = kuramoto.coupling;
+            connections = kuramoto.Connections;
+            attractionScl = kuramoto.attractionSclr;
+            played = 1;
+
+        }
+
+
+    }
 
     public struct GPUOutput
     {
@@ -186,7 +247,7 @@ public class GPUCompute : MonoBehaviour
     private void LinkData()
     {
 
-        List<SentinelManager.GPUData> sentData = new List<SentinelManager.GPUData>();
+        List<GPUData> sentData = new List<GPUData>();
         List<GPUOutput> sentDataOut = new List<GPUOutput>();
 
         for (int i = 0; i < sentinels.Length; i++)
@@ -202,7 +263,7 @@ public class GPUCompute : MonoBehaviour
         sentinelData = sentData.ToArray();
         sentinelDataOut = sentDataOut.ToArray();
 
-        List<PathogenManager.GPUData> bioData = new List<PathogenManager.GPUData>();
+        List<GPUData> bioData = new List<GPUData>();
         List<GPUOutput> bioDataOut = new List<GPUOutput>();
 
         for (int i = 0; i < pathogen.Length; i++)
@@ -227,7 +288,7 @@ public class GPUCompute : MonoBehaviour
         pathogenData = bioData.ToArray();
         pathogenDataOut = bioDataOut.ToArray();
 
-        List<PlasticManager2.GPUData> plasData = new List<PlasticManager2.GPUData>();
+        List<GPUData> plasData = new List<GPUData>();
         List<GPUOutput> plasDataOut = new List<GPUOutput>();
 
         for (int i = 0; i < plastics.Length; i++)
@@ -254,13 +315,13 @@ public class GPUCompute : MonoBehaviour
         rt.enableRandomWrite = true;
         RenderTexture.active = rt;
 
-        ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(SentinelManager.GPUData)));
+        ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUData)));
         sentinelBuffer.SetData(sentinelData);
 
-        ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(PathogenManager.GPUData)));
+        ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUData)));
         BiomeBuffer.SetData(pathogenData);
 
-        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager2.GPUData)));
+        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
         plasticBuffer.SetData(plasticData);
 
         //  Debug.Log("start");
@@ -317,13 +378,13 @@ public class GPUCompute : MonoBehaviour
             rt.enableRandomWrite = true;
             RenderTexture.active = rt;
 
-            ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(SentinelManager.GPUData)));
+            ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUData)));
             sentinelBuffer.SetData(sentinelData);
 
-            ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(PathogenManager.GPUData)));
+            ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUData)));
             BiomeBuffer.SetData(pathogenData);
 
-            ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(PlasticManager2.GPUData)));
+            ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
             plasticBuffer.SetData(plasticData);
 
             ComputeBuffer sentinelBufferOut = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUOutput)));
@@ -375,6 +436,8 @@ public class GPUCompute : MonoBehaviour
             BiomeBufferOut.Release();
             sentinelBufferOut.Release();
             plasticBufferOut.Release();
+
+            
         }
     }
 

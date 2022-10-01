@@ -42,7 +42,7 @@ public class SentinelManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; // list of the sentinel object
     [HideInInspector]
-    public GPUData[] GPUStruct; // list of sentinel struct, that will hold the data for gpu compute
+    public GPUCompute.GPUData[] GPUStruct; // list of sentinel struct, that will hold the data for gpu compute
     public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // list of the GenVel data to act as the library
@@ -63,41 +63,7 @@ public class SentinelManager : MonoBehaviour
 
 
     // struct to hold all the sentinels data potential gpu compute
-    public struct GPUData
-    {
-        public float age;
-        public float connections;
-        public int played;
-        public float speed;
-        public float phase;
-        public float cohPhi;
-        public float coherenceRadius;
-        public float couplingRange;
-        public float noiseScl;
-        public float coupling;
-        public float attractionScl;
-        public float fittness;
-        public Vector3 vel;
-        public Vector3 pos;
-
-        public void SetFromKuramoto(KuramotoAffecterAgent kuramoto)
-        {
-
-
-            speed = kuramoto.speed;
-            phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
-            coherenceRadius = kuramoto.coherenceRadius;
-            couplingRange = kuramoto.couplingRange;
-            noiseScl = kuramoto.noiseScl;
-            coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
-            attractionScl = kuramoto.attractionSclr;
-            age = 0;
-            fittness = 0;
-
-        }
-    }
+   
 
 
     // Start is called before the first frame update
@@ -106,7 +72,7 @@ public class SentinelManager : MonoBehaviour
         // create the sentiels list
         sentinels = new GameObject[nSentinels];
         // create the data struct list
-        GPUStruct = new GPUData[nSentinels];
+        GPUStruct = new GPUCompute.GPUData[nSentinels];
         // create the two libs as lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -197,7 +163,6 @@ public class SentinelManager : MonoBehaviour
 
         }
 
-        Debug.Log(GPUOutput[0].vel);
         /*
         // if lib is greater than ...
         if (GenVelLib.Count > 1000)

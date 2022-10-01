@@ -37,7 +37,7 @@ public class PathogenManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
-    public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public GPUCompute.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     public GPUCompute.GPUOutput[] GPUOutput;
 
 
@@ -59,46 +59,6 @@ public class PathogenManager : MonoBehaviour
     private float timeGate = 0;
 
     // struct to hold data maybe for gpu acceleration
-    public struct GPUData
-    {
-        public float age;
-        public float connections;
-        public int played;
-        public float speed;
-        public float phase;
-        public float cohPhi;
-        public float coherenceRadius;
-        public float couplingRange;
-        public float noiseScl;
-        public float coupling;
-        public float attractionScl;
-        public float fittness;
-        public Vector3 vel;
-        public Vector3 pos;
-
-        
-        public void SetFromKuramoto(KuramotoAffectedAgent kuramoto)
-        {
-            speed = kuramoto.speed;
-            phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
-            coherenceRadius = kuramoto.coherenceRadius;
-            couplingRange = kuramoto.couplingRange;
-            noiseScl = kuramoto.noiseScl;
-            coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
-            attractionScl = kuramoto.attractionSclr;
-            age = 0;
-            fittness = 0;
-            played = 1;
-        }
-
-        public void SetPos(Vector3 Pos)
-        {
-            pos=Pos;
-            age = 0;
-        }
-    }
     
     // Start is called before the first frame update
     void Start()
@@ -106,7 +66,7 @@ public class PathogenManager : MonoBehaviour
         // create list to hold object
         sentinels = new GameObject[nSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUData[nSentinels];
+        GPUStruct = new GPUCompute.GPUData[nSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -273,7 +233,7 @@ public class PathogenManager : MonoBehaviour
        
         if (nxtIndx != -1)
         {
-            GPUStruct[nxtIndx] = new GPUData();
+            GPUStruct[nxtIndx] = new GPUCompute.GPUData();
             sentinels[nxtIndx] = null;
 
         }

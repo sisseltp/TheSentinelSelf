@@ -40,7 +40,7 @@ public class TCellManager : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
-    public PathogenManager.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public GPUCompute.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
@@ -67,7 +67,7 @@ public class TCellManager : MonoBehaviour
         // create list to hold object
         sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new PathogenManager.GPUData[MaxSentinels];
+        GPUStruct = new GPUCompute.GPUData[MaxSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -162,10 +162,18 @@ public class TCellManager : MonoBehaviour
             }
             else
             {
+                if (kuramoto.played == 3)
+                {
+                    kuramoto.age += Time.deltaTime*10;
 
-                kuramoto.age += Time.deltaTime;
+                }
+                else
+                {
+                    kuramoto.age += Time.deltaTime;
+                }
                 kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
                 if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase-1; }
+                GPUStruct[i].played = kuramoto.played;
                 GPUStruct[i].phase = kuramoto.phase;
 
                 sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
@@ -216,7 +224,7 @@ public class TCellManager : MonoBehaviour
         RealNumSentinels -= toRemove.Count;
         
         if (nxtIndx != -1) {
-            GPUStruct[nxtIndx] = new PathogenManager.GPUData();
+            GPUStruct[nxtIndx] = new GPUCompute.GPUData();
             sentinels[nxtIndx] = null;
 
         }
@@ -314,9 +322,9 @@ public class TCellManager : MonoBehaviour
             KuramotoAffectedAgent kuramoto = TCell.GetComponent<KuramotoAffectedAgent>();
 
             // set data in the struct
-            PathogenManager.GPUData gpuStruct = new PathogenManager.GPUData();
+            GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
             gpuStruct.SetFromKuramoto(kuramoto);
-            gpuStruct.SetPos(TCell.transform.position);
+            gpuStruct.pos = TCell.transform.position;
             GPUStruct[RealNumSentinels] = gpuStruct;
         
 

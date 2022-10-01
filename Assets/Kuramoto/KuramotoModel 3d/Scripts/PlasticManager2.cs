@@ -44,7 +44,7 @@ public class PlasticManager2 : MonoBehaviour
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
-    public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public GPUCompute.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
@@ -59,44 +59,7 @@ public class PlasticManager2 : MonoBehaviour
     [SerializeField]
     private float speedScl = 3f;
 
-    public struct GPUData
-    {
-        public float age;
-        public float connections;
-        public int played;
-        public float speed;
-        public float phase;
-        public float cohPhi;
-        public float coherenceRadius;
-        public float couplingRange;
-        public float noiseScl;
-        public float coupling;
-        public float attractionScl;
-        public float fittness;
-        public Vector3 vel;
-        public Vector3 pos;
 
-
-        public void SetFromKuramoto(KuramotoPlasticAgent kuramoto)
-        {
-
-            speed = kuramoto.speed;
-            phase = kuramoto.phase;
-            coherenceRadius = kuramoto.coherenceRadius;
-            couplingRange = kuramoto.couplingRange;
-            noiseScl = kuramoto.noiseScl;
-            coupling = kuramoto.coupling;
-            attractionScl = kuramoto.attractionSclr;
-            age = 0;
-            fittness = 0;
-            played = 1;
-        }
-
-
-
-
-
-    }
 
 
     // Start is called before the first frame update
@@ -108,7 +71,7 @@ public class PlasticManager2 : MonoBehaviour
         // create list to hold object
         sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUData[MaxSentinels];
+        GPUStruct = new GPUCompute.GPUData[MaxSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -234,7 +197,7 @@ public class PlasticManager2 : MonoBehaviour
         RealNumSentinels -= toRemove.Count;
         
         if (nxtIndx != -1) {
-            GPUStruct[nxtIndx] = new GPUData();
+            GPUStruct[nxtIndx] = new GPUCompute.GPUData();
             sentinels[nxtIndx] = null;
 
         }
@@ -279,7 +242,7 @@ public class PlasticManager2 : MonoBehaviour
             ResetSentinel(RealNumSentinels - 1);
 
             // set data in the struct
-            GPUData gpuStruct = new GPUData();
+            GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
             gpuStruct.SetFromKuramoto(kuramoto);
             gpuStruct.pos = thisAgent.transform.position;
             GPUStruct[RealNumSentinels-1] = gpuStruct;
