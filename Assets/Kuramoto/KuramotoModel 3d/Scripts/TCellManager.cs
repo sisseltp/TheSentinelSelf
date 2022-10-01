@@ -41,7 +41,8 @@ public class TCellManager : MonoBehaviour
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
     public PathogenManager.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
-    
+    public GPUCompute.GPUOutput[] GPUOutput;
+
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
 
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
@@ -72,7 +73,7 @@ public class TCellManager : MonoBehaviour
         GenVelLib = new List<Genetics.GenVel>();
         antigenLib = new List<Genetics.Antigen>();
 
-
+        GPUOutput = new GPUCompute.GPUOutput[MaxSentinels];
 
         // loop over the nsentinels
         for (int i=0; i<nSentinels; i++)
@@ -98,7 +99,7 @@ public class TCellManager : MonoBehaviour
             // set data in the struct
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
-            
+            GPUOutput[i].Setup();
 
         }
         RealNumSentinels = nSentinels;
@@ -143,7 +144,7 @@ public class TCellManager : MonoBehaviour
             KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
             // if older than age 
-            if (kuramoto.dead || GPUStruct[i].age > MaxAge) {
+            if (kuramoto.dead || kuramoto.age > MaxAge) {
                 if (i > nSentinels)
                 {
 
@@ -154,30 +155,20 @@ public class TCellManager : MonoBehaviour
 
                 sentinels[i].transform.position = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
-
-                // add data to lib
-                Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
-                GenKurLib.Add(genKurm);
-                Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementTcell>().geneticMovement, kuramoto.fitness);
-                GenVelLib.Add(vels);
-
-                antigenLib.Add(sentinels[i].GetComponent<GeneticAntigenKey>().antigen);
-
                 // reset its values
                 ResetSentinel(i);
                 
-                GPUStruct[i].SetFromKuramoto(kuramoto);
 
             }
             else
             {
 
-                kuramoto.fitness = GPUStruct[i].fittness;
-                kuramoto.age = GPUStruct[i].age;
-                kuramoto.phase = GPUStruct[i].phase;
-                kuramoto.Connections =  GPUStruct[i].connections;
-                GPUStruct[i].played = kuramoto.played;
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+                kuramoto.age += Time.deltaTime;
+                kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
+                if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase-1; }
+                GPUStruct[i].phase = kuramoto.phase;
+
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].transform.position;
 
@@ -185,7 +176,7 @@ public class TCellManager : MonoBehaviour
 
           
         }
-
+/*
         // if the lib is greater than ...
         if (GenVelLib.Count > 1000)
         {
@@ -194,7 +185,7 @@ public class TCellManager : MonoBehaviour
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
 
         }
-
+        */
 
 
         int nxtIndx = -1;

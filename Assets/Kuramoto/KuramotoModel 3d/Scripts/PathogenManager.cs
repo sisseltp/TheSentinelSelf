@@ -38,6 +38,8 @@ public class PathogenManager : MonoBehaviour
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
     public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
+    public GPUCompute.GPUOutput[] GPUOutput;
+
 
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
    
@@ -108,9 +110,10 @@ public class PathogenManager : MonoBehaviour
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
+        GPUOutput = new GPUCompute.GPUOutput[nSentinels];
 
         // loop over the nsentinels
-        for(int i=0; i<10; i++)
+        for (int i=0; i<10; i++)
         {
 
             AddPathogen(i);
@@ -142,6 +145,7 @@ public class PathogenManager : MonoBehaviour
             // set data in the struct
             GPUStruct[RealNumPathogens].SetFromKuramoto(kuramoto);
             GPUStruct[RealNumPathogens].pos = sentinels[i].transform.position;
+            GPUOutput[RealNumPathogens].Setup();
 
             RealNumPathogens++;
         }
@@ -197,27 +201,26 @@ public class PathogenManager : MonoBehaviour
 
                 toRemove.Add(i);
             }
-            else  if (GPUStruct[i].age > MaxAge )
+            else  if (kuramoto.age > MaxAge )
             {
 
-                GPUStruct[i].age = 0;
                 kuramoto.age = 0;
 
                
                     
-                    DuplicatePathogen( sentinels[i],1);
+                 DuplicatePathogen( sentinels[i],1);
                     
                
             }
             else
             {
-                kuramoto.fitness = GPUStruct[i].fittness;
-                kuramoto.age = GPUStruct[i].age;
-                kuramoto.phase = GPUStruct[i].phase;
-                kuramoto.Connections = GPUStruct[i].connections;
-                kuramoto.played = GPUStruct[i].played;
-                float sinSpdScl = Mathf.Sin(Mathf.Deg2Rad * (kuramoto.phase * 360)) * speedScl;
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * sinSpdScl, sentinels[i].transform.position - sentinels[i].transform.up);
+                
+                kuramoto.age += Time.deltaTime;
+                kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
+                if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase - 1; }
+                GPUStruct[i].phase = kuramoto.phase;
+
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 

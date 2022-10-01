@@ -45,7 +45,8 @@ public class PlasticManager2 : MonoBehaviour
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
     public GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
-    
+    public GPUCompute.GPUOutput[] GPUOutput;
+
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
 
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
@@ -111,8 +112,8 @@ public class PlasticManager2 : MonoBehaviour
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
-       
 
+        GPUOutput = new GPUCompute.GPUOutput[MaxSentinels];
 
 
         // loop over the startingNumAgents
@@ -139,7 +140,9 @@ public class PlasticManager2 : MonoBehaviour
             // set data in the struct
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
-            
+
+            GPUOutput[i].Setup();
+
 
         }
         //Debug.Log(GPUStruct.Length);
@@ -165,7 +168,7 @@ public class PlasticManager2 : MonoBehaviour
             // get the kurmto
             KuramotoPlasticAgent kuramoto = sentinels[i].GetComponent<KuramotoPlasticAgent>();
             
-            if( GPUStruct[i].age > MaxAge || kuramoto.dead)
+            if(kuramoto.age > MaxAge || kuramoto.dead)
             {
                 toRemove.Add(i);
 
@@ -175,13 +178,14 @@ public class PlasticManager2 : MonoBehaviour
             else
             {
 
-                kuramoto.fitness = GPUStruct[i].fittness;
-                kuramoto.age = GPUStruct[i].age;
-                kuramoto.phase = GPUStruct[i].phase;
-               
                 
+                kuramoto.age += Time.deltaTime;
+                kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime ;
+                if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase - 1; }
+                GPUStruct[i].phase = kuramoto.phase;
 
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition( GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up);
+
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
@@ -189,6 +193,7 @@ public class PlasticManager2 : MonoBehaviour
 
           
         }
+
 
         /*
         // if the lib is greater than ...

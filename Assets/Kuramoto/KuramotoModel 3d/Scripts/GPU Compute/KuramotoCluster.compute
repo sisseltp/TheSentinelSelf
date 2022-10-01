@@ -23,6 +23,12 @@ struct Sentinel
 	float3 pos;
 };
 
+struct GPUOutput
+{
+	float3 vel;
+	float phaseAdition;
+
+};
 
 // img texture just for itterating
 RWTexture2D<float4> Result;
@@ -31,6 +37,10 @@ RWTexture2D<float4> Result;
 RWStructuredBuffer<Sentinel> sentinelData;
 RWStructuredBuffer<Sentinel> biomeData;
 RWStructuredBuffer<Sentinel> plasticData;
+
+RWStructuredBuffer<GPUOutput> sentinelDataOut;
+RWStructuredBuffer<GPUOutput> biomeDataOut;
+RWStructuredBuffer<GPUOutput> plasticDataOut;
 
 // variables for the kuramoto
 static const float PI = 3.14159265f;
@@ -90,7 +100,7 @@ void Bio2BioCOHERENCE(int id) {
 				// add the phase and get the distance between the two
 				float sigDst = AddOscilations(biomeData[b].phase);
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += (biomeData[b].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl ;
+				biomeDataOut[id].vel += (biomeData[b].pos - biomeData[id].pos) * sigDst * biomeData[id].attractionScl ;
 				// add 1 to connections
 				biomeData[id].connections += 1;
 			}
@@ -118,7 +128,7 @@ void Bio2SenCOHERENCE(int id) {
 				//add two connections
 				biomeData[id].connections += 2;
 				// add the vector between the two * the distance in cycles
-				biomeData[id].vel += (normalize(sentinelData[s].pos - biomeData[id].pos) * sigDst * sentinelData[s].attractionScl) * 2;
+				biomeDataOut[id].vel += (normalize(sentinelData[s].pos - biomeData[id].pos) * sigDst * sentinelData[s].attractionScl) * 2;
 
 
 			}
@@ -148,7 +158,7 @@ void Plas2SenCOHERENCE(int id) {
 				AddOscilations(plasticData[b].phase);
 
 				// add the vector between the two * the distance in cycles * 2
-				sentinelData[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
+				sentinelDataOut[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
 
 				// add two to the Connections
 				sentinelData[id].connections += 2.0;;
@@ -227,7 +237,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		// reset num connections
 		sentinelData[id.x].connections = 0;
 		//reset the vel
-		sentinelData[id.x].vel = float3(0, 0, 0);
+		sentinelDataOut[id.x].vel = float3(0, 0, 0);
 
 		// set the phase value
 		SetPhases(sentinelData[id.x].phase);
@@ -246,7 +256,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			sumy /= float(sentinelData[id.x].connections);
 
 			// average vel over connections
-			sentinelData[id.x].vel /= sentinelData[id.x].connections;
+			
+			sentinelDataOut[id.x].vel /= sentinelData[id.x].connections;
 			
 
 			
@@ -266,24 +277,22 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			calc = sentinelData[id.x].coupling * sentinelData[id.x].coherenceRadius * calc;
 
 			// add the speed noise and calc together and times by delta time, and add to Phase
-			sentinelData[id.x].phase += dt * (sentinelData[id.x].speed + abs(thisNoise) + calc);
+			sentinelDataOut[id.x].phaseAdition =  (sentinelData[id.x].speed + abs(thisNoise) + calc);
 			
 		}
 		else {// else no connection
 			// get the noise
 			float thisNoise = sentinelData[id.x].noiseScl * Noise(sentinelData[id.x].pos);
 			// add the speed + noise to the phase * deltatime
-			sentinelData[id.x].phase += dt * (sentinelData[id.x].speed + abs(thisNoise));
+			sentinelDataOut[id.x].phaseAdition =  (sentinelData[id.x].speed + abs(thisNoise));
 			
 		}
 	
-		// subtract its intiger to leave it as a 0-1
-		sentinelData[id.x].phase -= float(floor(sentinelData[id.x].phase));
-
-		sentinelData[id.x].vel += senVel;
+	
+		sentinelDataOut[id.x].vel = senVel;
 		// times vel by detla time and phase
-		sentinelData[id.x].vel *= dt;
-		sentinelData[id.x].vel *= sentinelData[id.x].phase;
+		
+		
 
 	}// if in biome section
 	else if (int(id.x) < int(biomeData.Length + sentinelData.Length)) {
@@ -291,7 +300,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		int indx = id.x - int(sentinelData.Length) ;
 		if (biomeData[indx].played > 0) {
 			// reset the vel
-			biomeData[indx].vel = float3(0, 0, 0);
+			biomeDataOut[indx].vel = float3(0, 0, 0);
 
 			// reset num connections
 			biomeData[indx].connections = 0;
@@ -310,8 +319,7 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 				// average the values over total num neighbors 
 				sumx /= float(biomeData[indx].connections);
 				sumy /= float(biomeData[indx].connections);
-				biomeData[indx].vel /= biomeData[indx].connections;
-
+				biomeDataOut[indx].vel /= biomeData[indx].connections;
 				// angle to x,y pos to positive x axis
 				biomeData[indx].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
 				// distance to 0
@@ -324,29 +332,17 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 				// second phase (scaler * distTo0 * lastClac)
 				calc = biomeData[indx].coupling * biomeData[indx].coherenceRadius * calc;
 				// add the speed noise and calc together and times by delta time, and add to P
-				biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise) + calc);
+				biomeDataOut[indx].phaseAdition =  (biomeData[indx].speed + abs(thisNoise) + calc);
 
 			}
 			else {
 				// else no connects just add speed + noise * delta time
 				float thisNoise = biomeData[indx].noiseScl * Noise(biomeData[indx].pos);
-				biomeData[indx].phase += dt * (biomeData[indx].speed + abs(thisNoise));
+				biomeDataOut[indx].phaseAdition =  (biomeData[indx].speed + abs(thisNoise));
 			}
 
-			if (biomeData[indx].played == 3) {
-				biomeData[indx].age += dt * 10;
-			}
-			else {
-				// add dt to the age
-				biomeData[indx].age += dt * float(biomeData[indx].played);
-			}
-			// subtract its intiger to leave it as a 0. someting
-			biomeData[indx].phase -= float(floor(biomeData[indx].phase));
-
-			//scaled by the phase to make it pulse movement
-			biomeData[indx].vel *= biomeData[indx].phase;
-			// mult by dt
-			biomeData[indx].vel *= dt;
+		
+		
 		}
 		
 	} // else if plasitcs
@@ -356,13 +352,8 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 		int indx = id.x - int(biomeData.Length) - int(sentinelData.Length);
 		if (plasticData[indx].played == 1) {
 			float thisNoise = plasticData[indx].noiseScl * Noise(plasticData[indx].pos);
-			plasticData[indx].phase += dt * (plasticData[indx].speed + abs(thisNoise));
+			plasticDataOut[indx].phaseAdition = (plasticData[indx].speed + abs(thisNoise));
 
-			// subtract its intiger to leave it as a 0. someting
-			plasticData[indx].phase -= float(floor(plasticData[indx].phase));
-
-			// reset vel
-			plasticData[indx].vel = float3(0, 0, 0);
 
 			// set min dist to a high number
 			float minDist = 1000000;
@@ -390,14 +381,11 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			//if there has been connected
 			if (closestIndx != -1) {
 				// add the velocity
-				plasticData[indx].vel = normalize(sentinelData[closestIndx].pos - plasticData[indx].pos) * plasticData[indx].attractionScl;
-				// mult by phase
-				plasticData[indx].vel *= plasticData[indx].phase;
-				// mult by dt
-				plasticData[indx].vel *= dt;
+				plasticDataOut[indx].vel = normalize(sentinelData[closestIndx].pos - plasticData[indx].pos) * plasticData[indx].attractionScl;
+				
 			}
 			else {
-				plasticData[indx].vel = float3(0, 0, 0);
+				plasticDataOut[indx].vel = float3(0, 0, 0);
 			}
 		}
 	}

@@ -43,6 +43,7 @@ public class SentinelManager : MonoBehaviour
     public GameObject[] sentinels; // list of the sentinel object
     [HideInInspector]
     public GPUData[] GPUStruct; // list of sentinel struct, that will hold the data for gpu compute
+    public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // list of the GenVel data to act as the library
 
@@ -110,8 +111,10 @@ public class SentinelManager : MonoBehaviour
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
 
+        GPUOutput = new GPUCompute.GPUOutput[nSentinels];
+
         // for n sentinels
-        for(int i=0; i<nSentinels; i++)
+        for (int i=0; i<nSentinels; i++)
         {
 
 
@@ -132,6 +135,8 @@ public class SentinelManager : MonoBehaviour
 
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
+
+            GPUOutput[i].Setup();
 
         }
 
@@ -167,7 +172,7 @@ public class SentinelManager : MonoBehaviour
             
 
             // if the agent is dead
-            if (kuramoto.dead || GPUStruct[i].age> MaxAge) {
+            if (kuramoto.dead || kuramoto.age> MaxAge) {
 
                 
                 // call the reset function
@@ -178,33 +183,34 @@ public class SentinelManager : MonoBehaviour
             }
             else
             {
+                kuramoto.age += Time.deltaTime;
+                kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
+                if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase - 1; }
+                GPUStruct[i].phase = kuramoto.phase;
 
-                kuramoto.fitness = GPUStruct[i].fittness;
-                kuramoto.age = GPUStruct[i].age;
-                kuramoto.phase = GPUStruct[i].phase;
-                kuramoto.Connections = GPUStruct[i].connections;
-                kuramoto.played = GPUStruct[i].played;
-               
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUStruct[i].vel * speedScl, sentinels[i].transform.position + sentinels[i].transform.up); 
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+
+
                 GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
-                GPUStruct[i].couplingRange = kuramoto.couplingRange;
             }
 
         }
 
-
+        Debug.Log(GPUOutput[0].vel);
+        /*
         // if lib is greater than ...
         if (GenVelLib.Count > 1000)
         {
             // reorder on fitness
-            Debug.Log("Resize");
+            
             // negative selection
             GenVelLib = Genetics.NegativeSelection(GenVelLib);
             GenKurLib = Genetics.NegativeSelection(GenKurLib);
             
 
         }
+        */
     }
 
     // resets the sentinel
