@@ -104,7 +104,7 @@ public class SoundFXManager : MonoBehaviour
                 }
 
                 // Stop approach sources after 5 seconds
-                Invoke("StopApproachSounds", 5.0f);
+                Invoke("StopApproachSounds", 2.0f);
                 break;
             
             case "ExitBody":

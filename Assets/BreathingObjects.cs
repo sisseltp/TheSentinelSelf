@@ -10,6 +10,10 @@ public class BreathingObjects : MonoBehaviour
     [SerializeField]
     private string id;
 
+    [Space(10)]
+    [Header("Debug")]
+    public float phase;
+
     private KuramotoAffecterAgent phaseFocus;
 
     private float phaseSmoothed = 0;
@@ -17,14 +21,11 @@ public class BreathingObjects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        
         if (phaseFocus != null) {
-            
-
+            phase = Mathf.Sin(phaseFocus.phase * Mathf.PI);
             foreach (Renderer breath in BreathingMaterials)
             {
-                breath.material.SetFloat(id, phaseFocus.phase);
+                breath.material.SetFloat(id, phase);
             }
         }
     }
