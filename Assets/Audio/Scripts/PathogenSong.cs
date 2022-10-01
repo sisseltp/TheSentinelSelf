@@ -3,10 +3,25 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public enum KuramotoSongBehavior { Swelling, Shouting }    
+public enum KuramotoSongBehavior { Swelling, Shouting }
+
+public enum SongScale {Scriabin, Sikah, WholeTone, Lydian, Bartok, Major};
+
+
+
 
 public class PathogenSong : MonoBehaviour
 {
+    public static Dictionary<SongScale, float[]> SongScaleRatios = new Dictionary<SongScale, float[]>
+    {
+    {SongScale.Scriabin, new [] {  0.18728838461084f,  0.21022410381474f,  0.25000000000139f,  0.26486577359123f,  0.31498026247517f,  0.37457676922064f,  0.42044820762831f,  0.50000000000139f,  0.52973154718099f,  0.6299605249486f,  0.74915353843921f,  0.8408964152543f,  1.0f,  1.0594630943591f,  }}, 
+    {SongScale.Sikah, new [] {  0.09364419230568f,  0.11798428908622f,  0.14030775603977f,  0.16685498177245f,  0.21022410381474f,  0.25000000000139f,  0.29730177875212f,  0.37457676922064f,  0.47193715634226f,  0.56123102415598f,  0.6674199270861f,  0.8408964152543f,  1.0f,  1.1892071150019f,  }}, 
+    {SongScale.WholeTone, new [] {  0.25000000000139f,  0.28061551207877f,  0.31498026247517f,  0.35355339059474f,  0.39685026299352f,  0.44544935907161f,  0.50000000000139f,  0.56123102415598f,  0.6299605249486f,  0.70710678118753f,  0.79370052598483f,  0.89089871814075f,  1.0f,  1.1224620483089f,  }}, 
+    {SongScale.Lydian, new [] {  0.31498026247517f,  0.35355339059474f,  0.37457676922064f,  0.42044820762831f,  0.47193715634226f,  0.50000000000139f,  0.56123102415598f,  0.6299605249486f,  0.70710678118753f,  0.74915353843921f,  0.8408964152543f,  0.94387431268191f,  1.0f,  1.1224620483089f,  }}, 
+    {SongScale.Bartok, new [] {  0.31498026247517f,  0.33370996354397f,  0.37457676922064f,  0.39685026299352f,  0.44544935907161f,  0.50000000000139f,  0.56123102415598f,  0.6299605249486f,  0.6674199270861f,  0.74915353843921f,  0.79370052598483f,  0.89089871814075f,  1.0f,  1.1224620483089f,  }}, 
+    {SongScale.Major, new   [] {  0.31498026247517f,  0.33370996354397f,  0.37457676922064f,  0.42044820762831f,  0.47193715634226f,  0.50000000000139f,  0.56123102415598f,  0.6299605249486f,  0.6674199270861f,  0.74915353843921f,  0.8408964152543f,  0.94387431268191f,  1.0f,  1.1224620483089f,  }}, 
+    };
+
     [Tooltip("Kuramoto behavior swelling / shouting")]
     public KuramotoSongBehavior behavior = KuramotoSongBehavior.Shouting;
 
@@ -14,37 +29,18 @@ public class PathogenSong : MonoBehaviour
     [SerializeField]
     private float shoutAtKuramotoPhase = 0.0f;
 
-    [Tooltip("Possible pitch multipliers, chosen randomly on Awake")]
+    [Tooltip("Scale across which voices are distributed")]
+    public SongScale scale = SongScale.Lydian;
+
+    [Tooltip("Pitch multipliers based on Scale, one of these is chosen randomly on Awake")]
     [SerializeField]    
-    private float[] pitchMultipliers = new float[] { 0.6299605249486f, 0.6674199270861f, 0.74915353843921f, 0.8408964152543f, 0.94387431268191f, 1.0f, 1.1224620483089f, 1.2599210498937f };
+    private float[] pitchMultipliers;
     
     [Tooltip("Chance of disabling AudioSource on Awake (useful if there are very many Pathogens singing)")]
     [SerializeField]
     private float percentDisabled = 0.5f;
 
-    /*
 
-    Scale Ratios..
-
-    Scriabin:
-    [ 1.0, 1.0594630943591, 1.2599210498937, 1.4983070768743, 1.6817928305039 ]
-
-    Sikah:
-    [ 1.0, 1.0905077326649, 1.2240535433037, 1.3739536474563, 1.4983070768743, 1.6339154532379, 1.8340080864049 ]
-
-    Whole Tone:
-    [ 1.0, 1.1224620483089, 1.2599210498937, 1.4142135623711, 1.5874010519653, 1.7817974362766 ]
-
-    Lydian:
-    [ 1.0, 1.1224620483089, 1.2599210498937, 1.4142135623711, 1.4983070768743, 1.6817928305039, 1.8877486253586 ]
-
-    Bartok:
-    [ 1.0, 1.1224620483089, 1.2599210498937, 1.3348398541685, 1.4983070768743, 1.5874010519653, 1.7817974362766 ]
-    
-    Major:
-     0.6299605249486, 0.6674199270861, 0.74915353843921, 0.8408964152543, 0.94387431268191, 1.0, 1.1224620483089, 1.2599210498937, 1.3348398541685, 1.4983070768743, 1.6817928305039, 1.8877486253586 ]
-
-    */
 
     [Header("Debugging Attributes (don't edit these, just look!)")]
 
@@ -70,6 +66,10 @@ public class PathogenSong : MonoBehaviour
     void Awake() {
         audioSource = GetComponent<AudioSource>();
         maxVolume = audioSource.volume;
+
+        // Set pitchMultipliers based on scale.
+        pitchMultipliers = SongScaleRatios[scale];
+
         if(Random.value <= percentDisabled) {
             // Disable this singer.
             audioSource.enabled = false;

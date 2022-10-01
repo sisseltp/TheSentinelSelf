@@ -188,7 +188,7 @@ MonoBehaviour:
   - 1
   - 1.122462
   - 1.2599211
-  percentDisabled: 0.8
+  percentDisabled: 0.6
   pitchMultiplier: 1
   maxVolume: 1
   currentVolume: 1
@@ -211,7 +211,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 256
-  DopplerLevel: 0.71
+  DopplerLevel: 1
   MinDistance: 0.1
   MaxDistance: 70
   Pan2D: 0
@@ -223,7 +223,7 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.0009999999
+      time: 0.09645517
       value: 1
       inSlope: -1.8572983
       outSlope: -1.8572983
@@ -232,8 +232,8 @@ AudioSource:
       inWeight: 0
       outWeight: 0.1658325
     - serializedVersion: 3
-      time: 0.12912157
-      value: 0.45986795
+      time: 0.251848
+      value: 0.5806031
       inSlope: -3.5587993
       outSlope: -3.5587993
       tangentMode: 0
@@ -241,14 +241,14 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.69704026
     - serializedVersion: 3
-      time: 0.264363
-      value: 0.20870247
-      inSlope: -0.91715264
-      outSlope: -0.91715264
+      time: 0.5825469
+      value: 0.121513754
+      inSlope: -0.7732373
+      outSlope: -0.7732373
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.33333334
+      outWeight: 0.54268134
     - serializedVersion: 3
       time: 1
       value: 0
