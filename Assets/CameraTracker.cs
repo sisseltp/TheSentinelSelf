@@ -200,6 +200,7 @@ public class CameraTracker : MonoBehaviour
     {        
         if (collision.transform.tag == "Body") { // Camera is entering the body, into the inner world.
             soundFx.Play("EnterBody");
+            soundFx.Stop("VoiceOver");
 
             FindSceneTracked("Player");
 

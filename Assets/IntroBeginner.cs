@@ -112,6 +112,9 @@ public class IntroBeginner : MonoBehaviour
 
         soundFx.Play("ExitBody");
 
+        // TODO: Maybe nicer to delay this or fade in?
+        soundFx.Play("VoiceOver");
+
         if (!camTrack.Introing)
         {
             camTrack.ReturnToOrigin();
