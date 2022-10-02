@@ -75,7 +75,6 @@ public class PlasticManager : MonoBehaviour
 
             speed = kuramoto.speed;
             phase = kuramoto.phase;
-            coherenceRadius = kuramoto.coherenceRadius;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;

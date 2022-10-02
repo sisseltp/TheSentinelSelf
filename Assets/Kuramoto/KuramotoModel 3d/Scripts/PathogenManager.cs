@@ -193,8 +193,14 @@ public class PathogenManager : MonoBehaviour
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
             }
+            Renderer rendr = sentinels[i].GetComponent<Renderer>();
+            if (rendr.isVisible)
+            {
+                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
+                //rendr.material.color = Color.Lerp(col0, col1, phase);
+                rendr.material.SetFloat("Phase", kuramoto.phase);
+            }
 
-          
         }
 
         /*

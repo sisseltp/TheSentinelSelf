@@ -79,9 +79,6 @@ public class TCellManager : MonoBehaviour
         for (int i=0; i<nSentinels; i++)
         {
 
-            
-
-
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
 
             int randindx = UnityEngine.Random.Range(0, tCell.Length);
@@ -184,7 +181,13 @@ public class TCellManager : MonoBehaviour
 
             }
 
-          
+            Renderer rendr = sentinels[i].GetComponent<Renderer>();
+            if (rendr.isVisible)
+            {
+                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
+                //rendr.material.color = Color.Lerp(col0, col1, phase);
+                rendr.material.SetFloat("Phase", kuramoto.phase);
+            }
         }
 /*
         // if the lib is greater than ...
@@ -326,7 +329,7 @@ public class TCellManager : MonoBehaviour
             // add the object to the list
             sentinels[RealNumSentinels-1] = TCell;
             KuramotoAffectedAgent kuramoto = TCell.GetComponent<KuramotoAffectedAgent>();
-
+            TCell.GetComponent<GeneticAntigenKey>().Reset();
             // set data in the struct
             GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
             gpuStruct.SetFromKuramoto(kuramoto);

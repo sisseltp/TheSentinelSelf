@@ -59,6 +59,12 @@ public class PlasticManager2 : MonoBehaviour
     [SerializeField]
     private float speedScl = 3f;
 
+       [Tooltip("colour 1 to lerp between")]
+    [SerializeField]
+    private Color col0;// phase col1
+    [Tooltip("colour 2 to lerp between")]
+    [SerializeField]
+    private Color col1; // phase col2
 
 
 
@@ -154,7 +160,14 @@ public class PlasticManager2 : MonoBehaviour
 
             }
 
-          
+            Renderer rendr = sentinels[i].GetComponent<Renderer>();
+            if (rendr.isVisible)
+            {
+                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
+                //rendr.material.color = Color.Lerp(col0, col1, phase);
+                rendr.material.SetFloat("Phase", kuramoto.phase);
+            }
+
         }
 
 

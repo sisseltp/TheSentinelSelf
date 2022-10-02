@@ -60,7 +60,6 @@ public class GPUCompute : MonoBehaviour
 
             speed = kuramoto.speed;
             phase = kuramoto.phase;
-            coherenceRadius = kuramoto.coherenceRadius;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
@@ -73,12 +72,9 @@ public class GPUCompute : MonoBehaviour
         {
             speed = kuramoto.speed;
             phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
-            coherenceRadius = kuramoto.coherenceRadius;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
             attractionScl = kuramoto.attractionSclr;
             played = 1;
         }
@@ -89,12 +85,9 @@ public class GPUCompute : MonoBehaviour
 
             speed = kuramoto.speed;
             phase = kuramoto.phase;
-            cohPhi = kuramoto.cohPhi;
-            coherenceRadius = kuramoto.coherenceRadius;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
-            connections = kuramoto.Connections;
             attractionScl = kuramoto.attractionSclr;
             played = 1;
 
@@ -430,7 +423,7 @@ public class GPUCompute : MonoBehaviour
 
             AsncySetData();
 
-            BiomeBuffer.Release();
+            BiomeBuffer.Release(); ;
             sentinelBuffer.Release();
             plasticBuffer.Release();
             BiomeBufferOut.Release();

@@ -161,6 +161,13 @@ public class SentinelManager : MonoBehaviour
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
             }
 
+            Renderer rendr = sentinels[i].GetComponentInChildren<Renderer>();
+            if (rendr.isVisible)
+            {
+                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
+                //rendr.material.color = Color.Lerp(col0, col1, phase);
+                rendr.material.SetFloat("Phase", kuramoto.phase);
+            }
         }
 
         /*
@@ -181,23 +188,24 @@ public class SentinelManager : MonoBehaviour
     // resets the sentinel
     public void ResetSentinel(int i, bool genOn= false)
     {
+
         // get the sentinel
         GameObject thisSentinel = sentinels[i];
 
-       
+        
 
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
 
         thisSentinel.GetComponent<Fosilising>().enabled = false;
-        Debug.Log("reset sentinel");
         thisSentinel.SetActive(true);
 
         if (!genOn)
         {
             // reset bothe genetic values to random
             KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            Debug.Log(kuramoto.dead);
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
             GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();

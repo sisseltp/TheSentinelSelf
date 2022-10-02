@@ -141,7 +141,6 @@ public class GeneticMovementSentinel : MonoBehaviour
         }else if (collision.gameObject.tag == "Terrain" && rb.useGravity)
         {
             GetComponent<Fosilising>().enabled = true;
-            Debug.Log("fosil on hit terrain");
         }
     }
     private void OnTriggerEnter(Collider collision)

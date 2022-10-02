@@ -280,7 +280,7 @@ public class GeneticMovementTcell : MonoBehaviour
 
         keyBuffer.GetData(keys);
 
-        keyBuffer.Dispose();
+        keyBuffer.Release();
 
         return keys;
     }

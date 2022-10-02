@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class KuramotoPlasticAgent : MonoBehaviour
 {
-    private Renderer rendr;
-    [Tooltip("colour 1 to lerp between")]
-    [SerializeField]
-    private Color col0;// phase col1
-    [Tooltip("colour 2 to lerp between")]
-    [SerializeField]
-    private Color col1; // phase col2
-
 
 
     [Header("Debugging Atrributes (just for looking)")]
@@ -42,22 +34,6 @@ public class KuramotoPlasticAgent : MonoBehaviour
 
         age = 0;
         dead = false;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        rendr = GetComponentInChildren<Renderer>();
-        
-        Setup(new Vector2(0.01f, 0.1f), new Vector2(20, 30), new Vector2(50, 60), new Vector2(5, 6), new Vector2(4, 20));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-        rendr.material.color = Color.Lerp(col0, col1, phase);
-
     }
 
 }
