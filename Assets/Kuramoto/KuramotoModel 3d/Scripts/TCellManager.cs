@@ -93,6 +93,8 @@ public class TCellManager : MonoBehaviour
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
+            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
+
             // add the object to the list
             sentinels[i] = thisSentinel;
 
@@ -100,6 +102,7 @@ public class TCellManager : MonoBehaviour
             GPUStruct[i].SetFromKuramoto(kuramoto);
             GPUStruct[i].pos = sentinels[i].transform.position;
             GPUOutput[i].Setup();
+
 
         }
         RealNumSentinels = nSentinels;

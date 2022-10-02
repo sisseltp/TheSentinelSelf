@@ -99,6 +99,8 @@ public class PathogenManager : MonoBehaviour
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
 
+            thisSentinel.GetComponentInChildren<GeneticAntigenKey>().Reset();
+
             // add the object to the list
             sentinels[RealNumPathogens] = thisSentinel;
 
@@ -108,6 +110,7 @@ public class PathogenManager : MonoBehaviour
             GPUOutput[RealNumPathogens].Setup();
 
             RealNumPathogens++;
+
         }
     }
 
@@ -132,6 +135,13 @@ public class PathogenManager : MonoBehaviour
                 GPUStruct[RealNumPathogens].pos = sentinels[RealNumPathogens].transform.position;
 
                 RealNumPathogens++;
+
+
+                thisSentinel.GetComponentInChildren<GeneticAntigenKey>().antigen = new Genetics.Antigen();
+
+                thisSentinel.GetComponentInChildren<GeneticAntigenKey>().antigen.Key = pathogen.GetComponentInChildren<GeneticAntigenKey>().antigen.Key;
+
+
             }
         }
     }
