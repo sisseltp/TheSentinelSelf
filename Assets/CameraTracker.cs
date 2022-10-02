@@ -21,7 +21,7 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float distVariation;
     
-    [Range(0f, 10f)]
+    [Range(0f, 20f)]
     [SerializeField]
     private float power;
     
@@ -50,6 +50,8 @@ public class CameraTracker : MonoBehaviour
 
     public float restTimer = 0;
 
+    [SerializeField]
+    private bool normalized = true;
 
     [Space(10)]
     [Header("Debugging")]
@@ -77,6 +79,7 @@ public class CameraTracker : MonoBehaviour
     private SoundFXManager soundFx;
 
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -100,6 +103,10 @@ public class CameraTracker : MonoBehaviour
     {
         Vector3 dif = tracked.position - transform.position;
 
+        if (normalized)
+        {
+            dif = Vector3.Normalize(dif);
+        }
         lookPos += (look.position - lookPos) * 0.2f;
     
         Vector3 lookDif = lookPos - transform.position;

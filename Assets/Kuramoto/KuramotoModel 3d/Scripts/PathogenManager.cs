@@ -166,9 +166,7 @@ public class PathogenManager : MonoBehaviour
 
                 kuramoto.age = 0;
 
-               
-                    
-                 DuplicatePathogen( sentinels[i],1);
+                DuplicatePathogen( sentinels[i],1);
                     
                
             }
@@ -261,6 +259,8 @@ public class PathogenManager : MonoBehaviour
 
             GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
+
+
 
         }
         else if (GenKurLib.Count < 500)
