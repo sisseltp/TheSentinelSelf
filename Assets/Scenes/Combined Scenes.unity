@@ -13723,13 +13723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98860665e358f4c198c6984de0789e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breathingAudioSources:
-  - {fileID: 1658200037}
-  - {fileID: 696373506}
-  - {fileID: 307490657}
-  - {fileID: 380812768}
-  pitchRandomization: 0.131
-  breathingScript: {fileID: 6169456976460453343}
+  breathingAudioSources: []
+  pitchRandomization: 0
+  breathingScript: {fileID: 0}
 --- !u!23 &409529905 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 1618403242009636519, guid: 9530cfc21a309da40bf613d585ebc47b, type: 3}
@@ -18566,7 +18562,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136528580}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 436817d5cccaaba5aabd947005d75456, type: 3}
   m_Name: 
@@ -18578,8 +18574,8 @@ MonoBehaviour:
   - {fileID: 1697717913}
   exitBodyAudioSources:
   - {fileID: 1431152003}
-  voiceoverClipsPath: wavs/voice/narrative
-  voiceoverSource: {fileID: 123773193}
+  voiceoverClipsPath: 
+  voiceoverSource: {fileID: 366966483}
   voiceoverPlaying: 0
   currentVoiceoverClip: -1
   voiceoverClips: []
@@ -28835,17 +28831,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
---- !u!114 &6169456976460453343 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6169456976549353379, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
-  m_PrefabInstance: {fileID: 6169456976460453342}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1136528580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8e1ff8a676283a458efb98bb38ab1d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6203880192402659412
 PrefabInstance:
   m_ObjectHideFlags: 0

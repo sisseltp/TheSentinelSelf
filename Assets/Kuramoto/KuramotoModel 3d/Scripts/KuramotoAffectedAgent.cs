@@ -89,8 +89,6 @@ public class KuramotoAffectedAgent : MonoBehaviour
     {
        
 
-        // set the material to lerp between the the 2 cols by the phase
-        //rendr.material.color = Color.Lerp(col0, col1, phase);
         rendr.material.SetFloat("Phase", phase);
      
 

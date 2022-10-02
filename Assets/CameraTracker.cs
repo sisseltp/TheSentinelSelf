@@ -145,7 +145,7 @@ public class CameraTracker : MonoBehaviour
             {
                 if (hit.transform.tag == "Terrain")
                 {
-                    vel += Vector3.up * power *3;
+                    vel += Vector3.up * Vector3.Magnitude(rb.velocity);
                 }
             }
         }

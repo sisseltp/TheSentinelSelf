@@ -256,10 +256,10 @@ public class PathogenManager : MonoBehaviour
         if (!genOn)
         {
             // reset bothe genetic values to random
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
-            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
 
         }

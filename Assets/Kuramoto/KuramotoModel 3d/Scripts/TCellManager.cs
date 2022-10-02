@@ -153,7 +153,6 @@ public class TCellManager : MonoBehaviour
                     continue;
                 }
 
-                sentinels[i].transform.position = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
                 // reset its values
                 ResetSentinel(i);
@@ -242,14 +241,18 @@ public class TCellManager : MonoBehaviour
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
         thisSentinel.transform.position = pos;
+
         if (!genOn)
         {
             // reset bothe genetic values to random
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
-            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
+            GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
             genVel.Reset();
+
+            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
+
         }
         else if (GenKurLib.Count < 500)
         {
