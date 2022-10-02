@@ -18562,7 +18562,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1136528580}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 436817d5cccaaba5aabd947005d75456, type: 3}
   m_Name: 
@@ -18574,8 +18574,8 @@ MonoBehaviour:
   - {fileID: 1697717913}
   exitBodyAudioSources:
   - {fileID: 1431152003}
-  voiceoverClipsPath: 
-  voiceoverSource: {fileID: 366966483}
+  voiceoverClipsPath: wavs/voice/narrative
+  voiceoverSource: {fileID: 123773193}
   voiceoverPlaying: 0
   currentVoiceoverClip: -1
   voiceoverClips: []
