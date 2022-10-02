@@ -175,18 +175,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9090937596946319456, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3311a8de702bc9569b2f9353895a24bb, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3301fae85a80bd054b91e30a2e4b25b1, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.3
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 256
   DopplerLevel: 1.71
-  MinDistance: 20
-  MaxDistance: 70
+  MinDistance: 10
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -196,31 +196,49 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.2857143
+      time: 0.1
       value: 1
-      inSlope: -3.5014045
-      outSlope: -3.5014045
+      inSlope: -10.0039835
+      outSlope: -10.0039835
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.42181617
-      value: 0.34284973
-      inSlope: -1.6924335
-      outSlope: -1.6924335
+      time: 0.2
+      value: 0.5
+      inSlope: -2.5009959
+      outSlope: -2.5009959
       tangentMode: 0
       weightedMode: 0
-      inWeight: 1
-      outWeight: 0.2565792
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
-      time: 0.95669556
-      value: 0
-      inSlope: -0.1159441
-      outSlope: -0.1159441
+      time: 0.4
+      value: 0.21923828
+      inSlope: -0.62524897
+      outSlope: -0.62524897
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.37265038
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.8
+      value: 0.048080444
+      inSlope: -0.15631224
+      outSlope: -0.15631224
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.10003988
+      outSlope: -0.10003988
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -282,9 +300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078c843a2d0b821f4b6ccf16f6379e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behavior: 0
+  behavior: 1
   shoutAtKuramotoPhase: 0
-  scale: 4
+  scale: 0
   pitchMultipliers:
   - 0.62996054
   - 0.6674199
@@ -294,7 +312,7 @@ MonoBehaviour:
   - 1
   - 1.122462
   - 1.2599211
-  percentDisabled: 0.8
+  percentDisabled: 0.6
   pitchMultiplier: 1
   maxVolume: 1
   currentVolume: 1

@@ -86,9 +86,9 @@ public class SoundFXManager : MonoBehaviour
                 voiceoverPlaying = true;
                 break;
             case "ApproachBody":
-                // In case the exit sources are playing...
+                // In case the exit sources are already playing...
                 foreach(AudioSource src in exitBodyAudioSources) {
-                    src.Play();
+                    src.Stop();
                 }
                 // Play approach sources...
                 foreach(AudioSource src in approachBodyAudioSources) {
