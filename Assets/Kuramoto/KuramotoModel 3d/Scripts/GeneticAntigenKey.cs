@@ -19,22 +19,26 @@ public class GeneticAntigenKey : MonoBehaviour
     [SerializeField]
     private float fadeTimeVarience = 4;
 
+    public int[] key;
     // Start is called before the first frame update
     void Start()
     {
         // sets it to a new vec3 list for vels
         antigen = new Genetics.Antigen(keyLength);
         origin = transform.position;
+        key = antigen.Key;
+
     }
-    
-   
+
+
     // reset randomizes the list of vels
     public void Reset()
     {
-        
+        origin = transform.position;
+
         // sets it to a new vec3 list for vels
         antigen = new Genetics.Antigen(keyLength);
-
+        key = antigen.Key;
     }
 
     public void TimeOut()
