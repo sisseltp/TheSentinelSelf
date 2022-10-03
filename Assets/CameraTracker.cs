@@ -107,6 +107,7 @@ public class CameraTracker : MonoBehaviour
         {
             dif = Vector3.Normalize(dif);
         }
+
         lookPos += (look.position - lookPos) * 0.2f;
     
         Vector3 lookDif = lookPos - transform.position;
@@ -148,11 +149,11 @@ public class CameraTracker : MonoBehaviour
             Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
 
             RaycastHit hit;
-            if (Physics.Raycast(forward, out hit, 20))
+            if (Physics.SphereCast(forward,3, out hit, 20))
             {
                 if (hit.transform.tag == "Terrain")
                 {
-                    vel += Vector3.up * Vector3.Magnitude(rb.velocity);
+                    vel += Vector3.up * (Vector3.Magnitude(rb.velocity)/3);
                 }
             }
         }

@@ -205,7 +205,6 @@ public class SentinelManager : MonoBehaviour
         {
             // reset bothe genetic values to random
             KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
-            Debug.Log(kuramoto.dead);
             kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
 
             GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();

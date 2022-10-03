@@ -186,19 +186,8 @@ public class GeneticMovementSentinel : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10 && !targeting)
         {
-            int indx = 0;
-            int length = 0;
 
-            for (int i = 0; i < manager.pathogenManagers.Length; i++)
-            {
-                int numpathogens = manager.pathogenManagers[i].RealNumPathogens;
-
-                if (numpathogens > length)
-                {
-                    length = numpathogens;
-                    indx = i;
-                }
-            }
+            int indx = Random.Range(0, manager.PathogenEmitters.Length);
 
             targeting = true;
 
