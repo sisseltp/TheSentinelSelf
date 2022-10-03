@@ -18821,36 +18821,6 @@ MonoBehaviour:
   rndr: {fileID: 1218618672}
   growingObjs:
   - {fileID: 1831704468}
---- !u!114 &1144778777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1144778775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2223ba3785f562a078938e125fba5207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateStatsEvery: 3
-  seekingPathogens: 0
-  carryingToLymphNode: 0
-  fossilized: 0
-  totalApcs: 0
-  totalDigestedAntigens: 0
-  totalDigestedPlastics: 0
-  totalPlastics: 0
-  naiveTcells: 0
-  imprintedTcells: 0
-  confusedTcells: 0
-  totalTcells: 0
-  totalPathogens: 0
-  infection: 0
-  totalAgents: 0
-  simulationRunningHours: 0
-  simulationRunningMinutes: 0
-  simulationRunningSeconds: 0
 --- !u!4 &1144778778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3850774878344472471, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
@@ -23373,7 +23343,7 @@ GameObject:
   - component: {fileID: 1537432214}
   - component: {fileID: 1537432213}
   m_Layer: 0
-  m_Name: Watchdog
+  m_Name: Stats
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23386,17 +23356,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537432212}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40378f3f782440398957c7a4d86df780, type: 3}
+  m_Script: {fileID: 11500000, guid: 2223ba3785f562a078938e125fba5207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsThreshold: 15
-  minutesUnderThreshold: 10
-  behavior: 0
-  currentFps: 0
-  timerRunning: 0
-  timerTime: 0
+  updateStatsEvery: 5
+  seekingPathogens: 0
+  carryingToLymphNode: 0
+  fossilized: 0
+  totalApcs: 0
+  totalDigestedAntigens: 0
+  totalDigestedPlastics: 0
+  totalPlastics: 0
+  naiveTcells: 0
+  imprintedTcells: 0
+  confusedTcells: 0
+  totalTcells: 0
+  totalPathogens: 0
+  infection: 0
+  totalAgents: 0
+  simulationRunningHours: 0
+  simulationRunningMinutes: 0
+  simulationRunningSeconds: 0
 --- !u!4 &1537432214
 Transform:
   m_ObjectHideFlags: 0

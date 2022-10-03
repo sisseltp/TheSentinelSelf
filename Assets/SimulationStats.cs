@@ -1,16 +1,39 @@
-    using System.Collections;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+/*
+    RestartScene - hard reboot of the current scene.
+
+    CleanupSimulation - not yet implemented
+        the idea is to provide a softer option over a hard reboot
+        clean up any possible memory leaks and reduces the current complexity
+        of the simulation
+*/
+public enum SafetyBehavior {RestartScene, CleanupSimulation};
 
 public class SimulationStats : MonoBehaviour
 {
-    [Header("Simulation Status")]
 
     [Tooltip("How often to update the status info (in seconds)")]
     public float updateStatsEvery = 5.0f;
 
     [Space(10)]
-    [Header("Antigen Presenting Cells (APC)")]
+    public float currentFps = 1000.0f;
+ 
+    [Tooltip("Ratio Pathogens to Tcells -- pathogens / (Tcells + pathogens)")]    
+    public float infection = 0.0f;
+
+    [Tooltip("Total agents")]    
+    public int totalAgents = 0;
+
+    public float simulationRunningHours = 0.0f;
+    public float simulationRunningMinutes = 0.0f;
+    public float simulationRunningSeconds = 0.0f;
+
+
+    [Space(10)]
+    [Header("Agents")]
 
     [Tooltip("APCs seeking pathogens")]    
     public int seekingPathogens = 0;
@@ -37,10 +60,7 @@ public class SimulationStats : MonoBehaviour
     [Tooltip("Number of microplastics currently in the simulation")]    
     public int totalPlastics = 0;
 
-
-
-    [Space(10)]
-    [Header("Tcell / Pathogens")]
+    [Space(5)]
 
     [Tooltip("Number of naive Tcells")]    
     public int naiveTcells = 0;
@@ -59,25 +79,123 @@ public class SimulationStats : MonoBehaviour
     public int totalPathogens = 0;
 
 
+    [Space(5)]
+
+
+    [Header("Watchdog Settings")]
+
+    [Tooltip("FPS threshold below which watchdog kicks in")]
+    [Range(5.0f, 40.0f)]
+    public float fpsThreshold = 15.0f;
+
+    [Tooltip("Minutes below fps threshold when watchdog activates")]
+    [Range(0.1f, 30.0f)]
+    public float minutesUnderThreshold = 10.0f;
+
+    public SafetyBehavior behavior = SafetyBehavior.RestartScene;
+
     [Space(10)]
-    [Header("General")]
+    [Header("Debug")]
+    private float lastFps = 1000.0f;
+    
+    private float timeThreshold; // in seconds, calculated on start
 
-    [Tooltip("Ratio Pathogens to Tcells -- pathogens / (Tcells + pathogens)")]    
-    public float infection = 0.0f;
+    [SerializeField]
+    private bool timerRunning = false;
 
-    [Tooltip("Total agents")]    
-    public int totalAgents = 0;
+    [SerializeField]
+    private float timerTime = 0.0f;
 
-    public float simulationRunningHours = 0.0f;
-    public float simulationRunningMinutes = 0.0f;
-    public float simulationRunningSeconds = 0.0f;
-
-
+    private float calculateEvery = 1.0f; // in seconds, used to get an avg fps
+    private int framesCount = 0;
+    private float framesTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Init FPS & Watchdog parameers
+        currentFps = 1000f;
+        lastFps = 1000f;
+        timeThreshold = minutesUnderThreshold * 60.0f;
+
+        // Run stats calculation as a coroutine that updates every so many seconds..
         StartCoroutine(checkWorld(updateStatsEvery));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        bool triggerWatchdog = false;
+        // Calculate FPS & check watchdog conditions...
+        timerTime += Time.unscaledDeltaTime;
+        framesTime += Time.unscaledDeltaTime;
+        framesCount++;
+
+        // Check watchdog conditions...
+
+        // FPS:
+        if(timerRunning && ( timerTime >= timeThreshold )) {
+            timerRunning = false;
+            timerTime = 0.0f;
+            lastFps = 1000.0f;
+            triggerWatchdog = true;
+
+        }
+
+        // Run Watchdog behavior if triggered.
+        if(triggerWatchdog) {
+            switch(behavior) {
+                case SafetyBehavior.RestartScene:
+                    Restart();
+                    break;
+                case SafetyBehavior.CleanupSimulation:
+                    Cleanup();
+                    break;
+                default:
+                    Debug.Assert(false, "Unknown Watchdog behavior: " + behavior);
+                    break;
+            }
+        }
+
+
+
+        if(framesTime >= calculateEvery) {
+
+
+            // Calculate avg fps
+            lastFps = currentFps;
+            currentFps = framesCount / framesTime;
+            framesCount = 0;
+            framesTime -= calculateEvery;
+
+
+
+            if(currentFps <= fpsThreshold) {
+                if(lastFps > fpsThreshold) {
+                    // Start timer...
+                    timerRunning = true;
+                    timerTime = 0.0f;
+                }
+            } else {
+                if(lastFps <= fpsThreshold) {
+                    timerRunning = false;
+                    timerTime = 0.0f;
+                }
+            }
+        }     
+    }
+
+    public void Restart() {
+        Debug.Log("REBOOT THE SCENE!");
+            
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Cleanup() {
+        Debug.Log("CLEAN UP THE SCENE!");
+        // TODO: Not implemented
+        //       clean up scene resources
+        //       & prune unnecessary game objects
     }
 
     IEnumerator checkWorld(float timetowait)
@@ -150,6 +268,6 @@ public class SimulationStats : MonoBehaviour
 
 
     }
-    
+
 
 }
