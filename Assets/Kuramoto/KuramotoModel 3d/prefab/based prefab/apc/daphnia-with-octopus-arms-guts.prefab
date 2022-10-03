@@ -256,6 +256,7 @@ MonoBehaviour:
   rootBone: {fileID: 3890087937688280639}
   digestAntigens: []
   plastics: []
+  currentBehavior: 1
 --- !u!114 &5728314670031916521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,25 +269,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 0.21340132, g: 1, b: 0, a: 0}
-  col1: {r: 1, g: 0.9708301, b: 0, a: 0}
   speedBPM: 0
   speed: 0
   phase: 0
-  cohPhi: 0
-  coherenceRadius: 0
   couplingRange: 5
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
   attractionSclr: 0.5
-  Connections: 0
   dead: 0
   fitness: 0
   played: 0
   age: 0
-  sumX: 0
-  sumY: 0
 --- !u!54 &1911477723890854107
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -635,7 +629,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45763eea8cb374e708a4b104476bdafe, type: 2}
+  - {fileID: 2100000, guid: b4e4ba7afa94e264c870298e3f41a224, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
