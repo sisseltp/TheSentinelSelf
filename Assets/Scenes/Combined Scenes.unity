@@ -23361,10 +23361,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2223ba3785f562a078938e125fba5207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateStatsEvery: 5
-  seekingPathogens: 0
-  carryingToLymphNode: 0
-  fossilized: 0
+  updateStatsEvery: 3
+  currentFps: 1000
+  infection: 0
+  totalAgents: 0
+  runningHours: 0
+  runningMinutes: 0
+  runningSeconds: 0
+  apcSeeking: 0
+  apcCarrying: 0
+  apcFossils: 0
   totalApcs: 0
   totalDigestedAntigens: 0
   totalDigestedPlastics: 0
@@ -23374,11 +23380,13 @@ MonoBehaviour:
   confusedTcells: 0
   totalTcells: 0
   totalPathogens: 0
-  infection: 0
-  totalAgents: 0
-  simulationRunningHours: 0
-  simulationRunningMinutes: 0
-  simulationRunningSeconds: 0
+  rebootTimerEnabled: 1
+  rebootEvery: 1
+  behavior: 0
+  fpsThreshold: 15
+  minutesUnderThreshold: 10
+  watchdogTimerRunning: 0
+  watchdogTimer: 0
 --- !u!4 &1537432214
 Transform:
   m_ObjectHideFlags: 0

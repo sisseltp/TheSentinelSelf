@@ -27,22 +27,22 @@ public class SimulationStats : MonoBehaviour
     [Tooltip("Total agents")]    
     public int totalAgents = 0;
 
-    public float simulationRunningHours = 0.0f;
-    public float simulationRunningMinutes = 0.0f;
-    public float simulationRunningSeconds = 0.0f;
+    public float runningHours = 0.0f;
+    public float runningMinutes = 0.0f;
+    public float runningSeconds = 0.0f;
 
 
     [Space(10)]
     [Header("Agents")]
 
     [Tooltip("APCs seeking pathogens")]    
-    public int seekingPathogens = 0;
+    public int apcSeeking = 0;
 
     [Tooltip("APCs carrying antigens to a lymph node")]    
-    public int carryingToLymphNode = 0;
+    public int apcCarrying = 0;
 
-    [Tooltip("APCs that are fossilized")]    
-    public int fossilized = 0;
+    [Tooltip("APCs that are apcFossils")]    
+    public int apcFossils = 0;
 
     [Space(5)]
 
@@ -80,9 +80,17 @@ public class SimulationStats : MonoBehaviour
 
 
     [Space(5)]
+    [Header("Reboot Timer")]
+    public bool rebootTimerEnabled = false;
 
+    [Tooltip("How often to reboot the system (in minutes)")]
+    [Range(1, 240)]
+    public float rebootEvery = 1;
 
-    [Header("Watchdog Settings")]
+    [Space(5)]
+    [Header("Watchdog")]
+
+    public SafetyBehavior behavior = SafetyBehavior.RestartScene;
 
     [Tooltip("FPS threshold below which watchdog kicks in")]
     [Range(5.0f, 40.0f)]
@@ -92,7 +100,8 @@ public class SimulationStats : MonoBehaviour
     [Range(0.1f, 30.0f)]
     public float minutesUnderThreshold = 10.0f;
 
-    public SafetyBehavior behavior = SafetyBehavior.RestartScene;
+
+
 
     [Space(10)]
     [Header("Debug")]
@@ -101,10 +110,10 @@ public class SimulationStats : MonoBehaviour
     private float timeThreshold; // in seconds, calculated on start
 
     [SerializeField]
-    private bool timerRunning = false;
+    private bool watchdogTimerRunning = false;
 
     [SerializeField]
-    private float timerTime = 0.0f;
+    private float watchdogTimer = 0.0f;
 
     private float calculateEvery = 1.0f; // in seconds, used to get an avg fps
     private int framesCount = 0;
@@ -127,19 +136,26 @@ public class SimulationStats : MonoBehaviour
     {
         bool triggerWatchdog = false;
         // Calculate FPS & check watchdog conditions...
-        timerTime += Time.unscaledDeltaTime;
+        if(watchdogTimerRunning) {
+            watchdogTimer += Time.unscaledDeltaTime;
+        }
+        runningSeconds += Time.unscaledDeltaTime;
+
         framesTime += Time.unscaledDeltaTime;
         framesCount++;
 
         // Check watchdog conditions...
-
         // FPS:
-        if(timerRunning && ( timerTime >= timeThreshold )) {
-            timerRunning = false;
-            timerTime = 0.0f;
+        if(watchdogTimerRunning && ( watchdogTimer >= timeThreshold )) {
+            watchdogTimerRunning = false;
+            watchdogTimer = 0.0f;
             lastFps = 1000.0f;
             triggerWatchdog = true;
+        }
 
+        // Reboot Timer:
+        if(rebootTimerEnabled && (runningSeconds >= (rebootEvery * 60))) {
+            triggerWatchdog = true;
         }
 
         // Run Watchdog behavior if triggered.
@@ -161,25 +177,22 @@ public class SimulationStats : MonoBehaviour
 
         if(framesTime >= calculateEvery) {
 
-
             // Calculate avg fps
             lastFps = currentFps;
             currentFps = framesCount / framesTime;
             framesCount = 0;
             framesTime -= calculateEvery;
 
-
-
             if(currentFps <= fpsThreshold) {
                 if(lastFps > fpsThreshold) {
                     // Start timer...
-                    timerRunning = true;
-                    timerTime = 0.0f;
+                    watchdogTimerRunning = true;
+                    watchdogTimer = 0.0f;
                 }
             } else {
                 if(lastFps <= fpsThreshold) {
-                    timerRunning = false;
-                    timerTime = 0.0f;
+                    watchdogTimerRunning = false;
+                    watchdogTimer = 0.0f;
                 }
             }
         }     
@@ -203,18 +216,18 @@ public class SimulationStats : MonoBehaviour
         while (true)
         {
             totalApcs = 0;
-            seekingPathogens = 0;
-            carryingToLymphNode = 0;
+            apcSeeking = 0;
+            apcCarrying = 0;
             totalDigestedAntigens = 0;
             totalDigestedPlastics = 0;
             foreach(GameObject apc in GameObject.FindGameObjectsWithTag("Player")) {
                 GeneticMovementSentinel movementScript = apc.GetComponent<GeneticMovementSentinel>();
                 switch(movementScript.currentBehavior) {
                     case APCBehavior.SeekingPathogens:
-                        seekingPathogens += 1;
+                        apcSeeking += 1;
                         break;
                     case APCBehavior.CarryingAntigens:
-                        carryingToLymphNode += 1;
+                        apcCarrying += 1;
                         break;
                     default:
                         throw new System.Exception("Unknown APCBehavior: " + movementScript.currentBehavior);
@@ -224,7 +237,7 @@ public class SimulationStats : MonoBehaviour
                 totalDigestedPlastics += movementScript.plastics.Count;
             }
             
-            fossilized = GameObject.FindGameObjectsWithTag("Eggs").Length;
+            apcFossils = GameObject.FindGameObjectsWithTag("Eggs").Length;
 
             totalTcells = 0;
             naiveTcells = 0;
@@ -259,9 +272,8 @@ public class SimulationStats : MonoBehaviour
 
             totalAgents = totalApcs + totalTcells + totalPathogens + totalPlastics;
 
-            simulationRunningSeconds = Time.time;
-            simulationRunningMinutes = simulationRunningSeconds / 60.0f;
-            simulationRunningHours = simulationRunningMinutes / 60.0f;
+            runningMinutes = runningSeconds / 60.0f;
+            runningHours = runningMinutes / 60.0f;
 
             yield return new WaitForSeconds(timetowait);
         }
