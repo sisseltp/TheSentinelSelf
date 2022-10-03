@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
         of the simulation
 */
 public enum SafetyBehavior {RestartScene, CleanupSimulation};
+public enum WorldScene {InnerWorld, OuterWorld}
 
 public class SimulationStats : MonoBehaviour
 {
@@ -30,6 +31,11 @@ public class SimulationStats : MonoBehaviour
     public float runningHours = 0.0f;
     public float runningMinutes = 0.0f;
     public float runningSeconds = 0.0f;
+
+
+    // Tracks whether the scene is inside the body/simulation world
+    [SerializeField]
+    private WorldScene currentScene = WorldScene.OuterWorld;
 
 
     [Space(10)]
@@ -87,6 +93,9 @@ public class SimulationStats : MonoBehaviour
     [Range(1, 240)]
     public float rebootEvery = 1;
 
+    [Tooltip("If checked, reboot will only happen when in the outer world / bodies scene.")]
+    public bool rebootOnlyIfInOuterWorld = true;
+
     [Space(5)]
     [Header("Watchdog")]
 
@@ -119,9 +128,19 @@ public class SimulationStats : MonoBehaviour
     private int framesCount = 0;
     private float framesTime = 0.0f;
 
+    private CameraTracker mainCameraTracker;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Get MainCamera
+        mainCameraTracker = GameObject.FindGameObjectsWithTag("MainCamera")[0].GetComponent<CameraTracker>();
+        if(mainCameraTracker.enabled) {
+            currentScene = WorldScene.InnerWorld;
+        } else {
+            currentScene = WorldScene.OuterWorld;
+        }
+
         // Init FPS & Watchdog parameers
         currentFps = 1000f;
         lastFps = 1000f;
@@ -140,9 +159,13 @@ public class SimulationStats : MonoBehaviour
             watchdogTimer += Time.unscaledDeltaTime;
         }
         runningSeconds += Time.unscaledDeltaTime;
-
         framesTime += Time.unscaledDeltaTime;
         framesCount++;
+        if(mainCameraTracker.enabled) {
+            currentScene = WorldScene.InnerWorld;
+        } else {
+            currentScene = WorldScene.OuterWorld;
+        }
 
         // Check watchdog conditions...
         // FPS:
@@ -155,7 +178,13 @@ public class SimulationStats : MonoBehaviour
 
         // Reboot Timer:
         if(rebootTimerEnabled && (runningSeconds >= (rebootEvery * 60))) {
-            triggerWatchdog = true;
+            if(rebootOnlyIfInOuterWorld) {
+                if(currentScene == WorldScene.OuterWorld) {
+                    triggerWatchdog = true;
+                }
+            } else {
+                triggerWatchdog = true;
+            }
         }
 
         // Run Watchdog behavior if triggered.
