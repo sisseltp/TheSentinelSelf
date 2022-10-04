@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1.12
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.9811321, g: 0.7256675, b: 0.7256675, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: fb9944b7dd2ae844f818193ad7a25255, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 21162ac7b85e44e84aacec0e6af2369e, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -23368,6 +23368,7 @@ MonoBehaviour:
   runningHours: 0
   runningMinutes: 0
   runningSeconds: 0
+  currentScene: 1
   apcSeeking: 0
   apcCarrying: 0
   apcFossils: 0
@@ -23382,6 +23383,7 @@ MonoBehaviour:
   totalPathogens: 0
   rebootTimerEnabled: 1
   rebootEvery: 90
+  rebootOnlyIfInOuterWorld: 1
   behavior: 0
   fpsThreshold: 15
   minutesUnderThreshold: 10
