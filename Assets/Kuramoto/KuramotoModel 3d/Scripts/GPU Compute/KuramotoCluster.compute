@@ -156,7 +156,7 @@ void Plas2SenCOHERENCE(int id) {
 				AddOscilations(plasticData[b].phase);
 
 				// add the vector between the two * the distance in cycles * 2
-				sentinelDataOut[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
+				sentinelDataOut[id].vel -= (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
 
 				// add two to the Connections
 				sentinelData[id].connections += 2.0;;

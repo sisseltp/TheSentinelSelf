@@ -49,7 +49,7 @@ public class FadeIn : MonoBehaviour
             yield return new WaitForSeconds(stepSize);
         }
 
-        Destroy(this.gameObject);
+        Destroy(this.transform.parent.gameObject);
     }
 
 }

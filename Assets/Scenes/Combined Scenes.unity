@@ -15356,7 +15356,7 @@ MonoBehaviour:
   couplingSclRange: {x: 1, y: 3}
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 2500
+  MaxAge: 1500
   speedScl: 1.2
   emitionRate: 4
 --- !u!135 &685113649
@@ -18645,7 +18645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: MaxAge
-      value: 2500
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 3850774877178959697, guid: 6d014b7c9c2c6294ca68bfcf29502bb7, type: 3}
       propertyPath: speedScl
@@ -25554,7 +25554,7 @@ MonoBehaviour:
   couplingSclRange: {x: 1, y: 3}
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 2500
+  MaxAge: 1500
   speedScl: 1.2
   emitionRate: 4
 --- !u!135 &1796357676
@@ -26964,7 +26964,7 @@ MonoBehaviour:
   couplingSclRange: {x: 1, y: 3}
   attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 2500
+  MaxAge: 1500
   speedScl: 1.2
   emitionRate: 4
 --- !u!135 &2035026503
