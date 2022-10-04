@@ -22,11 +22,10 @@ public class FadeIn : MonoBehaviour
     }
     private IEnumerator TimedDisolve(float fade, float waitTime)
     {
-        float stepSize = fadeTime / (float)steps;
+        float stepSize = fade / (float)steps;
 
-        float timeGate = Time.time + waitTime;
 
-        while (Time.time < timeGate)
+        while (fadeVal<1)
         {
             
             fadeVal += (float)1 / (float)steps;
@@ -38,8 +37,7 @@ public class FadeIn : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-         timeGate = Time.time + waitTime;
-        while (Time.time < timeGate)
+        while (fadeVal>0)
         {
 
             fadeVal -= (float)1 / (float)steps;

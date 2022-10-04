@@ -156,7 +156,7 @@ void Plas2SenCOHERENCE(int id) {
 				AddOscilations(plasticData[b].phase);
 
 				// add the vector between the two * the distance in cycles * 2
-				sentinelDataOut[id].vel -= (normalize(plasticData[b].pos - sentinelData[id].pos) * sigDst * plasticData[b].attractionScl) * 2;
+				//sentinelDataOut[id].vel += (normalize(plasticData[b].pos - sentinelData[id].pos)  * plasticData[b].attractionScl) * 2;
 
 				// add two to the Connections
 				sentinelData[id].connections += 2.0;;
@@ -253,12 +253,6 @@ void BiomeUpdate (uint3 id : SV_DispatchThreadID)
 			sumx /= float( sentinelData[id.x].connections);
 			sumy /= float(sentinelData[id.x].connections);
 
-			// average vel over connections
-			
-			sentinelDataOut[id.x].vel /= sentinelData[id.x].connections;
-			
-
-			
 
 			// angle to x,y pos to positive x axis
 			sentinelData[id.x].cohPhi = atan2(sumy, sumx) * RADIAN_TO_NORMALIZED;
