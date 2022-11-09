@@ -46,11 +46,8 @@ public class GeneticMovementPathogen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isIn)
-        {
-            transform.position = transform.parent.position;
-        }
-        else { isIn =  false; }
+  
+
         // if phase is less than last phase (back to 0 from 1)
         if (pathogen.phase > lastPhase) { 
             step++; //go to the next step
@@ -103,12 +100,13 @@ public class GeneticMovementPathogen : MonoBehaviour
         
         
     }
-    private bool isIn = false;
-    private void OnTriggerStay(Collider other)
+ 
+
+    private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "PathogenEmitter")
+        if(other.gameObject.tag == "PathogenEmitter")
         {
-            isIn = true;
+            transform.position = transform.parent.position+ Random.insideUnitSphere;
         }
     }
 
