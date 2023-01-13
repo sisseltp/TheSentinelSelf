@@ -294,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 39fd81f09d4164747b9cd64eaaa0ec71, type: 2}
+    - target: {fileID: -3885584778537546962, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
+      propertyPath: m_TagString
+      value: BreathingSentinel
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Name
       value: daphnia-with-long-arms-guts Variant
@@ -451,25 +455,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 0.21340132, g: 1, b: 0, a: 0}
-  col1: {r: 1, g: 0.9708301, b: 0, a: 0}
   speedBPM: 0
   speed: 0
   phase: 0
-  cohPhi: 0
-  coherenceRadius: 0
   couplingRange: 5
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
   attractionSclr: 0.5
-  Connections: 0
   dead: 0
   fitness: 0
   played: 0
   age: 0
-  sumX: 0
-  sumY: 0
 --- !u!114 &2426609259906592573
 MonoBehaviour:
   m_ObjectHideFlags: 0

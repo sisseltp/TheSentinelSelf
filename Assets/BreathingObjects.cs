@@ -8,6 +8,9 @@ public class BreathingObjects : MonoBehaviour
     private Renderer[] BreathingMaterials;
 
     [SerializeField]
+    private GameObject[] BreathingSentinels;
+
+    [SerializeField]
     private string id;
 
     [Space(10)]
@@ -18,14 +21,26 @@ public class BreathingObjects : MonoBehaviour
 
     private float phaseSmoothed = 0;
 
+    void Start()
+    {
+        
+
+    }
+
     // Update is called once per frame
     void Update()
     {
+        BreathingSentinels = GameObject.FindGameObjectsWithTag("BreathingSentinel");
         if (phaseFocus != null) {
             phase = Mathf.Sin(phaseFocus.phase * Mathf.PI);
             foreach (Renderer breath in BreathingMaterials)
             {
                 breath.material.SetFloat(id, phase);
+            }
+
+            foreach (GameObject i in BreathingSentinels)
+            {
+                i.GetComponent<Renderer>().material.SetFloat(id, phase);
             }
         }
     }

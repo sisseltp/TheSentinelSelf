@@ -308,6 +308,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7400811557794676671, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
+      propertyPath: m_TagString
+      value: BreathingSentinel
+      objectReference: {fileID: 0}
     - target: {fileID: -7175424642043412100, guid: 984beab5aec3c584fbd38f6fb8b121e5, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.57
@@ -532,25 +536,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 0.21340132, g: 1, b: 0, a: 0}
-  col1: {r: 1, g: 0.9708301, b: 0, a: 0}
   speedBPM: 0
   speed: 0
   phase: 0
-  cohPhi: 0
-  coherenceRadius: 0
   couplingRange: 5
   noiseScl: 0.1
   coupling: 1.62
   speedVariation: 0.43
   attractionSclr: 0.5
-  Connections: 0
   dead: 0
   fitness: 0
   played: 0
   age: 0
-  sumX: 0
-  sumY: 0
 --- !u!114 &7929008921302118870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +571,7 @@ MonoBehaviour:
   rootBone: {fileID: 2960265356548078975}
   digestAntigens: []
   plastics: []
+  currentBehavior: 1
 --- !u!135 &2197515392669788572
 SphereCollider:
   m_ObjectHideFlags: 0
