@@ -28775,7 +28775,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6848046280692090961, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6848046281362885742, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: m_Port
+      value: 2001
       objectReference: {fileID: 0}
     - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_Radius
