@@ -102,7 +102,7 @@ public class GeneticMovementPlastic : MonoBehaviour
 
             if (!full)
             {
-                collision.gameObject.GetComponent<KuramotoAffecterAgent>().speed *= 0.9f;
+                collision.gameObject.GetComponent<KuramotoAffectedAgent>().speed *= 0.9f;
                 collision.gameObject.GetComponent<Rigidbody>().drag += dragItter;
 
                 if (collision.gameObject.GetComponent<Rigidbody>().drag > maxDrag)

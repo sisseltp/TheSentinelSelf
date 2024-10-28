@@ -5,9 +5,9 @@ public class AgentsManagerParameters : ScriptableObject
 {
     [Tooltip("Number of agents to produce")]
     [Range(1, 3000)]
-    public int nSentinels = 10; // number of sentinels to be made
+    public int amongAgentsAtStart = 10; // number of sentinels to be made
     [Tooltip("radius of area to be produced in")]
-    [Range(0.1f, 100f)]
+    [Range(0.1f, 200f)]
     public float spawnArea = 1.0f; // area to be spawned in
     [Tooltip("Kuramoto Speed Scaler")]
     [Range(0f, 20f)]

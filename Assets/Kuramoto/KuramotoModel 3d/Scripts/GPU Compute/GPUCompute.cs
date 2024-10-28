@@ -78,22 +78,6 @@ public class GPUCompute : MonoBehaviour
             attractionScl = kuramoto.attractionSclr;
             played = 1;
         }
-
-        public void SetFromKuramoto(KuramotoAffecterAgent kuramoto)
-        {
-
-
-            speed = kuramoto.speed;
-            phase = kuramoto.phase;
-            couplingRange = kuramoto.couplingRange;
-            noiseScl = kuramoto.noiseScl;
-            coupling = kuramoto.coupling;
-            attractionScl = kuramoto.attractionSclr;
-            played = 1;
-
-        }
-
-
     }
 
     public struct GPUOutput

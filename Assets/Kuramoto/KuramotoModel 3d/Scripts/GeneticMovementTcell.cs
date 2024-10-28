@@ -40,52 +40,42 @@ public class GeneticMovementTcell : MonoBehaviour
 
     private bool targeting = true;
 
-    // Start is called before the first frame update
     void Start()
     {
-        // gets the kuramotos kurmto
         kuramoto = GetComponent<KuramotoAffectedAgent>();
-        // gets this rb
         rb = GetComponent<Rigidbody>();
-        // sets it to a new vec3 list for vels
+
         geneticMovement = new Vector3[cycleLength];
 
-        // set the vels of the list
         for(int i=0; i<cycleLength; i++)
-        {
-            // random vec
             geneticMovement[i] = Random.insideUnitSphere;
 
-        }
-
         manager = GetComponentInParent<TCellManager>();
-        if (notKeyed) {
+
+        if (notKeyed)
             target = transform.parent.position;
-        }
         
          thisAnti = gameObject.GetComponent<GeneticAntigenKey>();
     }
     
-    // Update is called once per frame
     void Update()
     {
         // if phase is less than last phase (back to 0 from 1)
-        if (kuramoto.phase < lastPhase) {
+        if (kuramoto.phase < lastPhase) 
+        {
             step++;// add a step
-            if (step >= cycleLength) { // if greater than list length, back to 0
+            if (step >= cycleLength) 
                 step = 0;
-            }
-        } else if (kuramoto.phase == lastPhase) {
+        } 
+        else if (kuramoto.phase == lastPhase)
             Destroy(gameObject);
-        }
 
         thisGenVel = geneticMovement[step];
 
          // get vel from this steps genmov, mult by phase and scl
         Vector3 vel =   thisGenVel * genSpeedScl;
-        if (targeting) {
+        if (targeting)
             vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
-        }
 
         vel *= kuramoto.phase;
                
@@ -100,10 +90,7 @@ public class GeneticMovementTcell : MonoBehaviour
     public void Reset()
     {
         for (int i = 0; i < geneticMovement.Length; i++)
-        {
-            geneticMovement[i] = Random.insideUnitSphere;
-        }
-        
+            geneticMovement[i] = Random.insideUnitSphere;   
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -119,7 +106,8 @@ public class GeneticMovementTcell : MonoBehaviour
             List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
             List<Transform> plastics = collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics;
 
-            if (plastics.Count > 0) {
+            if (plastics.Count > 0) 
+            {
                 int rndIndx = Random.Range(0, plastics.Count);
 
                 target = plastics[rndIndx].GetComponent<Digestion>().origin;
@@ -128,7 +116,10 @@ public class GeneticMovementTcell : MonoBehaviour
                 GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
                 GetComponent<KuramotoAffectedAgent>().played = 3;
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
-            } else if (Antigens.Count > 0) { // if it had antigens?
+            } 
+            else if (Antigens.Count > 0) 
+            { 
+                // if it had antigens?
                 // get matches from children
                 AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
 
@@ -152,9 +143,9 @@ public class GeneticMovementTcell : MonoBehaviour
                             if (manager.CanAddCell())
                             {
                                 // create a replica
-                                GameObject replica = Instantiate(gameObject, transform.parent);
-                                replica.GetComponent<GeneticMovementTcell>().notKeyed = false;
-                                replica.GetComponent<GeneticMovementTcell>().target = target;
+                                TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
+                                replica.geneticMovementTcell.notKeyed = false;
+                                replica.geneticMovementTcell.target = target;
                                 // add new tcell to manager
                                 manager.AddTCell(replica);
                             }
@@ -167,9 +158,6 @@ public class GeneticMovementTcell : MonoBehaviour
                     }
                 }
             }
-
-
-
         }
         else if (collision.gameObject.tag == "Pathogen")
         {
@@ -197,25 +185,24 @@ public class GeneticMovementTcell : MonoBehaviour
                 }
             }
         }
-     
-
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Lymphonde" && notKeyed) {
+        if (other.gameObject.tag == "Lymphonde" && notKeyed) 
+        {
             target = transform.parent.position+(UnityEngine.Random.onUnitSphere * 100);
         }
-        else if (other.gameObject.tag == "PathogenEmitter") { 
+        else if (other.gameObject.tag == "PathogenEmitter") 
+        { 
             StartCoroutine(TargetTimeout(15));
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< tcell reaches the pathogen emitter
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag == "LymphOuter" && notKeyed )
-        {
             target = transform.parent.position;
-        }
     }
 
 
@@ -224,8 +211,6 @@ public class GeneticMovementTcell : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         targeting = false;
     }
-
-
 
     /// <summary>
     ///  GPu accelerating bits
@@ -255,12 +240,8 @@ public class GeneticMovementTcell : MonoBehaviour
         keys[0].SetupKey(thisAnti.antigen.Key);
 
         for (int i=1; i<keys.Length; i++)
-        {
             if (antigens[i - 1].antigen.Key != null)
-            {
                 keys[i].SetupKey(antigens[i - 1].antigen.Key);
-            }
-        }
 
         RenderTexture rt = new RenderTexture(1, 1, 0);
         rt.enableRandomWrite = true;
@@ -268,7 +249,6 @@ public class GeneticMovementTcell : MonoBehaviour
 
         ComputeBuffer keyBuffer = new ComputeBuffer(keys.Length, Marshal.SizeOf(typeof(AntigenKeys)));
         keyBuffer.SetData(keys);
-
 
         int UpdateBiome = compare.FindKernel("KeyCompare");
         //int UpdateSentinel = shader.FindKernel("SentinelUpdate");

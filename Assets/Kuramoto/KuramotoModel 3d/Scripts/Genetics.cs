@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class Genetics
 {
-
     public struct GenVel
     {
-
         public GenVel(Vector3[] vels, float fit = 0)
         {
             Vels = vels;
@@ -37,15 +35,11 @@ public class Genetics
                 }
 
             }
-
-
-
             return newVels;
         }
 
         public Vector3[] Vels;
         public float fitness;
-
     }
     // struct to holg gene kurmto data
     public struct GenKurmto
@@ -73,15 +67,9 @@ public class Genetics
                 float rand = UnityEngine.Random.value;
 
                 if (rand < 0.5f)
-                {
                     newSetting[i] = Settings[i];
-                }
                 else
-                {
                     newSetting[i] = otherSettings[i];
-                }
-
-
             }
 
             return newSetting;
@@ -89,8 +77,7 @@ public class Genetics
     }
 
     public struct Antigen
-        {
-
+    {
         public int[] Key;
         public float fitness;
 
@@ -114,59 +101,41 @@ public class Genetics
 
         public Antigen(int keyLength)
         {
-
             Key = new int[keyLength];
             // set the vels of the list
             for (int i = 0; i < keyLength; i++)
-            {
                 Key[i] = UnityEngine.Random.Range(0, keyLength);
-
-            }
                         
             fitness = 0;
         }
 
         public bool Compare(int[] otherKey)
         {
+            if (Key.Length != otherKey.Length)
+                return false;
 
-            if (Key.Length != otherKey.Length) { return false; }
+            for (int i=0; i<otherKey.Length; i++)
+                if (Key[i] != otherKey[i])
+                    return false;
 
-
-            for(int i=0; i<otherKey.Length; i++)
-            {
-
-                if (Key[i] != otherKey[i]) { return false; }
-
-            }
             return true;
         }
-
 
         public int[] BlendAttributes(int[] otherKey)
         {
             int[] newKey = new int[Key.Length];
             for (int i = 0; i < newKey.Length; i++)
             {
-
                 int rand = UnityEngine.Random.Range(0,10);
 
                 if (rand < 0.5f)
-                {
                     newKey[i] = Key[i];
-                }
                 else
-                {
                     newKey[i] = otherKey[i];
-                }
-
-
             }
 
             return newKey;
         }
-
-
-
     }
 
     internal static List<Antigen> NegativeSelection(List<Antigen> antigenLib)
@@ -182,8 +151,6 @@ public class Genetics
     {
         return x.fitness.CompareTo(y.fitness);
     }
-
-
 
     internal static List<GenVel> NegativeSelection(List<GenVel> genVelLib)
     {

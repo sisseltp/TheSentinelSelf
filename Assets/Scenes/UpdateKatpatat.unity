@@ -12512,16 +12512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
-  nSentinels: 10
-  spawnArea: 20
-  speedScl: 0.9
-  speedRange: {x: 70, y: 80}
-  couplingRange: {x: 10, y: 20}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 10, y: 20}
-  attractionSclRange: {x: 15, y: 25}
   sentinels: []
-  MaxAge: 21000
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
@@ -14767,12 +14758,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  tCell:
+  prefabsTCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  RealNumSentinels: 0
-  sentinels: []
+  RealAmountTCells: 0
+  TCells: []
   emitionRate: 4
 --- !u!135 &685113649
 SphereCollider:
@@ -16787,7 +16778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  sentinels: []
+  pathogens: []
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &954404690
@@ -17375,7 +17366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  sentinels: []
+  pathogens: []
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &1105928081
@@ -17423,16 +17414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
-  nSentinels: 10
-  spawnArea: 20
-  speedScl: 0.9
-  speedRange: {x: 70, y: 80}
-  couplingRange: {x: 10, y: 20}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 10, y: 20}
-  attractionSclRange: {x: 15, y: 25}
   sentinels: []
-  MaxAge: 21000
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
@@ -18578,16 +18560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
-  nSentinels: 10
-  spawnArea: 20
-  speedScl: 0.9
-  speedRange: {x: 70, y: 80}
-  couplingRange: {x: 10, y: 20}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 10, y: 20}
-  attractionSclRange: {x: 15, y: 25}
   sentinels: []
-  MaxAge: 21000
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
@@ -21175,7 +21148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  sentinels: []
+  pathogens: []
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &1516042819
@@ -21732,22 +21705,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 247c6fecfcf946d4a9eb33a49f73cb2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plastics:
-  - {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
+  parameters: {fileID: 11400000, guid: 969981c6208f8854cb9950637ba05295, type: 2}
+  prefabPlastic: {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
   emitionOrigin: {fileID: 3850774876864796953}
-  startingNumAgents: 10
-  MaxSentinels: 400
+  MaxPlastics: 15
   emitionSpeed: 1
-  RealNumSentinels: 0
-  spawnArea: 150
-  speedRange: {x: 40, y: 60}
-  couplingRange: {x: 50, y: 50}
-  noiseSclRange: {x: 0.001, y: 0.005}
-  couplingSclRange: {x: 7, y: 15}
-  attractionSclRange: {x: 20, y: 30}
-  sentinels: []
-  MaxAge: 300
-  speedScl: 8
+  RealAmountPlasstics: 0
+  plastics: []
   col0: {r: 0, g: 0, b: 0, a: 0}
   col1: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1629737345
@@ -23429,12 +23393,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  tCell:
+  prefabsTCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  RealNumSentinels: 0
-  sentinels: []
+  RealAmountTCells: 0
+  TCells: []
   emitionRate: 4
 --- !u!135 &1796357676
 SphereCollider:
@@ -24531,12 +24495,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  tCell:
+  prefabsTCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  RealNumSentinels: 0
-  sentinels: []
+  RealAmountTCells: 0
+  TCells: []
   emitionRate: 4
 --- !u!135 &2035026503
 SphereCollider:
@@ -26057,7 +26021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  sentinels: []
+  pathogens: []
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!4 &3850774876630024338
@@ -26106,16 +26070,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
-  nSentinels: 10
-  spawnArea: 20
-  speedScl: 0.9
-  speedRange: {x: 70, y: 80}
-  couplingRange: {x: 10, y: 20}
-  noiseSclRange: {x: 0.0001, y: 0.001}
-  couplingSclRange: {x: 10, y: 20}
-  attractionSclRange: {x: 15, y: 25}
   sentinels: []
-  MaxAge: 21000
   Lymphondes: []
   PathogenEmitters: []
   pathogenManagers: []
@@ -26300,12 +26255,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  tCell:
+  prefabsTCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  RealNumSentinels: 0
-  sentinels: []
+  RealAmountTCells: 0
+  TCells: []
   emitionRate: 15
 --- !u!1 &3942708858654904100
 GameObject:

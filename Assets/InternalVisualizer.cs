@@ -25,7 +25,7 @@ public class InternalVisualizer : MonoBehaviour
     {
         int numTCells = 0;
         foreach(TCellManager manager in tcellManagers)
-            numTCells += manager.RealNumSentinels;
+            numTCells += manager.RealAmountTCells;
 
         int numPathogens = 0;
         foreach (PathogenManager manager in pathogenManagers)

@@ -7,41 +7,12 @@ public class SentinelManager : MonoBehaviour
 {
     public AgentsManagerParameters parameters;
 
-    [Tooltip("Main sentinel agent")]
     [SerializeField]
     private GameObject prefabSentinel;
    
-    [Tooltip("Number of agents to produce")]
-    [Range(1, 3000)]
-    [SerializeField]
-    public int nSentinels = 10; // number of sentinels to be made
-    [Tooltip("radius of area to be produced in")]
-    [Range(0.1f, 100f)]
-    [SerializeField]
-    private float spawnArea = 1.0f; // area to be spawned in
-
-    [Range(0f, 20f)]
-    [SerializeField]
-    private float speedScl = 2;
-
-    [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
-    [SerializeField]
-    private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have
-    [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
-    [Tooltip("Kuramoto, range for noise effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 noiseSclRange = new Vector2( 0.01f, 0.5f); // noise Scl to have
-    [Tooltip("Kuramoto, range for the strength of the coupling effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingSclRange = new Vector2(0.2f,10f); // coupling scl
-    [Tooltip("Kuramoto, range for the scaling the clustering/attraction effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 attractionSclRange = new Vector2(0.2f, 1f); // coupling scl
-
+    
     [HideInInspector]
-    public GameObject[] sentinels; // list of the sentinel object
+    public Sentinel[] sentinels; // list of the sentinel object
     [HideInInspector]
     public GPUCompute.GPUData[] GPUStruct; // list of sentinel struct, that will hold the data for gpu compute
     public GPUCompute.GPUOutput[] GPUOutput;
@@ -49,9 +20,7 @@ public class SentinelManager : MonoBehaviour
     private List<Genetics.GenVel> GenVelLib; // list of the GenVel data to act as the library
 
     private List<Genetics.GenKurmto> GenKurLib;// list of the GenKurmto data to act as the library
-    [Tooltip("Max age the agents will reach")]
-    [SerializeField]
-    private float MaxAge = 1000; // age limit to kill sentinels
+
 
     [HideInInspector]
     public Vector3[] Lymphondes;
@@ -62,39 +31,28 @@ public class SentinelManager : MonoBehaviour
     [HideInInspector]
     public TCellManager[] tcellManagers;
 
-
-    // struct to hold all the sentinels data potential gpu compute
-   
-
-
-    // Start is called before the first frame update
     void Start()
     {
-        sentinels = new GameObject[nSentinels];
-        GPUStruct = new GPUCompute.GPUData[nSentinels];
+        sentinels = new Sentinel[parameters.amongAgentsAtStart];
+        GPUStruct = new GPUCompute.GPUData[parameters.amongAgentsAtStart];
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
-        GPUOutput = new GPUCompute.GPUOutput[nSentinels];
+        GPUOutput = new GPUCompute.GPUOutput[parameters.amongAgentsAtStart];
 
-        for (int i=0; i<nSentinels; i++)
+        for (int i=0; i< parameters.amongAgentsAtStart; i++)
         {
 
-            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
-            GameObject newSentinel = Instantiate(prefabSentinel, pos, Quaternion.identity, this.transform);
+            Sentinel newSentinel = Instantiate(prefabSentinel, pos, Quaternion.identity, this.transform).GetComponent<Sentinel>();
             
-            // get the kuramoto sentinel
-            KuramotoAffecterAgent kuramoto = newSentinel.GetComponent<KuramotoAffecterAgent>();
-            kuramoto.Setup(noiseSclRange,couplingRange,speedRange, couplingSclRange, attractionSclRange,  0.2f);// setup its setting to randomize them
+            newSentinel.kuramotoAffectedAgent.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange,  0.2f);// setup its setting to randomize them
 
-            sentinels[i] = newSentinel; // set the sentinel object to the list
-
-
-            GPUStruct[i].SetFromKuramoto(kuramoto);
-            GPUStruct[i].pos = sentinels[i].transform.position;
-
+            GPUStruct[i].SetFromKuramoto(newSentinel.kuramotoAffectedAgent);
+            GPUStruct[i].pos = newSentinel.transform.position;
             GPUOutput[i].Setup();
 
+            sentinels[i] = newSentinel;
         }
 
         GameObject[] lymphs = GameObject.FindGameObjectsWithTag("Lymphonde");
@@ -115,108 +73,65 @@ public class SentinelManager : MonoBehaviour
             PathogenEmitters[i] = pathogens[i].transform.position;
             pathogenManagers[i] = pathogens[i].GetComponent<PathogenManager>();
         }
-
-
     }
 
     private void Update()
-    {
-        
-        for (int i = 0; i < nSentinels; i++)
+    {  
+        for (int i = 0; i < parameters.amongAgentsAtStart; i++)
         {
-            // get the components kuramoto component
-            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
-            
-
-            // if the agent is dead
-            if (kuramoto.dead || kuramoto.age> MaxAge) {
-
-                
-                // call the reset function
+            if (sentinels[i].kuramotoAffectedAgent.dead || sentinels[i].kuramotoAffectedAgent.age> parameters.MaxAge) 
+            {
                 ResetSentinel(i);
 
-                GPUStruct[i].SetFromKuramoto(kuramoto);
-                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
+                GPUStruct[i].SetFromKuramoto(sentinels[i].kuramotoAffectedAgent);
+                GPUStruct[i].pos = sentinels[i].rigidBody.position;
             }
             else
             {
-                kuramoto.age += Time.deltaTime;
-                kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
-                if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase - 1; }
-                GPUStruct[i].phase = kuramoto.phase;
+                sentinels[i].kuramotoAffectedAgent.age += Time.deltaTime;
+                sentinels[i].kuramotoAffectedAgent.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
+                if (sentinels[i].kuramotoAffectedAgent.phase > 1) 
+                    sentinels[i].kuramotoAffectedAgent.phase--; 
+                GPUStruct[i].phase = sentinels[i].kuramotoAffectedAgent.phase;
 
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+                sentinels[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * sentinels[i].kuramotoAffectedAgent.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
-
-                GPUStruct[i].speed = sentinels[i].GetComponent<KuramotoAffecterAgent>().speed;
-                GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
+                GPUStruct[i].speed = sentinels[i].kuramotoAffectedAgent.speed;
+                GPUStruct[i].pos = sentinels[i].rigidBody.position;
             }
 
-            Renderer rendr = sentinels[i].GetComponentInChildren<Renderer>();
-            if (rendr.isVisible)
-            {
-                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
-                //rendr.material.color = Color.Lerp(col0, col1, phase);
-                rendr.material.SetFloat("Phase", kuramoto.phase);
-            }
+            if (sentinels[i].renderer.isVisible)
+                sentinels[i].renderer.material.SetFloat("Phase", sentinels[i].kuramotoAffectedAgent.phase);
         }
-
-        /*
-        // if lib is greater than ...
-        if (GenVelLib.Count > 1000)
-        {
-            // reorder on fitness
-            
-            // negative selection
-            GenVelLib = Genetics.NegativeSelection(GenVelLib);
-            GenKurLib = Genetics.NegativeSelection(GenKurLib);
-            
-
-        }
-        */
     }
 
-    // resets the sentinel
     public void ResetSentinel(int i, bool genOn= false)
     {
+        Sentinel thisSentinel = sentinels[i];
 
-        // get the sentinel
-        GameObject thisSentinel = sentinels[i];
-
-        
-
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
-
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
         thisSentinel.transform.position = pos;
 
-        thisSentinel.GetComponent<Fosilising>().enabled = false;
-        thisSentinel.SetActive(true);
+        thisSentinel.fosilising.enabled = false;
+        thisSentinel.gameObject.SetActive(true);
 
         if (!genOn)
         {
             // reset bothe genetic values to random
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
-
-            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
-            genVel.Reset();
+            thisSentinel.kuramotoAffectedAgent.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
+            thisSentinel.geneticMovementSentinel.Reset();
         }
         else if (GenKurLib.Count < 500)
         {
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
-
-
             // add it settings to the librarys
-            Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
+            Genetics.GenKurmto genKurm = new Genetics.GenKurmto(thisSentinel.kuramotoAffectedAgent.speedBPM, thisSentinel.kuramotoAffectedAgent.noiseScl, thisSentinel.kuramotoAffectedAgent.coupling, thisSentinel.kuramotoAffectedAgent.couplingRange, thisSentinel.kuramotoAffectedAgent.attractionSclr, thisSentinel.kuramotoAffectedAgent.fitness);
             GenKurLib.Add(genKurm);
-            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
+            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].geneticMovementSentinel.geneticMovement, thisSentinel.kuramotoAffectedAgent.fitness);
             GenVelLib.Add(vels);
 
             // reset bothe genetic values to random
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
-
-            GeneticMovementSentinel genVel = thisSentinel.GetComponent<GeneticMovementSentinel>();
-            genVel.Reset();
+            thisSentinel.kuramotoAffectedAgent.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
+            thisSentinel.geneticMovementSentinel.Reset();
         }
         else
         {
@@ -228,8 +143,7 @@ public class SentinelManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
-            kuramoto.SetupData(Settings);
+            thisSentinel.kuramotoAffectedAgent.SetupData(Settings);
            
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
@@ -239,11 +153,8 @@ public class SentinelManager : MonoBehaviour
 
             Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
 
-            GeneticMovementSentinel genMov = thisSentinel.GetComponent<GeneticMovementSentinel>();
-            genMov.Reset();
-            genMov.geneticMovement = Vels;
-
-            
+            thisSentinel.geneticMovementSentinel.Reset();
+            thisSentinel.geneticMovementSentinel.geneticMovement = Vels;
         }
         
     }
@@ -251,32 +162,20 @@ public class SentinelManager : MonoBehaviour
     // all bellow is for ui to change all sentinels values 
     public void setRange(float range)
     {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
-            kuramoto.couplingRange = range;
-
-        }
+        for (int i = 0; i < parameters.amongAgentsAtStart; i++)
+            sentinels[i].kuramotoAffectedAgent.couplingRange = range;
     }
 
     public void setCoupling(float range)
     {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
-            kuramoto.coupling = range;
-
-        }
+        for (int i = 0; i < parameters.amongAgentsAtStart; i++)
+            sentinels[i].kuramotoAffectedAgent.coupling = range;
     }
 
     public void setNoise(float range)
     {
-        for (int i = 0; i < nSentinels; i++)
-        {
-            KuramotoAffecterAgent kuramoto = sentinels[i].GetComponent<KuramotoAffecterAgent>();
-            kuramoto.noiseScl = range;
-
-        }
+        for (int i = 0; i < parameters.amongAgentsAtStart; i++)
+            sentinels[i].kuramotoAffectedAgent.noiseScl = range;
 
         JsonUtility.ToJson(GenVelLib);
     }

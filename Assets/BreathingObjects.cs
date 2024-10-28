@@ -17,7 +17,7 @@ public class BreathingObjects : MonoBehaviour
     [Header("Debug")]
     public float phase;
 
-    private KuramotoAffecterAgent phaseFocus;
+    private KuramotoAffectedAgent phaseFocus;
 
     private float phaseSmoothed = 0;
 
@@ -46,6 +46,6 @@ public class BreathingObjects : MonoBehaviour
     }
     public void SetFocus(Transform focus)
     {
-        phaseFocus = focus.GetComponent<KuramotoAffecterAgent>();
+        phaseFocus = focus.GetComponent<KuramotoAffectedAgent>();
     }
 }

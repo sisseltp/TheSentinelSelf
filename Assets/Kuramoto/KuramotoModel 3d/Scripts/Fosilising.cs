@@ -92,7 +92,7 @@ public class Fosilising : MonoBehaviour
         GetComponent<GeneticMovementSentinel>().digestAntigens.Clear();
 
         gameObject.SetActive(false);
-        GetComponent<KuramotoAffecterAgent>().dead = true;
+        GetComponent<KuramotoAffectedAgent>().dead = true;
         rb.useGravity = false;
         rb.drag = originalDrag;
         this.enabled = false;

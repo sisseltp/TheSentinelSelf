@@ -19,7 +19,7 @@ public class GeneticMovementSentinel : MonoBehaviour
 
     private Vector3 thisGenVel;
 
-    private KuramotoAffecterAgent kuramoto; // kuramoto obj
+    private KuramotoAffectedAgent kuramoto; // kuramoto obj
 
     private APCSong song;
 
@@ -61,7 +61,7 @@ public class GeneticMovementSentinel : MonoBehaviour
         plastics = new List<Transform>();
 
         // gets this APC's kurmto
-        kuramoto = GetComponent<KuramotoAffecterAgent>();
+        kuramoto = GetComponent<KuramotoAffectedAgent>();
 
         // get song manager
         song = GetComponent<APCSong>();

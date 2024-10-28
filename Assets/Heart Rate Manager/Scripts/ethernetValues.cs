@@ -28,7 +28,7 @@ public class ethernetValues : MonoBehaviour
 
     [Header("Kuramoto Values")]
     public float pulseGradient;
-    private KuramotoAffecterAgent agent;
+    private KuramotoAffectedAgent agent;
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     public int bias = 3;
 
@@ -105,7 +105,7 @@ public class ethernetValues : MonoBehaviour
         lastAvrgRate = avrgRate;
     }
 
-    public void setSentinelAgent(KuramotoAffecterAgent thisAgent)
+    public void setSentinelAgent(KuramotoAffectedAgent thisAgent)
     {
         agent = thisAgent;
     }

@@ -8,75 +8,61 @@ public class TCellManager : MonoBehaviour
 {
     public AgentsManagerParameters parameters;
 
-    [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
-    private GameObject[] tCell; // holds the sentinel prefab
+    private GameObject[] prefabsTCell;
     
-    private int MaxSentinels = 15;
+    private int MaxTCells = 15;
     [HideInInspector]
-    public int RealNumSentinels = 0;
+    public int RealAmountTCells = 0;
     [HideInInspector]
-    public GameObject[] sentinels; //list to hold the sentinels
+    public TCell[] TCells;
     [HideInInspector]
     public GPUCompute.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
     public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
-
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
-
-    private List<Genetics.Antigen> antigenLib;
 
     [SerializeField]
     private float emitionRate = 4;
 
     void Start()
     {
-        MaxSentinels = Mathf.FloorToInt(parameters.nSentinels * 1.5f);
+        MaxTCells = Mathf.FloorToInt(parameters.amongAgentsAtStart * 1.5f);
+        TCells = new TCell[MaxTCells];
 
-
-        // create list to hold object
-        sentinels = new GameObject[MaxSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUCompute.GPUData[MaxSentinels];
+        GPUStruct = new GPUCompute.GPUData[MaxTCells];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
-        antigenLib = new List<Genetics.Antigen>();
 
-        GPUOutput = new GPUCompute.GPUOutput[MaxSentinels];
 
-        // loop over the nsentinels
-        for (int i=0; i< parameters.nSentinels; i++)
+        GPUOutput = new GPUCompute.GPUOutput[MaxTCells];
+
+        for (int i=0; i< parameters.amongAgentsAtStart; i++)
         {
-
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere* parameters.spawnArea;
+            int randindx = UnityEngine.Random.Range(0, prefabsTCell.Length);
+            TCell newTCell = Instantiate(prefabsTCell[randindx], pos, Quaternion.identity, this.transform).GetComponent<TCell>();
 
-            int randindx = UnityEngine.Random.Range(0, tCell.Length);
-
-            // instantiate a new sentinel as child and at pos
-            GameObject thisSentinel = Instantiate(tCell[randindx], pos, Quaternion.identity, this.transform);
-
-            // get its kurmto component
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+            KuramotoAffectedAgent kuramoto = newTCell.kuramotoAffectedAgent;
             kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
-            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
+            newTCell.geneticAntigenKey.Reset();
 
-            // add the object to the list
-            sentinels[i] = thisSentinel;
-
-            // set data in the struct
             GPUStruct[i].SetFromKuramoto(kuramoto);
-            GPUStruct[i].pos = sentinels[i].transform.position;
+            GPUStruct[i].pos = newTCell.transform.position;
             GPUOutput[i].Setup();
 
-
+            TCells[i] = newTCell;
         }
-        RealNumSentinels = parameters.nSentinels;
+
+        RealAmountTCells = parameters.amongAgentsAtStart;
 
         StartCoroutine(emition(emitionRate));
     }
+
     IEnumerator emition( float rate)
     {
         while (true)
@@ -84,170 +70,116 @@ public class TCellManager : MonoBehaviour
             if (CanAddCell())
             {
                 Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
+                int randindx = UnityEngine.Random.Range(0, prefabsTCell.Length);
+                TCell thisSentinel = Instantiate(prefabsTCell[randindx], pos, Quaternion.identity, this.transform).GetComponent<TCell>();
 
-                int randindx = UnityEngine.Random.Range(0, tCell.Length);
-
-                // instantiate a new sentinel as child and at pos
-                GameObject thisSentinel = Instantiate(tCell[randindx], pos, Quaternion.identity, this.transform);
-
-                // get its kurmto component
-                KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-                kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
+                thisSentinel.kuramotoAffectedAgent.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
                 AddTCell(thisSentinel);
             }
 
             yield return new WaitForSeconds(rate);
-
         }
     }
     private void Update()
     {
-        
         List<int> toRemove = new List<int>();
-        // loop over the n sentinels
-       
-        for (int i = 0; i < RealNumSentinels; i++)
+
+        for (int i = 0; i < RealAmountTCells; i++)
         {
-
-            if(sentinels[i] == null) { continue; }
-            // get the kurmto
-            KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
+            if (TCells[i] == null)
+                continue;
             
-            // if older than age 
-            if (kuramoto.dead || kuramoto.age > parameters.MaxAge) {
-                if (i > parameters.nSentinels)
+            KuramotoAffectedAgent kuramoto = TCells[i].kuramotoAffectedAgent;
+            
+            if (kuramoto.dead || kuramoto.age > parameters.MaxAge) 
+            {
+                if (i > parameters.amongAgentsAtStart)
                 {
-
                     toRemove.Add(i);
-                    
                     continue;
                 }
 
-
-                // reset its values
-                ResetSentinel(i);
-                
-
+                ResetTCell(i);
             }
             else
             {
                 if (kuramoto.played == 3)
-                {
                     kuramoto.age += Time.deltaTime*10;
-
-                }
                 else
-                {
                     kuramoto.age += Time.deltaTime;
-                }
+
                 kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
                 if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase-1; }
                 GPUStruct[i].played = kuramoto.played;
                 GPUStruct[i].phase = kuramoto.phase;
 
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+                TCells[i].rigidbody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * kuramoto.phase, TCells[i].transform.position + TCells[i].transform.up);
 
-                GPUStruct[i].pos = sentinels[i].transform.position;
+                GPUStruct[i].pos = TCells[i].transform.position;
 
             }
 
-            Renderer rendr = sentinels[i].GetComponent<Renderer>();
-            if (rendr.isVisible)
-            {
-                //float oscil = Mathf.Sin((cohPhi - phase) * (2 * Mathf.PI));
-                //rendr.material.color = Color.Lerp(col0, col1, phase);
-                rendr.material.SetFloat("Phase", kuramoto.phase);
-            }
+            if (TCells[i].renderer.isVisible)
+                TCells[i].renderer.material.SetFloat("Phase", kuramoto.phase);
         }
-/*
-        // if the lib is greater than ...
-        if (GenVelLib.Count > 1000)
-        {
-            // negative selection
-            GenVelLib = Genetics.NegativeSelection(GenVelLib);
-            GenKurLib = Genetics.NegativeSelection(GenKurLib);
-
-        }
-        */
-
 
         int nxtIndx = -1;
         
         for ( int i=0; i<toRemove.Count; i++)
         {
             int indx = toRemove[i];
-            Destroy(sentinels[indx]);
+            Destroy(TCells[indx]);
 
             if (i != toRemove.Count-1)
-            {
                  nxtIndx = toRemove[i+1];
-            }
             else
-            {
-                nxtIndx = RealNumSentinels;
-            }
+                nxtIndx = RealAmountTCells;
 
             for (int p = indx+1; p <= nxtIndx ; p++)
             {
                 GPUStruct[p - (i+1)] = GPUStruct[p];
-                sentinels[p - (i+1)] = sentinels[p];
-
+                TCells[p - (i+1)] = TCells[p];
             }            
-
         }
         
-        RealNumSentinels -= toRemove.Count;
+        RealAmountTCells -= toRemove.Count;
         
         if (nxtIndx != -1) {
             GPUStruct[nxtIndx] = new GPUCompute.GPUData();
-            sentinels[nxtIndx] = null;
-
+            TCells[nxtIndx] = null;
         }
-
     }
    
-    public void ResetSentinel(int i ,bool genOn = false)
+    public void ResetTCell(int i ,bool genOn = false)
     {
+        TCell thisTCell = TCells[i];
 
-        // get i sentinel
-        GameObject thisSentinel = sentinels[i];
-
-        thisSentinel.GetComponent<Renderer>().material.SetFloat("KeyTrigger", 0);
+        thisTCell.renderer.material.SetFloat("KeyTrigger", 0);
 
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
-        thisSentinel.transform.position = pos;
+        thisTCell.transform.position = pos;
 
         if (!genOn)
         {
-            // reset bothe genetic values to random
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
-
-            GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
-            genVel.Reset();
-
-            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
-
+            thisTCell.kuramotoAffectedAgent.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
+            thisTCell.geneticMovementTcell.Reset();
+            thisTCell.geneticAntigenKey.Reset();
         }
         else if (GenKurLib.Count < 500)
         {
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            KuramotoAffectedAgent kuramoto = thisTCell.kuramotoAffectedAgent;
 
-
-            // add it settings to the librarys
             Genetics.GenKurmto genKurm = new Genetics.GenKurmto(kuramoto.speedBPM, kuramoto.noiseScl, kuramoto.coupling, kuramoto.couplingRange, kuramoto.attractionSclr, kuramoto.fitness);
             GenKurLib.Add(genKurm);
-            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
+            Genetics.GenVel vels = new Genetics.GenVel(TCells[i].geneticMovementSentinel.geneticMovement, kuramoto.fitness);
             GenVelLib.Add(vels);
             // add random new sentinel
             kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
             
-            GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
-            genVel.Reset();
-
-            thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
+            thisTCell.geneticMovementTcell.Reset();
+            thisTCell.geneticAntigenKey.Reset();
         }
         else
         {
@@ -259,7 +191,7 @@ public class TCellManager : MonoBehaviour
 
             float[] Settings = kurData1.BlendAttributes(kurData2.Settings);
 
-            KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
+            KuramotoAffectedAgent kuramoto = thisTCell.kuramotoAffectedAgent;
             kuramoto.SetupData(Settings);
 
             rand = UnityEngine.Random.Range(0, GenVelLib.Count);
@@ -269,45 +201,25 @@ public class TCellManager : MonoBehaviour
 
             Vector3[] Vels = genVel2.BlendAttributes(genVel1.Vels);
 
-            GeneticMovementTcell genMov = thisSentinel.GetComponent<GeneticMovementTcell>();
-            genMov.Reset();
-            genMov.geneticMovement = genVel1.BlendAttributes(Vels);
-
-            GeneticAntigenKey antigenKey = thisSentinel.GetComponent<GeneticAntigenKey>();
-            antigenKey.Reset();
-
-
-
+            thisTCell.geneticMovementTcell.Reset();
+            thisTCell.geneticMovementTcell.geneticMovement = genVel1.BlendAttributes(Vels);
+            thisTCell.geneticAntigenKey.Reset();
         }
-        
     }
 
-    public bool CanAddCell()
+    public bool CanAddCell() => RealAmountTCells<MaxTCells - 1;
+
+    public void AddTCell(TCell tCell)
     {
-        if (RealNumSentinels < MaxSentinels - 1)
-        {
-            return true;
-        }
-        return false;
-    }
+        RealAmountTCells++;
+        TCells[RealAmountTCells-1] = tCell;
+        KuramotoAffectedAgent kuramoto = tCell.kuramotoAffectedAgent;
+        tCell.geneticAntigenKey.Reset();
 
-    public void AddTCell(GameObject TCell)
-    {
-        
-            RealNumSentinels++;
-
-
-            // add the object to the list
-            sentinels[RealNumSentinels-1] = TCell;
-            KuramotoAffectedAgent kuramoto = TCell.GetComponent<KuramotoAffectedAgent>();
-            TCell.GetComponent<GeneticAntigenKey>().Reset();
-            // set data in the struct
-            GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
-            gpuStruct.SetFromKuramoto(kuramoto);
-            gpuStruct.pos = TCell.transform.position;
-            GPUStruct[RealNumSentinels] = gpuStruct;
-        
-
+        GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
+        gpuStruct.SetFromKuramoto(kuramoto);
+        gpuStruct.pos = tCell.transform.position;
+        GPUStruct[RealAmountTCells] = gpuStruct;
     }
 
 #if UNITY_EDITOR
@@ -317,5 +229,4 @@ public class TCellManager : MonoBehaviour
         Gizmos.DrawSphere(transform.position, 1f);
     }
 #endif
-
 }

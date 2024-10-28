@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4999d55f4245df64ca7703de3f0fa64f, type: 3}
-  m_Name: PathogenManager
+  m_Name: PlasticManager
   m_EditorClassIdentifier: 
-  amongAgentsAtStart: 150
-  spawnArea: 11
-  speedScl: -0.5
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 5, y: 8}
-  noiseSclRange: {x: 0.01, y: 0.1}
-  couplingSclRange: {x: 2, y: 3}
-  attractionSclRange: {x: 5, y: 6}
-  MaxAge: 4
+  amongAgentsAtStart: 10
+  spawnArea: 150
+  speedScl: 8
+  speedRange: {x: 40, y: 60}
+  couplingRange: {x: 50, y: 50}
+  noiseSclRange: {x: 0.001, y: 0.005}
+  couplingSclRange: {x: 7, y: 15}
+  attractionSclRange: {x: 20, y: 30}
+  MaxAge: 300

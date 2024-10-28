@@ -109,7 +109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
       propertyPath: m_Name
-      value: STARFISH-with-blendshapes Variant
+      value: TCellA
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
       propertyPath: m_TagString
@@ -120,6 +120,11 @@ PrefabInstance:
 --- !u!1 &4478763503305038647 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
+  m_PrefabInstance: {fileID: 3667806399774467686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8713158750708350580 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 47bf5784ae59e434b85402bb72c6f645, type: 3}
   m_PrefabInstance: {fileID: 3667806399774467686}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &6036541704713322092
@@ -152,6 +157,25 @@ CapsuleCollider:
   m_Height: 5.13
   m_Direction: 1
   m_Center: {x: 0, y: -0.65, z: 0}
+--- !u!114 &-8074260994788382438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4478763503305038647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750ba806d9c1c42409b3e5beab94117c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  geneticAntigenKey: {fileID: 1106587717428591582}
+  geneticMovementTcell: {fileID: -3675019409970671806}
+  geneticMovementSentinel: {fileID: 0}
+  kuramotoAffectedAgent: {fileID: 9074480801987277044}
+  kuramotoAffecterAgent: {fileID: 0}
+  renderer: {fileID: 8713158750708350580}
+  rigidbody: {fileID: 6036541704713322092}
 --- !u!114 &-3675019409970671806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,22 +223,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752ac7befa9fd0c4daa8dc93837953a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 1, g: 0, b: 0, a: 0}
-  col1: {r: 0.3574047, g: 0.84628844, b: 0.9150943, a: 1}
   speedBPM: 0
   speed: 0
   phase: 0
-  cohPhi: 0
-  coherenceRadius: 0
   couplingRange: 1
   noiseScl: 1
   coupling: 0.5
   speedVariation: 0.1
   attractionSclr: 0.5
-  Connections: 0
   played: 0
   dead: 0
   fitness: 0
   age: 0
-  sumx: 0
-  sumy: 0

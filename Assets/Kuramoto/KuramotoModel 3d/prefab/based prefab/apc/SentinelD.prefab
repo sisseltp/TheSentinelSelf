@@ -300,7 +300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_Name
-      value: daphnia-with-long-arms-guts Variant
+      value: SentinelD
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
       propertyPath: m_TagString
@@ -339,6 +339,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
   m_PrefabInstance: {fileID: 7897182255382070972}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3437196715197562134 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4455452734695638102, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
+  m_PrefabInstance: {fileID: 7897182255382070972}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7643404712517853527 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
@@ -364,32 +369,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
   m_PrefabInstance: {fileID: 7897182255382070972}
   m_PrefabAsset: {fileID: 0}
---- !u!135 &5535400727157346464
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717491179339184573}
-  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.009
-  m_Center: {x: 0, y: 0, z: -0.002}
---- !u!135 &4326261346371601037
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6827422627903766298}
-  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.007
-  m_Center: {x: 0, y: 0, z: -0.002}
 --- !u!54 &3279415286626361967
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -453,6 +432,23 @@ MonoBehaviour:
   fadeTime: 10
   steps: 20
   fosil: {fileID: 578608192284748201, guid: ed1f485a83e511c4882c6eb87889255e, type: 3}
+--- !u!114 &-1844520038115134994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014643093506636781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff7b397152b02c428779922c7ab1eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigidBody: {fileID: 3279415286626361967}
+  renderer: {fileID: 3437196715197562134}
+  kuramotoAffectedAgent: {fileID: 5401913748539114236}
+  geneticMovementSentinel: {fileID: 5814697880065516071}
+  fosilising: {fileID: -8793455779029428887}
 --- !u!114 &2129739940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,30 +465,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 1848485853}
     m_Active: 1
   m_Effectors: []
---- !u!114 &11100302574872553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014643093506636781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb74282894d88547bce3ec51a93bb84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speedBPM: 0
-  speed: 0
-  phase: 0
-  couplingRange: 5
-  noiseScl: 0.1
-  coupling: 1.62
-  speedVariation: 0.43
-  attractionSclr: 0.5
-  dead: 0
-  fitness: 0
-  played: 0
-  age: 0
 --- !u!114 &2426609259906592573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +508,7 @@ MonoBehaviour:
   digestAntigens: []
   plastics: []
   currentBehavior: 1
---- !u!114 &-1844520038115134994
+--- !u!114 &5401913748539114236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -545,6 +517,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 7014643093506636781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eff7b397152b02c428779922c7ab1eec, type: 3}
+  m_Script: {fileID: 11500000, guid: 752ac7befa9fd0c4daa8dc93837953a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedBPM: 0
+  speed: 0
+  phase: 0
+  couplingRange: 5
+  noiseScl: 0.1
+  coupling: 1.62
+  speedVariation: 0.43
+  attractionSclr: 0.5
+  fitness: 0
+  played: 0
+  age: 0
+  dead: 0
+--- !u!135 &4326261346371601037
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6827422627903766298}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.007
+  m_Center: {x: 0, y: 0, z: -0.002}
+--- !u!135 &5535400727157346464
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717491179339184573}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009
+  m_Center: {x: 0, y: 0, z: -0.002}

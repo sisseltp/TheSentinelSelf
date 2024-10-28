@@ -158,7 +158,7 @@ public class CameraTracker : MonoBehaviour
             }
         }
 
-        KuramotoAffecterAgent kA = tracked.GetComponent<KuramotoAffecterAgent>();
+        KuramotoAffectedAgent kA = tracked.GetComponent<KuramotoAffectedAgent>();
 
         vel += dif * power * Time.deltaTime;
         vel *= 0.8f;
@@ -272,7 +272,7 @@ public class CameraTracker : MonoBehaviour
 
         if (heartbeatSensor != null)
         {
-            heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffecterAgent>());
+            heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffectedAgent>());
         }
         GetComponent<BreathingObjects>().SetFocus(tracked);
     }

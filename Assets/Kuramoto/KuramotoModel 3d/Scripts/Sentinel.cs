@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Sentinel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Rigidbody rigidBody;
+    public Renderer renderer;
+    public KuramotoAffectedAgent kuramotoAffectedAgent;
+    public GeneticMovementSentinel geneticMovementSentinel;
+    public Fosilising fosilising;
 }
