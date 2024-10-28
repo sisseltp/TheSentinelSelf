@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: -747346939756499596}
   - component: {fileID: 3408627365277564685}
   - component: {fileID: 3917101715563697206}
+  - component: {fileID: -604599453256533031}
   m_Layer: 0
   m_Name: daphnia-with-octopus-arms-guts
   m_TagString: Player
@@ -344,6 +345,18 @@ MonoBehaviour:
   rolloff: 1
   state: 0
   audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
+--- !u!114 &-604599453256533031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2731493512756071247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff7b397152b02c428779922c7ab1eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2966006493748706069
 GameObject:
   m_ObjectHideFlags: 0

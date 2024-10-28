@@ -32,7 +32,7 @@ public class GPUCompute : MonoBehaviour
 
     private SentinelManager[] sentinels;
     private PathogenManager[] pathogen;
-    private PlasticManager2[] plastics;
+    private PlasticManager[] plastics;
     private TCellManager[] tcells;
 
     private float cDT = 1;
@@ -116,7 +116,7 @@ public class GPUCompute : MonoBehaviour
 
         pathogen = GetComponentsInChildren<PathogenManager>();
 
-        plastics = GetComponentsInChildren<PlasticManager2>();
+        plastics = GetComponentsInChildren<PlasticManager>();
 
         tcells = GetComponentsInChildren<TCellManager>();
 

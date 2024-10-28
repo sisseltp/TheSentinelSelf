@@ -8,7 +8,7 @@ public class PathogenManager : MonoBehaviour
 {
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
-    private GameObject[] pathogens; // holds the sentinel prefab
+    private GameObject prefabPathogen;
     [Tooltip("Number of the agents to be produced by this manager")]
     [Range(1, 3000)]
     [SerializeField]
@@ -73,14 +73,8 @@ public class PathogenManager : MonoBehaviour
         GPUOutput = new GPUCompute.GPUOutput[nSentinels];
 
         // loop over the nsentinels
-        for (int i=0; i<10; i++)
-        {
-
+        for (int i=0; i< nSentinels; i++)
             AddPathogen(i);
-
-        }
-
-
     }
 
     public void AddPathogen(int i)
@@ -90,10 +84,7 @@ public class PathogenManager : MonoBehaviour
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
             // instantiate a new sentinel as child and at pos
-
-            int randindx = UnityEngine.Random.Range(0, pathogens.Length);
-
-            GameObject thisSentinel = Instantiate(pathogens[randindx], pos, Quaternion.identity, this.transform);
+            GameObject thisSentinel = Instantiate(prefabPathogen, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
@@ -275,9 +266,6 @@ public class PathogenManager : MonoBehaviour
 
             GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
-
-
-
         }
         else if (GenKurLib.Count < 500)
         {
@@ -324,6 +312,14 @@ public class PathogenManager : MonoBehaviour
         }
         
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 1f);
+    }
+#endif
 
 
 }

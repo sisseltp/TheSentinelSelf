@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class SentinelManager : MonoBehaviour
 {
-
     [Tooltip("Main sentinel agent")]
     [SerializeField]
-    private GameObject sentinel; // the sentinel game object
-   
+    private GameObject prefabSentinel;
    
     [Tooltip("Number of agents to produce")]
     [Range(1, 3000)]
@@ -69,34 +67,24 @@ public class SentinelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // create the sentiels list
         sentinels = new GameObject[nSentinels];
-        // create the data struct list
         GPUStruct = new GPUCompute.GPUData[nSentinels];
-        // create the two libs as lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
-
         GPUOutput = new GPUCompute.GPUOutput[nSentinels];
 
-        // for n sentinels
         for (int i=0; i<nSentinels; i++)
         {
 
-
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
 
-            // create a new sentinel asa child and at pos
-            GameObject thisSentinel;
-
-           
-                thisSentinel = Instantiate(sentinel, pos, Quaternion.identity, this.transform);
+            GameObject newSentinel = Instantiate(prefabSentinel, pos, Quaternion.identity, this.transform);
             
             // get the kuramoto sentinel
-            KuramotoAffecterAgent kuramoto = thisSentinel.GetComponent<KuramotoAffecterAgent>();
+            KuramotoAffecterAgent kuramoto = newSentinel.GetComponent<KuramotoAffecterAgent>();
             kuramoto.Setup(noiseSclRange,couplingRange,speedRange, couplingSclRange, attractionSclRange,  0.2f);// setup its setting to randomize them
 
-            sentinels[i] = thisSentinel; // set the sentinel object to the list
+            sentinels[i] = newSentinel; // set the sentinel object to the list
 
 
             GPUStruct[i].SetFromKuramoto(kuramoto);
@@ -290,5 +278,11 @@ public class SentinelManager : MonoBehaviour
         JsonUtility.ToJson(GenVelLib);
     }
 
-
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 1f);
+    }
+#endif
 }

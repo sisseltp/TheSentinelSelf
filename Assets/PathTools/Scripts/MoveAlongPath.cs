@@ -29,7 +29,6 @@ namespace Romi.PathTools
             runtimeDistance = 0f;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (arrived)
@@ -66,6 +65,8 @@ namespace Romi.PathTools
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            if (path == null)
+                return;
             if (!path.IsPathReady())
                 return;
 

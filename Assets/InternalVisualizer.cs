@@ -15,28 +15,21 @@ public class InternalVisualizer : MonoBehaviour
 
     private float draggedVarience=0;
     
-
-    // Start is called before the first frame update
     void Start()
     {
         tcellManagers = GetComponentsInChildren<TCellManager>();
         pathogenManagers = GetComponentsInChildren<PathogenManager>();        
     }
     
-    // Update is called once per frame
     void Update()
     {
         int numTCells = 0;
         foreach(TCellManager manager in tcellManagers)
-        {
             numTCells += manager.RealNumSentinels;
-        }
 
         int numPathogens = 0;
         foreach (PathogenManager manager in pathogenManagers)
-        {
             numPathogens += manager.RealNumPathogens;
-        }
 
         float variation = numTCells + numPathogens;
         variation = numTCells / variation;
@@ -45,8 +38,6 @@ public class InternalVisualizer : MonoBehaviour
         rndr.materials[1].SetFloat("ChangeTextures", draggedVarience);
 
         foreach(Renderer rnd in growingObjs)
-        {
             rnd.material.SetFloat("Grow", draggedVarience);
-        }
     }
 }
