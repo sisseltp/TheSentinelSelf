@@ -6,33 +6,15 @@ using UnityEngine;
 
 public class PathogenManager : MonoBehaviour
 {
+    public AgentsManagerParameters parameters;
+
+
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
     private GameObject prefabPathogen;
-    [Tooltip("Number of the agents to be produced by this manager")]
-    [Range(1, 3000)]
-    [SerializeField]
-    public int nSentinels = 10; // number of them to be made
 
-    [Tooltip("radius to be spawned in from this obects transform")]
-    [Range(0.1f, 1000f)]
-    [SerializeField]
-    private float spawnArea = 1.0f; // area to spawn in 
-    [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
-    [SerializeField]
-    private Vector2 speedRange = new Vector2(90, 100); // variation of speed for them to have
-    [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
-    [Tooltip("Kuramoto, range for noise effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 noiseSclRange = new Vector2(0.01f, 0.5f); // noise Scl to have
-    [Tooltip("Kuramoto, range for the strength of the coupling effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingSclRange = new Vector2(0.2f, 10f); // coupling scl
-    [Tooltip("Kuramoto, range for the scaling the clustering/attraction effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 attractionSclRange = new Vector2(0.2f, 1f); // coupling scl
+
+ 
 
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
@@ -44,13 +26,7 @@ public class PathogenManager : MonoBehaviour
     private List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
    
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
-    [Tooltip("Max age the agents will reach")]
-    [SerializeField]
-    private float MaxAge = 1000; // age limit to kill sentinels
 
-    [Tooltip("Kuramoto Speed Scaler")]
-    [SerializeField]
-    private float speedScl = 3f;
 
     //[HideInInspector]
     public int RealNumPathogens = 0;
@@ -64,31 +40,31 @@ public class PathogenManager : MonoBehaviour
     void Start()
     {
         // create list to hold object
-        sentinels = new GameObject[nSentinels];
+        sentinels = new GameObject[parameters.nSentinels];
         // create list to hold data structs
-        GPUStruct = new GPUCompute.GPUData[nSentinels];
+        GPUStruct = new GPUCompute.GPUData[parameters.nSentinels];
         // create the two lib lists
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
-        GPUOutput = new GPUCompute.GPUOutput[nSentinels];
+        GPUOutput = new GPUCompute.GPUOutput[parameters.nSentinels];
 
         // loop over the nsentinels
-        for (int i=0; i< nSentinels; i++)
+        for (int i=0; i< parameters.nSentinels; i++)
             AddPathogen(i);
     }
 
     public void AddPathogen(int i)
     {
-        if (nSentinels-2 > RealNumPathogens)
+        if (parameters.nSentinels -2 > RealNumPathogens)
         {
-            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
             // instantiate a new sentinel as child and at pos
             GameObject thisSentinel = Instantiate(prefabPathogen, pos, Quaternion.identity, this.transform);
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
             thisSentinel.GetComponentInChildren<GeneticAntigenKey>().Reset();
 
@@ -107,7 +83,7 @@ public class PathogenManager : MonoBehaviour
 
     private void DuplicatePathogen( GameObject pathogen, int duplications=2)
     {
-        if (nSentinels-2 > RealNumPathogens)
+        if (parameters.nSentinels -2 > RealNumPathogens)
         {
             for (int l = 0; l < duplications; l++)
             {
@@ -116,7 +92,7 @@ public class PathogenManager : MonoBehaviour
 
                 // get its kurmto component
                 KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-                kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+                kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
                 // add the object to the list
                 sentinels[RealNumPathogens] = thisSentinel;
@@ -139,7 +115,7 @@ public class PathogenManager : MonoBehaviour
 
     private void Update()
     {
-        if(Time.time > emitionTimer + timeGate && RealNumPathogens < nSentinels)
+        if(Time.time > emitionTimer + timeGate && RealNumPathogens < parameters.nSentinels)
         {
 
             timeGate = Time.time;
@@ -162,7 +138,7 @@ public class PathogenManager : MonoBehaviour
 
                 toRemove.Add(i);
             }
-            else  if (kuramoto.age > MaxAge )
+            else  if (kuramoto.age > parameters.MaxAge )
             {
 
                 kuramoto.age = 0;
@@ -179,7 +155,7 @@ public class PathogenManager : MonoBehaviour
                 if (kuramoto.phase > 1) { kuramoto.phase = kuramoto.phase - 1; }
                 GPUStruct[i].phase = kuramoto.phase;
 
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].GetComponent<Rigidbody>().position;
 
@@ -222,7 +198,7 @@ public class PathogenManager : MonoBehaviour
             else
             {
                 // set the next indx with the limit of agents
-                nxtIndx = Mathf.Clamp( RealNumPathogens,0, nSentinels);
+                nxtIndx = Mathf.Clamp( RealNumPathogens,0, parameters.nSentinels);
             }
             // loop from this indx+1 to the next index  
             for (int p = indx + 1; p <= nxtIndx; p++)
@@ -254,7 +230,7 @@ public class PathogenManager : MonoBehaviour
 
 
 
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
         thisSentinel.transform.position = pos;
 
@@ -262,7 +238,7 @@ public class PathogenManager : MonoBehaviour
         {
             // reset bothe genetic values to random
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
 
             GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
@@ -279,7 +255,7 @@ public class PathogenManager : MonoBehaviour
 
             // add random new sentinel
     
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
             GeneticMovementPathogen genVel = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genVel.Reset();
@@ -307,10 +283,7 @@ public class PathogenManager : MonoBehaviour
             GeneticMovementPathogen genMov = thisSentinel.GetComponent<GeneticMovementPathogen>();
             genMov.Reset();
             genMov.geneticMovement = genVel1.BlendAttributes(Vels);
-
-
-        }
-        
+        } 
     }
 
 #if UNITY_EDITOR

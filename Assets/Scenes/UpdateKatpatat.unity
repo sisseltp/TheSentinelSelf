@@ -12510,6 +12510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   nSentinels: 10
   spawnArea: 20
@@ -14765,21 +14766,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
   tCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  nSentinels: 256
   RealNumSentinels: 0
-  spawnArea: 20
-  speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 4}
-  noiseSclRange: {x: 0.1, y: 0.2}
-  couplingSclRange: {x: 1, y: 3}
-  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 1500
-  speedScl: 1.2
   emitionRate: 4
 --- !u!135 &685113649
 SphereCollider:
@@ -16792,17 +16785,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  nSentinels: 150
-  spawnArea: 11
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 5, y: 8}
-  noiseSclRange: {x: 0.01, y: 0.1}
-  couplingSclRange: {x: 2, y: 3}
-  attractionSclRange: {x: 5, y: 6}
   sentinels: []
-  MaxAge: 4
-  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &954404690
@@ -17388,17 +17373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  nSentinels: 150
-  spawnArea: 11
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 5, y: 8}
-  noiseSclRange: {x: 0.01, y: 0.1}
-  couplingSclRange: {x: 2, y: 3}
-  attractionSclRange: {x: 5, y: 6}
   sentinels: []
-  MaxAge: 4
-  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &1105928081
@@ -17444,6 +17421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
   nSentinels: 10
   spawnArea: 20
@@ -18598,6 +18576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   nSentinels: 10
   spawnArea: 20
@@ -21194,17 +21173,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  nSentinels: 150
-  spawnArea: 11
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 5, y: 8}
-  noiseSclRange: {x: 0.01, y: 0.1}
-  couplingSclRange: {x: 2, y: 3}
-  attractionSclRange: {x: 5, y: 6}
   sentinels: []
-  MaxAge: 4
-  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!1 &1516042819
@@ -23457,21 +23428,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
   tCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  nSentinels: 256
   RealNumSentinels: 0
-  spawnArea: 20
-  speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 4}
-  noiseSclRange: {x: 0.1, y: 0.2}
-  couplingSclRange: {x: 1, y: 3}
-  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 1500
-  speedScl: 1.2
   emitionRate: 4
 --- !u!135 &1796357676
 SphereCollider:
@@ -24567,21 +24530,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
   tCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  nSentinels: 256
   RealNumSentinels: 0
-  spawnArea: 20
-  speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 4}
-  noiseSclRange: {x: 0.1, y: 0.2}
-  couplingSclRange: {x: 1, y: 3}
-  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 1500
-  speedScl: 1.2
   emitionRate: 4
 --- !u!135 &2035026503
 SphereCollider:
@@ -26100,17 +26055,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
   prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  nSentinels: 150
-  spawnArea: 11
-  speedRange: {x: 90, y: 100}
-  couplingRange: {x: 5, y: 8}
-  noiseSclRange: {x: 0.01, y: 0.1}
-  couplingSclRange: {x: 2, y: 3}
-  attractionSclRange: {x: 5, y: 6}
   sentinels: []
-  MaxAge: 4
-  speedScl: -0.5
   RealNumPathogens: 0
   emitionTimer: 10
 --- !u!4 &3850774876630024338
@@ -26157,6 +26104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabSentinel: {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
   nSentinels: 10
   spawnArea: 20
@@ -26351,21 +26299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
   tCell:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  nSentinels: 256
   RealNumSentinels: 0
-  spawnArea: 20
-  speedRange: {x: 110, y: 120}
-  couplingRange: {x: 1, y: 4}
-  noiseSclRange: {x: 0.1, y: 0.2}
-  couplingSclRange: {x: 1, y: 3}
-  attractionSclRange: {x: 1, y: 2}
   sentinels: []
-  MaxAge: 1500
-  speedScl: 1.2
   emitionRate: 15
 --- !u!1 &3942708858654904100
 GameObject:

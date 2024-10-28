@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SentinelManager : MonoBehaviour
 {
+    public AgentsManagerParameters parameters;
+
     [Tooltip("Main sentinel agent")]
     [SerializeField]
     private GameObject prefabSentinel;
@@ -17,6 +19,7 @@ public class SentinelManager : MonoBehaviour
     [Range(0.1f, 100f)]
     [SerializeField]
     private float spawnArea = 1.0f; // area to be spawned in
+
     [Range(0f, 20f)]
     [SerializeField]
     private float speedScl = 2;

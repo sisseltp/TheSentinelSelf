@@ -6,37 +6,15 @@ using UnityEngine;
 
 public class TCellManager : MonoBehaviour
 {
+    public AgentsManagerParameters parameters;
+
     [Tooltip("The gameobject for each agent in this manager")]
     [SerializeField]
     private GameObject[] tCell; // holds the sentinel prefab
-    [Tooltip("Number of the agents to be produced by this manager")]
-    [Range(1, 3000)]
-    [SerializeField]
-    public int nSentinels = 10; // number of them to be made
+    
     private int MaxSentinels = 15;
     [HideInInspector]
     public int RealNumSentinels = 0;
-
-    [Tooltip("radius to be spawned in from this obects transform")]
-    [Range(0.1f, 1000f)]
-    [SerializeField]
-    private float spawnArea = 1.0f; // area to spawn in 
-    [Tooltip("Kuramoto speed, measured in bpm, x=min y=max")]
-    [SerializeField]
-    private Vector2 speedRange = new Vector2(0, 1); // variation of speed for them to have  
-    [Tooltip("Kuramoto, range for the max distance for the effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingRange = new Vector2(1, 10); // coupling range to have
-    [Tooltip("Kuramoto, range for noise effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 noiseSclRange = new Vector2(0.01f, 0.5f); // noise Scl to have
-    [Tooltip("Kuramoto, range for the strength of the coupling effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 couplingSclRange = new Vector2(0.2f, 10f); // coupling scl
-    [Tooltip("Kuramoto, range for the scaling the clustering/attraction effect, x=min y=max")]
-    [SerializeField]
-    private Vector2 attractionSclRange = new Vector2(0.2f, 1f); // coupling scl
-
     [HideInInspector]
     public GameObject[] sentinels; //list to hold the sentinels
     [HideInInspector]
@@ -48,20 +26,13 @@ public class TCellManager : MonoBehaviour
     private List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
 
     private List<Genetics.Antigen> antigenLib;
-    [Tooltip("Max age the agents will reach")]
-    [SerializeField]
-    private float MaxAge = 1000; // age limit to kill sentinels
-
-    [SerializeField]
-    private float speedScl = 3f;
 
     [SerializeField]
     private float emitionRate = 4;
 
-    // Start is called before the first frame update
     void Start()
     {
-        MaxSentinels = Mathf.FloorToInt(nSentinels * 1.5f);
+        MaxSentinels = Mathf.FloorToInt(parameters.nSentinels * 1.5f);
 
 
         // create list to hold object
@@ -76,10 +47,10 @@ public class TCellManager : MonoBehaviour
         GPUOutput = new GPUCompute.GPUOutput[MaxSentinels];
 
         // loop over the nsentinels
-        for (int i=0; i<nSentinels; i++)
+        for (int i=0; i< parameters.nSentinels; i++)
         {
 
-            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere*spawnArea;
+            Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere* parameters.spawnArea;
 
             int randindx = UnityEngine.Random.Range(0, tCell.Length);
 
@@ -88,7 +59,7 @@ public class TCellManager : MonoBehaviour
 
             // get its kurmto component
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
             thisSentinel.GetComponent<GeneticAntigenKey>().Reset();
 
@@ -102,7 +73,7 @@ public class TCellManager : MonoBehaviour
 
 
         }
-        RealNumSentinels = nSentinels;
+        RealNumSentinels = parameters.nSentinels;
 
         StartCoroutine(emition(emitionRate));
     }
@@ -112,7 +83,7 @@ public class TCellManager : MonoBehaviour
         {
             if (CanAddCell())
             {
-                Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+                Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
                 int randindx = UnityEngine.Random.Range(0, tCell.Length);
 
@@ -121,7 +92,7 @@ public class TCellManager : MonoBehaviour
 
                 // get its kurmto component
                 KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-                kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+                kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
                 AddTCell(thisSentinel);
             }
@@ -144,8 +115,8 @@ public class TCellManager : MonoBehaviour
             KuramotoAffectedAgent kuramoto = sentinels[i].GetComponent<KuramotoAffectedAgent>();
             
             // if older than age 
-            if (kuramoto.dead || kuramoto.age > MaxAge) {
-                if (i > nSentinels)
+            if (kuramoto.dead || kuramoto.age > parameters.MaxAge) {
+                if (i > parameters.nSentinels)
                 {
 
                     toRemove.Add(i);
@@ -175,7 +146,7 @@ public class TCellManager : MonoBehaviour
                 GPUStruct[i].played = kuramoto.played;
                 GPUStruct[i].phase = kuramoto.phase;
 
-                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+                sentinels[i].GetComponent<Rigidbody>().AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
 
                 GPUStruct[i].pos = sentinels[i].transform.position;
 
@@ -244,7 +215,7 @@ public class TCellManager : MonoBehaviour
 
         thisSentinel.GetComponent<Renderer>().material.SetFloat("KeyTrigger", 0);
 
-        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * spawnArea;
+        Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
         thisSentinel.transform.position = pos;
 
@@ -252,7 +223,7 @@ public class TCellManager : MonoBehaviour
         {
             // reset bothe genetic values to random
             KuramotoAffectedAgent kuramoto = thisSentinel.GetComponent<KuramotoAffectedAgent>();
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
 
             GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
             genVel.Reset();
@@ -271,7 +242,7 @@ public class TCellManager : MonoBehaviour
             Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].GetComponent<GeneticMovementSentinel>().geneticMovement, kuramoto.fitness);
             GenVelLib.Add(vels);
             // add random new sentinel
-            kuramoto.Setup(noiseSclRange, couplingRange, speedRange, couplingSclRange, attractionSclRange, 0.2f);// setup its setting to randomize them
+            kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
             
             GeneticMovementTcell genVel = thisSentinel.GetComponent<GeneticMovementTcell>();
             genVel.Reset();
