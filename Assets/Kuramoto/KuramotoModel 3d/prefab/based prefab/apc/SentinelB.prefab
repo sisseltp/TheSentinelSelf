@@ -246,11 +246,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: -604599453256533031}
   cycleLength: 10
   genSpeedScl: 35
-  targetSpeedScl: 40
   geneticMovement: []
+  step: 0
+  lastPhase: 0
+  notKeyed: 1
+  speedScl: 0.5
   targeting: 1
+  target: {x: 0, y: 0, z: 0}
+  targetSpeedScl: 40
   keys: 0
   NumKeysToCollect: 12
   origDrag: 0
@@ -333,11 +339,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff7b397152b02c428779922c7ab1eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 1911477723890854107}
   renderer: {fileID: 8669686465503524168}
-  kuramotoAffectedAgent: {fileID: 3914187097377177630}
-  geneticMovementSentinel: {fileID: -2003108449324412811}
+  rigidBody: {fileID: 1911477723890854107}
+  kuramoto: {fileID: 3914187097377177630}
+  geneticMovement: {fileID: -2003108449324412811}
   fosilising: {fileID: -747346939756499596}
+  apcSong: {fileID: 3917101715563697206}
 --- !u!114 &3914187097377177630
 MonoBehaviour:
   m_ObjectHideFlags: 0

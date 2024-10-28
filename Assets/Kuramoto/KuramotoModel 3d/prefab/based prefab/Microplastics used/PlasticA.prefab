@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: eb9b971a898adda468e92ffcbc7c2500, type: 2}
     - target: {fileID: 919132149155446097, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_Name
-      value: low-poly-microplastics3 Variant
+      value: PlasticA
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
       propertyPath: m_TagString
@@ -80,6 +80,11 @@ PrefabInstance:
 --- !u!1 &9038299800857035272 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
+  m_PrefabInstance: {fileID: 8191788348300099417}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7380979467071448029 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 8b3ef40143d661c4bb86f95c39c5a381, type: 3}
   m_PrefabInstance: {fileID: 8191788348300099417}
   m_PrefabAsset: {fileID: 0}
 --- !u!54 &7866063629140690938
@@ -111,6 +116,46 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.02
   m_Center: {x: -0.00038149813, y: 0.00019115253, z: 0.0023625789}
+--- !u!114 &68250410301167932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038299800857035272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bea70e27c51216418127d5bd51157e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 7380979467071448029}
+  rigidBody: {fileID: 7866063629140690938}
+  kuramoto: {fileID: 325246557824574683}
+  geneticMovement: {fileID: 2351948123429560839}
+--- !u!114 &325246557824574683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038299800857035272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 752ac7befa9fd0c4daa8dc93837953a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedBPM: 0
+  speed: 0.4833633
+  phase: 0.4654054
+  couplingRange: 30
+  noiseScl: 0.08
+  coupling: 7
+  speedVariation: 1.05
+  attractionSclr: 0.5
+  fitness: 0
+  played: 0
+  age: 0
+  dead: 0
 --- !u!114 &2351948123429560839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,34 +168,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3772cc60de9de8418908ad8e52c6147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 68250410301167932}
   cycleLength: 10
-  speedScl: 5
+  genSpeedScl: 0.5
   geneticMovement: []
+  step: 0
+  lastPhase: 0
+  notKeyed: 1
+  speedScl: 5
   attachedGO: {fileID: 3010071362858964238, guid: d65dc05cfc2798f4cb97bfb5731e0937, type: 3}
   origin: {x: 0, y: 0, z: 0}
   numToKill: 2
   maxDrag: 0.6
---- !u!114 &5425442252488360563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9038299800857035272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32d4856c2ae0306479e0c2ff47364824, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0.48336333
-  speedBPM: 0
-  phase: 0.4654054
-  coherenceRadius: 0
-  couplingRange: 30
-  noiseScl: 0.08
-  coupling: 7
-  speedVariation: 1.05
-  attractionSclr: 0.5
-  dead: 0
-  age: 0
-  fitness: 0

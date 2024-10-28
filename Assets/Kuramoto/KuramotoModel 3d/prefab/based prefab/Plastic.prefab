@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6554403188448632231}
   - component: {fileID: 6554403188448632224}
   - component: {fileID: 6554403188448632230}
+  - component: {fileID: 3768069050237267817}
   - component: {fileID: 814553353071685709}
   - component: {fileID: 1858646717515602377}
   - component: {fileID: 3060412162202455232}
@@ -77,20 +78,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32d4856c2ae0306479e0c2ff47364824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 1, g: 0.032075405, b: 0.9829266, a: 1}
-  col1: {r: 0, g: 1, b: 0.1410408, a: 1}
-  speed: 0.48336333
   speedBPM: 0
+  speed: 0.48336333
   phase: 0.4654054
-  coherenceRadius: 0
   couplingRange: 30
   noiseScl: 0.08
   coupling: 7
   speedVariation: 1.05
   attractionSclr: 0.5
-  dead: 0
-  age: 0
   fitness: 0
+  played: 0
+  age: 0
+  dead: 0
+--- !u!114 &3768069050237267817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554403188448632226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 752ac7befa9fd0c4daa8dc93837953a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedBPM: 0
+  speed: 0
+  phase: 0
+  couplingRange: 1
+  noiseScl: 1
+  coupling: 0.5
+  speedVariation: 0.1
+  attractionSclr: 0.5
+  fitness: 0
+  played: 0
+  age: 0
+  dead: 0
 --- !u!33 &814553353071685709
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -157,3 +180,5 @@ MonoBehaviour:
   geneticMovement: []
   attachedGO: {fileID: 5719062151264495361, guid: 4de8b48df704ce04f8af19230cb97795, type: 3}
   origin: {x: 0, y: 0, z: 0}
+  numToKill: 10
+  maxDrag: 0.4

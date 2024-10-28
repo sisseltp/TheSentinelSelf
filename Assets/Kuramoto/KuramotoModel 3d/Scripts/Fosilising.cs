@@ -13,14 +13,11 @@ public class Fosilising : MonoBehaviour
     [SerializeField]
     private GameObject fosil;
 
-
     private bool collided = false;
 
     private Rigidbody rb;
 
     private float originalDrag;
-
-    
 
     private void Start()
     {
@@ -31,22 +28,24 @@ public class Fosilising : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-  
-        if(collision.gameObject.tag == "Terrain" && !collided && this.enabled)
+        if(collision.gameObject.CompareTag("Terrain") && !collided && this.enabled)
         {
             TimeOut();
             collided = true;
         }
     }
+
     Bounds GetMaxBounds(GameObject g)
     {
-        var renderers = g.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return new Bounds(g.transform.position, Vector3.zero);
+        Renderer[] renderers = g.GetComponentsInChildren<Renderer>();
+
+        if (renderers.Length == 0) 
+            return new Bounds(g.transform.position, Vector3.zero);
+
         var b = renderers[0].bounds;
         foreach (Renderer r in renderers)
-        {
             b.Encapsulate(r.bounds);
-        }
+
         return b;
     }
 
@@ -54,40 +53,29 @@ public class Fosilising : MonoBehaviour
     {
         IEnumerator coroutine = TimedDisolve(fadeTime);
         StartCoroutine(coroutine);
-        
     }
 
     private IEnumerator TimedDisolve(float waitTime)
     {
-        
         if (rb == null)
-        {
             rb = GetComponent<Rigidbody>();
-        }
+
         rb.isKinematic = true;
         Bounds B = GetMaxBounds(gameObject);
         GameObject thisFosil = Instantiate(fosil, B.center - new Vector3(0, -0.5f, 0), new Quaternion(0, 0, 0, 0));
         thisFosil.transform.localScale = B.size * 1.2f;
-        
-
 
         yield return new WaitForSeconds(waitTime);
         
-       
-
         foreach (Transform p in GetComponent<GeneticMovementSentinel>().plastics)
-        {
             Destroy(p.gameObject);
-        }
 
         GetComponent<GeneticMovementSentinel>().plastics.Clear();
 
         GeneticAntigenKey[] antigens = GetComponentsInChildren<GeneticAntigenKey>();
 
         foreach (GeneticAntigenKey K in GetComponent<GeneticMovementSentinel>().digestAntigens)
-        {
             Destroy(K.gameObject);
-        }
 
         GetComponent<GeneticMovementSentinel>().digestAntigens.Clear();
 
@@ -98,8 +86,5 @@ public class Fosilising : MonoBehaviour
         this.enabled = false;
         collided = false;
         rb.isKinematic = false;
-
     }
-
-
 }

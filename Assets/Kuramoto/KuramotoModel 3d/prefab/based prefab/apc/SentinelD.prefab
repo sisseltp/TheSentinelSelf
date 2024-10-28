@@ -444,11 +444,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff7b397152b02c428779922c7ab1eec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody: {fileID: 3279415286626361967}
   renderer: {fileID: 3437196715197562134}
-  kuramotoAffectedAgent: {fileID: 5401913748539114236}
-  geneticMovementSentinel: {fileID: 5814697880065516071}
+  rigidBody: {fileID: 3279415286626361967}
+  kuramoto: {fileID: 5401913748539114236}
+  geneticMovement: {fileID: 5814697880065516071}
   fosilising: {fileID: -8793455779029428887}
+  apcSong: {fileID: 2426609259906592573}
 --- !u!114 &2129739940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,30 +485,6 @@ MonoBehaviour:
   rolloff: 1
   state: 0
   audioMixerGroup: {fileID: 6301782089671805052, guid: 4ccc21ebc56689191839dd977564e3ee, type: 2}
---- !u!114 &5814697880065516071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7014643093506636781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cycleLength: 10
-  genSpeedScl: 35
-  targetSpeedScl: 40
-  geneticMovement: []
-  targeting: 1
-  keys: 0
-  NumKeysToCollect: 12
-  origDrag: 0
-  rootBone: {fileID: 8164300466720681629}
-  digestAntigens: []
-  plastics: []
-  currentBehavior: 1
 --- !u!114 &5401913748539114236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,6 +509,36 @@ MonoBehaviour:
   played: 0
   age: 0
   dead: 0
+--- !u!114 &5814697880065516071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014643093506636781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8f7cc0091db274390b4d686120a479, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: -1844520038115134994}
+  cycleLength: 10
+  genSpeedScl: 35
+  geneticMovement: []
+  step: 0
+  lastPhase: 0
+  notKeyed: 1
+  speedScl: 0.5
+  targeting: 1
+  target: {x: 0, y: 0, z: 0}
+  targetSpeedScl: 40
+  keys: 0
+  NumKeysToCollect: 12
+  origDrag: 0
+  rootBone: {fileID: 8164300466720681629}
+  digestAntigens: []
+  plastics: []
+  currentBehavior: 1
 --- !u!135 &4326261346371601037
 SphereCollider:
   m_ObjectHideFlags: 0

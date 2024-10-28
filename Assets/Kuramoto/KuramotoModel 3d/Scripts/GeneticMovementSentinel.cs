@@ -3,46 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum APCBehavior {CarryingAntigens, SeekingPathogens}
-public class GeneticMovementSentinel : MonoBehaviour
+public class GeneticMovementSentinel : GeneticMovementTarget
 {
-    [Tooltip("How many cycles to contain")]
-    [SerializeField]
-    private int cycleLength = 10; // number of steps in cylcle
-    [Tooltip("Scaler for the genetic speed")]
-    [SerializeField]
-    private float genSpeedScl = 0.5f; // sclr for the speed
-    [Tooltip("Scaler for the target speed")]
-    [SerializeField]
-    private float targetSpeedScl = 1.5f; // sclr for the speed
-    [HideInInspector]
-    public Vector3[] geneticMovement; // list to hold vels in
-
-    private Vector3 thisGenVel;
-
-    private KuramotoAffectedAgent kuramoto; // kuramoto obj
-
-    private APCSong song;
-
-    private Rigidbody rb;// rigidbody
-
-    private int step = 0;// to hold the steps number
-
-    private float lastPhase = 0;// holds the last phase
-
-    private Vector3 target;
-
-    [HideInInspector]
-    public bool targeting = true;
-
     private SentinelManager manager;
-
     public int keys = 0;
-
     public int NumKeysToCollect = 4;
-
-
     public float origDrag = 0;
-
     public Transform rootBone;
 
     [HideInInspector]
@@ -52,164 +18,110 @@ public class GeneticMovementSentinel : MonoBehaviour
     public List<Transform> plastics;
 
     [Tooltip("Current stage of the APC in its cycle of activities")]
-    public APCBehavior currentBehavior = APCBehavior.SeekingPathogens; 
+    public APCBehavior currentBehavior = APCBehavior.SeekingPathogens;
 
-    // Start is called before the first frame update
-    void Start()
+    private int tcellHits = 0;
+
+    public override void Start()
     {
         digestAntigens = new List<GeneticAntigenKey>();
         plastics = new List<Transform>();
-
-        // gets this APC's kurmto
-        kuramoto = GetComponent<KuramotoAffectedAgent>();
-
-        // get song manager
-        song = GetComponent<APCSong>();
-
-        // gets this rb
-        rb = GetComponent<Rigidbody>();
-        origDrag = rb.drag;
-        // sets it to a new vec3 list for vels
         geneticMovement = new Vector3[cycleLength];
-
         manager = GetComponentInParent<SentinelManager>();
+        origDrag = agent.rigidBody.drag;
 
-        Reset();
+        base.Start();
     }
-    Vector3 point;
-    // Update is called once per frame
-    void Update()
+
+    public override void Reset()
     {
-        // if phase is less than last phase (back to 0 from 1)
-        if (kuramoto.phase < lastPhase) { 
-            step++;// add a step
-            if (step >= cycleLength)// if greater than list length, back to 0
-            {
-                step = 0;
-            }
-            thisGenVel = geneticMovement[step];
-        }
+        base.Reset();
+
+        agent.rigidBody.drag = origDrag;
+
+        target = manager.pathogenManagers[Random.Range(0, manager.pathogenManagers.Length)].transform.position;
+        targeting = true;
+    }
+
+    public override void Update()
+    {
+        if (agent.kuramoto.phase < lastPhase) 
+            step = (step + 1) % cycleLength;
 
         Vector3 vel = Vector3.zero ;
 
-        // get vel from this steps genmov, mult by phase and scl
-        if (targeting) { // if theres an object in the way add upward force
+        if (targeting)  
             vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
-        }
 
-        Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
+        Ray forward = new Ray(transform.position, Vector3.Normalize(agent.rigidBody.velocity) + Vector3.down * 0.5f);
 
-        RaycastHit hit;
-        if (Physics.Raycast(forward, out hit, 20))
-        {
-            if (hit.transform.tag == "Terrain")
-            {
+        if (Physics.Raycast(forward, out RaycastHit hit, 20))
+            if (hit.transform.CompareTag("Terrain"))
                 vel += Vector3.up * targetSpeedScl * 3;
-            }
-        }
 
-        vel += thisGenVel * genSpeedScl;
-        vel *= kuramoto.phase;
+        vel += geneticMovement[step] * genSpeedScl;
+        vel *= agent.kuramoto.phase;
 
-        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
-        // set last phase to phase
-        lastPhase = kuramoto.phase;
+        agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
+
+        lastPhase = agent.kuramoto.phase;
     }
 
-    // reset randomizes the list of vels
-    public void Reset()
-    {
-        for (int i = 0; i < geneticMovement.Length; i++)
-        {
-            geneticMovement[i] = Random.insideUnitSphere;
-        }
-        rb.drag = origDrag;
-        
+    
 
-        int indx = Random.Range(0, manager.PathogenEmitters.Length);
+    
 
-        target = manager.PathogenEmitters[indx];
-        targeting = true;
-
-    }
-    private int tcellHits = 0;
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Tcell")
-        {
+        if(collision.gameObject.CompareTag("Tcell"))
             tcellHits++;
-        }else if (collision.gameObject.tag == "Terrain" && rb.useGravity)
-        {
+        else if (collision.gameObject.CompareTag("Terrain") && agent.rigidBody.useGravity)
             GetComponent<Fosilising>().enabled = true;
-        }
     }
+
     private void OnTriggerEnter(Collider collision)
     {
-
-         if (collision.gameObject.tag == "PathogenEmitter")
-        {
+        if (collision.gameObject.CompareTag("PathogenEmitter") || collision.gameObject.CompareTag("Lymphonde"))
             targeting = false;
-            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the pathogen emitter
-        }
-        else if (collision.gameObject.tag == "Lymphonde")
-        {
-            targeting = false;
-            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  reaches the lymph node 
-        }
-
     }
 
-   
     private void OnTriggerStay(Collider collision)
     {
-
-        if (collision.gameObject.tag == "PathogenEmitter")
+        if (collision.gameObject.CompareTag("PathogenEmitter"))
         {
             if (keys >= NumKeysToCollect && !targeting)
             {
                 int indx = Random.Range(0, manager.Lymphondes.Length);
                 
-
                 target = manager.Lymphondes[indx];
                 targeting = true;
                 tcellHits = 0;
 
                 currentBehavior = APCBehavior.CarryingAntigens;
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
-
             }
             else if( keys< NumKeysToCollect)
-            {
                 targeting = false;
-            }
-            
         }
-        else if (collision.gameObject.tag == "Lymphonde" && tcellHits > 10 && !targeting)
+        else if (collision.gameObject.CompareTag("Lymphonde") && tcellHits > 10 && !targeting)
         {
+            int indx = Random.Range(0, manager.pathogenManagers.Length);
 
-            int indx = Random.Range(0, manager.PathogenEmitters.Length);
-
+            target = manager.pathogenManagers[indx].transform.position;
             targeting = true;
 
-            target = manager.PathogenEmitters[indx];
-
-            foreach(GeneticAntigenKey key in digestAntigens)
-            {
+            foreach (GeneticAntigenKey key in digestAntigens)
                 key.TimeOut();
-            }
 
             digestAntigens.Clear();
             keys = 0;
             currentBehavior = APCBehavior.SeekingPathogens;
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
         }
-
     }
 
     private void OnTriggerExit(Collider other)
     {
         targeting = true;
     }
-
-
 }

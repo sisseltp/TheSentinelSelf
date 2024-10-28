@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7986584347249604642}
   - component: {fileID: -2629601526590107559}
   - component: {fileID: 677060231279357479}
+  - component: {fileID: 7406274280803019904}
   m_Layer: 0
   m_Name: PathogenA
   m_TagString: Pathogen
@@ -95,7 +96,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4021970835733115310}
-  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.77
@@ -114,25 +115,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752ac7befa9fd0c4daa8dc93837953a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col0: {r: 1, g: 0, b: 0, a: 0}
-  col1: {r: 0.09913397, g: 0, b: 1, a: 0}
   speedBPM: 0
   speed: 0
   phase: 0
-  cohPhi: 0
-  coherenceRadius: 0
   couplingRange: 2.3
   noiseScl: 1
   coupling: 0.5
   speedVariation: 0.1
   attractionSclr: 0.5
-  Connections: 0
-  played: 0
-  dead: 0
   fitness: 0
+  played: 0
   age: 0
-  sumx: 0
-  sumy: 0
+  dead: 0
 --- !u!54 &-5416354910346406675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -161,9 +155,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4edd38e0b75c1534482bfb36ebe2cac8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 7406274280803019904}
   cycleLength: 10
-  speedScl: 15
+  genSpeedScl: 0.5
   geneticMovement: []
+  step: 0
+  lastPhase: 0
+  notKeyed: 1
+  speedScl: 15
   maxKeys: 10
 --- !u!82 &-2629601526590107559
 AudioSource:
@@ -316,6 +315,23 @@ MonoBehaviour:
   pitchMultiplier: 1
   maxVolume: 1
   currentVolume: 1
+--- !u!114 &7406274280803019904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4021970835733115310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2197dbbd5043f4a4b8a5677091593eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 3229104410298011771}
+  rigidBody: {fileID: -5416354910346406675}
+  kuramoto: {fileID: 4872389133939868052}
+  geneticMovement: {fileID: 7986584347249604642}
+  geneticAntigenKey: {fileID: 238140882530524130}
 --- !u!1001 &540398960029899901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -388,6 +404,10 @@ PrefabInstance:
       value: Antigen
       objectReference: {fileID: 0}
     - target: {fileID: 8579018948218109992, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8579018948218109992, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: be6639181b4f2402aa79467c358265af, type: 2}
@@ -403,6 +423,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7898435213921547592, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
   m_PrefabInstance: {fileID: 540398960029899901}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &238140882530524130 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 302280087198779295, guid: ebb30120ad8f64da6b9beff57370d60d, type: 3}
+  m_PrefabInstance: {fileID: 540398960029899901}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8322910020565961215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab197fd7c7718234d9bcef70c141ac53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6375970403941845576
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,102 +3,51 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class GeneticMovementTcell : MonoBehaviour
+public class GeneticMovementTcell : GeneticMovementTarget
 {
-    [Tooltip("How many cycles to contain")]
-    [SerializeField]
-    private int cycleLength = 10; // number of steps in cylcle
-    [Tooltip("Scaler for the genetic speed")]
-    [SerializeField]
-    private float genSpeedScl = 0.5f; // sclr for the speed
-    [Tooltip("Scaler for the target speed")]
-    [SerializeField]
-    private float targetSpeedScl = 1.5f; // sclr for the speed
-    [HideInInspector]
-    public Vector3[] geneticMovement; // list to hold vels in
+    private TCellManager manager;
 
-    private Vector3 thisGenVel;// this steps velocity
-
-    private KuramotoAffectedAgent kuramoto; // kuramoto obj
-
-    private Rigidbody rb;// rigidbody
-
-    private int step = 0;// to hold the steps number
-
-    private float lastPhase = 0;// holds the last phase for a gate
-   // [HideInInspector]
-    public Vector3 target;// the target to aim for
-
-    private TCellManager manager;//its manager
     [Tooltip("Shader to compare keys")]
     [SerializeField]
     private ComputeShader compare;
 
-    private GeneticAntigenKey thisAnti;
-    
-    public bool notKeyed = true;
-
-    private bool targeting = true;
-
-    void Start()
+    public override void Start()
     {
-        kuramoto = GetComponent<KuramotoAffectedAgent>();
-        rb = GetComponent<Rigidbody>();
-
-        geneticMovement = new Vector3[cycleLength];
-
-        for(int i=0; i<cycleLength; i++)
-            geneticMovement[i] = Random.insideUnitSphere;
+        base.Start();
 
         manager = GetComponentInParent<TCellManager>();
 
         if (notKeyed)
             target = transform.parent.position;
-        
-         thisAnti = gameObject.GetComponent<GeneticAntigenKey>();
     }
     
-    void Update()
+    public override void Update()
     {
-        // if phase is less than last phase (back to 0 from 1)
-        if (kuramoto.phase < lastPhase) 
+        if (agent.kuramoto.phase < lastPhase)
+            step = (step + 1) % cycleLength;
+        else if (agent.kuramoto.phase == lastPhase)
         {
-            step++;// add a step
-            if (step >= cycleLength) 
-                step = 0;
-        } 
-        else if (kuramoto.phase == lastPhase)
             Destroy(gameObject);
+            return;
+        }
+            
 
-        thisGenVel = geneticMovement[step];
+        Vector3 vel = geneticMovement[step] * genSpeedScl;
 
-         // get vel from this steps genmov, mult by phase and scl
-        Vector3 vel =   thisGenVel * genSpeedScl;
         if (targeting)
             vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
 
-        vel *= kuramoto.phase;
-               
-        // add the vel to the rb
-        rb.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
+        vel *= agent.kuramoto.phase;
+        agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
-       // set last phase to phase
-        lastPhase = kuramoto.phase;
-    }
-
-    // reset randomizes the list of vels
-    public void Reset()
-    {
-        for (int i = 0; i < geneticMovement.Length; i++)
-            geneticMovement[i] = Random.insideUnitSphere;   
+        lastPhase = agent.kuramoto.phase;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Kill")
         {
-            kuramoto.dead = true;
+            agent.kuramoto.dead = true;
         }
         else if (collision.gameObject.tag == "Player")//if hits player
         {
@@ -144,8 +93,8 @@ public class GeneticMovementTcell : MonoBehaviour
                             {
                                 // create a replica
                                 TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
-                                replica.geneticMovementTcell.notKeyed = false;
-                                replica.geneticMovementTcell.target = target;
+                                replica.geneticMovement.notKeyed = false;
+                                (replica.geneticMovement as GeneticMovementTarget).target = target;
                                 // add new tcell to manager
                                 manager.AddTCell(replica);
                             }
@@ -237,7 +186,7 @@ public class GeneticMovementTcell : MonoBehaviour
     {
         AntigenKeys[] keys = new AntigenKeys[antigens.Length + 1];
         
-        keys[0].SetupKey(thisAnti.antigen.Key);
+        keys[0].SetupKey((agent as TCell).geneticAntigenKey.antigen.Key);
 
         for (int i=1; i<keys.Length; i++)
             if (antigens[i - 1].antigen.Key != null)

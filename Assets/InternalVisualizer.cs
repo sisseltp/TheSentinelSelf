@@ -29,7 +29,7 @@ public class InternalVisualizer : MonoBehaviour
 
         int numPathogens = 0;
         foreach (PathogenManager manager in pathogenManagers)
-            numPathogens += manager.RealNumPathogens;
+            numPathogens += manager.RealAmountPathogens;
 
         float variation = numTCells + numPathogens;
         variation = numTCells / variation;

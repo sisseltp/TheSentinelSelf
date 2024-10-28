@@ -7,6 +7,9 @@ public class Genetics
 {
     public struct GenVel
     {
+        public Vector3[] Vels;
+        public float fitness;
+
         public GenVel(Vector3[] vels, float fit = 0)
         {
             Vels = vels;
@@ -18,35 +21,26 @@ public class Genetics
             Vector3[] newVels = new Vector3[Vels.Length];
             for (int i = 0; i < newVels.Length; i++)
             {
-
                 float rand = UnityEngine.Random.value;
 
                 if (rand < 0.33f)
-                {
                     newVels[i] = Vels[i];
-                }
                 else if (rand < 0.66f)
-                {
                     newVels[i] = otherVels[i];
-                }
                 else
-                {
                     newVels[i] = UnityEngine.Random.insideUnitSphere;
-                }
-
             }
+
             return newVels;
         }
-
-        public Vector3[] Vels;
-        public float fitness;
     }
+
     // struct to holg gene kurmto data
     public struct GenKurmto
     {
         public float[] Settings;
         public float fitness;
-        // constructor 
+
         public GenKurmto(float speed, float noiseScl, float coupling, float couplingRange, float attractionScl, float fit)
         {
             Settings = new float[5];
@@ -63,7 +57,6 @@ public class Genetics
             float[] newSetting = new float[Settings.Length];
             for (int i = 0; i < newSetting.Length; i++)
             {
-
                 float rand = UnityEngine.Random.value;
 
                 if (rand < 0.5f)
@@ -92,10 +85,9 @@ public class Genetics
                 Key = new int[5];
 
                 for(int i=0; i<Key.Length; i++)
-                {
                     Key[i] = UnityEngine.Random.Range(0, 10);
-                }
             }
+
             fitness = fit;
         }
 

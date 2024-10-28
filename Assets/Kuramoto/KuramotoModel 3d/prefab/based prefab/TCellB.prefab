@@ -131,13 +131,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc756304b44320942baf6061fa8b10dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 1730273845510685423}
   cycleLength: 10
   genSpeedScl: 5
-  targetSpeedScl: 15
   geneticMovement: []
-  target: {x: 0, y: 0, z: 0}
-  compare: {fileID: 7200000, guid: 3f6cf722db9dba94a9d5581c53aa8c38, type: 3}
+  step: 0
+  lastPhase: 0
   notKeyed: 1
+  speedScl: 0.5
+  targeting: 1
+  target: {x: 0, y: 0, z: 0}
+  targetSpeedScl: 15
+  compare: {fileID: 7200000, guid: 3f6cf722db9dba94a9d5581c53aa8c38, type: 3}
 --- !u!114 &1416988187725681835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,10 +179,10 @@ MonoBehaviour:
   coupling: 0.5
   speedVariation: 0.1
   attractionSclr: 0.5
-  played: 0
-  dead: 0
   fitness: 0
+  played: 0
   age: 0
+  dead: 0
 --- !u!114 &1730273845510685423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,10 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750ba806d9c1c42409b3e5beab94117c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  geneticAntigenKey: {fileID: 1416988187725681835}
-  geneticMovementTcell: {fileID: -1509221153179686947}
-  geneticMovementSentinel: {fileID: 0}
-  kuramotoAffectedAgent: {fileID: 1010303308904772618}
-  kuramotoAffecterAgent: {fileID: 0}
   renderer: {fileID: 5111818174461018370}
-  rigidbody: {fileID: -1083921816534582082}
+  rigidBody: {fileID: -1083921816534582082}
+  kuramoto: {fileID: 1010303308904772618}
+  geneticMovement: {fileID: -1509221153179686947}
+  geneticAntigenKey: {fileID: 1416988187725681835}
