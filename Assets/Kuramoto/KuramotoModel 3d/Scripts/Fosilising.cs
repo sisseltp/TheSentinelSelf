@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.CameraSystem;
 using UnityEngine;
 
 public class Fosilising : MonoBehaviour
@@ -57,6 +58,9 @@ public class Fosilising : MonoBehaviour
 
     private IEnumerator TimedDisolve(float waitTime)
     {
+        // TODO: @Neander: This is where the Sentinel becomes an egg
+        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelBecomesEgg, transform, null));
+        
         if (rb == null)
             rb = GetComponent<Rigidbody>();
 

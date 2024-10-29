@@ -1,12 +1,9 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.InteropServices;
 using System.Linq;
 using UnityEngine.Rendering;
-using Unity.Collections;
-using Unity.Rendering;
 
 public class GPUCompute : MonoBehaviour
 {
@@ -41,6 +38,14 @@ public class GPUCompute : MonoBehaviour
     private bool Pcomputed = false;
     private bool Scomputed = false;
     private bool Bcomputed = false;
+    
+    private ComputeBuffer sentinelBuffer;
+    private ComputeBuffer BiomeBuffer;
+    private ComputeBuffer plasticBuffer;
+    private ComputeBuffer sentinelBufferOut;
+    private ComputeBuffer BiomeBufferOut;
+    private ComputeBuffer plasticBufferOut;
+    
     public struct GPUData
     {
         public float connections;
@@ -102,17 +107,6 @@ public class GPUCompute : MonoBehaviour
         cDT = Time.deltaTime;
 
         StartCoroutine(UpdateTextureFromComputeASync());
-    }
-
-    private void Update()
-    {
-        //LinkData();
-
-        //UpdateTextureFromCompute();
-
-        //SetData();
-        //timer = Time.realtimeSinceStartup;
-        //Debug.Log(pathogenData[0].phase);
     }
 
     private void SetData()
@@ -266,54 +260,6 @@ public class GPUCompute : MonoBehaviour
         TexResolution = pathogenData.Length + sentinelData.Length + plasticData.Length;
     }
 
-
-    private void UpdateTextureFromCompute()
-    {
-        rt = new RenderTexture(TexResolution, 1, 0);
-        rt.enableRandomWrite = true;
-        RenderTexture.active = rt;
-
-        ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUData)));
-        sentinelBuffer.SetData(sentinelData);
-
-        ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUData)));
-        BiomeBuffer.SetData(pathogenData);
-
-        ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
-        plasticBuffer.SetData(plasticData);
-
-        int UpdateBiome = shader.FindKernel("BiomeUpdate");
-        //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
-
-        shader.SetTexture(UpdateBiome, "Result", rt);
-        shader.SetBuffer(UpdateBiome, "sentinelData", sentinelBuffer);
-        shader.SetBuffer(UpdateBiome, "biomeData", BiomeBuffer);
-        shader.SetBuffer(UpdateBiome, "plasticData", plasticBuffer);
-        shader.SetFloat("dt", Time.deltaTime);
-
-        shader.Dispatch(UpdateBiome, TexResolution, 1, 1);
-
-        BiomeBuffer.GetData(pathogenData);
-        sentinelBuffer.GetData(sentinelData);
-        plasticBuffer.GetData(plasticData);
-        //  Debug.Log(plasticData[0].phase);
-
-        BiomeBuffer.Release();
-        sentinelBuffer.Release();
-        plasticBuffer.Release();
-        //       print("C");
-    }
-
-
-    void OnCompleteReadback(AsyncGPUReadbackRequest request)
-    {
-        if (request.hasError)
-        {
-            Debug.Log("GPU readback error detected.");
-            return;
-        }
-    }
-
     IEnumerator UpdateTextureFromComputeASync()
     {
         yield return new WaitForSeconds(1);
@@ -325,22 +271,22 @@ public class GPUCompute : MonoBehaviour
             rt.enableRandomWrite = true;
             RenderTexture.active = rt;
 
-            ComputeBuffer sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUData)));
+            sentinelBuffer = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUData)));
             sentinelBuffer.SetData(sentinelData);
 
-            ComputeBuffer BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUData)));
+            BiomeBuffer = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUData)));
             BiomeBuffer.SetData(pathogenData);
 
-            ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
+            plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
             plasticBuffer.SetData(plasticData);
 
-            ComputeBuffer sentinelBufferOut = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUOutput)));
+            sentinelBufferOut = new ComputeBuffer(sentinelData.Length, Marshal.SizeOf(typeof(GPUOutput)));
             sentinelBufferOut.SetData(new GPUOutput[sentinelData.Length]);
 
-            ComputeBuffer BiomeBufferOut = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUOutput)));
+            BiomeBufferOut = new ComputeBuffer(pathogenData.Length, Marshal.SizeOf(typeof(GPUOutput)));
             BiomeBufferOut.SetData(new GPUOutput[pathogenData.Length]);
 
-            ComputeBuffer plasticBufferOut = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUOutput)));
+            plasticBufferOut = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUOutput)));
             plasticBufferOut.SetData(new GPUOutput[plasticData.Length]);
 
             int UpdateBiome = shader.FindKernel("BiomeUpdate");
@@ -404,6 +350,26 @@ public class GPUCompute : MonoBehaviour
             pathogenDataOut = request.GetData<GPUOutput>().ToArray();
             Bcomputed = true;
         }
+    }
+
+    private void OnDisable()
+    {
+        BiomeBuffer.Release(); ;
+        sentinelBuffer.Release();
+        plasticBuffer.Release();
+        BiomeBufferOut.Release();
+        sentinelBufferOut.Release();
+        plasticBufferOut.Release();
+    }
+
+    private void OnDestroy()
+    {
+        BiomeBuffer.Release(); ;
+        sentinelBuffer.Release();
+        plasticBuffer.Release();
+        BiomeBufferOut.Release();
+        sentinelBufferOut.Release();
+        plasticBufferOut.Release();
     }
 }
 

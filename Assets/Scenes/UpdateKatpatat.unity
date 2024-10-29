@@ -12517,7 +12517,7 @@ MonoBehaviour:
   - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
-  Lymphondes: []
+  realAmountAgents: 0
   pathogensManagers: []
   tcellsManagers: []
 --- !u!1 &335496620
@@ -14766,7 +14766,7 @@ MonoBehaviour:
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
-  RealAmountTCells: 0
+  realAmountAgents: 0
   emitionRate: 4
 --- !u!135 &685113649
 SphereCollider:
@@ -16783,7 +16783,7 @@ MonoBehaviour:
   prefabsAgents:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
-  RealAmountPathogens: 0
+  realAmountAgents: 0
   emitionTimer: 10
 --- !u!1 &954404690
 GameObject:
@@ -17372,7 +17372,7 @@ MonoBehaviour:
   prefabsAgents:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
-  RealAmountPathogens: 0
+  realAmountAgents: 0
   emitionTimer: 10
 --- !u!1 &1105928081
 GameObject:
@@ -17424,7 +17424,7 @@ MonoBehaviour:
   - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
-  Lymphondes: []
+  realAmountAgents: 0
   pathogensManagers: []
   tcellsManagers: []
 --- !u!1 &1127644777
@@ -17538,6 +17538,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTimeS: 120
+--- !u!20 &1136528590 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8573577045286854420, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+  m_PrefabInstance: {fileID: 6169456976460453342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1136528592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18573,7 +18578,7 @@ MonoBehaviour:
   - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
-  Lymphondes: []
+  realAmountAgents: 0
   pathogensManagers: []
   tcellsManagers: []
 --- !u!1001 &1243791059
@@ -21161,7 +21166,7 @@ MonoBehaviour:
   prefabsAgents:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
-  RealAmountPathogens: 0
+  realAmountAgents: 0
   emitionTimer: 10
 --- !u!1 &1516042819
 GameObject:
@@ -23389,7 +23394,7 @@ MonoBehaviour:
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
-  RealAmountTCells: 0
+  realAmountAgents: 0
   emitionRate: 4
 --- !u!135 &1796357676
 SphereCollider:
@@ -24491,7 +24496,7 @@ MonoBehaviour:
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
-  RealAmountTCells: 0
+  realAmountAgents: 0
   emitionRate: 4
 --- !u!135 &2035026503
 SphereCollider:
@@ -26046,7 +26051,7 @@ MonoBehaviour:
   prefabsAgents:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
-  RealAmountPathogens: 0
+  realAmountAgents: 0
   emitionTimer: 10
 --- !u!114 &3850774876727978457
 MonoBehaviour:
@@ -26067,7 +26072,7 @@ MonoBehaviour:
   - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
-  Lymphondes: []
+  realAmountAgents: 0
   pathogensManagers: []
   tcellsManagers: []
 --- !u!4 &3850774876727978458
@@ -26148,12 +26153,10 @@ MonoBehaviour:
   prefabsAgents:
   - {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
   agents: []
+  realAmountAgents: 0
   emitionOrigin: {fileID: 3850774876864796953}
   MaxPlastics: 15
   emitionSpeed: 1
-  RealAmountPlastics: 0
-  col0: {r: 0, g: 0, b: 0, a: 0}
-  col1: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3850774877200160640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26206,6 +26209,7 @@ GameObject:
   - component: {fileID: 3850774877200160641}
   - component: {fileID: 3850774877200160640}
   - component: {fileID: 1144778776}
+  - component: {fileID: 3850774877200160643}
   m_Layer: 0
   m_Name: Agents Manager
   m_TagString: Untagged
@@ -26213,6 +26217,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3850774877200160643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774877200160642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b7aff1545ef164ca0ddd725bb97d41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3850774878323730104
 Transform:
   m_ObjectHideFlags: 0
@@ -26264,7 +26280,7 @@ MonoBehaviour:
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
-  RealAmountTCells: 0
+  realAmountAgents: 0
   emitionRate: 4
 --- !u!135 &3850774878323730246
 SphereCollider:
@@ -27239,6 +27255,10 @@ PrefabInstance:
       value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1136528590}
+    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: normalized
       value: 0
       objectReference: {fileID: 0}
@@ -27248,6 +27268,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: ChangeTrackTimer
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: changeTrackTimer
       value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}

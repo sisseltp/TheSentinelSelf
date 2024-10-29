@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +7,15 @@ public class IntroBeginner : MonoBehaviour
 
     private SoundFXManager soundFx;
 
+    [SerializeField]
+    private bool useMouseToTransition;
+    
     [HideInInspector]
     public bool floating = true;
 
     [SerializeField]
     private float driftPower = 3.5f;
+    
     [SerializeField]
     private float nScale = 3.5f;
     private Rigidbody rb;
@@ -49,14 +51,18 @@ public class IntroBeginner : MonoBehaviour
         origin = transform.position;
 
         alongPath = GetComponent<Romi.PathTools.MoveAlongPath>();
+
+        if (!useMouseToTransition)
+        {
+            Begin();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)==true)
+        if (useMouseToTransition && Input.GetMouseButtonDown(0))
         {
-
             ChangeStates();
         }
 
@@ -103,7 +109,6 @@ public class IntroBeginner : MonoBehaviour
         camTrack.enabled = true;
         floating = false;
         alongPath.enabled = false;
-        
     }
 
     // Called when visitor disconnects, return to the outer world.
@@ -115,7 +120,7 @@ public class IntroBeginner : MonoBehaviour
         // TODO: Maybe nicer to delay this or fade in?
         soundFx.Play("VoiceOver");
 
-        if (!camTrack.Introing)
+        if (!camTrack.doingIntro)
         {
             camTrack.ReturnToOrigin();
             return true;

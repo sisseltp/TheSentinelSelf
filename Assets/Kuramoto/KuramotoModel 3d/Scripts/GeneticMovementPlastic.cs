@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Script.CameraSystem;
 using UnityEngine;
 
 public class GeneticMovementPlastic : GeneticMovement
@@ -49,12 +50,25 @@ public class GeneticMovementPlastic : GeneticMovement
             if (!full)
             {
                 collision.gameObject.GetComponent<KuramotoAffectedAgent>().speed *= 0.9f;
-                collision.gameObject.GetComponent<Rigidbody>().drag += dragItter;
 
-                if (collision.gameObject.GetComponent<Rigidbody>().drag > maxDrag)
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+
+                var drag = rb.drag;
+                drag += dragItter;
+                rb.drag = drag;
+                
+                if (drag > maxDrag)
                 {
-                    collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    // TODO: @Neander: This is where the sentinel dies and falls to the ground
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelDies, collision.transform));
+                    
+                    rb.useGravity = true;
                     full = true;
+                }
+                else
+                {
+                    // TODO: @Neander: Check the max drag and see if we are close, keep following this sentinel because it is about to die
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAtePlastic, collision.transform, new EventData(drag, maxDrag)));
                 }
             }
         }

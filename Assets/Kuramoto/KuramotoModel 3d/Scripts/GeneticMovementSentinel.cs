@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Script.CameraSystem;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum APCBehavior {CarryingAntigens, SeekingPathogens}
 public class GeneticMovementSentinel : GeneticMovement
@@ -30,6 +33,9 @@ public class GeneticMovementSentinel : GeneticMovement
         manager = GetComponentInParent<SentinelsManager>();
         origDrag = agent.rigidBody.drag;
 
+        // TODO: @Neander: This is where the sentinel starts pathogen hunting
+        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToPathogen, transform));
+        
         base.Start();
     }
 
@@ -94,6 +100,19 @@ public class GeneticMovementSentinel : GeneticMovement
                 tcellHits = 0;
 
                 currentBehavior = APCBehavior.CarryingAntigens;
+
+                if (Math.Abs(origDrag - GetComponent<Rigidbody>().drag) < 0.01f)
+                {
+                    // TODO: @Neander: This is where the sentinel has enough antigens
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToLymphNode, transform));
+                }
+                else
+                {
+                    // TODO: @Neander: This is where the sentinel has enough antigens and is infected by plastic
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.InfectedSentinelGoesToTCell, transform));
+                }
+                
+
                 //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
             }
             else if( keys< NumKeysToCollect)
@@ -112,6 +131,9 @@ public class GeneticMovementSentinel : GeneticMovement
             digestAntigens.Clear();
             keys = 0;
             currentBehavior = APCBehavior.SeekingPathogens;
+            
+            // TODO: @Neander: This is where the sentinel has delivered antigens and goes back to pathogen hunting
+            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToPathogen, transform));
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
         }
     }
