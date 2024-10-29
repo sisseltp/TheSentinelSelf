@@ -4,37 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlasticManager : MonoBehaviour
+public class PlasticsManager : AgentsManager
 {
-    public AgentsManagerParameters parameters;
-
-    [SerializeField]
-    private GameObject prefabPlastic;
     [Tooltip("The object to emit from")]
     [SerializeField]
     private Transform emitionOrigin;
 
     public int MaxPlastics = 15;
     public float emitionSpeed = 10;
-    public int RealAmountPlastics = 0;
     private float timeGate = 0;
-
-    [HideInInspector]
-    public Plastic[] plastics; //list to hold the sentinels
-    [HideInInspector]
-    public GPUCompute.GPUData[] GPUStruct; // list of struct ot hold data, maybe for gpu acceleration
-    public GPUCompute.GPUOutput[] GPUOutput;
-
-    [Tooltip("colour 1 to lerp between")]
-    [SerializeField]
-    private Color col0;// phase col1
-    [Tooltip("colour 2 to lerp between")]
-    [SerializeField]
-    private Color col1; // phase col2
 
     void Start()
     {
-        plastics = new Plastic[MaxPlastics];
+        agents = new Plastic[MaxPlastics];
         GPUStruct = new GPUCompute.GPUData[MaxPlastics];
         GPUOutput = new GPUCompute.GPUOutput[MaxPlastics];
 
@@ -42,7 +24,7 @@ public class PlasticManager : MonoBehaviour
         {
             Vector3 pos = emitionOrigin.position + UnityEngine.Random.insideUnitSphere* parameters.spawnArea;
 
-            Plastic thisSentinel = Instantiate(prefabPlastic, pos, Quaternion.identity, this.transform).GetComponent<Plastic>();
+            Plastic thisSentinel = Instantiate(prefabsAgents[UnityEngine.Random.Range(0,prefabsAgents.Length)], pos, Quaternion.identity, this.transform).GetComponent<Plastic>();
 
             thisSentinel.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
 
@@ -50,10 +32,10 @@ public class PlasticManager : MonoBehaviour
             GPUStruct[i].pos = thisSentinel.transform.position;
             GPUOutput[i].Setup();
 
-            plastics[i] = thisSentinel;
+            agents[i] = thisSentinel;
         }
 
-        RealAmountPlastics = parameters.amongAgentsAtStart;
+        realAmountAgents = parameters.amongAgentsAtStart;
     }
 
     private void Update()
@@ -66,27 +48,27 @@ public class PlasticManager : MonoBehaviour
             AddCell();
         }
 
-        for (int i = 0; i < RealAmountPlastics; i++)
+        for (int i = 0; i < realAmountAgents; i++)
         {
-            if(plastics[i] == null)
+            if(agents[i] == null)
                 continue;
             
-            if(plastics[i].kuramoto.age > parameters.MaxAge || plastics[i].kuramoto.dead)
+            if(agents[i].kuramoto.age > parameters.MaxAge || agents[i].kuramoto.dead)
             {
                 toRemove.Add(i);
             }
             else
             {
-                plastics[i].kuramoto.age += Time.deltaTime;
-                plastics[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime ;
-                if (plastics[i].kuramoto.phase > 1) { plastics[i].kuramoto.phase = plastics[i].kuramoto.phase - 1; }
-                GPUStruct[i].phase = plastics[i].kuramoto.phase;
-                plastics[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * plastics[i].kuramoto.phase, plastics[i].transform.position + plastics[i].transform.up);
-                GPUStruct[i].pos = plastics[i].rigidBody.position;
+                agents[i].kuramoto.age += Time.deltaTime;
+                agents[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime ;
+                if (agents[i].kuramoto.phase > 1) { agents[i].kuramoto.phase = agents[i].kuramoto.phase - 1; }
+                GPUStruct[i].phase = agents[i].kuramoto.phase;
+                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * agents[i].kuramoto.phase, agents[i].transform.position + agents[i].transform.up);
+                GPUStruct[i].pos = agents[i].rigidBody.position;
             }
 
-            if (plastics[i].renderer.isVisible)
-                plastics[i].renderer.material.SetFloat("Phase", plastics[i].kuramoto.phase);
+            if (agents[i].renderer.isVisible)
+                agents[i].renderer.material.SetFloat("Phase", agents[i].kuramoto.phase);
         }
 
         int nextIndex = 0;
@@ -94,27 +76,27 @@ public class PlasticManager : MonoBehaviour
         {
             if (toRemove.Contains(i))
             {
-                if (plastics[i] != null)
+                if (agents[i] != null)
                 {
-                    Destroy(plastics[i].gameObject);
-                    plastics[i] = null;
+                    Destroy(agents[i].gameObject);
+                    agents[i] = null;
                 }
                 continue;
             }
 
-            plastics[nextIndex] = plastics[i];
+            agents[nextIndex] = agents[i];
             GPUStruct[nextIndex] = GPUStruct[i];
 
             if (nextIndex != i)
             {
-                plastics[i] = null;
+                agents[i] = null;
                 GPUStruct[i] = new GPUCompute.GPUData();
             }
 
             nextIndex++;
         }
 
-        RealAmountPlastics -= toRemove.Count;
+        realAmountAgents -= toRemove.Count;
 
         /*int nxtIndx = -1;
         
@@ -146,7 +128,7 @@ public class PlasticManager : MonoBehaviour
    
     public void ResetPlastic(int i)
     {
-        Plastic thisPlastic = plastics[i];
+        Agent thisPlastic = agents[i];
 
         Vector3 pos = emitionOrigin.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
@@ -158,20 +140,20 @@ public class PlasticManager : MonoBehaviour
 
     public void AddCell()
     {
-        if (RealAmountPlastics < MaxPlastics-1)
+        if (realAmountAgents < MaxPlastics-1)
         {
-            RealAmountPlastics++;
+            realAmountAgents++;
 
-            Plastic thisAgent =  Instantiate(prefabPlastic, transform).GetComponent<Plastic>();
+            Plastic thisAgent =  Instantiate(prefabsAgents[UnityEngine.Random.Range(0,prefabsAgents.Length)], transform).GetComponent<Plastic>();
 
-            plastics[RealAmountPlastics-1] = thisAgent;
+            agents[realAmountAgents-1] = thisAgent;
 
-            ResetPlastic(RealAmountPlastics - 1);
+            ResetPlastic(realAmountAgents - 1);
 
             GPUCompute.GPUData gpuStruct = new GPUCompute.GPUData();
             gpuStruct.SetFromKuramoto(thisAgent.kuramoto);
             gpuStruct.pos = thisAgent.transform.position;
-            GPUStruct[RealAmountPlastics-1] = gpuStruct;
+            GPUStruct[realAmountAgents-1] = gpuStruct;
         }
     }
 }

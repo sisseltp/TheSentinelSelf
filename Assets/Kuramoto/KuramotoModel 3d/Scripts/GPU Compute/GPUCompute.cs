@@ -30,10 +30,10 @@ public class GPUCompute : MonoBehaviour
 
     private GPUOutput[] plasticDataOut;
 
-    private SentinelManager[] sentinels;
-    private PathogenManager[] pathogen;
-    private PlasticManager[] plastics;
-    private TCellManager[] tcells;
+    private SentinelsManager[] sentinelsManagers;
+    private PathogensManager[] pathogensManagers;
+    private PlasticsManager[] plasticsManagers;
+    private TCellsManager[] tcellsManagers;
 
     private float cDT = 1;
     private float timer = 0;
@@ -92,28 +92,20 @@ public class GPUCompute : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-
     private void Start()
     {
-        sentinels = GetComponentsInChildren<SentinelManager>();
-
-        pathogen = GetComponentsInChildren<PathogenManager>();
-
-        plastics = GetComponentsInChildren<PlasticManager>();
-
-        tcells = GetComponentsInChildren<TCellManager>();
+        sentinelsManagers = GetComponentsInChildren<SentinelsManager>();
+        pathogensManagers = GetComponentsInChildren<PathogensManager>();
+        plasticsManagers = GetComponentsInChildren<PlasticsManager>();
+        tcellsManagers = GetComponentsInChildren<TCellsManager>();
 
         cDT = Time.deltaTime;
 
         StartCoroutine(UpdateTextureFromComputeASync());
-
     }
-
 
     private void Update()
     {
-
         //LinkData();
 
         //UpdateTextureFromCompute();
@@ -121,54 +113,50 @@ public class GPUCompute : MonoBehaviour
         //SetData();
         //timer = Time.realtimeSinceStartup;
         //Debug.Log(pathogenData[0].phase);
-
-
     }
 
     private void SetData()
     {
         int bioOffset = 0;
 
-        for (int i = 0; i < pathogen.Length; i++)
+        for (int i = 0; i < pathogensManagers.Length; i++)
         {
-            if (pathogen[i].GPUStruct != null)
+            if (pathogensManagers[i].GPUStruct != null)
             {
-
-                pathogen[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset, pathogen[i].GPUStruct.Length);
-                bioOffset += pathogen[i].GPUStruct.Length;
-            }
-        }
-        for (int i = 0; i < tcells.Length; i++)
-        {
-            if (tcells[i].GPUStruct != null)
-            {
-                tcells[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset, tcells[i].GPUStruct.Length);
-
-                bioOffset += tcells[i].GPUStruct.Length;
+                pathogensManagers[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset, pathogensManagers[i].GPUStruct.Length);
+                bioOffset += pathogensManagers[i].GPUStruct.Length;
             }
         }
 
+        for (int i = 0; i < tcellsManagers.Length; i++)
+        {
+            if (tcellsManagers[i].GPUStruct != null)
+            {
+                tcellsManagers[i].GPUStruct = Extensions.SubArray(pathogenData, bioOffset, tcellsManagers[i].GPUStruct.Length);
+                bioOffset += tcellsManagers[i].GPUStruct.Length;
+            }
+        }
 
         int sentOffset = 0;
 
-        for (int i = 0; i < sentinels.Length; i++)
+        for (int i = 0; i < sentinelsManagers.Length; i++)
         {
-            if (sentinels[i].GPUStruct != null)
+            if (sentinelsManagers[i].GPUStruct != null)
             {
-                sentinels[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentinels[i].GPUStruct.Length);
-                sentOffset += sentinels[i].GPUStruct.Length;
+                sentinelsManagers[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, sentinelsManagers[i].GPUStruct.Length);
+                sentOffset += sentinelsManagers[i].GPUStruct.Length;
             }
         }
 
         int plasticOffset = 0;
 
-        for (int i = 0; i < plastics.Length; i++)
+        for (int i = 0; i < plasticsManagers.Length; i++)
         {
-            if (plastics[i].GPUStruct != null)
+            if (plasticsManagers[i].GPUStruct != null)
             {
 
-                plastics[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset, plastics[i].GPUStruct.Length);
-                plasticOffset += plastics[i].GPUStruct.Length;
+                plasticsManagers[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset, plasticsManagers[i].GPUStruct.Length);
+                plasticOffset += plasticsManagers[i].GPUStruct.Length;
             }
         }
     }
@@ -177,65 +165,61 @@ public class GPUCompute : MonoBehaviour
     {
         int bioOffset = 0;
 
-        for (int i = 0; i < pathogen.Length; i++)
+        for (int i = 0; i < pathogensManagers.Length; i++)
         {
-            if (pathogen[i].GPUStruct != null)
+            if (pathogensManagers[i].GPUStruct != null)
             {
-
-                pathogen[i].GPUOutput = Extensions.SubArray(pathogenDataOut, bioOffset, pathogen[i].GPUStruct.Length);
-                bioOffset += pathogen[i].GPUStruct.Length;
-            }
-        }
-        for (int i = 0; i < tcells.Length; i++)
-        {
-            if (tcells[i].GPUStruct != null)
-            {
-                tcells[i].GPUOutput = Extensions.SubArray(pathogenDataOut, bioOffset, tcells[i].GPUStruct.Length);
-
-                bioOffset += tcells[i].GPUStruct.Length;
+                pathogensManagers[i].GPUOutput = Extensions.SubArray(pathogenDataOut, bioOffset, pathogensManagers[i].GPUStruct.Length);
+                bioOffset += pathogensManagers[i].GPUStruct.Length;
             }
         }
 
+        for (int i = 0; i < tcellsManagers.Length; i++)
+        {
+            if (tcellsManagers[i].GPUStruct != null)
+            {
+                tcellsManagers[i].GPUOutput = Extensions.SubArray(pathogenDataOut, bioOffset, tcellsManagers[i].GPUStruct.Length);
+
+                bioOffset += tcellsManagers[i].GPUStruct.Length;
+            }
+        }
 
         int sentOffset = 0;
 
-        for (int i = 0; i < sentinels.Length; i++)
+        for (int i = 0; i < sentinelsManagers.Length; i++)
         {
-            if (sentinels[i].GPUStruct != null)
+            if (sentinelsManagers[i].GPUStruct != null)
             {
-                sentinels[i].GPUOutput = Extensions.SubArray(sentinelDataOut, sentOffset, sentinels[i].GPUStruct.Length);
-                sentOffset += sentinels[i].GPUStruct.Length;
+                sentinelsManagers[i].GPUOutput = Extensions.SubArray(sentinelDataOut, sentOffset, sentinelsManagers[i].GPUStruct.Length);
+                sentOffset += sentinelsManagers[i].GPUStruct.Length;
             }
         }
 
         int plasticOffset = 0;
 
-        for (int i = 0; i < plastics.Length; i++)
+        for (int i = 0; i < plasticsManagers.Length; i++)
         {
-            if (plastics[i].GPUStruct != null)
+            if (plasticsManagers[i].GPUStruct != null)
             {
-
-                plastics[i].GPUOutput = Extensions.SubArray(plasticDataOut, plasticOffset, plastics[i].GPUStruct.Length);
-                plasticOffset += plastics[i].GPUStruct.Length;
+                plasticsManagers[i].GPUOutput = Extensions.SubArray(plasticDataOut, plasticOffset, plasticsManagers[i].GPUStruct.Length);
+                plasticOffset += plasticsManagers[i].GPUStruct.Length;
             }
         }
     }
 
     private void LinkData()
     {
-
         List<GPUData> sentData = new List<GPUData>();
         List<GPUOutput> sentDataOut = new List<GPUOutput>();
 
-        for (int i = 0; i < sentinels.Length; i++)
+        for (int i = 0; i < sentinelsManagers.Length; i++)
         {
-            if (sentinels[i].GPUStruct != null)
+            if (sentinelsManagers[i].GPUStruct != null)
             {
-                sentData.AddRange(sentinels[i].GPUStruct);
-                sentDataOut.AddRange(sentinels[i].GPUOutput);
+                sentData.AddRange(sentinelsManagers[i].GPUStruct);
+                sentDataOut.AddRange(sentinelsManagers[i].GPUOutput);
             }
         }
-
 
         sentinelData = sentData.ToArray();
         sentinelDataOut = sentDataOut.ToArray();
@@ -243,22 +227,21 @@ public class GPUCompute : MonoBehaviour
         List<GPUData> bioData = new List<GPUData>();
         List<GPUOutput> bioDataOut = new List<GPUOutput>();
 
-        for (int i = 0; i < pathogen.Length; i++)
+        for (int i = 0; i < pathogensManagers.Length; i++)
         {
-            if (pathogen[i].GPUStruct != null)
+            if (pathogensManagers[i].GPUStruct != null)
             {
-                bioData.AddRange(pathogen[i].GPUStruct);
-                bioDataOut.AddRange(pathogen[i].GPUOutput);
-
+                bioData.AddRange(pathogensManagers[i].GPUStruct);
+                bioDataOut.AddRange(pathogensManagers[i].GPUOutput);
             }
         }
 
-        for (int i = 0; i < tcells.Length; i++)
+        for (int i = 0; i < tcellsManagers.Length; i++)
         {
-            if (tcells[i].GPUStruct != null)
+            if (tcellsManagers[i].GPUStruct != null)
             {
-                bioData.AddRange(tcells[i].GPUStruct);
-                bioDataOut.AddRange(tcells[i].GPUOutput);
+                bioData.AddRange(tcellsManagers[i].GPUStruct);
+                bioDataOut.AddRange(tcellsManagers[i].GPUOutput);
             }
         }
 
@@ -268,12 +251,12 @@ public class GPUCompute : MonoBehaviour
         List<GPUData> plasData = new List<GPUData>();
         List<GPUOutput> plasDataOut = new List<GPUOutput>();
 
-        for (int i = 0; i < plastics.Length; i++)
+        for (int i = 0; i < plasticsManagers.Length; i++)
         {
-            if (plastics[i].GPUStruct != null)
+            if (plasticsManagers[i].GPUStruct != null)
             {
-                plasData.AddRange(plastics[i].GPUStruct);
-                plasDataOut.AddRange(plastics[i].GPUOutput);
+                plasData.AddRange(plasticsManagers[i].GPUStruct);
+                plasDataOut.AddRange(plasticsManagers[i].GPUOutput);
             }
         }
 
@@ -281,13 +264,11 @@ public class GPUCompute : MonoBehaviour
         plasticDataOut = plasDataOut.ToArray();
 
         TexResolution = pathogenData.Length + sentinelData.Length + plasticData.Length;
-
     }
 
 
     private void UpdateTextureFromCompute()
     {
-
         rt = new RenderTexture(TexResolution, 1, 0);
         rt.enableRandomWrite = true;
         RenderTexture.active = rt;
@@ -300,9 +281,6 @@ public class GPUCompute : MonoBehaviour
 
         ComputeBuffer plasticBuffer = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUData)));
         plasticBuffer.SetData(plasticData);
-
-        //  Debug.Log("start");
-        //  Debug.Log(plasticData[0].phase);
 
         int UpdateBiome = shader.FindKernel("BiomeUpdate");
         //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
@@ -324,8 +302,6 @@ public class GPUCompute : MonoBehaviour
         sentinelBuffer.Release();
         plasticBuffer.Release();
         //       print("C");
-
-
     }
 
 
@@ -336,19 +312,13 @@ public class GPUCompute : MonoBehaviour
             Debug.Log("GPU readback error detected.");
             return;
         }
-
     }
-
-
-
 
     IEnumerator UpdateTextureFromComputeASync()
     {
-
         yield return new WaitForSeconds(1);
         while (true)
         {
-
             LinkData();
 
             rt = new RenderTexture(TexResolution, 1, 0);
@@ -373,8 +343,6 @@ public class GPUCompute : MonoBehaviour
             ComputeBuffer plasticBufferOut = new ComputeBuffer(plasticData.Length, Marshal.SizeOf(typeof(GPUOutput)));
             plasticBufferOut.SetData(new GPUOutput[plasticData.Length]);
 
-
-
             int UpdateBiome = shader.FindKernel("BiomeUpdate");
             //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
 
@@ -387,10 +355,7 @@ public class GPUCompute : MonoBehaviour
             shader.SetBuffer(UpdateBiome, "biomeDataOut", BiomeBufferOut);
             shader.SetBuffer(UpdateBiome, "plasticDataOut", plasticBufferOut);
 
-          
-
             shader.Dispatch(UpdateBiome, TexResolution, 1, 1);
-
 
             AsyncGPUReadback.Request(plasticBufferOut, POnCompleteReadBack);
             AsyncGPUReadback.Request(sentinelBufferOut, SOnCompleteReadBack);
@@ -402,7 +367,6 @@ public class GPUCompute : MonoBehaviour
             Scomputed = false;
             Pcomputed = false;
 
-          
             //Debug.Log(plasticDataOut[0].phaseAdition);
 
             AsncySetData();
@@ -413,13 +377,8 @@ public class GPUCompute : MonoBehaviour
             BiomeBufferOut.Release();
             sentinelBufferOut.Release();
             plasticBufferOut.Release();
-
-            
         }
     }
-
-
-
 
     void POnCompleteReadBack(AsyncGPUReadbackRequest request)
     {
@@ -428,8 +387,6 @@ public class GPUCompute : MonoBehaviour
             plasticDataOut = request.GetData<GPUOutput>().ToArray();
             Pcomputed = true;
         }
-       
-
     }
 
     void SOnCompleteReadBack(AsyncGPUReadbackRequest request)
@@ -439,7 +396,6 @@ public class GPUCompute : MonoBehaviour
             sentinelDataOut = request.GetData<GPUOutput>().ToArray();
             Scomputed = true;
         }
-
     }
     void BOnCompleteReadBack(AsyncGPUReadbackRequest request)
     {
@@ -448,14 +404,10 @@ public class GPUCompute : MonoBehaviour
             pathogenDataOut = request.GetData<GPUOutput>().ToArray();
             Bcomputed = true;
         }
-
     }
-
 }
 
-
-
-    public static class Extensions
+public static class Extensions
 {
     public static T[] SubArray<T>(this T[] array, int offset, int length)
     {

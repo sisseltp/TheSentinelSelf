@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InternalVisualizer : MonoBehaviour
 {
-    private TCellManager[] tcellManagers;
-    private PathogenManager[] pathogenManagers;
+    private TCellsManager[] tcellManagers;
+    private PathogensManager[] pathogensManagers;
 
     [SerializeField]
     private Renderer rndr;
@@ -17,19 +17,19 @@ public class InternalVisualizer : MonoBehaviour
     
     void Start()
     {
-        tcellManagers = GetComponentsInChildren<TCellManager>();
-        pathogenManagers = GetComponentsInChildren<PathogenManager>();        
+        tcellManagers = GetComponentsInChildren<TCellsManager>();
+        pathogensManagers = GetComponentsInChildren<PathogensManager>();        
     }
     
     void Update()
     {
         int numTCells = 0;
-        foreach(TCellManager manager in tcellManagers)
-            numTCells += manager.RealAmountTCells;
+        foreach(TCellsManager manager in tcellManagers)
+            numTCells += manager.realAmountAgents;
 
         int numPathogens = 0;
-        foreach (PathogenManager manager in pathogenManagers)
-            numPathogens += manager.RealAmountPathogens;
+        foreach (PathogensManager manager in pathogensManagers)
+            numPathogens += manager.realAmountAgents;
 
         float variation = numTCells + numPathogens;
         variation = numTCells / variation;

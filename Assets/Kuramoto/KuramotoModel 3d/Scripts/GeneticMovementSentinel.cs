@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum APCBehavior {CarryingAntigens, SeekingPathogens}
-public class GeneticMovementSentinel : GeneticMovementTarget
+public class GeneticMovementSentinel : GeneticMovement
 {
-    private SentinelManager manager;
+    private SentinelsManager manager;
     public int keys = 0;
     public int NumKeysToCollect = 4;
     public float origDrag = 0;
@@ -27,7 +27,7 @@ public class GeneticMovementSentinel : GeneticMovementTarget
         digestAntigens = new List<GeneticAntigenKey>();
         plastics = new List<Transform>();
         geneticMovement = new Vector3[cycleLength];
-        manager = GetComponentInParent<SentinelManager>();
+        manager = GetComponentInParent<SentinelsManager>();
         origDrag = agent.rigidBody.drag;
 
         base.Start();
@@ -39,7 +39,7 @@ public class GeneticMovementSentinel : GeneticMovementTarget
 
         agent.rigidBody.drag = origDrag;
 
-        target = manager.pathogenManagers[Random.Range(0, manager.pathogenManagers.Length)].transform.position;
+        target = manager.pathogensManagers[Random.Range(0, manager.pathogensManagers.Length)].transform.position;
         targeting = true;
     }
 
@@ -48,16 +48,16 @@ public class GeneticMovementSentinel : GeneticMovementTarget
         if (agent.kuramoto.phase < lastPhase) 
             step = (step + 1) % cycleLength;
 
-        Vector3 vel = Vector3.zero ;
+        Vector3 vel = Vector3.zero;
 
         if (targeting)  
-            vel = Vector3.Normalize(target - transform.position) * targetSpeedScl;
+            vel = Vector3.Normalize(target - transform.position) * speedScl;
 
         Ray forward = new Ray(transform.position, Vector3.Normalize(agent.rigidBody.velocity) + Vector3.down * 0.5f);
 
         if (Physics.Raycast(forward, out RaycastHit hit, 20))
             if (hit.transform.CompareTag("Terrain"))
-                vel += Vector3.up * targetSpeedScl * 3;
+                vel += Vector3.up * speedScl * 3;
 
         vel += geneticMovement[step] * genSpeedScl;
         vel *= agent.kuramoto.phase;
@@ -67,16 +67,12 @@ public class GeneticMovementSentinel : GeneticMovementTarget
         lastPhase = agent.kuramoto.phase;
     }
 
-    
-
-    
-
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Tcell"))
             tcellHits++;
         else if (collision.gameObject.CompareTag("Terrain") && agent.rigidBody.useGravity)
-            GetComponent<Fosilising>().enabled = true;
+            (agent as Sentinel).fosilising.enabled = true;
     }
 
     private void OnTriggerEnter(Collider collision)
@@ -91,9 +87,9 @@ public class GeneticMovementSentinel : GeneticMovementTarget
         {
             if (keys >= NumKeysToCollect && !targeting)
             {
-                int indx = Random.Range(0, manager.Lymphondes.Length);
+                int indx = Random.Range(0, manager.tcellsManagers.Length);
                 
-                target = manager.Lymphondes[indx];
+                target = manager.tcellsManagers[indx].transform.position;
                 targeting = true;
                 tcellHits = 0;
 
@@ -105,9 +101,9 @@ public class GeneticMovementSentinel : GeneticMovementTarget
         }
         else if (collision.gameObject.CompareTag("Lymphonde") && tcellHits > 10 && !targeting)
         {
-            int indx = Random.Range(0, manager.pathogenManagers.Length);
+            int indx = Random.Range(0, manager.pathogensManagers.Length);
 
-            target = manager.pathogenManagers[indx].transform.position;
+            target = manager.pathogensManagers[indx].transform.position;
             targeting = true;
 
             foreach (GeneticAntigenKey key in digestAntigens)

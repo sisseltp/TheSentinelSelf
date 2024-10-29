@@ -14,12 +14,23 @@ public class GeneticMovement : MonoBehaviour
     public float genSpeedScl = 0.5f; // sclr for the speed
     [HideInInspector]
     public Vector3[] geneticMovement; // list to hold vels in
+    [HideInInspector]
     public int step = 0;// to hold the steps number
+    [HideInInspector]
     public float lastPhase = 0;// holds the last phase for a gate
     public bool notKeyed = true;
     [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
-    private float speedScl = 0.5f;
+    public float speedScl = 0.5f;
+
+
+    //ONLY FOR SENTINEL AND TCELL
+    [HideInInspector]
+    public bool targeting = true;
+    [HideInInspector]
+    public Vector3 target;// the target to aim for
+
+
     public virtual void Start()
     {
         Reset();

@@ -531,10 +531,9 @@ MonoBehaviour:
   step: 0
   lastPhase: 0
   notKeyed: 1
-  speedScl: 0.5
+  speedScl: 40
   targeting: 1
   target: {x: 0, y: 0, z: 0}
-  targetSpeedScl: 40
   keys: 0
   NumKeysToCollect: 12
   origDrag: 0
@@ -575,19 +574,6 @@ MonoBehaviour:
   geneticMovement: {fileID: 7003511296015800859}
   fosilising: {fileID: 8066729109672978145}
   apcSong: {fileID: -3190368452660139381}
---- !u!135 &8497469333657627850
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3377039675396537542}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.007
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &1914231309048697930
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -601,3 +587,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.009
   m_Center: {x: 0, y: 0, z: -0.003}
+--- !u!135 &8497469333657627850
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3377039675396537542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.007
+  m_Center: {x: 0, y: 0, z: 0}

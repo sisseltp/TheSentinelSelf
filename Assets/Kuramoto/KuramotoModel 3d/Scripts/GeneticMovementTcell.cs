@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-public class GeneticMovementTcell : GeneticMovementTarget
+public class GeneticMovementTcell : GeneticMovement
 {
-    private TCellManager manager;
+    private TCellsManager manager;
 
     [Tooltip("Shader to compare keys")]
     [SerializeField]
@@ -15,7 +15,7 @@ public class GeneticMovementTcell : GeneticMovementTarget
     {
         base.Start();
 
-        manager = GetComponentInParent<TCellManager>();
+        manager = GetComponentInParent<TCellsManager>();
 
         if (notKeyed)
             target = transform.parent.position;
@@ -35,7 +35,7 @@ public class GeneticMovementTcell : GeneticMovementTarget
         Vector3 vel = geneticMovement[step] * genSpeedScl;
 
         if (targeting)
-            vel += Vector3.Normalize(target - transform.position) * targetSpeedScl;
+            vel += Vector3.Normalize(target - transform.position) * speedScl;
 
         vel *= agent.kuramoto.phase;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
@@ -94,7 +94,7 @@ public class GeneticMovementTcell : GeneticMovementTarget
                                 // create a replica
                                 TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
                                 replica.geneticMovement.notKeyed = false;
-                                (replica.geneticMovement as GeneticMovementTarget).target = target;
+                                replica.geneticMovement.target = target;
                                 // add new tcell to manager
                                 manager.AddTCell(replica);
                             }

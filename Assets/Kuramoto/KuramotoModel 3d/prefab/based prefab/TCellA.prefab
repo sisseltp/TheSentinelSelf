@@ -193,10 +193,9 @@ MonoBehaviour:
   step: 0
   lastPhase: 0
   notKeyed: 1
-  speedScl: 0.5
+  speedScl: 15
   targeting: 1
   target: {x: 0, y: 0, z: 0}
-  targetSpeedScl: 15
   compare: {fileID: 7200000, guid: 3f6cf722db9dba94a9d5581c53aa8c38, type: 3}
 --- !u!114 &1106587717428591582
 MonoBehaviour:

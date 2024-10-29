@@ -369,6 +369,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8653015579971244591, guid: 0a48457bc2c33a3468c45e04a2e373fb, type: 3}
   m_PrefabInstance: {fileID: 7897182255382070972}
   m_PrefabAsset: {fileID: 0}
+--- !u!135 &5535400727157346464
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717491179339184573}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.009
+  m_Center: {x: 0, y: 0, z: -0.002}
+--- !u!135 &4326261346371601037
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6827422627903766298}
+  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.007
+  m_Center: {x: 0, y: 0, z: -0.002}
 --- !u!54 &3279415286626361967
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -528,10 +554,9 @@ MonoBehaviour:
   step: 0
   lastPhase: 0
   notKeyed: 1
-  speedScl: 0.5
+  speedScl: 40
   targeting: 1
   target: {x: 0, y: 0, z: 0}
-  targetSpeedScl: 40
   keys: 0
   NumKeysToCollect: 12
   origDrag: 0
@@ -539,29 +564,3 @@ MonoBehaviour:
   digestAntigens: []
   plastics: []
   currentBehavior: 1
---- !u!135 &4326261346371601037
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6827422627903766298}
-  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.007
-  m_Center: {x: 0, y: 0, z: -0.002}
---- !u!135 &5535400727157346464
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717491179339184573}
-  m_Material: {fileID: 13400000, guid: 5b53aeabfa6ff544fa3e6b450195a10c, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.009
-  m_Center: {x: 0, y: 0, z: -0.002}

@@ -3,35 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SentinelManager : MonoBehaviour
+public class SentinelsManager : AgentsManager
 {
-    public AgentsManagerParameters parameters;
-
-    [SerializeField]
-    private GameObject prefabSentinel;
-   
-    
-    [HideInInspector]
-    public Sentinel[] sentinels; // list of the sentinel object
-    [HideInInspector]
-    public GPUCompute.GPUData[] GPUStruct; // list of sentinel struct, that will hold the data for gpu compute
-    public GPUCompute.GPUOutput[] GPUOutput;
 
     private List<Genetics.GenVel> GenVelLib; // list of the GenVel data to act as the library
-
     private List<Genetics.GenKurmto> GenKurLib;// list of the GenKurmto data to act as the library
 
-
     [HideInInspector]
-    public Vector3[] Lymphondes;
+    public PathogensManager[] pathogensManagers;
     [HideInInspector]
-    public PathogenManager[] pathogenManagers;
-    [HideInInspector]
-    public TCellManager[] tcellManagers;
+    public TCellsManager[] tcellsManagers;
 
     void Start()
     {
-        sentinels = new Sentinel[parameters.amongAgentsAtStart];
+        agents = new Sentinel[parameters.amongAgentsAtStart];
         GPUStruct = new GPUCompute.GPUData[parameters.amongAgentsAtStart];
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -42,7 +27,7 @@ public class SentinelManager : MonoBehaviour
 
             Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
 
-            Sentinel newSentinel = Instantiate(prefabSentinel, pos, Quaternion.identity, this.transform).GetComponent<Sentinel>();
+            Sentinel newSentinel = Instantiate(prefabsAgents[UnityEngine.Random.Range(0,prefabsAgents.Length)], pos, Quaternion.identity, this.transform).GetComponent<Sentinel>();
             
             newSentinel.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange,  0.2f);// setup its setting to randomize them
 
@@ -50,24 +35,24 @@ public class SentinelManager : MonoBehaviour
             GPUStruct[i].pos = newSentinel.transform.position;
             GPUOutput[i].Setup();
 
-            sentinels[i] = newSentinel;
+            agents[i] = newSentinel;
         }
 
         GameObject[] lymphs = GameObject.FindGameObjectsWithTag("Lymphonde");
-        Lymphondes = new Vector3[lymphs.Length];
-        tcellManagers = new TCellManager[lymphs.Length];
+
+        tcellsManagers = new TCellsManager[lymphs.Length];
         for (int i = 0; i < lymphs.Length; i++)
         {
-            tcellManagers[i] = lymphs[i].GetComponent<TCellManager>();
-            Lymphondes[i] = lymphs[i].transform.position;
+            tcellsManagers[i] = lymphs[i].GetComponent<TCellsManager>();
+
         }
 
         GameObject[] pathogens = GameObject.FindGameObjectsWithTag("PathogenEmitter");
-        pathogenManagers = new PathogenManager[pathogens.Length];
+        pathogensManagers = new PathogensManager[pathogens.Length];
 
         for (int i = 0; i < pathogens.Length; i++)
         {
-            pathogenManagers[i] = pathogens[i].GetComponent<PathogenManager>();
+            pathogensManagers[i] = pathogens[i].GetComponent<PathogensManager>();
         }
     }
 
@@ -75,41 +60,41 @@ public class SentinelManager : MonoBehaviour
     {  
         for (int i = 0; i < parameters.amongAgentsAtStart; i++)
         {
-            if (sentinels[i].kuramoto.dead || sentinels[i].kuramoto.age> parameters.MaxAge) 
+            if (agents[i].kuramoto.dead || agents[i].kuramoto.age> parameters.MaxAge) 
             {
                 ResetSentinel(i);
 
-                GPUStruct[i].SetFromKuramoto(sentinels[i].kuramoto);
-                GPUStruct[i].pos = sentinels[i].rigidBody.position;
+                GPUStruct[i].SetFromKuramoto(agents[i].kuramoto);
+                GPUStruct[i].pos = agents[i].rigidBody.position;
             }
             else
             {
-                sentinels[i].kuramoto.age += Time.deltaTime;
-                sentinels[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
+                agents[i].kuramoto.age += Time.deltaTime;
+                agents[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
 
-                if (sentinels[i].kuramoto.phase > 1) 
-                    sentinels[i].kuramoto.phase--; 
-                GPUStruct[i].phase = sentinels[i].kuramoto.phase;
+                if (agents[i].kuramoto.phase > 1) 
+                    agents[i].kuramoto.phase--; 
+                GPUStruct[i].phase = agents[i].kuramoto.phase;
 
-                sentinels[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * sentinels[i].kuramoto.phase, sentinels[i].transform.position + sentinels[i].transform.up);
+                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * agents[i].kuramoto.phase, agents[i].transform.position + agents[i].transform.up);
 
-                GPUStruct[i].speed = sentinels[i].kuramoto.speed;
-                GPUStruct[i].pos = sentinels[i].rigidBody.position;
+                GPUStruct[i].speed = agents[i].kuramoto.speed;
+                GPUStruct[i].pos = agents[i].rigidBody.position;
             }
 
-            if (sentinels[i].renderer.isVisible)
-                sentinels[i].renderer.material.SetFloat("Phase", sentinels[i].kuramoto.phase);
+            if (agents[i].renderer.isVisible)
+                agents[i].renderer.material.SetFloat("Phase", agents[i].kuramoto.phase);
         }
     }
 
     public void ResetSentinel(int i, bool genOn= false)
     {
-        Sentinel thisSentinel = sentinels[i];
+        Agent thisSentinel = agents[i];
 
         Vector3 pos = transform.position + UnityEngine.Random.insideUnitSphere * parameters.spawnArea;
         thisSentinel.transform.position = pos;
 
-        thisSentinel.fosilising.enabled = false;
+        (thisSentinel as Sentinel).fosilising.enabled = false;
         thisSentinel.gameObject.SetActive(true);
 
         if (!genOn)
@@ -123,7 +108,7 @@ public class SentinelManager : MonoBehaviour
             // add it settings to the librarys
             Genetics.GenKurmto genKurm = new Genetics.GenKurmto(thisSentinel.kuramoto.speedBPM, thisSentinel.kuramoto.noiseScl, thisSentinel.kuramoto.coupling, thisSentinel.kuramoto.couplingRange, thisSentinel.kuramoto.attractionSclr, thisSentinel.kuramoto.fitness);
             GenKurLib.Add(genKurm);
-            Genetics.GenVel vels = new Genetics.GenVel(sentinels[i].geneticMovement.geneticMovement, thisSentinel.kuramoto.fitness);
+            Genetics.GenVel vels = new Genetics.GenVel(agents[i].geneticMovement.geneticMovement, thisSentinel.kuramoto.fitness);
             GenVelLib.Add(vels);
 
             // reset bothe genetic values to random
@@ -160,19 +145,19 @@ public class SentinelManager : MonoBehaviour
     public void setRange(float range)
     {
         for (int i = 0; i < parameters.amongAgentsAtStart; i++)
-            sentinels[i].kuramoto.couplingRange = range;
+            agents[i].kuramoto.couplingRange = range;
     }
 
     public void setCoupling(float range)
     {
         for (int i = 0; i < parameters.amongAgentsAtStart; i++)
-            sentinels[i].kuramoto.coupling = range;
+            agents[i].kuramoto.coupling = range;
     }
 
     public void setNoise(float range)
     {
         for (int i = 0; i < parameters.amongAgentsAtStart; i++)
-            sentinels[i].kuramoto.noiseScl = range;
+            agents[i].kuramoto.noiseScl = range;
 
         JsonUtility.ToJson(GenVelLib);
     }

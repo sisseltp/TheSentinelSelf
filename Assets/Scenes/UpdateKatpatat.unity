@@ -12478,7 +12478,7 @@ GameObject:
   - component: {fileID: 334618063}
   - component: {fileID: 334618064}
   m_Layer: 0
-  m_Name: Sentinel Manager 4
+  m_Name: Sentinels Manager 4
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12511,12 +12511,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
-  prefabSentinel: {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
-  sentinels: []
+  prefabsAgents:
+  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
+  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
+  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
+  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
+  agents: []
   Lymphondes: []
-  PathogenEmitters: []
-  pathogenManagers: []
-  tcellManagers: []
+  pathogensManagers: []
+  tcellsManagers: []
 --- !u!1 &335496620
 GameObject:
   m_ObjectHideFlags: 0
@@ -14724,7 +14727,7 @@ GameObject:
   - component: {fileID: 685113649}
   - component: {fileID: 685113648}
   m_Layer: 0
-  m_Name: Lymph Node (T Cell Manager) 2
+  m_Name: Lymph Node (T Cells Manager) 2
   m_TagString: Lymphonde
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14754,16 +14757,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 685113646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
+  m_Script: {fileID: 11500000, guid: 4df0e54d5fd912d45894315fb9f884ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  prefabsTCell:
+  prefabsAgents:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
+  agents: []
   RealAmountTCells: 0
-  TCells: []
   emitionRate: 4
 --- !u!135 &685113649
 SphereCollider:
@@ -16728,10 +16731,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 943453297}
-  - component: {fileID: 943453299}
   - component: {fileID: 943453298}
+  - component: {fileID: 943453299}
   m_Layer: 0
-  m_Name: Pathogen Manager 3
+  m_Name: Pathogens Manager 3
   m_TagString: PathogenEmitter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16773,13 +16776,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 943453296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
+  m_Script: {fileID: 11500000, guid: 289692a563863fe4e8d73b4c438e1a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
-  prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  pathogens: []
-  RealNumPathogens: 0
+  prefabsAgents:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  agents: []
+  RealAmountPathogens: 0
   emitionTimer: 10
 --- !u!1 &954404690
 GameObject:
@@ -17316,10 +17320,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1105279491}
-  - component: {fileID: 1105279493}
   - component: {fileID: 1105279492}
+  - component: {fileID: 1105279493}
   m_Layer: 0
-  m_Name: Pathogen Manager 2
+  m_Name: Pathogens Manager 2
   m_TagString: PathogenEmitter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17361,13 +17365,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1105279490}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
+  m_Script: {fileID: 11500000, guid: 289692a563863fe4e8d73b4c438e1a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
-  prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  pathogens: []
-  RealNumPathogens: 0
+  prefabsAgents:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  agents: []
+  RealAmountPathogens: 0
   emitionTimer: 10
 --- !u!1 &1105928081
 GameObject:
@@ -17380,7 +17385,7 @@ GameObject:
   - component: {fileID: 1105928082}
   - component: {fileID: 1105928083}
   m_Layer: 0
-  m_Name: Sentinel Manager 2
+  m_Name: Sentinels Manager 2
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17413,12 +17418,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
-  prefabSentinel: {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
-  sentinels: []
+  prefabsAgents:
+  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
+  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
+  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
+  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
+  agents: []
   Lymphondes: []
-  PathogenEmitters: []
-  pathogenManagers: []
-  tcellManagers: []
+  pathogensManagers: []
+  tcellsManagers: []
 --- !u!1 &1127644777
 GameObject:
   m_ObjectHideFlags: 0
@@ -18526,7 +18534,7 @@ GameObject:
   - component: {fileID: 1233575351}
   - component: {fileID: 1233575352}
   m_Layer: 0
-  m_Name: Sentinel Manager 3
+  m_Name: Sentinels Manager 3
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18559,12 +18567,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
-  prefabSentinel: {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
-  sentinels: []
+  prefabsAgents:
+  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
+  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
+  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
+  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
+  agents: []
   Lymphondes: []
-  PathogenEmitters: []
-  pathogenManagers: []
-  tcellManagers: []
+  pathogensManagers: []
+  tcellsManagers: []
 --- !u!1001 &1243791059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21056,7 +21067,7 @@ GameObject:
   - component: {fileID: 1464486746}
   - component: {fileID: 1464486747}
   m_Layer: 0
-  m_Name: Plastic Manager Bounds?
+  m_Name: Plastics Manager Bounds?
   m_TagString: PlasticMover
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21098,10 +21109,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1504007424}
-  - component: {fileID: 1504007426}
   - component: {fileID: 1504007425}
+  - component: {fileID: 1504007426}
   m_Layer: 0
-  m_Name: Pathogen Manager 4
+  m_Name: Pathogens Manager 4
   m_TagString: PathogenEmitter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21143,13 +21154,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1504007423}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
+  m_Script: {fileID: 11500000, guid: 289692a563863fe4e8d73b4c438e1a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
-  prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  pathogens: []
-  RealNumPathogens: 0
+  prefabsAgents:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  agents: []
+  RealAmountPathogens: 0
   emitionTimer: 10
 --- !u!1 &1516042819
 GameObject:
@@ -21693,27 +21705,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d91e2e07d734bed43979d2f894b15b73, type: 3}
---- !u!114 &1629350854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774876864796954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 247c6fecfcf946d4a9eb33a49f73cb2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 969981c6208f8854cb9950637ba05295, type: 2}
-  prefabPlastic: {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
-  emitionOrigin: {fileID: 3850774876864796953}
-  MaxPlastics: 15
-  emitionSpeed: 1
-  RealAmountPlasstics: 0
-  plastics: []
-  col0: {r: 0, g: 0, b: 0, a: 0}
-  col1: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &1629737345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23359,7 +23350,7 @@ GameObject:
   - component: {fileID: 1796357676}
   - component: {fileID: 1796357675}
   m_Layer: 0
-  m_Name: Lymph Node (T Cell Manager) 4
+  m_Name: Lymph Node (T Cells Manager) 4
   m_TagString: Lymphonde
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23389,16 +23380,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1796357673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
+  m_Script: {fileID: 11500000, guid: 4df0e54d5fd912d45894315fb9f884ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  prefabsTCell:
+  prefabsAgents:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
+  agents: []
   RealAmountTCells: 0
-  TCells: []
   emitionRate: 4
 --- !u!135 &1796357676
 SphereCollider:
@@ -24461,7 +24452,7 @@ GameObject:
   - component: {fileID: 2035026503}
   - component: {fileID: 2035026502}
   m_Layer: 0
-  m_Name: Lymph Node (T Cell Manager) 3
+  m_Name: Lymph Node (T Cells Manager) 3
   m_TagString: Lymphonde
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24491,16 +24482,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2035026500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
+  m_Script: {fileID: 11500000, guid: 4df0e54d5fd912d45894315fb9f884ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  prefabsTCell:
+  prefabsAgents:
   - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
   - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
+  agents: []
   RealAmountTCells: 0
-  TCells: []
   emitionRate: 4
 --- !u!135 &2035026503
 SphereCollider:
@@ -26007,23 +25998,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3850774876630024337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774876630024339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6b14df31d2bd2543a319e8fe4c27081, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
-  prefabPathogen: {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
-  pathogens: []
-  RealNumPathogens: 0
-  emitionTimer: 10
 --- !u!4 &3850774876630024338
 Transform:
   m_ObjectHideFlags: 0
@@ -26047,15 +26021,33 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3850774876630024338}
-  - component: {fileID: 3850774876630024337}
   - component: {fileID: 3850774876630024336}
+  - component: {fileID: 3850774876630024340}
   m_Layer: 0
-  m_Name: Pathogen Manager 1
+  m_Name: Pathogens Manager 1
   m_TagString: PathogenEmitter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3850774876630024340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774876630024339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289692a563863fe4e8d73b4c438e1a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 20f61c9be2a85c545bacb5f27d31b83f, type: 2}
+  prefabsAgents:
+  - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
+  agents: []
+  RealAmountPathogens: 0
+  emitionTimer: 10
 --- !u!114 &3850774876727978457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26069,12 +26061,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
-  prefabSentinel: {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
-  sentinels: []
+  prefabsAgents:
+  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
+  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
+  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
+  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
+  agents: []
   Lymphondes: []
-  PathogenEmitters: []
-  pathogenManagers: []
-  tcellManagers: []
+  pathogensManagers: []
+  tcellsManagers: []
 --- !u!4 &3850774876727978458
 Transform:
   m_ObjectHideFlags: 0
@@ -26100,7 +26095,7 @@ GameObject:
   - component: {fileID: 3850774876727978458}
   - component: {fileID: 3850774876727978457}
   m_Layer: 0
-  m_Name: Sentinel Manager 1
+  m_Name: Sentinels Manager 1
   m_TagString: Respawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26129,14 +26124,36 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3850774876864796953}
-  - component: {fileID: 1629350854}
+  - component: {fileID: 3850774876864796955}
   m_Layer: 0
-  m_Name: Plastic Manager
+  m_Name: Plastics Manager
   m_TagString: PlasticMover
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3850774876864796955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774876864796954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b875ac3474080e34882cd10afc970ed1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 969981c6208f8854cb9950637ba05295, type: 2}
+  prefabsAgents:
+  - {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
+  agents: []
+  emitionOrigin: {fileID: 3850774876864796953}
+  MaxPlastics: 15
+  emitionSpeed: 1
+  RealAmountPlastics: 0
+  col0: {r: 0, g: 0, b: 0, a: 0}
+  col1: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &3850774877200160640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26221,14 +26238,34 @@ GameObject:
   m_Component:
   - component: {fileID: 3850774878323730104}
   - component: {fileID: 3850774878323730246}
-  - component: {fileID: 3850774878323730247}
+  - component: {fileID: 3850774878323730106}
   m_Layer: 0
-  m_Name: Lymph Node (T Cell Manager) 1
+  m_Name: Lymph Node (T Cells Manager) 1
   m_TagString: Lymphonde
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3850774878323730106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774878323730105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df0e54d5fd912d45894315fb9f884ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
+  prefabsAgents:
+  - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
+  - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
+  - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
+  agents: []
+  RealAmountTCells: 0
+  emitionRate: 4
 --- !u!135 &3850774878323730246
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -26242,26 +26279,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3850774878323730247
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774878323730105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3f2596c163bd8a4fb67f936ff796f37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 14dd469e1ea256c499008e2c2014f50c, type: 2}
-  prefabsTCell:
-  - {fileID: 4478763503305038647, guid: 1b27e703250e85243bb7e369a5ef9897, type: 3}
-  - {fileID: 16971644301419585, guid: 96ad87a1ba3a30546a60ed9904d262fb, type: 3}
-  - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
-  RealAmountTCells: 0
-  TCells: []
-  emitionRate: 15
 --- !u!1 &3942708858654904100
 GameObject:
   m_ObjectHideFlags: 0
