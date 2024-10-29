@@ -89,14 +89,14 @@ public class GeneticMovementTcell : GeneticMovement
                         target = Antigens[i - 1].origin;
                         for (int j = 0; j < 2; j++)
                         {
-                            if (manager.CanAddCell())
+                            if ((agent.manager as TCellsManager).CanAddCell)
                             {
                                 // create a replica
                                 TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
                                 replica.geneticMovement.notKeyed = false;
                                 replica.geneticMovement.target = target;
                                 // add new tcell to manager
-                                manager.AddTCell(replica);
+                                manager.AddNewAgentAtTop(replica);
                             }
                             else
                             {

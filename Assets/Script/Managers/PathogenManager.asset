@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4999d55f4245df64ca7703de3f0fa64f, type: 3}
   m_Name: PathogenManager
   m_EditorClassIdentifier: 
-  amongAgentsAtStart: 150
+  maxAmountAgents: 150
+  percentageMaxAmountAgentsAtStart: 100
   spawnArea: 11
-  speedScl: -0.5
+  speedScl: 0.5
   speedRange: {x: 90, y: 100}
   couplingRange: {x: 5, y: 8}
   noiseSclRange: {x: 0.01, y: 0.1}
