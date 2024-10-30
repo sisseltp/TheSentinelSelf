@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4999d55f4245df64ca7703de3f0fa64f, type: 3}
   m_Name: TCellManager
   m_EditorClassIdentifier: 
-  amongAgentsAtStart: 256
+  maxAmountAgents: 384
+  percentageMaxAmountAgentsAtStart: 66
   spawnArea: 20
   speedScl: 1.2
   speedRange: {x: 110, y: 120}

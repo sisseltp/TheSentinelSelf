@@ -12512,14 +12512,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabsAgents:
-  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
-  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
-  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
   - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
   realAmountAgents: 0
-  pathogensManagers: []
-  tcellsManagers: []
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1 &335496620
 GameObject:
   m_ObjectHideFlags: 0
@@ -14767,7 +14764,8 @@ MonoBehaviour:
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionRate: 4
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!135 &685113649
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -16784,7 +16782,8 @@ MonoBehaviour:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionTimer: 10
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1 &954404690
 GameObject:
   m_ObjectHideFlags: 0
@@ -17373,7 +17372,8 @@ MonoBehaviour:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionTimer: 10
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1 &1105928081
 GameObject:
   m_ObjectHideFlags: 0
@@ -17419,14 +17419,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabsAgents:
-  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
   - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
-  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
-  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
   realAmountAgents: 0
-  pathogensManagers: []
-  tcellsManagers: []
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1 &1127644777
 GameObject:
   m_ObjectHideFlags: 0
@@ -17538,11 +17535,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changeTimeS: 120
---- !u!20 &1136528590 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 8573577045286854420, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
-  m_PrefabInstance: {fileID: 6169456976460453342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1136528592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18528,6 +18520,66 @@ SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3659947589023617642, guid: 2b5cc66c7613726428b00fce2295c8ed, type: 3}
   m_PrefabInstance: {fileID: 1243791059}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1224673888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1224673889}
+  - component: {fileID: 1224673890}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1224673889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224673888}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 867.2712, y: 3500.1707, z: 808.6958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1224673890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224673888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2de61643399338a47942eec68b6c161f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentinelsManagers:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pathogensManagers:
+  - {fileID: 3850774876630024340}
+  - {fileID: 1105279493}
+  - {fileID: 943453299}
+  - {fileID: 1504007426}
+  plasticsManagers:
+  - {fileID: 3850774876864796955}
+  tCellsManagers:
+  - {fileID: 3850774878323730106}
+  - {fileID: 685113648}
+  - {fileID: 2035026502}
+  - {fileID: 1796357675}
 --- !u!1 &1233575350
 GameObject:
   m_ObjectHideFlags: 0
@@ -18573,14 +18625,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
   prefabsAgents:
-  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
-  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
   - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
-  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
   agents: []
   realAmountAgents: 0
-  pathogensManagers: []
-  tcellsManagers: []
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1001 &1243791059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21167,7 +21216,8 @@ MonoBehaviour:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionTimer: 10
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!1 &1516042819
 GameObject:
   m_ObjectHideFlags: 0
@@ -23395,7 +23445,8 @@ MonoBehaviour:
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionRate: 4
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!135 &1796357676
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24497,7 +24548,8 @@ MonoBehaviour:
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionRate: 4
+  emitsContinuously: 1
+  delayBetweenEmissions: 4
 --- !u!135 &2035026503
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -26052,29 +26104,8 @@ MonoBehaviour:
   - {fileID: 4021970835733115310, guid: d99d0e7ce3c106b46a73db471db9c8bf, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionTimer: 10
---- !u!114 &3850774876727978457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774876727978459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
-  prefabsAgents:
-  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
-  - {fileID: 2731493512756071247, guid: bcb59897c468e4eebb97060dfcb07a10, type: 3}
-  - {fileID: 4107442386137540623, guid: f7525f89c8f4d0d4b829f9ce347782b2, type: 3}
-  - {fileID: 7014643093506636781, guid: 1778783398c82c94a89d9f0ef29f08b1, type: 3}
-  agents: []
-  realAmountAgents: 0
-  pathogensManagers: []
-  tcellsManagers: []
+  emitsContinuously: 1
+  delayBetweenEmissions: 10
 --- !u!4 &3850774876727978458
 Transform:
   m_ObjectHideFlags: 0
@@ -26098,7 +26129,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3850774876727978458}
-  - component: {fileID: 3850774876727978457}
+  - component: {fileID: 3850774876727978460}
   m_Layer: 0
   m_Name: Sentinels Manager 1
   m_TagString: Respawn
@@ -26106,6 +26137,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3850774876727978460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3850774876727978459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34389f8632042a84b9897bfb05380d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters: {fileID: 11400000, guid: 43a028e7414f78b4f8fbe5f1be3f584b, type: 2}
+  prefabsAgents:
+  - {fileID: 1241660613132810289, guid: e5eebf7dbeb514b49a96bc764fea8f6b, type: 3}
+  agents: []
+  realAmountAgents: 0
+  emitsContinuously: 0
+  delayBetweenEmissions: 1
 --- !u!4 &3850774876864796953
 Transform:
   m_ObjectHideFlags: 0
@@ -26154,9 +26204,8 @@ MonoBehaviour:
   - {fileID: 9038299800857035272, guid: 61e945d616d377d4faa61d3f38c8a118, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionOrigin: {fileID: 3850774876864796953}
-  MaxPlastics: 15
-  emitionSpeed: 1
+  emitsContinuously: 1
+  delayBetweenEmissions: 1
 --- !u!114 &3850774877200160640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26209,7 +26258,6 @@ GameObject:
   - component: {fileID: 3850774877200160641}
   - component: {fileID: 3850774877200160640}
   - component: {fileID: 1144778776}
-  - component: {fileID: 3850774877200160643}
   m_Layer: 0
   m_Name: Agents Manager
   m_TagString: Untagged
@@ -26217,18 +26265,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3850774877200160643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774877200160642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7b7aff1545ef164ca0ddd725bb97d41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &3850774878323730104
 Transform:
   m_ObjectHideFlags: 0
@@ -26281,7 +26317,8 @@ MonoBehaviour:
   - {fileID: 750013943307717221, guid: 69a8e89ef0d95954791d7e91c44a1ca5, type: 3}
   agents: []
   realAmountAgents: 0
-  emitionRate: 4
+  emitsContinuously: 1
+  delayBetweenEmissions: 4
 --- !u!135 &3850774878323730246
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -27255,10 +27292,6 @@ PrefabInstance:
       value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 1136528590}
-    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: normalized
       value: 0
       objectReference: {fileID: 0}
@@ -27268,10 +27301,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: ChangeTrackTimer
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
-      propertyPath: changeTrackTimer
       value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}

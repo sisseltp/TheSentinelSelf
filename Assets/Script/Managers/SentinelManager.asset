@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4999d55f4245df64ca7703de3f0fa64f, type: 3}
   m_Name: SentinelManager
   m_EditorClassIdentifier: 
-  nSentinels: 10
+  maxAmountAgents: 10
+  percentageMaxAmountAgentsAtStart: 100
   spawnArea: 20
   speedScl: 0.9
   speedRange: {x: 70, y: 80}

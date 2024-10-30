@@ -45,7 +45,7 @@ public class GeneticMovementSentinel : GeneticMovement
 
         agent.rigidBody.drag = origDrag;
 
-        target = manager.pathogensManagers[Random.Range(0, manager.pathogensManagers.Length)].transform.position;
+        target = GameManager.Instance.pathogensManagers[Random.Range(0, GameManager.Instance.pathogensManagers.Count)].transform.position;
         targeting = true;
     }
 
@@ -93,9 +93,9 @@ public class GeneticMovementSentinel : GeneticMovement
         {
             if (keys >= NumKeysToCollect && !targeting)
             {
-                int indx = Random.Range(0, manager.tcellsManagers.Length);
+                int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
                 
-                target = manager.tcellsManagers[indx].transform.position;
+                target = GameManager.Instance.tCellsManagers[indx].transform.position;
                 targeting = true;
                 tcellHits = 0;
 
@@ -120,9 +120,9 @@ public class GeneticMovementSentinel : GeneticMovement
         }
         else if (collision.gameObject.CompareTag("Lymphonde") && tcellHits > 10 && !targeting)
         {
-            int indx = Random.Range(0, manager.pathogensManagers.Length);
+            int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
-            target = manager.pathogensManagers[indx].transform.position;
+            target = GameManager.Instance.pathogensManagers[indx].transform.position;
             targeting = true;
 
             foreach (GeneticAntigenKey key in digestAntigens)

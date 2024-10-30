@@ -3,9 +3,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AgentsManagerParameters", menuName = "ScriptableObjects/AgentsManagerParameters", order = 1)]
 public class AgentsManagerParameters : ScriptableObject
 {
-    [Tooltip("Number of agents to produce")]
     [Range(1, 3000)]
-    public int amongAgentsAtStart = 10; // number of sentinels to be made
+    public int maxAmountAgents = 10; // number of sentinels to be made
+
+    [Tooltip("% of maxAmountAgents to produce at start")]
+    [Range(0, 100)]
+    public int percentageMaxAmountAgentsAtStart = 100; // number of sentinels to be made
+
     [Tooltip("radius of area to be produced in")]
     [Range(0.1f, 200f)]
     public float spawnArea = 1.0f; // area to be spawned in
@@ -26,6 +30,4 @@ public class AgentsManagerParameters : ScriptableObject
 
     [Tooltip("Max age the agents will reach")]
     public float MaxAge = 1000; // age limit to kill sentinels
-
-  
 }
