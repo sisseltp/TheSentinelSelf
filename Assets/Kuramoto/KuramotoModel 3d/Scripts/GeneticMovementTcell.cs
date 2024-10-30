@@ -91,8 +91,16 @@ public class GeneticMovementTcell : GeneticMovement
                         GetComponent<KuramotoAffectedAgent>().played = 2; // I guess this means its looking for pathogens?
                         // add fitness
                         Antigens[i - 1].antigen.fitness++;
+                        
+                        // @neander: Sets the pathogen emitter as target and copies itself a few times
                         // set the target from the origin
                         target = Antigens[i - 1].origin;
+                        
+                        Debug.Log($"Target position = {target}");
+                        
+                        // TODO: @Neander: This is where the TCell goes to the pathogen emitter
+                        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
+
                         for (int j = 0; j < 2; j++)
                         {
                             if (manager.CanAddCell())
@@ -116,8 +124,10 @@ public class GeneticMovementTcell : GeneticMovement
                 }
             }
         }
-        else if (collision.gameObject.CompareTag("Pathogen"))
+        else if (collision.gameObject.CompareTag("Pathogen")) // TODO: Check why this is not firing
         {
+            Debug.Log("Hit Pathogen");
+            
             // get keys from children
             GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
 
@@ -168,11 +178,11 @@ public class GeneticMovementTcell : GeneticMovement
         {
             target = transform.parent.position;
         }
-        else if (other.gameObject.CompareTag("LymphOuter") && !notKeyed)
-        {
-            // TODO: @Neander: This is where the TCell goes to the pathogen emitter
-            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
-        }
+        // else if (other.gameObject.CompareTag("LymphOuter") && !notKeyed)
+        // {
+        //     // TODO: @Neander: This is where the TCell goes to the pathogen emitter
+        //     CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
+        // }
     }
 
 

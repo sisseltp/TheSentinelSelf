@@ -63,13 +63,13 @@ namespace Script.CameraSystem
                 case WorldEvents.SentinelDies:
                 case WorldEvents.SentinelBecomesEgg:
                 case WorldEvents.InfectedSentinelGoesToTCell:
-                    Debug.Log($"Sentinel Event: {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
+                    // Debug.Log($"<color=green>Sentinel Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
                     break;
                 case WorldEvents.TCellGoesToPathogen:
                 case WorldEvents.TCellKillsPathogen:
                 case WorldEvents.TCellReachedPathogenEmitter:
                 case WorldEvents.TCellIsCorrupted:
-                    Debug.LogError($"TCell Event: {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
+                    Debug.Log($"<color=blue>TCell Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -108,7 +108,7 @@ namespace Script.CameraSystem
         {
             currentEvent = null;
             
-            Debug.Log("Next event if any");
+            // Debug.Log("Next event if any");
             
             // If no new event was triggered go trough the list and check the highest interest event
         }
