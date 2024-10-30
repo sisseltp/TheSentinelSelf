@@ -354,22 +354,22 @@ public class GPUCompute : MonoBehaviour
 
     private void OnDisable()
     {
-        BiomeBuffer.Release(); ;
-        sentinelBuffer.Release();
-        plasticBuffer.Release();
-        BiomeBufferOut.Release();
-        sentinelBufferOut.Release();
-        plasticBufferOut.Release();
+        BiomeBuffer?.Release(); ;
+        sentinelBuffer?.Release();
+        plasticBuffer?.Release();
+        BiomeBufferOut?.Release();
+        sentinelBufferOut?.Release();
+        plasticBufferOut?.Release();
     }
 
     private void OnDestroy()
     {
-        BiomeBuffer.Release(); ;
-        sentinelBuffer.Release();
-        plasticBuffer.Release();
-        BiomeBufferOut.Release();
-        sentinelBufferOut.Release();
-        plasticBufferOut.Release();
+        BiomeBuffer?.Release(); ;
+        sentinelBuffer?.Release();
+        plasticBuffer?.Release();
+        BiomeBufferOut?.Release();
+        sentinelBufferOut?.Release();
+        plasticBufferOut?.Release();
     }
 }
 
