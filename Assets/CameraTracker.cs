@@ -224,8 +224,20 @@ public class CameraTracker : MonoBehaviour
     }
 
     private int lastIndx = -1;
+
+    public void SetTracked(Transform target)
+    {
+        look = target;
+        tracked = target;
+        
+        StartCoroutine(ChangeCharacter(changeTrackTimer));
+        StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
+    }
+    
     private void FindSceneTracked(string tagToFind)
     {
+        return;
+        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
         int max = 0;
         int indx = -1;
@@ -277,6 +289,8 @@ public class CameraTracker : MonoBehaviour
 
     private void FindSceneLook(string tagToFind)
     {
+        return;
+        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
 
         float dist = float.PositiveInfinity;
@@ -302,6 +316,8 @@ public class CameraTracker : MonoBehaviour
 
     public void FindScreenTracked(string tagToFind)
     {
+        return;
+        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
 
         float dist = float.PositiveInfinity;
@@ -331,6 +347,8 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ChangeCharacter(float timer)
     {
+        yield return null;
+        
         while (tracking)
         {
             yield return new WaitForSeconds(timer);

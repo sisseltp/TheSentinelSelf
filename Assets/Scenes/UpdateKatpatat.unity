@@ -27143,6 +27143,10 @@ PrefabInstance:
       propertyPath: EmissionModule.rateOverDistance.scalar
       value: 60
       objectReference: {fileID: 0}
+    - target: {fileID: 6169456976523002883, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 6169456976549353376, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: path
       value: 
@@ -27257,7 +27261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6848046281362885742, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_Port
-      value: 2001
+      value: 9001
       objectReference: {fileID: 0}
     - target: {fileID: 7903102902183674424, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: m_Radius
@@ -27292,6 +27296,10 @@ PrefabInstance:
       value: 900
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 6169456976460453343}
+    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: normalized
       value: 0
       objectReference: {fileID: 0}
@@ -27304,11 +27312,20 @@ PrefabInstance:
       value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+      propertyPath: changeTrackTimer
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145074984584773378, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
       propertyPath: underWaterJumpDist
       value: 2800
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+--- !u!20 &6169456976460453343 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8573577045286854420, guid: a8c1b114d1cffd74792592ab75b6ec2c, type: 3}
+  m_PrefabInstance: {fileID: 6169456976460453342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &6180248705868249413
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

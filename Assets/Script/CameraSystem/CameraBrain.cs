@@ -5,13 +5,19 @@ using UnityEngine;
 
 namespace Script.CameraSystem
 {
+    // TODO: @Neander: Less switching, react to urgent world events else just let it follow the current target around and switch it up from time to time
+    // Have a list of the last N events and after a timer is done check valid events that are different and switch to it
+    
     public class CameraBrain : MonoBehaviour
     {
         public static CameraBrain Instance;
 
         [SerializeField] 
         private CameraTracker cameraTracker;
-        
+
+        [SerializeField]
+        private float switchTime = 30f; // In seconds
+            
         private float currentTimer;
         private WorldEvent currentEvent;
         
@@ -21,28 +27,28 @@ namespace Script.CameraSystem
         {
             {WorldEvents.SentinelDies, 10},
             {WorldEvents.SentinelAteAntigen, 0},
-            {WorldEvents.SentinelAtePlastic, 1},
-            {WorldEvents.SentinelBecomesEgg, 15},
+            {WorldEvents.SentinelAtePlastic, 60},
+            {WorldEvents.SentinelBecomesEgg, 70},
             {WorldEvents.SentinelGoesToPathogen, 1},
             {WorldEvents.TCellIsCorrupted, 20},
             {WorldEvents.SentinelGoesToLymphNode, 5},
-            {WorldEvents.TCellGoesToPathogen, 1},
+            {WorldEvents.TCellGoesToPathogen, 8},
             {WorldEvents.TCellKillsPathogen, 20},
-            {WorldEvents.TCellReachedPathogenEmitter, 30},
-            {WorldEvents.InfectedSentinelGoesToTCell, 20}
+            {WorldEvents.TCellReachedPathogenEmitter, 40},
+            {WorldEvents.InfectedSentinelGoesToTCell, 50}
         };
         
         private readonly Dictionary<WorldEvents, int> eventTimes = new Dictionary<WorldEvents, int>()
         {
             {WorldEvents.SentinelDies, 20},
-            {WorldEvents.SentinelAteAntigen, 5},
-            {WorldEvents.SentinelAtePlastic, 10},
-            {WorldEvents.SentinelBecomesEgg, 20},
-            {WorldEvents.SentinelGoesToPathogen, 5},
-            {WorldEvents.TCellIsCorrupted, 20},
-            {WorldEvents.SentinelGoesToLymphNode, 20},
-            {WorldEvents.TCellGoesToPathogen, 5},
-            {WorldEvents.TCellKillsPathogen, 5},
+            {WorldEvents.SentinelAteAntigen, 15},
+            {WorldEvents.SentinelAtePlastic, 30},
+            {WorldEvents.SentinelBecomesEgg, 30},
+            {WorldEvents.SentinelGoesToPathogen, 15},
+            {WorldEvents.TCellIsCorrupted, 30},
+            {WorldEvents.SentinelGoesToLymphNode, 30},
+            {WorldEvents.TCellGoesToPathogen, 15},
+            {WorldEvents.TCellKillsPathogen, 15},
             {WorldEvents.TCellReachedPathogenEmitter, 20},
             {WorldEvents.InfectedSentinelGoesToTCell, 30}
         };
@@ -50,6 +56,11 @@ namespace Script.CameraSystem
         private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
+            currentTimer = switchTime;
         }
 
         public void RegisterEvent(WorldEvent newWorldEvent)
@@ -76,7 +87,14 @@ namespace Script.CameraSystem
             }
             
             // Add to the queue
-            worldEvents.Add(newWorldEvent);
+            if (currentEvent != null && newWorldEvent.EventType != currentEvent.EventType)
+            {
+                if (worldEvents.Count >= 5)
+                {
+                    worldEvents.RemoveAt(0);
+                    worldEvents.Add(newWorldEvent);
+                }
+            }
             // Evaluate event
             EvaluateEvent(newWorldEvent);
         }
@@ -102,25 +120,42 @@ namespace Script.CameraSystem
             
             currentEvent = worldEvent;
             currentTimer = GetEvenTime(currentEvent.EventType);
+
+            cameraTracker.SetTracked(currentEvent.EventTarget);
+            
+            // cameraTracker.tracked = currentEvent.EventTarget;
+            // cameraTracker.look = currentEvent.EventTarget;
         }
 
         private void NextEvent()
         {
+            if (worldEvents.Count <= 0) return;
+            if (worldEvents.Count(x => x.EventTarget != null) <= 0) return;
+            
             currentEvent = null;
-            
-            // Debug.Log("Next event if any");
-            
             // If no new event was triggered go trough the list and check the highest interest event
+
+            var currentValue = -100;
+            WorldEvent chosenEvent = null;
+            
+            foreach (var worldEvent in worldEvents)
+            {
+                if (GetHeuristicValue(worldEvent.EventType) > currentValue && worldEvent.EventTarget != null)
+                {
+                    chosenEvent = worldEvent;
+                }
+            }
+            
+            SetNextEvent(chosenEvent);
         }
 
         private void Update()
         {
-            if (currentEvent == null) return;
-            
             currentTimer -= Time.deltaTime;
-
+            
             if (currentTimer <= 0)
             {
+                currentTimer = switchTime;
                 // Check new event
                 NextEvent();
             }
