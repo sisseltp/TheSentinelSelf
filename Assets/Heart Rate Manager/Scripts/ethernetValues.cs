@@ -39,13 +39,13 @@ public class EthernetValues : MonoBehaviour
 
     void Update()
     {
-        if (sentinel1Interval == 0)
+        if (GlobalInterval == 0)
         {
             IntroControl.SetSensorConnected(false);
         }
 
-        avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
-        float avrgChange = Mathf.Abs(sentinel1Rate - lastAvrgRate);
+        avrgRate += (GlobalRate - avrgRate) * avrgDrag;
+        float avrgChange = Mathf.Abs(GlobalRate - lastAvrgRate);
 
         if (avrgRate > 50 && avrgRate < 150 && (avrgChange < changeGate))
         {
@@ -54,7 +54,7 @@ public class EthernetValues : MonoBehaviour
                 reading = true;
                 TimerGate = Time.time;
             }
-            else if (sentinel1Interval > 0 && TimerGate + beginTimer < Time.time ) {
+            else if (GlobalInterval > 0 && TimerGate + beginTimer < Time.time ) {
                 IntroControl.SetSensorConnected(true, true);
             }
 
@@ -76,7 +76,7 @@ public class EthernetValues : MonoBehaviour
         {
             reading = false;
             TimerGate = Time.time;
-        } else if (sentinel1Interval > 0 && TimerGate + restartTimer < Time.time) {
+        } else if (GlobalInterval > 0 && TimerGate + restartTimer < Time.time) {
             IntroControl.SetSensorConnected(true);
         }
 

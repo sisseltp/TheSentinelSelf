@@ -80,7 +80,7 @@ namespace Script.CameraSystem
                 case WorldEvents.TCellKillsPathogen:
                 case WorldEvents.TCellReachedPathogenEmitter:
                 case WorldEvents.TCellIsCorrupted:
-                    Debug.Log($"<color=blue>TCell Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
+                    // Debug.Log($"<color=blue>TCell Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

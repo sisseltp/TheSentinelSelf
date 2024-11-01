@@ -6261,6 +6261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9030bf12cbf3b48adc0b104d6e3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  underWaterScene: {fileID: 1243791062}
+  simulationScene: {fileID: 23368312}
+  useMouseToTransition: 1
   floating: 1
   driftPower: 170
   nScale: 0.15
@@ -24723,6 +24726,11 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1390.593, y: 401.7505, z: 1298.7225}
   m_Center: {x: 144.5, y: 150.3, z: 18}
+--- !u!1 &1243791062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9025669105572702251, guid: 2b5cc66c7613726428b00fce2295c8ed, type: 3}
+  m_PrefabInstance: {fileID: 1243791059}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1275252932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31161,6 +31169,7 @@ GameObject:
   - component: {fileID: 944095142113354960}
   - component: {fileID: 2636662854851455708}
   - component: {fileID: 4049622654821292006}
+  - component: {fileID: 1085927545661835972}
   - component: {fileID: 180126329}
   - component: {fileID: 180126334}
   - component: {fileID: 1136528582}
@@ -31173,6 +31182,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1085927545661835972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085927545661835971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d58aad3ad0979d5419599ba55299d7a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraTracker: {fileID: 2636662854851455708}
+  switchTime: 30
 --- !u!4 &1169724612600111783
 Transform:
   m_ObjectHideFlags: 0
@@ -31489,19 +31512,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085927545661835971}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b1f06484d35aeaf4883a78823a604a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tracked: {fileID: 0}
   look: {fileID: 0}
+  mainCamera: {fileID: 2550487142623021770}
   setDistance: 28
   distVariation: 3.45
   power: 0.2
   rotSpeed: 0.78
   distLimit: 42.3
-  ChangeTrackTimer: 120
+  changeTrackTimer: 120
   underWaterJumpDist: 2800
   fadePeriod: 4
   driftPower: 900
@@ -31509,7 +31533,8 @@ MonoBehaviour:
   restTimer: 0
   normalized: 0
   tracking: 0
-  Introing: 0
+  doingIntro: 0
+  doingOutro: 0
   rb: {fileID: 0}
 --- !u!1001 &2699149021228740462
 PrefabInstance:

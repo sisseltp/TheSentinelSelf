@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class IntroBeginner : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject underWaterScene;
-    
-    [SerializeField] 
-    private GameObject simulationScene;
+    // [SerializeField] 
+    // private GameObject underWaterScene;
+    //
+    // [SerializeField] 
+    // private GameObject simulationScene;
     
     CameraTracker camTrack;
 
@@ -168,28 +168,28 @@ public class IntroBeginner : MonoBehaviour
     
     public void SetDoingIntro(bool state)
     {
-        if (!state && doingIntro)
-        {
-            underWaterScene.SetActive(false);
-        }
-        else if (state && !doingIntro)
-        {
-            simulationScene.SetActive(true);
-        }
+        // if (!state && doingIntro)
+        // {
+        //     underWaterScene.SetActive(false);
+        // }
+        // else if (state && !doingIntro)
+        // {
+        //     simulationScene.SetActive(true);
+        // }
         
         doingIntro = state;
     }
 
     public void SetDoingOutro(bool state)
     {
-        if (state && !doingOutro)
-        {
-            underWaterScene.SetActive(true);
-        } 
-        else if (!state && doingOutro)
-        {
-            simulationScene.SetActive(false);
-        }
+        // if (state && !doingOutro)
+        // {
+        //     underWaterScene.SetActive(true);
+        // } 
+        // else if (!state && doingOutro)
+        // {
+        //     simulationScene.SetActive(false);
+        // }
         
         doingOutro = state;
     }
