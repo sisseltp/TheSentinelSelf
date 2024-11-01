@@ -168,7 +168,9 @@ public class CameraTracker : MonoBehaviour
     {
         if (!Introing)
         {
-            faderImage.CrossFadeAlpha(1, fadePeriod, false);
+            if(faderImage!=null)
+                faderImage.CrossFadeAlpha(1, fadePeriod, false);
+
             StartCoroutine(ReturnCallback());     
         }
     }

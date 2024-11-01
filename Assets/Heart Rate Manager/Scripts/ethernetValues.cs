@@ -7,9 +7,9 @@ using Freya;
 public class EthernetValues : MonoBehaviour
 {
     [Header("Sensor Values")]
-    public int sentinel1Rate;
-    public int sentinel1Interval;
-    public float sentinel1Pulse;
+    public int GlobalRate;
+    public int GlobalInterval;
+    public float GlobalPulse;
 
     [Header("Kuramoto Values")]
     public float pulseGradient;
@@ -29,6 +29,7 @@ public class EthernetValues : MonoBehaviour
 
     private float TimerGate = 0;
 
+    [SerializeField]
     private IntroBeginner IntroControl;
 
     [SerializeField]
@@ -38,15 +39,10 @@ public class EthernetValues : MonoBehaviour
     [SerializeField]
     private float changeGate = 10;
 
-    void Start()
-    {
-        IntroControl = GetComponentInParent<IntroBeginner>();
-    }
-
     void Update()
     {
-        avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
-        float avrgChange = Mathf.Abs(sentinel1Rate - lastAvrgRate);
+        avrgRate += (GlobalRate - avrgRate) * avrgDrag;
+        float avrgChange = Mathf.Abs(GlobalRate - lastAvrgRate);
 
         if (avrgRate > 50 && avrgRate < 150 && (avrgChange < changeGate))
         {
@@ -61,12 +57,12 @@ public class EthernetValues : MonoBehaviour
                 IntroControl.Begin();
             }
 
-            float step = (float)sentinel1Rate / 30;
+            float step = (float)GlobalRate / 30;
             step *= Time.deltaTime;
             pulseGradient += step;// *f; I realised the division above was wron so should be perfect now
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
-            if (sentinel1Pulse == 1)
+            if (GlobalPulse == 1)
                 pulseGradient = 0;
 
             /*if (agent != null)
@@ -90,5 +86,20 @@ public class EthernetValues : MonoBehaviour
     public void SetSentinelAgent(KuramotoAffectedAgent thisAgent)
     {
         agent = thisAgent;
+    }
+
+    public void SetGlobalHeartBeatRateValue(int value)
+    {
+        GlobalRate = value;
+    }
+
+    public void SetGlobalHeartBeatIntervalValue(int value)
+    {
+        GlobalInterval = value;
+    }
+
+    public void SetGlobalHeartBeatPulseValue(int value)
+    {
+        GlobalPulse = Mathf.Clamp01(value / 4095f);
     }
 }
