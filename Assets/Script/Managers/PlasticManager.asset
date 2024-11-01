@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4999d55f4245df64ca7703de3f0fa64f, type: 3}
   m_Name: PlasticManager
   m_EditorClassIdentifier: 
-  maxAmountAgents: 15
+  maxAmountAgents: 400
   percentageMaxAmountAgentsAtStart: 66
   spawnArea: 150
   speedScl: 8
