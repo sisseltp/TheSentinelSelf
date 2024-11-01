@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1690106266449968530
+--- !u!114 &-2405701270159016507
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,11 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Torso
-  m_Shader: {fileID: -6465566751694194690, guid: 2fd2af38912acea479ccef3128ed11b5, type: 3}
+  m_Name: HeartLine
+  m_Shader: {fileID: -6465566751694194690, guid: 70f189e8aaa5fdd4e955473def0d9a7a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -32,12 +32,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_aa495e8c8f9c4642833e4e954438e670:
-        m_Texture: {fileID: 2800000, guid: 3a0c59a2d9ca10f49801e44a45bc99cf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d5567a461bc8b6a4f92fdc0e586a33e1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -61,15 +57,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d5567a461bc8b6a4f92fdc0e586a33e1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalFromTexture_7e43254998f5426fa3bf74b6e19d06ad_Texture_0:
-        m_Texture: {fileID: 2800000, guid: 69bc1cf9c035ad44ba7e1af3e2904ca5, type: 3}
+    - _NormalFromTexture_156463b22de7437396be81e89f1b42a5_Texture_0:
+        m_Texture: {fileID: 2800000, guid: 6b00cc5d4eb2b4bfdaa0d51eded5640b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -80,8 +76,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_24105e4162b043e6a91172a5e48ea845_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 3a0c59a2d9ca10f49801e44a45bc99cf, type: 3}
+    - _SampleTexture2D_a4d3dd4369474993ba5fa38c82ff59f2_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 0c7e734c512b445d28061754f89859c3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -101,11 +97,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - ChangeTextures: 0.45
-    - Vector1_3eddbe5c2c29476e9c9b22579295e28e: 1.58
-    - Vector1_8060a5bf9d3a488d957f28e2f04a1082: 0
-    - Vector1_99c1daa1b1c242be9be328fa92c5c5cb: 0.04
-    - Vector1_ca23219f42bc4460af232205484f72b5: 127.28
+    - Phase: -2.17
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -117,13 +109,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _GlossMapScale: 1
+    - _GlossMapScale: 0
     - _Glossiness: 0
-    - _GlossyReflections: 1
+    - _GlossyReflections: 0
     - _Metallic: 0
-    - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -131,10 +122,10 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_4c468c225461465796ebb1ec8b492bde: {r: 0, g: 0.9883373, b: 0.6830394, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -5,50 +5,9 @@ using UnityEngine;
 
 public class PathogensManager : AgentsManager
 {
-    private void Update()
-    {
-        List<int> toRemove = new List<int>();
-
-        for (int i = 0; i < parameters.maxAmountAgents; i++)
-        {
-            if (agents[i] == null)
-                continue;
-
-            if (agents[i].kuramoto.dead)
-            {
-                toRemove.Add(i);
-            }
-            else if (agents[i].kuramoto.age > parameters.MaxAge)
-            {
-                agents[i].kuramoto.age = 0;
-                DuplicatePathogen(agents[i] as Pathogen, 1);
-            }
-            else
-            {
-                agents[i].kuramoto.age += Time.deltaTime;
-
-                agents[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
-                if (agents[i].kuramoto.phase > 1)
-                    agents[i].kuramoto.phase--;
-
-                GPUStruct[i].phase = agents[i].kuramoto.phase;
-
-                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * agents[i].kuramoto.phase, agents[i].transform.position + agents[i].transform.up);
-
-                GPUStruct[i].pos = agents[i].rigidBody.position;
-
-            }
-
-            if (agents[i].renderer.isVisible)
-                agents[i].renderer.material.SetFloat("Phase", agents[i].kuramoto.phase);
-        }
-
-        RemoveAgentsAtIndexes(toRemove);
-    }
-
     private void DuplicatePathogen(Pathogen pathogen, int duplications=2)
     {
-        if (realAmountAgents<parameters.maxAmountAgents -2)
+        if (realAmountAgents<parameters.maxAmountAgents - duplications)
         {
             for (int l = 0; l < duplications; l++)
             {
@@ -69,5 +28,14 @@ public class PathogensManager : AgentsManager
         }
     }
 
-    
+    public override void OnAgentDead(int i)
+    {
+        toRemove.Add(i);
+    }
+
+    public override void OnAgentAged(int i)
+    {
+        agents[i].kuramoto.age = 0f;
+        DuplicatePathogen(agents[i] as Pathogen, 1);
+    }
 }

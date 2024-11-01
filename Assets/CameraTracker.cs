@@ -76,7 +76,7 @@ public class CameraTracker : MonoBehaviour
     public Rigidbody rb;
 
     // Heartbeat sensor script component
-    private ethernetValues heartbeatSensor;
+    private EthernetValues heartbeatSensor;
 
     // Enter/exit body control script component
     private IntroBeginner introCntrl;
@@ -84,7 +84,8 @@ public class CameraTracker : MonoBehaviour
     // Script/component manages FX sound on the camera
     private SoundFXManager soundFx;
 
-    // Start is called before the first frame update
+    private int lastIndx = -1;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -97,11 +98,10 @@ public class CameraTracker : MonoBehaviour
         
         faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
 
-        heartbeatSensor = GetComponentInChildren<ethernetValues>();
+        heartbeatSensor = GetComponentInChildren<EthernetValues>();
         introCntrl = GetComponent<IntroBeginner>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (tracked == null || look == null) return;
@@ -109,9 +109,7 @@ public class CameraTracker : MonoBehaviour
         Vector3 dif = tracked.position - transform.position;
 
         if (normalized)
-        {
             dif = Vector3.Normalize(dif);
-        }
 
         lookPos += (look.position - lookPos) * 0.2f;
     
@@ -151,14 +149,9 @@ public class CameraTracker : MonoBehaviour
 
             Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
 
-            RaycastHit hit;
-            if (Physics.SphereCast(forward,3, out hit, 20))
-            {
-                if (hit.transform.CompareTag("Terrain"))
-                {
+            if (Physics.SphereCast(forward,3, out RaycastHit hit, 20))
+                if (hit.transform.tag == "Terrain")
                     vel += Vector3.up * (Vector3.Magnitude(rb.velocity)/3);
-                }
-            }
         }
         
         vel += dif * power * Time.deltaTime;
@@ -186,7 +179,7 @@ public class CameraTracker : MonoBehaviour
             doingOutro = true;
             introCntrl.SetDoingOutro(true);
             Debug.Log("Starting the outro");
-            StartCoroutine(ReturnCallback());
+            StartCoroutine(ReturnCallback());     
         }
     }
 
@@ -195,7 +188,8 @@ public class CameraTracker : MonoBehaviour
         rb.velocity = Vector3.zero;
         tracking = false;
         
-        faderImage.CrossFadeAlpha(1, fadePeriod, false);
+        if(faderImage!=null)
+            faderImage.CrossFadeAlpha(1, fadePeriod, false);
         
         yield return new WaitForSecondsRealtime(fadePeriod);
 
@@ -239,8 +233,6 @@ public class CameraTracker : MonoBehaviour
             FindScreenTracked("Body");
         }
     }
-
-    private int lastIndx = -1;
 
     public void SetTracked(Transform target)
     {
@@ -296,10 +288,7 @@ public class CameraTracker : MonoBehaviour
         tracked = bodies[indx].transform;
 
         if (heartbeatSensor != null)
-        {
-            heartbeatSensor.setSentinelAgent(tracked.GetComponent<KuramotoAffectedAgent>());
-        }
-        GetComponent<BreathingObjects>().SetFocus(tracked);
+            heartbeatSensor.SetSentinelAgent(tracked.GetComponent<KuramotoAffectedAgent>());
     }
 
     private void FindSceneLook(string tagToFind)
@@ -352,8 +341,6 @@ public class CameraTracker : MonoBehaviour
         look = bodies[indx].transform;
 
         tracked = bodies[indx].transform;
-
-        GetComponent<BreathingObjects>().SetFocus(tracked);
     }
 
     IEnumerator ChangeCharacter(float timer)
@@ -362,9 +349,7 @@ public class CameraTracker : MonoBehaviour
         {
             yield return new WaitForSeconds(timer);
             if (tracking)
-            {
                 FindSceneTracked("Player");
-            }
         }
     }
 
@@ -379,9 +364,7 @@ public class CameraTracker : MonoBehaviour
                 int rand = Random.Range(0, 4);
 
                 if (rand == 0)
-                {
                     driftPower *= -1;
-                }
                 else if (rand == 1)
                 {
                     setDistance = Random.Range(10, 34);
@@ -396,6 +379,5 @@ public class CameraTracker : MonoBehaviour
                 }
             }
         }
-
     }
 }

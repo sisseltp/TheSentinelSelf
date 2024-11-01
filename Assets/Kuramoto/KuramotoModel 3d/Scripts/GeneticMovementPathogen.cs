@@ -14,7 +14,7 @@ public class GeneticMovementPathogen : GeneticMovement
         {
             agent.kuramoto.dead = true;
         }
-        else if (collision.gameObject.CompareTag("Player"))// if hit by player
+        else if (collision.gameObject.CompareTag("Player"))
         {
             int numkeys = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>().Length;
             if (numkeys < collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect+maxKeys)// if less than max num, pick up key

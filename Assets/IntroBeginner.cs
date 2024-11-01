@@ -38,6 +38,7 @@ public class IntroBeginner : MonoBehaviour
 
     [HideInInspector]
     public Romi.PathTools.MoveAlongPath alongPath;
+    public Image faderImage;
 
     private bool sensorConnected;
     private bool sensorHasValue;
@@ -48,7 +49,7 @@ public class IntroBeginner : MonoBehaviour
     {
         camTrack = GetComponent<CameraTracker>();
         soundFx = GetComponent<SoundFXManager>();
-        Image  faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
+       
         //Make the alpha 1
         Color fixedColor = faderImage.color;
         fixedColor.a = 1;
