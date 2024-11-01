@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4642186315803394644
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4642186315803394642}
+  - component: {fileID: 4642186315803394645}
+  m_Layer: 0
+  m_Name: NewCameraPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4642186315803394642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642186315803394644}
+  m_LocalRotation: {x: -0.011911761, y: -0.57824516, z: -0.008596556, w: -0.8157308}
+  m_LocalPosition: {x: 170, y: 277, z: -94}
+  m_LocalScale: {x: 0.61081475, y: 0.61081475, z: 0.61081475}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0.544, y: 70.671, z: 1.593}
+--- !u!114 &4642186315803394645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642186315803394644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6167c82791949164aa5f23a4f1f88ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodes:
+  - localPos: {x: -387.6383, y: -388.3994, z: 331.99683}
+    leftHandle: {x: -508.62848, y: -361.70288, z: 397.0203}
+    rightHandle: {x: -209.3971, y: -427.72842, z: 236.20506}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -115.330154, y: -698.80646, z: 177.33469}
+    leftHandle: {x: -208.2721, y: -619.7561, z: 274.50806}
+    rightHandle: {x: 58.287354, y: -846.4742, z: -4.1872253}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -377.44733, y: -869.0366, z: -504.45535}
+    leftHandle: {x: -115.28238, y: -885.05817, z: -579.37427}
+    rightHandle: {x: -810.8684, y: -842.5492, z: -380.59656}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -776.5613, y: -665.0758, z: 49.79207}
+    leftHandle: {x: -855.0652, y: -667.25543, z: -147.83717}
+    rightHandle: {x: -583.864, y: -659.72565, z: 534.89685}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -62.67692, y: -380.8897, z: -119.03172}
+    leftHandle: {x: 5.5237694, y: -376.66788, z: 91.37225}
+    rightHandle: {x: -119.014015, y: -384.37714, z: -292.83566}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -391.59937, y: -234.86998, z: -253.14523}
+    leftHandle: {x: -140.25467, y: -246.31068, z: -259.85077}
+    rightHandle: {x: -584.8938, y: -226.07161, z: -247.9884}
+    orientation: 0
+    tangentType: 0
+  - localPos: {x: -697.5202, y: -196.81485, z: 38.924328}
+    leftHandle: {x: -688.0187, y: -203.62498, z: -99.34648}
+    rightHandle: {x: -708.6891, y: -188.80965, z: 201.45935}
+    orientation: 0
+    tangentType: 0
+  selectedId: 0
+  handleMulti: 19.36
+  closeLoop: 1
+  showUpVector: 1
+  lastPos: {x: -391.59937, y: -234.86998, z: -253.14523}
+  lastLeftHandlePos: {x: -140.25467, y: -246.31068, z: -259.85077}
+  lastRightHandlePos: {x: -584.8938, y: -226.07161, z: -247.9884}
