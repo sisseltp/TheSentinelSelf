@@ -6261,8 +6261,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9030bf12cbf3b48adc0b104d6e3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  underWaterScene: {fileID: 1243791062}
-  simulationScene: {fileID: 23368312}
   useMouseToTransition: 1
   floating: 1
   driftPower: 170
@@ -18739,7 +18737,7 @@ GameObject:
   - component: {fileID: 447112308}
   - component: {fileID: 447112307}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: FaderImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24726,11 +24724,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1390.593, y: 401.7505, z: 1298.7225}
   m_Center: {x: 144.5, y: 150.3, z: 18}
---- !u!1 &1243791062 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9025669105572702251, guid: 2b5cc66c7613726428b00fce2295c8ed, type: 3}
-  m_PrefabInstance: {fileID: 1243791059}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1275252932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30926,11 +30919,11 @@ MonoBehaviour:
   GlobalPulse: 0
   pulseGradient: 0
   bias: 3
-  beginTimer: 3
-  restartTimer: 8
+  beginTimer: 2
+  restartTimer: 5
   IntroControl: {fileID: 180126329}
   avrgDrag: 0.6
-  changeGate: 7
+  changeGate: 10
 --- !u!1 &763207998845574543
 GameObject:
   m_ObjectHideFlags: 0
@@ -31520,6 +31513,7 @@ MonoBehaviour:
   tracked: {fileID: 0}
   look: {fileID: 0}
   mainCamera: {fileID: 2550487142623021770}
+  faderImage: {fileID: 447112307}
   setDistance: 28
   distVariation: 3.45
   power: 0.2

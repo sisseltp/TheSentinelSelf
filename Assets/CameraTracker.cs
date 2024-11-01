@@ -10,6 +10,9 @@ public class CameraTracker : MonoBehaviour
     
     [SerializeField]
     private Camera mainCamera;
+
+    [SerializeField]
+    private Image faderImage;
     
     [Space(10)]
     [Header("Body Entry Animation")]
@@ -68,7 +71,6 @@ public class CameraTracker : MonoBehaviour
     private float lastChange = 0;    
     private Vector3 origin;
     private Quaternion origRot;
-    private Image faderImage;
     private Vector3 lookPos;
     private Vector3 vel;
 
@@ -96,8 +98,6 @@ public class CameraTracker : MonoBehaviour
         origin = trans.position;
         origRot = trans.rotation;
         
-        faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
-
         heartbeatSensor = GetComponentInChildren<EthernetValues>();
         introCntrl = GetComponent<IntroBeginner>();
     }
@@ -188,7 +188,7 @@ public class CameraTracker : MonoBehaviour
         rb.velocity = Vector3.zero;
         tracking = false;
         
-        if(faderImage!=null)
+        if(faderImage != null)
             faderImage.CrossFadeAlpha(1, fadePeriod, false);
         
         yield return new WaitForSecondsRealtime(fadePeriod);
@@ -202,7 +202,8 @@ public class CameraTracker : MonoBehaviour
         trans.position = origin;
         trans.rotation = origRot;
         
-        faderImage.CrossFadeAlpha(0, fadePeriod, false);
+        if(faderImage != null)
+            faderImage.CrossFadeAlpha(0, fadePeriod, false);
         GetComponent<SphereCollider>().isTrigger = true;
 
         yield return new WaitForSeconds(2);
