@@ -31,9 +31,7 @@ public class ethernetValues : MonoBehaviour
     private KuramotoAffectedAgent agent;
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     public int bias = 3;
-
-
-    private bool playing = false;
+    
     private bool reading = false;
 
     [Header("Scene Threshold Values")]
@@ -64,6 +62,11 @@ public class ethernetValues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (sentinel1Interval == 0)
+        {
+            IntroControl.SetSensorConnected(false);
+        }
+
         avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
         float avrgChange = Mathf.Abs(sentinel1Rate - lastAvrgRate);
 
@@ -73,9 +76,8 @@ public class ethernetValues : MonoBehaviour
                 reading = true;
                 TimerGate = Time.time;
             }
-            else if (!playing && (TimerGate + beginTimer < Time.time) ) {
-                playing = true;
-                IntroControl.Begin();
+            else if (sentinel1Interval > 0 && TimerGate + beginTimer < Time.time ) {
+                IntroControl.SetSensorConnected(true, true);
             }
 
             float step = (float)sentinel1Rate / 30;
@@ -96,10 +98,8 @@ public class ethernetValues : MonoBehaviour
         } else if (reading) {
             reading = false;
             TimerGate = Time.time;
-        } else if (playing && (TimerGate + restartTimer < Time.time)) {
-            if (IntroControl.Restart()) {
-                playing = false;
-            }
+        } else if (sentinel1Interval > 0 && TimerGate + restartTimer < Time.time) {
+            IntroControl.SetSensorConnected(true);
         }
 
         lastAvrgRate = avrgRate;

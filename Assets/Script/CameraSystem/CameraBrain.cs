@@ -121,10 +121,7 @@ namespace Script.CameraSystem
             currentEvent = worldEvent;
             currentTimer = GetEvenTime(currentEvent.EventType);
 
-            cameraTracker.SetTracked(currentEvent.EventTarget);
-            
-            // cameraTracker.tracked = currentEvent.EventTarget;
-            // cameraTracker.look = currentEvent.EventTarget;
+            // cameraTracker.SetTracked(currentEvent.EventTarget);
         }
 
         private void NextEvent()

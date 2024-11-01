@@ -59,8 +59,11 @@ public class CameraTracker : MonoBehaviour
     [Space(10)]
     [Header("Debugging")]
 
-    public bool tracking = false;
-    [FormerlySerializedAs("Introing")] public bool doingIntro = false;
+    public bool tracking;
+    [FormerlySerializedAs("Introing")] 
+    public bool doingIntro;
+
+    public bool doingOutro;
 
     private float lastChange = 0;    
     private Vector3 origin;
@@ -101,6 +104,8 @@ public class CameraTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (tracked == null || look == null) return;
+        
         Vector3 dif = tracked.position - transform.position;
 
         if (normalized)
@@ -169,15 +174,18 @@ public class CameraTracker : MonoBehaviour
     public void BeginTracking()
     {
         doingIntro = true;
+        introCntrl.SetDoingIntro(true);
         FindScreenTracked("BodyAlign");
         FindSceneLook("Body");
     }
 
     public void ReturnToOrigin()
     {
-        if (!doingIntro)
+        if (!doingIntro && !doingOutro)
         {
-            faderImage.CrossFadeAlpha(1, fadePeriod, false);
+            doingOutro = true;
+            introCntrl.SetDoingOutro(true);
+            Debug.Log("Starting the outro");
             StartCoroutine(ReturnCallback());
         }
     }
@@ -186,6 +194,8 @@ public class CameraTracker : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
         tracking = false;
+        
+        faderImage.CrossFadeAlpha(1, fadePeriod, false);
         
         yield return new WaitForSecondsRealtime(fadePeriod);
 
@@ -200,6 +210,12 @@ public class CameraTracker : MonoBehaviour
         
         faderImage.CrossFadeAlpha(0, fadePeriod, false);
         GetComponent<SphereCollider>().isTrigger = true;
+
+        yield return new WaitForSeconds(2);
+
+        Debug.Log("End of outro?");
+        doingOutro = false;
+        introCntrl.SetDoingOutro(false);
     }
    
     private void OnTriggerEnter(Collider collision)
@@ -214,6 +230,7 @@ public class CameraTracker : MonoBehaviour
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
             GetComponent<SphereCollider>().isTrigger = false;
             doingIntro = false;
+            introCntrl.SetDoingIntro(false);
 
             StartCoroutine(ChangeCharacter(changeTrackTimer));
             StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
@@ -236,8 +253,6 @@ public class CameraTracker : MonoBehaviour
     
     private void FindSceneTracked(string tagToFind)
     {
-        return;
-        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
         int max = 0;
         int indx = -1;
@@ -289,8 +304,6 @@ public class CameraTracker : MonoBehaviour
 
     private void FindSceneLook(string tagToFind)
     {
-        return;
-        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
 
         float dist = float.PositiveInfinity;
@@ -316,8 +329,6 @@ public class CameraTracker : MonoBehaviour
 
     public void FindScreenTracked(string tagToFind)
     {
-        return;
-        
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
 
         float dist = float.PositiveInfinity;
@@ -347,8 +358,6 @@ public class CameraTracker : MonoBehaviour
 
     IEnumerator ChangeCharacter(float timer)
     {
-        yield return null;
-        
         while (tracking)
         {
             yield return new WaitForSeconds(timer);

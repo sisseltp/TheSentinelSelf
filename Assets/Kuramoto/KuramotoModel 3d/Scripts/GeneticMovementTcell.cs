@@ -96,8 +96,6 @@ public class GeneticMovementTcell : GeneticMovement
                         // set the target from the origin
                         target = Antigens[i - 1].origin;
                         
-                        Debug.Log($"Target position = {target}");
-                        
                         // TODO: @Neander: This is where the TCell goes to the pathogen emitter
                         CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
 

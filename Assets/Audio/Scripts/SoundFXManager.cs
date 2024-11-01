@@ -78,7 +78,7 @@ public class SoundFXManager : MonoBehaviour
 
     // Used to play sources.
     public void Play(string tag) {
-        Debug.Log("Play: " + tag);
+        // Debug.Log("Play: " + tag);
         switch(tag) {
             case "VoiceOver":
                 // Start voiceover playback routine...

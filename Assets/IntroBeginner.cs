@@ -3,6 +3,12 @@ using UnityEngine.UI;
 
 public class IntroBeginner : MonoBehaviour
 {
+    [SerializeField] 
+    private GameObject underWaterScene;
+    
+    [SerializeField] 
+    private GameObject simulationScene;
+    
     CameraTracker camTrack;
 
     private SoundFXManager soundFx;
@@ -33,6 +39,10 @@ public class IntroBeginner : MonoBehaviour
     [HideInInspector]
     public Romi.PathTools.MoveAlongPath alongPath;
 
+    private bool sensorConnected;
+    private bool sensorHasValue;
+    private bool shouldChange;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +76,23 @@ public class IntroBeginner : MonoBehaviour
             ChangeStates();
         }
 
+        if (sensorConnected)
+        {
+            if (camTrack.tracking && !sensorHasValue || !camTrack.tracking && sensorHasValue)
+            {
+                shouldChange = true;
+            } 
+            else
+            {
+                shouldChange = false;
+            }
+        }
+        
+        if (shouldChange)
+        {
+            ChangeStates();
+        }
+
         if (floating)
         {
             /*
@@ -88,21 +115,32 @@ public class IntroBeginner : MonoBehaviour
         }
     }
 
+    public void SetSensorConnected(bool isConnected, bool hasValue = false)
+    {
+        sensorConnected = isConnected;
+        sensorHasValue = hasValue;
+    }
+
     public void ChangeStates()
     {
+        if (camTrack.doingIntro || camTrack.doingOutro) return;
+        
         if (camTrack.tracking)
         {
+            Debug.Log($"Change state, go back to body");
             Restart();
         }
         else
         {
+            Debug.Log($"Change state, go into the scene");
             Begin();
         }
     }
 
     // Called when visitor touches the biosensor, begins approach to body.
-    public void Begin()
+    private void Begin()
     {
+        shouldChange = false;
         soundFx.Play("ApproachBody");
 
         camTrack.BeginTracking();
@@ -112,22 +150,46 @@ public class IntroBeginner : MonoBehaviour
     }
 
     // Called when visitor disconnects, return to the outer world.
-    public bool Restart()
+    private void Restart()
     {
+        shouldChange = false;
 
         soundFx.Play("ExitBody");
 
         // TODO: Maybe nicer to delay this or fade in?
         soundFx.Play("VoiceOver");
 
-        if (!camTrack.doingIntro)
+        camTrack.ReturnToOrigin();
+    }
+
+    private bool doingIntro;
+    private bool doingOutro;
+    
+    public void SetDoingIntro(bool state)
+    {
+        if (!state && doingIntro)
         {
-            camTrack.ReturnToOrigin();
-            return true;
+            underWaterScene.SetActive(false);
         }
-        else
+        else if (state && !doingIntro)
         {
-            return false;
+            simulationScene.SetActive(true);
         }
+        
+        doingIntro = state;
+    }
+
+    public void SetDoingOutro(bool state)
+    {
+        if (state && !doingOutro)
+        {
+            underWaterScene.SetActive(true);
+        } 
+        else if (!state && doingOutro)
+        {
+            simulationScene.SetActive(false);
+        }
+        
+        doingOutro = state;
     }
 }
