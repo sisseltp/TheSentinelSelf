@@ -5,7 +5,6 @@ using UnityEngine;
 public enum APCBehavior {CarryingAntigens, SeekingPathogens}
 public class GeneticMovementSentinel : GeneticMovement
 {
-    private SentinelsManager manager;
     public int keys = 0;
     public int NumKeysToCollect = 4;
     public float origDrag = 0;
@@ -27,7 +26,6 @@ public class GeneticMovementSentinel : GeneticMovement
         digestAntigens = new List<GeneticAntigenKey>();
         plastics = new List<Transform>();
         geneticMovement = new Vector3[cycleLength];
-        manager = GetComponentInParent<SentinelsManager>();
         origDrag = agent.rigidBody.drag;
 
         base.Start();
@@ -39,13 +37,13 @@ public class GeneticMovementSentinel : GeneticMovement
 
         agent.rigidBody.drag = origDrag;
 
-        target = manager.pathogensManagers[Random.Range(0, manager.pathogensManagers.Length)].transform.position;
+        target = GameManager.Instance.pathogensManagers[Random.Range(0, GameManager.Instance.pathogensManagers.Count)].transform.position;
         targeting = true;
     }
 
     public override void Update()
     {
-        if (agent.kuramoto.phase < lastPhase) 
+        if (HeartRateManager.Instance.GlobalPhaseMod1 < lastPhase) 
             step = (step + 1) % cycleLength;
 
         Vector3 vel = Vector3.zero;
@@ -60,11 +58,10 @@ public class GeneticMovementSentinel : GeneticMovement
                 vel += Vector3.up * speedScl * 3;
 
         vel += geneticMovement[step] * genSpeedScl;
-        vel *= agent.kuramoto.phase;
+        vel *= HeartRateManager.Instance.GlobalPhaseMod1;
 
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
-
-        lastPhase = agent.kuramoto.phase;
+        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -87,9 +84,9 @@ public class GeneticMovementSentinel : GeneticMovement
         {
             if (keys >= NumKeysToCollect && !targeting)
             {
-                int indx = Random.Range(0, manager.tcellsManagers.Length);
+                int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
                 
-                target = manager.tcellsManagers[indx].transform.position;
+                target = GameManager.Instance.tCellsManagers[indx].transform.position;
                 targeting = true;
                 tcellHits = 0;
 
@@ -101,9 +98,9 @@ public class GeneticMovementSentinel : GeneticMovement
         }
         else if (collision.gameObject.CompareTag("Lymphonde") && tcellHits > 10 && !targeting)
         {
-            int indx = Random.Range(0, manager.pathogensManagers.Length);
+            int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
-            target = manager.pathogensManagers[indx].transform.position;
+            target = GameManager.Instance.pathogensManagers[indx].transform.position;
             targeting = true;
 
             foreach (GeneticAntigenKey key in digestAntigens)

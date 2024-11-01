@@ -23,13 +23,10 @@ public class GeneticMovement : MonoBehaviour
     [SerializeField]
     public float speedScl = 0.5f;
 
-
-    //ONLY FOR SENTINEL AND TCELL
     [HideInInspector]
     public bool targeting = true;
     [HideInInspector]
-    public Vector3 target;// the target to aim for
-
+    public Vector3 target;
 
     public virtual void Start()
     {
@@ -46,12 +43,12 @@ public class GeneticMovement : MonoBehaviour
 
     public virtual void Update()
     {
-        if (agent.kuramoto.phase > lastPhase)
+        if (HeartRateManager.Instance.GlobalPhaseMod1 > lastPhase)
             step = (step + 1) % cycleLength;
 
-        Vector3 vel = geneticMovement[step] * agent.kuramoto.phase * speedScl;
+        Vector3 vel = geneticMovement[step] * HeartRateManager.Instance.GlobalPhaseMod1 * speedScl;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
-        lastPhase = agent.kuramoto.phase;
+        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 }

@@ -23,24 +23,23 @@ public class GeneticMovementTcell : GeneticMovement
     
     public override void Update()
     {
-        if (agent.kuramoto.phase < lastPhase)
+        if (HeartRateManager.Instance.GlobalPhaseMod1 < lastPhase)
             step = (step + 1) % cycleLength;
-        else if (agent.kuramoto.phase == lastPhase)
+        else if (HeartRateManager.Instance.GlobalPhaseMod1 == lastPhase)
         {
             Destroy(gameObject);
             return;
         }
             
-
         Vector3 vel = geneticMovement[step] * genSpeedScl;
 
         if (targeting)
             vel += Vector3.Normalize(target - transform.position) * speedScl;
 
-        vel *= agent.kuramoto.phase;
+        vel *= HeartRateManager.Instance.GlobalPhaseMod1;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
-        lastPhase = agent.kuramoto.phase;
+        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -89,14 +88,14 @@ public class GeneticMovementTcell : GeneticMovement
                         target = Antigens[i - 1].origin;
                         for (int j = 0; j < 2; j++)
                         {
-                            if (manager.CanAddCell())
+                            if ((agent.manager as TCellsManager).CanAddCell)
                             {
                                 // create a replica
                                 TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
                                 replica.geneticMovement.notKeyed = false;
                                 replica.geneticMovement.target = target;
                                 // add new tcell to manager
-                                manager.AddTCell(replica);
+                                manager.AddNewAgentAtTop(replica);
                             }
                             else
                             {
