@@ -28,6 +28,8 @@ public class AgentsManager : MonoBehaviour
     [ShowIf("@emitsContinuously == true")]
     public float delayBetweenEmissions = 1f;
 
+    public List<int> toRemove = new List<int>();
+
     public virtual void Start()
     {
         agents = new Agent[parameters.maxAmountAgents];
@@ -45,6 +47,41 @@ public class AgentsManager : MonoBehaviour
 
         if (emitsContinuously)
             StartCoroutine(Emission());
+    }
+
+    public virtual void Update()
+    {
+        toRemove = new List<int>();
+
+        for (int i = 0; i < parameters.maxAmountAgents; i++)
+        {
+            if (agents[i] == null)
+                continue;
+
+            if (agents[i].kuramoto.dead)
+            {
+                OnAgentDead(i);
+            }
+            else if (agents[i].kuramoto.age > parameters.MaxAge)
+            {
+                OnAgentAged(i);
+            }
+            else
+            {
+                agents[i].kuramoto.age += Time.deltaTime;
+                //agents[i].kuramoto.phase = (HeartRateManager.Instance.GlobalPhaseMod1 + GPUOutput[i].phaseAdition * Time.deltaTime) % 1f;
+                GPUStruct[i].played = agents[i].kuramoto.played;
+                GPUStruct[i].phase = HeartRateManager.Instance.GlobalPhaseMod1;
+                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
+                GPUStruct[i].speed = agents[i].kuramoto.speed;
+                GPUStruct[i].pos = agents[i].rigidBody.position;
+            }
+
+            /*if (agents[i].renderer.isVisible)
+                agents[i].renderer.material.SetFloat("Phase", agents[i].kuramoto.phase);*/
+        }
+
+        RemoveAgentsAtIndexes(toRemove);
     }
 
     IEnumerator Emission()
@@ -176,5 +213,15 @@ public class AgentsManager : MonoBehaviour
             thisAgent.renderer.material.SetFloat("KeyTrigger", 0);
 
         thisAgent.gameObject.SetActive(true);
+    }
+
+    public virtual void OnAgentDead(int index)
+    {
+
+    }
+
+    public virtual void OnAgentAged(int index)
+    {
+
     }
 }

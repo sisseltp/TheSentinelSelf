@@ -30,13 +30,14 @@ public class IntroBeginner : MonoBehaviour
 
     [HideInInspector]
     public Romi.PathTools.MoveAlongPath alongPath;
+    public Image faderImage;
 
     // Start is called before the first frame update
     void Start()
     {
         camTrack = GetComponent<CameraTracker>();
         soundFx = GetComponent<SoundFXManager>();
-        Image  faderImage = transform.GetChild(0).GetComponentInChildren<Image>();
+       
         //Make the alpha 1
         Color fixedColor = faderImage.color;
         fixedColor.a = 1;
@@ -54,11 +55,8 @@ public class IntroBeginner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)==true)
-        {
-
+        if (Input.GetMouseButtonDown(0))
             ChangeStates();
-        }
 
         if (floating)
         {

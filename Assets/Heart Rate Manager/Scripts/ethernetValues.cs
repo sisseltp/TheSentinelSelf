@@ -4,27 +4,12 @@ using System.IO.Ports;
 using UnityEngine;
 using Freya;
 
-public class ethernetValues : MonoBehaviour
+public class EthernetValues : MonoBehaviour
 {
     [Header("Sensor Values")]
     public int sentinel1Rate;
     public int sentinel1Interval;
     public float sentinel1Pulse;
-
-    //[Header("Sentinel 2 Values")]
-    //public int sentinel2Rate;
-    //public int sentinel2Interval;
-    //public float sentinel2Pulse;
-
-    //[Header("Sentinel 3 Values")]
-    //public int sentinel3Rate;
-    //public int sentinel3Interval;
-    //public float sentinel3Pulse;
-
-    //[Header("Sentinel 4 Values")]
-    //public int sentinel4Rate;
-    //public int sentinel4Interval;
-    //public float sentinel4Pulse;
 
     [Header("Kuramoto Values")]
     public float pulseGradient;
@@ -44,7 +29,6 @@ public class ethernetValues : MonoBehaviour
 
     private float TimerGate = 0;
 
-    // Script component that manages entering & exiting the body
     private IntroBeginner IntroControl;
 
     [SerializeField]
@@ -54,14 +38,11 @@ public class ethernetValues : MonoBehaviour
     [SerializeField]
     private float changeGate = 10;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         IntroControl = GetComponentInParent<IntroBeginner>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         avrgRate += (sentinel1Rate - avrgRate) * avrgDrag;
@@ -69,11 +50,13 @@ public class ethernetValues : MonoBehaviour
 
         if (avrgRate > 50 && avrgRate < 150 && (avrgChange < changeGate))
         {
-            if (!reading) {
+            if (!reading) 
+            {
                 reading = true;
                 TimerGate = Time.time;
             }
-            else if (!playing && (TimerGate + beginTimer < Time.time) ) {
+            else if (!playing && (TimerGate + beginTimer < Time.time) ) 
+            {
                 playing = true;
                 IntroControl.Begin();
             }
@@ -84,87 +67,28 @@ public class ethernetValues : MonoBehaviour
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
             if (sentinel1Pulse == 1)
-            {
                 pulseGradient = 0;
-            }
 
-            //agent.AddOsiclation(thisX, thisY, bias);
-            if (agent != null)
-            {
-                agent.phase = pulseGradient;
-            }
-        } else if (reading) {
+            /*if (agent != null)
+                agent.phase = pulseGradient;*/
+
+            if(!HeartRateManager.Instance.simulateHeartBeat)
+                HeartRateManager.Instance.GlobalPhase = pulseGradient;
+        } 
+        else if (reading) 
+        {
             reading = false;
             TimerGate = Time.time;
-        } else if (playing && (TimerGate + restartTimer < Time.time)) {
-            if (IntroControl.Restart()) {
+        } 
+        else if (playing && (TimerGate + restartTimer < Time.time))
+            if (IntroControl.Restart())
                 playing = false;
-            }
-        }
 
         lastAvrgRate = avrgRate;
     }
 
-    public void setSentinelAgent(KuramotoAffectedAgent thisAgent)
+    public void SetSentinelAgent(KuramotoAffectedAgent thisAgent)
     {
         agent = thisAgent;
     }
-
-
-    public void setSentinel1Rate(int value)
-    {
-        sentinel1Rate = value;
-    }
-
-    public void setSentinel1Interval(int value)
-    {
-        sentinel1Interval = value;
-    }
-
-    public void setSentinel1Pulse(int value)
-    {
-        sentinel1Pulse = Mathfs.Remap(0f, 4095f, 0f, 1f, value);
-    }
-    //public void setSentinel2Rate(int value)
-    //{
-    //    sentinel2Rate = value;
-    //}
-
-    //public void setSentinel2Interval(int value)
-    //{
-    //    sentinel2Interval = value;
-    //}
-
-    //public void setSentinel2Pulse(int value)
-    //{
-    //    sentinel2Pulse = Mathfs.Remap(0f,4095f,0f,1f,value);
-    //}
-    //public void setSentinel3Rate(int value)
-    //{
-    //    sentinel3Rate = value;
-    //}
-
-    //public void setSentinel3Interval(int value)
-    //{
-    //    sentinel3Interval = value;
-    //}
-
-    //public void setSentinel3Pulse(int value)
-    //{
-    //    sentinel3Pulse = Mathfs.Remap(0f,4095f,0f,1f,value);
-    //}
-
-    //public void setSentinel4Rate(int value) {
-    //    sentinel4Rate = value;
-    //}
-
-    //public void setSentinel4Interval(int value) {
-    //    sentinel4Interval = value;
-    //}
-
-    //public void setSentinel4Pulse(int value) {
-    //    sentinel4Pulse = Mathfs.Remap(0f,4095f,0f,1f,value);
-    //}
-
 }
-

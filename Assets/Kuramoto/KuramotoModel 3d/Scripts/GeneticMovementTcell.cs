@@ -23,24 +23,23 @@ public class GeneticMovementTcell : GeneticMovement
     
     public override void Update()
     {
-        if (agent.kuramoto.phase < lastPhase)
+        if (HeartRateManager.Instance.GlobalPhaseMod1 < lastPhase)
             step = (step + 1) % cycleLength;
-        else if (agent.kuramoto.phase == lastPhase)
+        else if (HeartRateManager.Instance.GlobalPhaseMod1 == lastPhase)
         {
             Destroy(gameObject);
             return;
         }
             
-
         Vector3 vel = geneticMovement[step] * genSpeedScl;
 
         if (targeting)
             vel += Vector3.Normalize(target - transform.position) * speedScl;
 
-        vel *= agent.kuramoto.phase;
+        vel *= HeartRateManager.Instance.GlobalPhaseMod1;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
-        lastPhase = agent.kuramoto.phase;
+        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 
     private void OnCollisionEnter(Collision collision)
