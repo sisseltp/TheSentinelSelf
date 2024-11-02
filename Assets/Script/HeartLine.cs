@@ -6,13 +6,10 @@ public class HeartLine : MonoBehaviour
 {
     [SerializeField]
     private LineRenderer lineRenderer;
-    
-    
+     
     public int amountPoints = 2000;
     float[] valuesHeart;
     float[] xs;
-
-    float currentValue = 0f;
 
     public AnimationCurve curvePeak;
 
@@ -21,13 +18,16 @@ public class HeartLine : MonoBehaviour
     float progressPeak = 0f;
 
     public float speed = 50f;
+    public float height = 5f;
 
     Vector3[] finalPositions;
 
-    float progressPerlin = 0f;
+    Keyframe[] baseKeysCurve;
+    float multHeight = 1f;
+
     void Start()
     {
-
+        baseKeysCurve = curvePeak.keys;
         valuesHeart = new float[amountPoints];
         xs = new float[amountPoints];
 
@@ -51,6 +51,16 @@ public class HeartLine : MonoBehaviour
     {
         if(HeartRateManager.Instance.GlobalPhaseMod1>threshold && !wasOverThreshold)
         {
+            Keyframe[] modifiedKeys = new Keyframe[baseKeysCurve.Length];
+            for(int i= 0;i < baseKeysCurve.Length;i++)
+            {
+                Keyframe baseK = baseKeysCurve[i];
+                modifiedKeys[i] = new Keyframe(baseK.time+Random.Range(-0.02f,0.02f), baseK.value*Random.Range(0.8f,1.2f), baseK.inTangent, baseK.outTangent, baseK.inWeight, baseK.outWeight);
+                curvePeak.keys = modifiedKeys;
+            }
+
+            multHeight = Random.Range(0.8f, 1.2f);
+
             wasOverThreshold = true;
             progressPeak = 1f;
         }
@@ -58,14 +68,8 @@ public class HeartLine : MonoBehaviour
         if (HeartRateManager.Instance.GlobalPhaseMod1 <= threshold && wasOverThreshold)
             wasOverThreshold = false;
 
-        
-
-   
         for (int k=0;k< speed; k++)
         {
-            progressPerlin++;
-
-
             float newValue = 0f;
             if (progressPeak > 0f)
             {
@@ -75,12 +79,9 @@ public class HeartLine : MonoBehaviour
             }
 
             for (int i = 0; i < amountPoints - 1; i++)
-            {
                 valuesHeart[i] = valuesHeart[i + 1];
-            }
-                
 
-            valuesHeart[amountPoints - 1] = newValue * 5f;
+            valuesHeart[amountPoints - 1] = newValue * height* multHeight;
         }
 
         finalPositions = new Vector3[amountPoints];

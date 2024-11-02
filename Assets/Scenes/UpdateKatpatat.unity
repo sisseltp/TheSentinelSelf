@@ -29828,7 +29828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2025124031}
-  amountPoints: 2000
+  amountPoints: 1000
   curvePeak:
     serializedVersion: 2
     m_Curve:
@@ -29851,8 +29851,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.30317953
-      value: 0.09873843
+      time: 0.29979208
+      value: 0.10154605
       inSlope: 0.067985445
       outSlope: 0.067985445
       tangentMode: 0
@@ -29869,8 +29869,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.48420647
-      value: 0.99160767
+      time: 0.5002587
+      value: 0.95131683
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -29878,7 +29878,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.6446908
+      time: 0.6429818
       value: -0.10180664
       inSlope: 0
       outSlope: 0
@@ -29887,8 +29887,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.68038744
-      value: 0.20725107
+      time: 0.7006511
+      value: 0.20169687
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -29896,7 +29896,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7381869
+      time: 0.7517367
       value: 0
       inSlope: 0
       outSlope: 0
@@ -29916,7 +29916,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  speed: 30
+  speed: 27
+  height: 5
 --- !u!1 &2035026500
 GameObject:
   m_ObjectHideFlags: 0
