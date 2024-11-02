@@ -6261,15 +6261,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9030bf12cbf3b48adc0b104d6e3728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camTrack: {fileID: 2636662854851455708}
+  soundFx: {fileID: 1136528595}
+  rb: {fileID: 944095142113354960}
+  alongPath: {fileID: 180126334}
+  faderImage: {fileID: 447112307}
+  look: {fileID: 2066025142}
   useMouseToTransition: 1
   floating: 1
   driftPower: 170
   nScale: 0.15
   movementScl: 30
-  look: {fileID: 2066025142}
   rotSpeed: 1
-  alongPath: {fileID: 0}
-  faderImage: {fileID: 447112307}
+  sensorConnected: 0
+  sensorHasValue: 0
 --- !u!114 &180126334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22459,7 +22464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GlobalPhase: 0
   simulateHeartBeat: 0
-  simulatedBPM: 60
+  simulatedBPM: 30
 --- !u!1 &1105279490
 GameObject:
   m_ObjectHideFlags: 0
@@ -30949,7 +30954,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763207998979627445}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6291d1cd9c2bea94482c4d7a30f5ae2e, type: 3}
   m_Name: 

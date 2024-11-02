@@ -13,9 +13,8 @@ public class HeartRateManager : MonoBehaviour
 
     public bool simulateHeartBeat = false;
 
-    [ShowIf("@simulateHeartBeat == true")]
     [Range(1,180)]
-    public int simulatedBPM = 60;
+    public int simulatedBPM = 30;
 
     float simulatedPhase;
 
@@ -26,7 +25,7 @@ public class HeartRateManager : MonoBehaviour
 
     void Update()
     {
-        if(simulateHeartBeat)
+        if(!IntroBeginner.Instance.sensorConnected || !IntroBeginner.Instance.sensorHasValue || simulateHeartBeat)
         {
             simulatedPhase += Time.deltaTime * simulatedBPM / 60f;
             GlobalPhase = simulatedPhase;

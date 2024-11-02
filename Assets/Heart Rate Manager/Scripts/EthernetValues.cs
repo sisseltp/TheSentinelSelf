@@ -40,9 +40,7 @@ public class EthernetValues : MonoBehaviour
     void Update()
     {
         if (GlobalInterval == 0)
-        {
             IntroControl.SetSensorConnected(false);
-        }
 
         avrgRate += (GlobalRate - avrgRate) * avrgDrag;
         float avrgChange = Mathf.Abs(GlobalRate - lastAvrgRate);
@@ -60,14 +58,11 @@ public class EthernetValues : MonoBehaviour
 
             float step = (float)GlobalRate / 30;
             step *= Time.deltaTime;
-            pulseGradient += step;// *f; I realised the division above was wron so should be perfect now
+            pulseGradient += step;
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
             if (GlobalPulse == 1)
                 pulseGradient = 0;
-
-            /*if (agent != null)
-                agent.phase = pulseGradient;*/
 
             if(!HeartRateManager.Instance.simulateHeartBeat)
                 HeartRateManager.Instance.GlobalPhase = pulseGradient;
@@ -76,9 +71,9 @@ public class EthernetValues : MonoBehaviour
         {
             reading = false;
             TimerGate = Time.time;
-        } else if (GlobalInterval > 0 && TimerGate + restartTimer < Time.time) {
+        } 
+        else if (GlobalInterval > 0 && TimerGate + restartTimer < Time.time)
             IntroControl.SetSensorConnected(true);
-        }
 
         lastAvrgRate = avrgRate;
     }
