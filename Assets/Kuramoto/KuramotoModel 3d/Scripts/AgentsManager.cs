@@ -15,8 +15,6 @@ public class AgentsManager : MonoBehaviour
     [HideInInspector]
     public GPUCompute.GPUData[] GPUStruct; // list of agent struct, that will hold the data for gpu compute
     [HideInInspector]
-    public GPUCompute.GPUOutput[] GPUOutput;
-    [HideInInspector]
     public List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
     [HideInInspector]
     public List<Genetics.GenKurmto> GenKurLib; // lib to hold gene kurmto data
@@ -34,7 +32,6 @@ public class AgentsManager : MonoBehaviour
     {
         agents = new Agent[parameters.maxAmountAgents];
         GPUStruct = new GPUCompute.GPUData[parameters.maxAmountAgents];
-        GPUOutput = new GPUCompute.GPUOutput[parameters.maxAmountAgents];
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
 
@@ -69,16 +66,10 @@ public class AgentsManager : MonoBehaviour
             else
             {
                 agents[i].kuramoto.age += Time.deltaTime;
-                //agents[i].kuramoto.phase = (HeartRateManager.Instance.GlobalPhaseMod1 + GPUOutput[i].phaseAdition * Time.deltaTime) % 1f;
                 GPUStruct[i].played = agents[i].kuramoto.played;
-                GPUStruct[i].phase = HeartRateManager.Instance.GlobalPhaseMod1;
-                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
                 GPUStruct[i].speed = agents[i].kuramoto.speed;
                 GPUStruct[i].pos = agents[i].rigidBody.position;
             }
-
-            /*if (agents[i].renderer.isVisible)
-                agents[i].renderer.material.SetFloat("Phase", agents[i].kuramoto.phase);*/
         }
 
         RemoveAgentsAtIndexes(toRemove);
@@ -113,14 +104,13 @@ public class AgentsManager : MonoBehaviour
 
         if(newAgent==null)
             newAgent = Instantiate(prefabsAgents[UnityEngine.Random.Range(0, prefabsAgents.Length)], pos, Quaternion.identity, this.transform).GetComponent<Agent>();
-        newAgent.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);// setup its setting to randomize them
+        newAgent.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange);// setup its setting to randomize them
 
         if(newAgent.geneticAntigenKey!=null)
             newAgent.geneticAntigenKey.Reset();
 
         GPUStruct[i].SetFromKuramoto(newAgent.kuramoto);
         GPUStruct[i].pos = newAgent.transform.position;
-        GPUOutput[i].Setup();
 
         agents[i] = newAgent;
     }
@@ -176,7 +166,7 @@ public class AgentsManager : MonoBehaviour
 
         if (!cond1 || cond2)
         {
-            thisAgent.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange, 0.2f);
+            thisAgent.kuramoto.Setup(parameters.noiseSclRange, parameters.couplingRange, parameters.speedRange, parameters.couplingSclRange, parameters.attractionSclRange);
         }
         else
         {

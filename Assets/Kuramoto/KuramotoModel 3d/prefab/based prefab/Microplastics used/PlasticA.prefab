@@ -132,6 +132,10 @@ MonoBehaviour:
   rigidBody: {fileID: 7866063629140690938}
   kuramoto: {fileID: 325246557824574683}
   geneticMovement: {fileID: 2351948123429560839}
+  fosilising: {fileID: 0}
+  apcSong: {fileID: 0}
+  geneticAntigenKey: {fileID: 0}
+  manager: {fileID: 0}
 --- !u!114 &325246557824574683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +180,9 @@ MonoBehaviour:
   lastPhase: 0
   notKeyed: 1
   speedScl: 5
-  attachedGO: {fileID: 3010071362858964238, guid: d65dc05cfc2798f4cb97bfb5731e0937, type: 3}
+  targeting: 1
+  target: {x: 0, y: 0, z: 0}
+  prefabDigested: {fileID: 3010071362858964238, guid: d65dc05cfc2798f4cb97bfb5731e0937, type: 3}
   origin: {x: 0, y: 0, z: 0}
   numToKill: 2
   maxDrag: 0.6

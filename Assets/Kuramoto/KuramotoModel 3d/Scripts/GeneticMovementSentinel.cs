@@ -14,10 +14,10 @@ public class GeneticMovementSentinel : GeneticMovement
     public Transform rootBone;
 
     [HideInInspector]
-    public List<GeneticAntigenKey> digestAntigens;
-    
+    public List<GeneticAntigenKey> digestAntigens = new List<GeneticAntigenKey>();
+
     [HideInInspector]
-    public List<Transform> plastics;
+    public List<Transform> plastics = new List<Transform>();
 
     [Tooltip("Current stage of the APC in its cycle of activities")]
     public APCBehavior currentBehavior = APCBehavior.SeekingPathogens;
@@ -26,8 +26,6 @@ public class GeneticMovementSentinel : GeneticMovement
 
     public override void Start()
     {
-        digestAntigens = new List<GeneticAntigenKey>();
-        plastics = new List<Transform>();
         geneticMovement = new Vector3[cycleLength];
         origDrag = agent.rigidBody.drag;
 
@@ -70,52 +68,62 @@ public class GeneticMovementSentinel : GeneticMovement
         lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnterKill(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Tcell"))
-            tcellHits++;
-        else if (collision.gameObject.CompareTag("Terrain") && agent.rigidBody.useGravity)
-            (agent as Sentinel).fosilising.enabled = true;
+        //DO NOT APPLY DEAD TO THE SENTINEL
+        return;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    public override void OnCollisionEnterTCell(Collision collision)
     {
-        if (collision.gameObject.CompareTag("PathogenEmitter") || collision.gameObject.CompareTag("Lymphonde"))
+        tcellHits++;
+    }
+
+    public override void OnCollisionEnterTerrain(Collision collision)
+    {
+        (agent as Sentinel).fosilising.enabled = true;
+    }
+
+    public override void OnTriggerEnterLymphonde(Collider collider) 
+    {
+        targeting = false;
+    }
+
+    public override void OnTriggerEnterPathogenEmitter(Collider collider)
+    {
+        targeting = false;
+    }
+
+    public override void OnTriggerStayPathogenEmitter(Collider collider)
+    {
+        if (keys >= NumKeysToCollect && !targeting)
+        {
+            int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
+
+            target = GameManager.Instance.tCellsManagers[indx].transform.position;
+            targeting = true;
+            tcellHits = 0;
+
+            currentBehavior = APCBehavior.CarryingAntigens;
+
+            if (Math.Abs(origDrag - GetComponent<Rigidbody>().drag) < 0.01f)
+            {
+                // TODO: @Neander: This is where the sentinel has enough antigens
+                CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToLymphNode, transform));
+            }
+            else
+            {
+                // TODO: @Neander: This is where the sentinel has enough antigens and is infected by plastic
+                CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.InfectedSentinelGoesToTCell, transform));
+            }
+        }
+        else if (keys < NumKeysToCollect)
             targeting = false;
     }
 
-    private void OnTriggerStay(Collider collision)
+    public override void OnTriggerStayLymphonde(Collider collider)
     {
-        if (collision.gameObject.CompareTag("PathogenEmitter"))
-        {
-            if (keys >= NumKeysToCollect && !targeting)
-            {
-                int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
-                
-                target = GameManager.Instance.tCellsManagers[indx].transform.position;
-                targeting = true;
-                tcellHits = 0;
-
-                currentBehavior = APCBehavior.CarryingAntigens;
-
-                if (Math.Abs(origDrag - GetComponent<Rigidbody>().drag) < 0.01f)
-                {
-                    // TODO: @Neander: This is where the sentinel has enough antigens
-                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToLymphNode, transform));
-                }
-                else
-                {
-                    // TODO: @Neander: This is where the sentinel has enough antigens and is infected by plastic
-                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.InfectedSentinelGoesToTCell, transform));
-                }
-                
-
-                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< gets enough antigens to leave
-            }
-            else if( keys< NumKeysToCollect)
-                targeting = false;
-        }
-        else if (collision.gameObject.CompareTag("Lymphonde") && tcellHits > 10 && !targeting)
+        if (tcellHits > 10 && !targeting)
         {
             int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
@@ -128,14 +136,14 @@ public class GeneticMovementSentinel : GeneticMovement
             digestAntigens.Clear();
             keys = 0;
             currentBehavior = APCBehavior.SeekingPathogens;
-            
+
             // TODO: @Neander: This is where the sentinel has delivered antigens and goes back to pathogen hunting
             CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelGoesToPathogen, transform));
             //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leaving the lymphonode 
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public override void OnTriggerExitAnything(Collider collider)
     {
         targeting = true;
     }

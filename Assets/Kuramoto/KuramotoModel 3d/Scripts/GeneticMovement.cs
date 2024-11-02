@@ -51,4 +51,73 @@ public class GeneticMovement : MonoBehaviour
 
         lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
+
+    public virtual void OnCollisionEnter(Collision collision)
+    {
+        if (!(this is GeneticMovementSentinel))
+        {
+            if (collision.gameObject.CompareTag("Kill"))
+                OnCollisionEnterKill(collision);
+            else if (collision.gameObject.CompareTag("Player"))
+                OnCollisionEnterPlayer(collision);
+            else if (collision.gameObject.CompareTag("Pathogen") && this is GeneticMovementTcell)
+                OnCollisionEnterPathogen(collision);
+        }
+        else
+        {
+            if (collision.gameObject.CompareTag("Tcell"))
+                OnCollisionEnterTCell(collision);
+            else if (collision.gameObject.CompareTag("Terrain") && agent.rigidBody.useGravity)
+                OnCollisionEnterTerrain(collision);
+        }
+    }
+
+    public virtual void OnCollisionEnterKill(Collision collision)
+    {
+        agent.kuramoto.dead = true;
+    }
+
+    public virtual void OnCollisionEnterPlayer(Collision collision) { }
+    public virtual void OnCollisionEnterTCell(Collision collision) { }
+    public virtual void OnCollisionEnterPathogen(Collision collision) { }
+    public virtual void OnCollisionEnterTerrain(Collision collision) { }
+
+    public virtual void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Lymphonde"))
+            OnTriggerEnterLymphonde(collider);
+        else if (collider.gameObject.CompareTag("PathogenEmitter"))
+            OnTriggerEnterPathogenEmitter(collider);
+    }
+
+    public virtual void OnTriggerEnterLymphonde(Collider collider) { }
+    public virtual void OnTriggerEnterPathogenEmitter(Collider collider) { }
+
+    public virtual void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Lymphonde"))
+            OnTriggerStayLymphonde(collider);
+        else if (collider.gameObject.CompareTag("PathogenEmitter"))
+            OnTriggerStayPathogenEmitter(collider);
+        else if (collider.gameObject.CompareTag("PlasticMover"))
+            OnTriggerStayPlasticMover(collider);
+    }
+
+    public virtual void OnTriggerStayLymphonde(Collider collider) { }
+    public virtual void OnTriggerStayPathogenEmitter(Collider collider) { }
+    public virtual void OnTriggerStayPlasticMover(Collider collider) { }
+
+    public virtual void OnTriggerExit(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("LymphOuter"))
+            OnTriggerExitLymphOuter(collider);
+        else if (collider.gameObject.CompareTag("PathogenEmitter"))
+            OnTriggerExitPathogenEmitter(collider);
+        else
+            OnTriggerExitAnything(collider);
+    }
+
+    public virtual void OnTriggerExitLymphOuter(Collider collider) { }
+    public virtual void OnTriggerExitPathogenEmitter(Collider collider) { }
+    public virtual void OnTriggerExitAnything(Collider collider) { }
 }

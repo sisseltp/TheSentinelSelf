@@ -163,6 +163,8 @@ MonoBehaviour:
   lastPhase: 0
   notKeyed: 1
   speedScl: 15
+  targeting: 1
+  target: {x: 0, y: 0, z: 0}
   maxKeys: 10
 --- !u!82 &-2629601526590107559
 AudioSource:
@@ -299,6 +301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 078c843a2d0b821f4b6ccf16f6379e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: -2629601526590107559}
+  kuramoto: {fileID: 4872389133939868052}
   behavior: 1
   shoutAtKuramotoPhase: 0
   scale: 0
@@ -331,7 +335,10 @@ MonoBehaviour:
   rigidBody: {fileID: -5416354910346406675}
   kuramoto: {fileID: 4872389133939868052}
   geneticMovement: {fileID: 7986584347249604642}
+  fosilising: {fileID: 0}
+  apcSong: {fileID: 0}
   geneticAntigenKey: {fileID: 238140882530524130}
+  manager: {fileID: 0}
 --- !u!1001 &540398960029899901
 PrefabInstance:
   m_ObjectHideFlags: 0

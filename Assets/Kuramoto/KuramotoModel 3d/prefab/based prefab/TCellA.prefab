@@ -173,7 +173,11 @@ MonoBehaviour:
   rigidBody: {fileID: 6036541704713322092}
   kuramoto: {fileID: 9074480801987277044}
   geneticMovement: {fileID: -3675019409970671806}
+  skinnedMeshRenderer: {fileID: 8713158750708350580}
+  fosilising: {fileID: 0}
+  apcSong: {fileID: 0}
   geneticAntigenKey: {fileID: 1106587717428591582}
+  manager: {fileID: 0}
 --- !u!114 &-3675019409970671806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,11 +231,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedBPM: 0
   speed: 0
-  phase: 0
   couplingRange: 1
   noiseScl: 1
   coupling: 0.5
-  speedVariation: 0.1
   attractionSclr: 0.5
   fitness: 0
   played: 0
