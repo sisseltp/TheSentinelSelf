@@ -4,10 +4,7 @@ using UnityEngine.UI;
 public class IntroBeginner : MonoBehaviour
 {
     public static IntroBeginner Instance;
-    [SerializeField]
-    CameraTracker camTrack;
-    [SerializeField]
-    private SoundFXManager soundFx;
+
     [SerializeField]
     private Rigidbody rb;
     [SerializeField]
@@ -35,11 +32,6 @@ public class IntroBeginner : MonoBehaviour
 
     [SerializeField]
     private float rotSpeed = 1;
-
-    [HideInInspector]
-    public bool sensorConnected;
-    [HideInInspector]
-    public bool sensorHasValue;
 
     private bool shouldChange;
 
@@ -69,9 +61,9 @@ public class IntroBeginner : MonoBehaviour
         if (useMouseToTransition && Input.GetMouseButtonDown(0))
             ChangeStates();
 
-        if (sensorConnected)
+        if (HeartRateManager.Instance.sensorConnected)
         {
-            if (camTrack.tracking && !sensorHasValue || !camTrack.tracking && sensorHasValue)
+            if (CameraTracker.Instance.tracking && !HeartRateManager.Instance.sensorHasValue || !CameraTracker.Instance.tracking && HeartRateManager.Instance.sensorHasValue)
                 shouldChange = true;
             else
                 shouldChange = false;
@@ -93,18 +85,14 @@ public class IntroBeginner : MonoBehaviour
         }
     }
 
-    public void SetSensorConnected(bool isConnected, bool hasValue = false)
-    {
-        sensorConnected = isConnected;
-        sensorHasValue = hasValue;
-    }
+  
 
     public void ChangeStates()
     {
-        if (camTrack.doingIntro || camTrack.doingOutro) 
+        if (CameraTracker.Instance.doingIntro || CameraTracker.Instance.doingOutro) 
             return;
         
-        if (camTrack.tracking)
+        if (CameraTracker.Instance.tracking)
         {
             Debug.Log($"Change state, go back to body");
             Restart();
@@ -121,10 +109,10 @@ public class IntroBeginner : MonoBehaviour
     {
         shouldChange = false;
 
-        soundFx.Play("ApproachBody");
+        SoundFXManager.Instance.Play("ApproachBody");
 
-        camTrack.BeginTracking();
-        camTrack.enabled = true;
+        CameraTracker.Instance.BeginTracking();
+        CameraTracker.Instance.enabled = true;
 
         floating = false;
         alongPath.enabled = false;
@@ -135,11 +123,11 @@ public class IntroBeginner : MonoBehaviour
     {
         shouldChange = false;
 
-        soundFx.Play("ExitBody");
+        SoundFXManager.Instance.Play("ExitBody");
         // TODO: Maybe nicer to delay this or fade in?
-        soundFx.Play("VoiceOver");
+        SoundFXManager.Instance.Play("VoiceOver");
 
-        camTrack.ReturnToOrigin();
+        CameraTracker.Instance.ReturnToOrigin();
     }
 
     public void SetDoingIntro(bool state)

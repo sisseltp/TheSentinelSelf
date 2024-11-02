@@ -7,6 +7,10 @@ public class HeartRateManager : MonoBehaviour
 {
     public static HeartRateManager Instance;
 
+    [HideInInspector]
+    public bool sensorConnected;
+    [HideInInspector]
+    public bool sensorHasValue;
 
     public float GlobalPhase = 0f;
     public float GlobalPhaseMod1 => GlobalPhase % 1f;
@@ -25,12 +29,18 @@ public class HeartRateManager : MonoBehaviour
 
     void Update()
     {
-        if(!IntroBeginner.Instance.sensorConnected || !IntroBeginner.Instance.sensorHasValue || simulateHeartBeat)
+        if(!sensorConnected || !sensorHasValue || simulateHeartBeat)
         {
             simulatedPhase += Time.deltaTime * simulatedBPM / 60f;
             GlobalPhase = simulatedPhase;
         }
 
         Shader.SetGlobalFloat("_Phase", GlobalPhaseMod1);
+    }
+
+    public void SetSensorConnected(bool isConnected, bool hasValue = false)
+    {
+        sensorConnected = isConnected;
+        sensorHasValue = hasValue;
     }
 }

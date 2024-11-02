@@ -13,7 +13,6 @@ public class EthernetValues : MonoBehaviour
 
     [Header("Kuramoto Values")]
     public float pulseGradient;
-    private KuramotoAffectedAgent agent;
     private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
     public int bias = 3;
     
@@ -28,9 +27,6 @@ public class EthernetValues : MonoBehaviour
     private float TimerGate = 0;
 
     [SerializeField]
-    private IntroBeginner IntroControl;
-
-    [SerializeField]
     private float avrgDrag = 0.6f;
     private float avrgRate = 0;
     private float lastAvrgRate = 0;
@@ -40,7 +36,7 @@ public class EthernetValues : MonoBehaviour
     void Update()
     {
         if (GlobalInterval == 0)
-            IntroControl.SetSensorConnected(false);
+            HeartRateManager.Instance.SetSensorConnected(false);
 
         avrgRate += (GlobalRate - avrgRate) * avrgDrag;
         float avrgChange = Mathf.Abs(GlobalRate - lastAvrgRate);
@@ -53,7 +49,7 @@ public class EthernetValues : MonoBehaviour
                 TimerGate = Time.time;
             }
             else if (GlobalInterval > 0 && TimerGate + beginTimer < Time.time ) {
-                IntroControl.SetSensorConnected(true, true);
+                HeartRateManager.Instance.SetSensorConnected(true, true);
             }
 
             float step = (float)GlobalRate / 30;
@@ -73,14 +69,9 @@ public class EthernetValues : MonoBehaviour
             TimerGate = Time.time;
         } 
         else if (GlobalInterval > 0 && TimerGate + restartTimer < Time.time)
-            IntroControl.SetSensorConnected(true);
+            HeartRateManager.Instance.SetSensorConnected(true);
 
         lastAvrgRate = avrgRate;
-    }
-
-    public void SetSentinelAgent(KuramotoAffectedAgent thisAgent)
-    {
-        agent = thisAgent;
     }
 
     public void SetGlobalHeartBeatRateValue(int value)

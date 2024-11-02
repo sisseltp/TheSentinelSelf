@@ -5,15 +5,23 @@ using UnityEngine.UI;
 
 public class CameraTracker : MonoBehaviour
 {
-    public Transform tracked;
-    public Transform look;
-    
-    [SerializeField]
-    private Camera mainCamera;
+    public static CameraTracker Instance;
 
     [SerializeField]
+    public Rigidbody rb;
+
+
+    [SerializeField]
+    private Camera mainCamera;
+    [SerializeField]
     private Image faderImage;
-    
+    [SerializeField]
+    private SphereCollider sphereCollider;
+
+    private Transform tracked;
+
+    private Transform look;
+
     [Space(10)]
     [Header("Body Entry Animation")]
 
@@ -74,37 +82,23 @@ public class CameraTracker : MonoBehaviour
     private Vector3 lookPos;
     private Vector3 vel;
 
-    [HideInInspector]
-    public Rigidbody rb;
-
-    // Heartbeat sensor script component
-    private EthernetValues heartbeatSensor;
-
-    // Enter/exit body control script component
-    private IntroBeginner introCntrl;
-
-    // Script/component manages FX sound on the camera
-    private SoundFXManager soundFx;
-
     private int lastIndx = -1;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        soundFx = GetComponent<SoundFXManager>();
-
-        var trans = transform;
-        
-        origin = trans.position;
-        origRot = trans.rotation;
-        
-        heartbeatSensor = GetComponentInChildren<EthernetValues>();
-        introCntrl = GetComponent<IntroBeginner>();
+        origin = transform.position;
+        origRot = transform.rotation;
     }
 
     void Update()
     {
-        if (tracked == null || look == null) return;
+        if (tracked == null || look == null) 
+            return;
         
         Vector3 dif = tracked.position - transform.position;
 
@@ -112,15 +106,12 @@ public class CameraTracker : MonoBehaviour
             dif = Vector3.Normalize(dif);
 
         lookPos += (look.position - lookPos) * 0.2f;
-    
         Vector3 lookDif = lookPos - transform.position;
-
-        var targetRotation = Quaternion.LookRotation(lookDif);
-
-        // Smoothly rotate towards the target point.
+        Quaternion targetRotation = Quaternion.LookRotation(lookDif);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
 
-        if (tracking) {
+        if (tracking) 
+        {
             float dist = Vector3.Distance(tracked.position, transform.position);
             
             if (dist < setDistance - distVariation) 
@@ -142,6 +133,7 @@ public class CameraTracker : MonoBehaviour
                 {
                     restTimer = 0;
                 }
+
                 return;
             }
           
@@ -150,7 +142,7 @@ public class CameraTracker : MonoBehaviour
             Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
 
             if (Physics.SphereCast(forward,3, out RaycastHit hit, 20))
-                if (hit.transform.tag == "Terrain")
+                if (hit.transform.CompareTag("Terrain"))
                     vel += Vector3.up * (Vector3.Magnitude(rb.velocity)/3);
         }
         
@@ -159,15 +151,12 @@ public class CameraTracker : MonoBehaviour
         rb.velocity += vel;
     }
 
-    private float AbsMagnitude(Vector3 vec)
-    {
-        return Mathf.Abs(vec.x) + Mathf.Abs(vec.y)+  Mathf.Abs(vec.z);         
-    }
+    private float AbsMagnitude(Vector3 vec) => Mathf.Abs(vec.x) + Mathf.Abs(vec.y) + Mathf.Abs(vec.z);
 
     public void BeginTracking()
     {
         doingIntro = true;
-        introCntrl.SetDoingIntro(true);
+        IntroBeginner.Instance.SetDoingIntro(true);
         FindScreenTracked("BodyAlign");
         FindSceneLook("Body");
     }
@@ -177,7 +166,7 @@ public class CameraTracker : MonoBehaviour
         if (!doingIntro && !doingOutro)
         {
             doingOutro = true;
-            introCntrl.SetDoingOutro(true);
+            IntroBeginner.Instance.SetDoingOutro(true);
             Debug.Log("Starting the outro");
             StartCoroutine(ReturnCallback());     
         }
@@ -195,8 +184,8 @@ public class CameraTracker : MonoBehaviour
 
         tracked = null;
         enabled = false;
-        introCntrl.floating = true;
-        introCntrl.alongPath.enabled = true;
+        IntroBeginner.Instance.floating = true;
+        IntroBeginner.Instance.alongPath.enabled = true;
         
         var trans = transform;
         trans.position = origin;
@@ -210,27 +199,30 @@ public class CameraTracker : MonoBehaviour
 
         Debug.Log("End of outro?");
         doingOutro = false;
-        introCntrl.SetDoingOutro(false);
+        IntroBeginner.Instance.SetDoingOutro(false);
     }
    
     private void OnTriggerEnter(Collider collision)
     {        
         if (collision.transform.CompareTag("Body")) { // Camera is entering the body, into the inner world.
-            soundFx.Play("EnterBody");
-            soundFx.Stop("VoiceOver");
+            SoundFXManager.Instance.Play("EnterBody");
+            SoundFXManager.Instance.Stop("VoiceOver");
 
             FindSceneTracked("Player");
 
             tracking = true;
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
-            GetComponent<SphereCollider>().isTrigger = false;
+            sphereCollider.isTrigger = false;
             doingIntro = false;
-            introCntrl.SetDoingIntro(false);
+            IntroBeginner.Instance.SetDoingIntro(false);
 
             StartCoroutine(ChangeCharacter(changeTrackTimer));
             StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
 
-        } else if (collision.transform.CompareTag("BodyAlign")) { // camera is aligned and looking down at the body
+        } 
+        else if (collision.transform.CompareTag("BodyAlign")) 
+        { 
+            // camera is aligned and looking down at the body
             FindScreenTracked("Body");
         }
     }
@@ -251,45 +243,40 @@ public class CameraTracker : MonoBehaviour
         int indx = -1;
         for (int i = 0; i < bodies.Length; i++)
         {
-            if (i!= lastIndx)
+            if (i == lastIndx)
+                continue;
+
+            int numPlastics =  bodies[i].GetComponentsInChildren<GeneticMovementPlastic>().Length;
+            if (max < numPlastics)
             {
-                int numPlastics =  bodies[i].GetComponentsInChildren<GeneticMovementPlastic>().Length;
-                if (max < numPlastics)
-                {
-                    indx = i;
-                    max = numPlastics;
-                }
+                indx = i;
+                max = numPlastics;
             }
         }
 
         if (indx == -1)
         {
-            float dist = 0;
+            float dist = 0f;
             for (int i = 0; i < bodies.Length; i++)
             {
-                if (i!= lastIndx)
-                {
-                    float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
-                    if (thisDist > dist && bodies[i].GetComponentInChildren<Renderer>().isVisible)
-                    {  
-                        indx = i;
-                        dist = thisDist;
-                    }
+                if (i == lastIndx)
+                    continue;
+
+                float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
+                if (thisDist > dist && bodies[i].GetComponentInChildren<Renderer>().isVisible)
+                {  
+                    indx = i;
+                    dist = thisDist;
                 }
             }
         }
 
         if (indx == -1)
-        {
             indx = Random.Range(0, bodies.Length);
-        }
 
         lastIndx = indx;
         look = bodies[indx].transform;
         tracked = bodies[indx].transform;
-
-        if (heartbeatSensor != null)
-            heartbeatSensor.SetSentinelAgent(tracked.GetComponent<KuramotoAffectedAgent>());
     }
 
     private void FindSceneLook(string tagToFind)
@@ -302,20 +289,19 @@ public class CameraTracker : MonoBehaviour
 
         for (int i = 0; i < bodies.Length; i++)
         {
-            if (bodies[i].GetInstanceID() != tracked.GetInstanceID())
+            if (bodies[i].GetInstanceID() == tracked.GetInstanceID())
+                continue;
+
+            float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
+            if (thisDist < dist)
             {
-                float thisDist = Vector3.Distance(bodies[i].transform.position, transform.position);
-                if (thisDist < dist)
-                {
-                    indx = i;
-                    dist = thisDist;
-                }
+                indx = i;
+                dist = thisDist;
             }
         }
 
         look = bodies[indx].transform;
     }
-
 
     public void FindScreenTracked(string tagToFind)
     {
@@ -327,20 +313,19 @@ public class CameraTracker : MonoBehaviour
 
         for (int i = 0; i < bodies.Length; i++)
         {
-            if (tracked==null || bodies[i].GetInstanceID() != tracked.GetInstanceID())
+            if (tracked != null && bodies[i].GetInstanceID() == tracked.GetInstanceID())
+                continue;
+
+            Vector2 screenPos = mainCamera.WorldToScreenPoint(bodies[i].transform.position);
+            float thisDist = Vector2.Distance(screenPos, new Vector2(Screen.width / 2, Screen.height / 2));
+            if (thisDist < dist)
             {
-                Vector2 screenPos = mainCamera.WorldToScreenPoint(bodies[i].transform.position);
-                float thisDist = Vector2.Distance(screenPos, new Vector2(Screen.width / 2, Screen.height / 2));
-                if (thisDist < dist)
-                {
-                    indx = i;
-                    dist = thisDist;
-                }
+                indx = i;
+                dist = thisDist;
             }
         }
 
         look = bodies[indx].transform;
-
         tracked = bodies[indx].transform;
     }
 
@@ -349,6 +334,7 @@ public class CameraTracker : MonoBehaviour
         while (tracking)
         {
             yield return new WaitForSeconds(timer);
+
             if (tracking)
                 FindSceneTracked("Player");
         }
@@ -367,17 +353,11 @@ public class CameraTracker : MonoBehaviour
                 if (rand == 0)
                     driftPower *= -1;
                 else if (rand == 1)
-                {
                     setDistance = Random.Range(10, 34);
-                }
                 else if(rand == 2)
-                {
                     power = Random.Range(0.1f, 0.3f);
-                }
                 else if (rand == 3)
-                {
                     rotSpeed = Random.Range(0.5f, 1f);
-                }
             }
         }
     }

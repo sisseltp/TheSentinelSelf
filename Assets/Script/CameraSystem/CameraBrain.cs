@@ -12,9 +12,6 @@ namespace Script.CameraSystem
     {
         public static CameraBrain Instance;
 
-        [SerializeField] 
-        private CameraTracker cameraTracker;
-
         [SerializeField]
         private float switchTime = 30f; // In seconds
             
