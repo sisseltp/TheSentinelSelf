@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="eca29399-1e7d-422e-a84f-acbc2b0e7569" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CameraTracker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CameraTracker.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,10 +18,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2oLh9qkJtp6WIAEiUBkXmvmjwp6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,7 +30,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/merge__body__content",
+    "git-widget-placeholder": "feature/camera__system",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -83,6 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1730654617810</updated>
       <workItem from="1730654621084" duration="1177000" />
+      <workItem from="1730663043347" duration="2590000" />
     </task>
     <servers />
   </component>
@@ -96,6 +100,17 @@
     <option name="unityProjectFolder" value="true" />
   </component>
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>

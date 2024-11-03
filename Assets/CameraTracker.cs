@@ -46,9 +46,10 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float distLimit;
 
+    [FormerlySerializedAs("changeTrackTimer")]
     [FormerlySerializedAs("ChangeTrackTimer")] 
     [SerializeField]
-    private float changeTrackTimer = 10;
+    private float switchTargetTime = 10;
 
     [SerializeField]
     private float underWaterJumpDist = 10;
@@ -76,6 +77,12 @@ public class CameraTracker : MonoBehaviour
 
     public bool doingOutro;
 
+    private float targetSwitchTimer;
+    private float orientationSwitchTimer;
+
+    private Transform currentTarget;
+    private Transform nextTarget;
+    
     private float lastChange = 0;    
     private Vector3 origin;
     private Quaternion origRot;
@@ -97,7 +104,7 @@ public class CameraTracker : MonoBehaviour
 
     void Update()
     {
-        if (tracked == null || look == null) 
+        if (!tracked || !look) 
             return;
         
         Vector3 dif = tracked.position - transform.position;
@@ -110,8 +117,22 @@ public class CameraTracker : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(lookDif);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotSpeed * Time.deltaTime);
 
-        if (tracking) 
+        if (tracking)
         {
+            targetSwitchTimer += Time.deltaTime;
+            orientationSwitchTimer += Time.deltaTime;
+
+            if (orientationSwitchTimer >= switchTargetTime * 0.666f)
+            {
+                ChangeOrientation();
+            }
+                
+            if (targetSwitchTimer >= switchTargetTime)
+            {
+                targetSwitchTimer = 0;
+                SwitchTarget();
+            }
+            
             float dist = Vector3.Distance(tracked.position, transform.position);
             
             if (dist < setDistance - distVariation) 
@@ -123,11 +144,11 @@ public class CameraTracker : MonoBehaviour
                 if (AbsMagnitude(rb.velocity) < 3)
                 {
                     restTimer += Time.deltaTime;
-                    if (restTimer > restReset)
-                    {
-                        FindSceneTracked("Player");
-                        restTimer = 0;
-                    }
+                    
+                    if (!(restTimer > restReset)) return;
+                    
+                    restTimer = 0;
+                    SwitchTarget();
                 }
                 else
                 {
@@ -137,7 +158,7 @@ public class CameraTracker : MonoBehaviour
                 return;
             }
           
-            rb.AddForce(transform.right * driftPower * Time.deltaTime);
+            rb.AddForce(transform.right * (driftPower * Time.deltaTime));
 
             Ray forward = new Ray(transform.position, Vector3.Normalize(rb.velocity) + Vector3.down * 0.5f);
 
@@ -146,97 +167,50 @@ public class CameraTracker : MonoBehaviour
                     vel += Vector3.up * (Vector3.Magnitude(rb.velocity)/3);
         }
         
-        vel += dif * power * Time.deltaTime;
+        vel += dif * (power * Time.deltaTime);
         vel *= 0.8f;
         rb.velocity += vel;
     }
 
-    private float AbsMagnitude(Vector3 vec) => Mathf.Abs(vec.x) + Mathf.Abs(vec.y) + Mathf.Abs(vec.z);
-
-    public void BeginTracking()
+    public void OverrideTracked(Transform newTarget)
     {
-        doingIntro = true;
-        IntroBeginner.Instance.SetDoingIntro(true);
-        FindScreenTracked("BodyAlign");
-        FindSceneLook("Body");
+        if (!tracking) return;
+        
+        targetSwitchTimer = 0;
+        nextTarget = newTarget;
+        
+        SwitchTarget();
     }
 
-    public void ReturnToOrigin()
+    private void StartTracking()
     {
-        if (!doingIntro && !doingOutro)
+        tracking = true;
+        
+        if (tracked.CompareTag("Player")) return;
+        
+        var trans = FindSceneTracked("Player");
+        nextTarget = trans;
+        
+        SwitchTarget();
+    }
+
+    private void SwitchTarget()
+    {
+        if (!nextTarget)
         {
-            doingOutro = true;
-            IntroBeginner.Instance.SetDoingOutro(true);
-            Debug.Log("Starting the outro");
-            StartCoroutine(ReturnCallback());     
+            nextTarget = FindSceneTracked("Player");
         }
-    }
-
-    IEnumerator ReturnCallback()
-    {
-        rb.velocity = Vector3.zero;
-        tracking = false;
         
-        if(faderImage != null)
-            faderImage.CrossFadeAlpha(1, fadePeriod, false);
+        if (nextTarget == currentTarget) return;
         
-        yield return new WaitForSecondsRealtime(fadePeriod);
-
-        tracked = null;
-        enabled = false;
-        IntroBeginner.Instance.floating = true;
-        IntroBeginner.Instance.alongPath.enabled = true;
-        
-        var trans = transform;
-        trans.position = origin;
-        trans.rotation = origRot;
-        
-        if(faderImage != null)
-            faderImage.CrossFadeAlpha(0, fadePeriod, false);
-        GetComponent<SphereCollider>().isTrigger = true;
-
-        yield return new WaitForSeconds(2);
-
-        Debug.Log("End of outro?");
-        doingOutro = false;
-        IntroBeginner.Instance.SetDoingOutro(false);
-    }
-   
-    private void OnTriggerEnter(Collider collision)
-    {        
-        if (collision.transform.CompareTag("Body")) { // Camera is entering the body, into the inner world.
-            SoundFXManager.Instance.Play("EnterBody");
-            SoundFXManager.Instance.Stop("VoiceOver");
-
-            FindSceneTracked("Player");
-
-            tracking = true;
-            rb.position -= new Vector3(0, underWaterJumpDist, 0);
-            sphereCollider.isTrigger = false;
-            doingIntro = false;
-            IntroBeginner.Instance.SetDoingIntro(false);
-
-            StartCoroutine(ChangeCharacter(changeTrackTimer));
-            StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
-
-        } 
-        else if (collision.transform.CompareTag("BodyAlign")) 
-        { 
-            // camera is aligned and looking down at the body
-            FindScreenTracked("Body");
-        }
-    }
-
-    public void SetTracked(Transform target)
-    {
-        look = target;
-        tracked = target;
-        
-        StartCoroutine(ChangeCharacter(changeTrackTimer));
-        StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
+        currentTarget = nextTarget;
+        nextTarget = null;
+            
+        look = currentTarget;
+        tracked = currentTarget;
     }
     
-    private void FindSceneTracked(string tagToFind)
+    private Transform FindSceneTracked(string tagToFind)
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
         int max = 0;
@@ -275,10 +249,113 @@ public class CameraTracker : MonoBehaviour
             indx = Random.Range(0, bodies.Length);
 
         lastIndx = indx;
-        look = bodies[indx].transform;
-        tracked = bodies[indx].transform;
+        return bodies[indx].transform;
     }
 
+    private void ChangeOrientation()
+    {
+        var rand = Random.Range(0, 4);
+
+        switch (rand)
+        {
+            case 0:
+                driftPower *= -1;
+                break;
+            case 1:
+                setDistance = Random.Range(10, 34);
+                break;
+            case 2:
+                power = Random.Range(0.1f, 0.3f);
+                break;
+            case 3:
+                rotSpeed = Random.Range(0.5f, 1f);
+                break;
+        }
+    }
+    
+    private float AbsMagnitude(Vector3 vec) => Mathf.Abs(vec.x) + Mathf.Abs(vec.y) + Mathf.Abs(vec.z);
+    
+    //------ BODY SCENE LOGIC ------//
+    
+    #region BODY SCENE LOGIC
+    // Related to the body scene
+    public void BeginTracking()
+    {
+        doingIntro = true;
+        IntroBeginner.Instance.SetDoingIntro(true);
+        FindScreenTracked("BodyAlign");
+        FindSceneLook("Body");
+    }
+
+    // Related to the body scene
+    public void ReturnToOrigin()
+    {
+        if (!doingIntro && !doingOutro)
+        {
+            doingOutro = true;
+            IntroBeginner.Instance.SetDoingOutro(true);
+            Debug.Log("Starting the outro");
+            StartCoroutine(ReturnCallback());     
+        }
+    }
+
+    // Related to the body scene
+    IEnumerator ReturnCallback()
+    {
+        rb.velocity = Vector3.zero;
+        tracking = false;
+        
+        if(faderImage != null)
+            faderImage.CrossFadeAlpha(1, fadePeriod, false);
+        
+        yield return new WaitForSecondsRealtime(fadePeriod);
+
+        tracked = null;
+        enabled = false;
+        IntroBeginner.Instance.floating = true;
+        IntroBeginner.Instance.alongPath.enabled = true;
+        
+        var trans = transform;
+        trans.position = origin;
+        trans.rotation = origRot;
+        
+        if(faderImage != null)
+            faderImage.CrossFadeAlpha(0, fadePeriod, false);
+        GetComponent<SphereCollider>().isTrigger = true;
+
+        yield return new WaitForSeconds(2);
+
+        Debug.Log("End of outro?");
+        doingOutro = false;
+        IntroBeginner.Instance.SetDoingOutro(false);
+    }
+   
+    // Related to the body scene
+    private void OnTriggerEnter(Collider collision)
+    {        
+        if (collision.transform.CompareTag("Body")) { // Camera is entering the body, into the inner world.
+            SoundFXManager.Instance.Play("EnterBody");
+            SoundFXManager.Instance.Stop("VoiceOver");
+
+            // FindSceneTracked("Player");
+            StartTracking();
+            
+            rb.position -= new Vector3(0, underWaterJumpDist, 0);
+            sphereCollider.isTrigger = false;
+            doingIntro = false;
+            IntroBeginner.Instance.SetDoingIntro(false);
+
+            // StartCoroutine(ChangeCharacter(changeTrackTimer));
+            // StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
+        } 
+        else if (collision.transform.CompareTag("BodyAlign")) 
+        { 
+            // camera is aligned and looking down at the body
+            FindScreenTracked("Body");
+        }
+    }
+
+    // Related to the body scene
     private void FindSceneLook(string tagToFind)
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
@@ -303,6 +380,7 @@ public class CameraTracker : MonoBehaviour
         look = bodies[indx].transform;
     }
 
+    // Related to the body scene
     public void FindScreenTracked(string tagToFind)
     {
         GameObject[] bodies = GameObject.FindGameObjectsWithTag(tagToFind);
@@ -328,37 +406,7 @@ public class CameraTracker : MonoBehaviour
         look = bodies[indx].transform;
         tracked = bodies[indx].transform;
     }
-
-    IEnumerator ChangeCharacter(float timer)
-    {
-        while (tracking)
-        {
-            yield return new WaitForSeconds(timer);
-
-            if (tracking)
-                FindSceneTracked("Player");
-        }
-    }
-
-    IEnumerator ChangeOrientation(float timer)
-    {
-        while (tracking)
-        {
-            yield return new WaitForSeconds(timer);
-
-            if (tracking)
-            {
-                int rand = Random.Range(0, 4);
-
-                if (rand == 0)
-                    driftPower *= -1;
-                else if (rand == 1)
-                    setDistance = Random.Range(10, 34);
-                else if(rand == 2)
-                    power = Random.Range(0.1f, 0.3f);
-                else if (rand == 3)
-                    rotSpeed = Random.Range(0.5f, 1f);
-            }
-        }
-    }
+    #endregion BODY SCENE LOGIC
+    
+    //------ BODY SCENE LOGIC ------//
 }
