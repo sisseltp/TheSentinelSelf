@@ -17,12 +17,21 @@ namespace Script.CameraSystem
         
         [SerializeField] 
         private CameraTracker cameraTracker;
+
+        [SerializeField]
+        [Range(0, 11)]
+        private int maxBlacklistedEvents;
+        
+        [SerializeField] 
+        private float resetTime = 300;
+        
+        [Header("Debugging")]
+        [SerializeField] private float resetTimer;
         
         private WorldEvent currentEvent;
         
         private List<WorldEvent> worldEvents = new List<WorldEvent>();
-
-        private List<WorldEvents> currentListening = new List<WorldEvents>();
+        private List<WorldEvents> eventBlackList = new List<WorldEvents>();
         
         private readonly List<WorldEvents> allWorldEvents = new List<WorldEvents>()
         {
@@ -60,8 +69,24 @@ namespace Script.CameraSystem
 
             cameraTracker = GetComponent<CameraTracker>();
 
-            currentListening.Clear();
-            currentListening.AddRange(allWorldEvents);
+            cameraTracker.OnOutroDone += OutroDone;
+            
+            resetTimer = resetTime;
+        }
+
+        void Update()
+        {
+            if (!cameraTracker.tracking) return;
+            
+            resetTimer -= Time.deltaTime;
+
+            if (!(resetTimer <= 0)) return;
+            
+            resetTimer = resetTime;
+            // Accept all events again
+            eventBlackList.Clear();
+            
+            Debug.Log("<color=orange>Camera System:</color> Reset the events blacklist");
         }
 
         public void RegisterEvent(WorldEvent newWorldEvent)
@@ -73,16 +98,13 @@ namespace Script.CameraSystem
                 DebugEvents(newWorldEvent);
             }
             
-            if (currentListening.Contains(newWorldEvent.EventType) && newWorldEvent.EventTarget != null)
+            if (!eventBlackList.Contains(newWorldEvent.EventType) && newWorldEvent.EventTarget)
             {
-                Debug.Log("Interesting event came in");
-                
-                currentListening.Remove(newWorldEvent.EventType);
-                
-                if (currentListening.Count <= allWorldEvents.Count / 2)
+                eventBlackList.Add(newWorldEvent.EventType);
+
+                if (eventBlackList.Count >= maxBlacklistedEvents)
                 {
-                    currentListening.Clear();
-                    currentListening.AddRange(allWorldEvents);
+                    eventBlackList.Clear();
                 }
                 
                 if (worldEvents.Count >= 5)
@@ -90,10 +112,9 @@ namespace Script.CameraSystem
                     worldEvents.RemoveAt(0);
                     worldEvents.Add(newWorldEvent);
                 }
+                
+                EvaluateEvent(newWorldEvent);
             }
-            
-            // Evaluate event
-            EvaluateEvent(newWorldEvent);
         }
 
         private void EvaluateEvent(WorldEvent eventToEvaluate)
@@ -164,6 +185,17 @@ namespace Script.CameraSystem
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+        
+        private void OutroDone()
+        {
+            // Reset the blacklist everytime we go out of the simulation scene
+            eventBlackList.Clear();
+        }
+
+        private void OnDestroy()
+        {
+            cameraTracker.OnOutroDone -= OutroDone;
         }
     }
 

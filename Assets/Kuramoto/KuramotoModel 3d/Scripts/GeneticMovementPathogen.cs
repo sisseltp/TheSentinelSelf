@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Script.CameraSystem;
 using UnityEngine;
 
@@ -24,7 +22,7 @@ public class GeneticMovementPathogen : GeneticMovement
             agent.kuramoto.dead = true;
 
             // TODO: @Neander: This is where the sentinel took an antigen
-            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAteAntigen, transform, new EventData(numkeys, collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect + maxKeys)));
+            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAteAntigen, collision.transform, new EventData(numkeys, collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect + maxKeys)));
         }
     }
 

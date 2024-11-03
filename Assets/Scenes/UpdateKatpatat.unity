@@ -28794,6 +28794,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logWorldEvents: 0
   cameraTracker: {fileID: 0}
+  maxBlacklistedEvents: 5
+  resetTime: 300
+  resetTimer: 0
 --- !u!4 &1088792736221549654
 Transform:
   m_ObjectHideFlags: 0
@@ -46485,6 +46488,8 @@ MonoBehaviour:
   tracking: 0
   doingIntro: 0
   doingOutro: 0
+  targetSwitchTimer: 0
+  orientationSwitchTimer: 0
   pathogenEmitterLocations:
   - {fileID: 3850774876630024338}
   - {fileID: 1105279491}

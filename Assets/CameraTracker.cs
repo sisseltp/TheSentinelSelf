@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Script.CameraSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CameraTracker : MonoBehaviour
 {
     public static CameraTracker Instance;
 
+    public event Action OnOutroDone;
+    
     [SerializeField]
     public Rigidbody rb;
-
-
+    
     [SerializeField]
     private Camera mainCamera;
     [SerializeField]
@@ -79,8 +82,8 @@ public class CameraTracker : MonoBehaviour
 
     public bool doingOutro;
 
-    private float targetSwitchTimer;
-    private float orientationSwitchTimer;
+    [SerializeField] private float targetSwitchTimer;
+    [SerializeField] private float orientationSwitchTimer;
 
     private Transform currentTarget;
     private Transform nextTarget;
@@ -224,7 +227,7 @@ public class CameraTracker : MonoBehaviour
 
         if (nextTarget == currentTarget)
         {
-            SwitchTarget(CameraSwitchReason.None);
+            targetSwitchTimer = 0;
             return;
         }
         
@@ -367,7 +370,8 @@ public class CameraTracker : MonoBehaviour
 
         yield return new WaitForSeconds(2);
 
-        Debug.Log("End of outro?");
+        OnOutroDone?.Invoke();
+        
         doingOutro = false;
         IntroBeginner.Instance.SetDoingOutro(false);
     }
