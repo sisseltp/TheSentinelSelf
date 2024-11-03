@@ -12,10 +12,9 @@ namespace Script.CameraSystem
     {
         public static CameraBrain Instance;
 
-        [SerializeField]
-        private float switchTime = 30f; // In seconds
-            
-        private float currentTimer;
+        [SerializeField] 
+        private CameraTracker cameraTracker;
+        
         private WorldEvent currentEvent;
         
         private List<WorldEvent> worldEvents = new List<WorldEvent>();
@@ -53,15 +52,14 @@ namespace Script.CameraSystem
         private void Awake()
         {
             Instance = this;
-        }
 
-        private void Start()
-        {
-            currentTimer = switchTime;
+            cameraTracker = GetComponent<CameraTracker>();
         }
 
         public void RegisterEvent(WorldEvent newWorldEvent)
         {
+            // @neander: Check if the incoming event is more interesting then the event currently being tracked
+            
             switch (newWorldEvent.EventType)
             {
                 case WorldEvents.SentinelGoesToPathogen:
@@ -116,9 +114,7 @@ namespace Script.CameraSystem
             worldEvents.Remove(worldEvent);
             
             currentEvent = worldEvent;
-            currentTimer = GetEvenTime(currentEvent.EventType);
-
-            // cameraTracker.SetTracked(currentEvent.EventTarget);
+            cameraTracker.OverrideTracked(currentEvent.EventTarget);
         }
 
         private void NextEvent()
@@ -141,18 +137,6 @@ namespace Script.CameraSystem
             }
             
             SetNextEvent(chosenEvent);
-        }
-
-        private void Update()
-        {
-            currentTimer -= Time.deltaTime;
-            
-            if (currentTimer <= 0)
-            {
-                currentTimer = switchTime;
-                // Check new event
-                NextEvent();
-            }
         }
 
         private int GetHeuristicValue(WorldEvents eventType)
