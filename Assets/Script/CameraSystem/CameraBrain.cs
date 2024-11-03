@@ -12,6 +12,9 @@ namespace Script.CameraSystem
     {
         public static CameraBrain Instance;
 
+        [SerializeField]
+        private bool logWorldEvents;
+        
         [SerializeField] 
         private CameraTracker cameraTracker;
         
@@ -19,6 +22,23 @@ namespace Script.CameraSystem
         
         private List<WorldEvent> worldEvents = new List<WorldEvent>();
 
+        private List<WorldEvents> currentListening = new List<WorldEvents>();
+        
+        private readonly List<WorldEvents> allWorldEvents = new List<WorldEvents>()
+        {
+            WorldEvents.SentinelDies,
+            WorldEvents.SentinelAteAntigen,
+            WorldEvents.SentinelAtePlastic,
+            WorldEvents.SentinelBecomesEgg,
+            WorldEvents.SentinelGoesToPathogen,
+            WorldEvents.TCellIsCorrupted,
+            WorldEvents.SentinelGoesToLymphNode,
+            WorldEvents.TCellGoesToPathogen,
+            WorldEvents.TCellKillsPathogen,
+            WorldEvents.TCellReachedPathogenEmitter,
+            WorldEvents.InfectedSentinelGoesToTCell
+        };
+        
         private readonly Dictionary<WorldEvents, int> heuristicValues = new Dictionary<WorldEvents, int>()
         {
             {WorldEvents.SentinelDies, 10},
@@ -33,63 +53,45 @@ namespace Script.CameraSystem
             {WorldEvents.TCellReachedPathogenEmitter, 40},
             {WorldEvents.InfectedSentinelGoesToTCell, 50}
         };
-        
-        private readonly Dictionary<WorldEvents, int> eventTimes = new Dictionary<WorldEvents, int>()
-        {
-            {WorldEvents.SentinelDies, 20},
-            {WorldEvents.SentinelAteAntigen, 15},
-            {WorldEvents.SentinelAtePlastic, 30},
-            {WorldEvents.SentinelBecomesEgg, 30},
-            {WorldEvents.SentinelGoesToPathogen, 15},
-            {WorldEvents.TCellIsCorrupted, 30},
-            {WorldEvents.SentinelGoesToLymphNode, 30},
-            {WorldEvents.TCellGoesToPathogen, 15},
-            {WorldEvents.TCellKillsPathogen, 15},
-            {WorldEvents.TCellReachedPathogenEmitter, 20},
-            {WorldEvents.InfectedSentinelGoesToTCell, 30}
-        };
 
         private void Awake()
         {
             Instance = this;
 
             cameraTracker = GetComponent<CameraTracker>();
+
+            currentListening.Clear();
+            currentListening.AddRange(allWorldEvents);
         }
 
         public void RegisterEvent(WorldEvent newWorldEvent)
         {
-            // @neander: Check if the incoming event is more interesting then the event currently being tracked
+            if (!cameraTracker.tracking) return;
             
-            switch (newWorldEvent.EventType)
+            if (logWorldEvents)
             {
-                case WorldEvents.SentinelGoesToPathogen:
-                case WorldEvents.SentinelGoesToLymphNode:
-                case WorldEvents.SentinelAtePlastic:
-                case WorldEvents.SentinelAteAntigen:
-                case WorldEvents.SentinelDies:
-                case WorldEvents.SentinelBecomesEgg:
-                case WorldEvents.InfectedSentinelGoesToTCell:
-                    // Debug.Log($"<color=green>Sentinel Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
-                    break;
-                case WorldEvents.TCellGoesToPathogen:
-                case WorldEvents.TCellKillsPathogen:
-                case WorldEvents.TCellReachedPathogenEmitter:
-                case WorldEvents.TCellIsCorrupted:
-                    // Debug.Log($"<color=blue>TCell Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                DebugEvents(newWorldEvent);
             }
             
-            // Add to the queue
-            if (currentEvent != null && newWorldEvent.EventType != currentEvent.EventType)
+            if (currentListening.Contains(newWorldEvent.EventType) && newWorldEvent.EventTarget != null)
             {
+                Debug.Log("Interesting event came in");
+                
+                currentListening.Remove(newWorldEvent.EventType);
+                
+                if (currentListening.Count <= allWorldEvents.Count / 2)
+                {
+                    currentListening.Clear();
+                    currentListening.AddRange(allWorldEvents);
+                }
+                
                 if (worldEvents.Count >= 5)
                 {
                     worldEvents.RemoveAt(0);
                     worldEvents.Add(newWorldEvent);
                 }
             }
+            
             // Evaluate event
             EvaluateEvent(newWorldEvent);
         }
@@ -112,41 +114,56 @@ namespace Script.CameraSystem
         private void SetNextEvent(WorldEvent worldEvent)
         {
             worldEvents.Remove(worldEvent);
+
+            if (!worldEvent.EventTarget) return;
             
             currentEvent = worldEvent;
             cameraTracker.OverrideTracked(currentEvent.EventTarget);
         }
 
-        private void NextEvent()
+        public Transform GetNextInteresting()
         {
-            if (worldEvents.Count <= 0) return;
-            if (worldEvents.Count(x => x.EventTarget != null) <= 0) return;
+            if (worldEvents.Count <= 0) return null;
             
-            currentEvent = null;
-            // If no new event was triggered go trough the list and check the highest interest event
-
-            var currentValue = -100;
-            WorldEvent chosenEvent = null;
-            
-            foreach (var worldEvent in worldEvents)
+            var worldEvent = worldEvents[0];
+            if (worldEvent.EventTarget)
             {
-                if (GetHeuristicValue(worldEvent.EventType) > currentValue && worldEvent.EventTarget != null)
-                {
-                    chosenEvent = worldEvent;
-                }
+                currentEvent = worldEvent;
+                return worldEvent.EventTarget;
             }
-            
-            SetNextEvent(chosenEvent);
+
+            worldEvents.RemoveAt(0);
+            GetNextInteresting();
+            return null;
         }
 
         private int GetHeuristicValue(WorldEvents eventType)
         {
            return heuristicValues[eventType];
         }
-
-        private int GetEvenTime(WorldEvents eventType)
+        
+        private void DebugEvents(WorldEvent newWorldEvent)
         {
-            return eventTimes[eventType];
+            switch (newWorldEvent.EventType)
+            {
+                case WorldEvents.SentinelGoesToPathogen:
+                case WorldEvents.SentinelGoesToLymphNode:
+                case WorldEvents.SentinelAtePlastic:
+                case WorldEvents.SentinelAteAntigen:
+                case WorldEvents.SentinelDies:
+                case WorldEvents.SentinelBecomesEgg:
+                case WorldEvents.InfectedSentinelGoesToTCell:
+                    Debug.Log($"<color=green>Sentinel Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
+                    break;
+                case WorldEvents.TCellGoesToPathogen:
+                case WorldEvents.TCellKillsPathogen:
+                case WorldEvents.TCellReachedPathogenEmitter:
+                case WorldEvents.TCellIsCorrupted:
+                    Debug.Log($"<color=blue>TCell Event:</color> {newWorldEvent.EventType}", newWorldEvent.EventTarget.gameObject);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 
@@ -154,13 +171,11 @@ namespace Script.CameraSystem
     {
         public WorldEvents EventType;
         public Transform EventTarget;
-        public EventData EventValue;
 
         public WorldEvent(WorldEvents eventType, Transform eventTarget, EventData eventValue = null)
         {
             EventType = eventType;
             EventTarget = eventTarget;
-            EventValue = eventValue;
         }
     }
 

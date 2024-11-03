@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Linq;
+using Script.CameraSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -82,6 +84,9 @@ public class CameraTracker : MonoBehaviour
 
     private Transform currentTarget;
     private Transform nextTarget;
+
+    private CameraBrain cameraBrain;
+    [SerializeField] private Transform[] pathogenEmitterLocations;
     
     private float lastChange = 0;    
     private Vector3 origin;
@@ -94,6 +99,7 @@ public class CameraTracker : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        cameraBrain = GetComponent<CameraBrain>();
     }
 
     void Start()
@@ -124,13 +130,14 @@ public class CameraTracker : MonoBehaviour
 
             if (orientationSwitchTimer >= switchTargetTime * 0.666f)
             {
+                orientationSwitchTimer = 0;
                 ChangeOrientation();
             }
                 
             if (targetSwitchTimer >= switchTargetTime)
             {
                 targetSwitchTimer = 0;
-                SwitchTarget();
+                SwitchTarget(CameraSwitchReason.TimeWasUp);
             }
             
             float dist = Vector3.Distance(tracked.position, transform.position);
@@ -148,7 +155,7 @@ public class CameraTracker : MonoBehaviour
                     if (!(restTimer > restReset)) return;
                     
                     restTimer = 0;
-                    SwitchTarget();
+                    SwitchTarget(CameraSwitchReason.CameraWasTooStill);
                 }
                 else
                 {
@@ -178,8 +185,8 @@ public class CameraTracker : MonoBehaviour
         
         targetSwitchTimer = 0;
         nextTarget = newTarget;
-        
-        SwitchTarget();
+
+        SwitchTarget(CameraSwitchReason.BetterEvent);
     }
 
     private void StartTracking()
@@ -191,17 +198,35 @@ public class CameraTracker : MonoBehaviour
         var trans = FindSceneTracked("Player");
         nextTarget = trans;
         
-        SwitchTarget();
+        SwitchTarget(CameraSwitchReason.Start);
     }
 
-    private void SwitchTarget()
+    private void SwitchTarget(CameraSwitchReason reason)
     {
+        Debug.Log($"<color=orange>Camera System:</color> Camera switched target, reason: {reason}");
+        
         if (!nextTarget)
         {
-            nextTarget = FindSceneTracked("Player");
+            // Try get something interesting
+            nextTarget = cameraBrain.GetNextInteresting();
+
+            // Nothing interesting revert back to oldskool target
+            if (!nextTarget)
+            {
+                Debug.Log("<color=orange>Camera System:</color> No interesting target using oldskool logic.");
+                nextTarget = FindSceneTracked("Player");
+            }
+            else
+            {
+                Debug.Log("<color=orange>Camera System:</color> Better interesting target was found.");
+            }
         }
-        
-        if (nextTarget == currentTarget) return;
+
+        if (nextTarget == currentTarget)
+        {
+            SwitchTarget(CameraSwitchReason.None);
+            return;
+        }
         
         currentTarget = nextTarget;
         nextTarget = null;
@@ -230,6 +255,21 @@ public class CameraTracker : MonoBehaviour
 
         if (indx == -1)
         {
+            // Find a target close to an emmiter
+            for (var i = 0; i < bodies.Length; i++)
+            {
+                if (!pathogenEmitterLocations
+                        .Select(pathogenEmitterLocation =>
+                            Vector3.Distance(bodies[i].transform.position, pathogenEmitterLocation.position))
+                        .Any(dist => dist <= 20)) continue;
+                
+                indx = i;
+                break;
+            }
+        }
+        
+        if (indx == -1)
+        {
             float dist = 0f;
             for (int i = 0; i < bodies.Length; i++)
             {
@@ -246,7 +286,9 @@ public class CameraTracker : MonoBehaviour
         }
 
         if (indx == -1)
+        {
             indx = Random.Range(0, bodies.Length);
+        }
 
         lastIndx = indx;
         return bodies[indx].transform;
@@ -409,4 +451,13 @@ public class CameraTracker : MonoBehaviour
     #endregion BODY SCENE LOGIC
     
     //------ BODY SCENE LOGIC ------//
+
+    private enum CameraSwitchReason
+    {
+        None,
+        Start,
+        TimeWasUp,
+        BetterEvent,
+        CameraWasTooStill
+    }
 }

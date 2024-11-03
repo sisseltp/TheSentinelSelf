@@ -28792,7 +28792,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58aad3ad0979d5419599ba55299d7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchTime: 30
+  logWorldEvents: 0
+  cameraTracker: {fileID: 0}
 --- !u!4 &1088792736221549654
 Transform:
   m_ObjectHideFlags: 0
@@ -46474,7 +46475,7 @@ MonoBehaviour:
   power: 0.2
   rotSpeed: 0.78
   distLimit: 42.3
-  changeTrackTimer: 120
+  switchTargetTime: 120
   underWaterJumpDist: 2800
   fadePeriod: 4
   driftPower: 900
@@ -46484,6 +46485,11 @@ MonoBehaviour:
   tracking: 0
   doingIntro: 0
   doingOutro: 0
+  pathogenEmitterLocations:
+  - {fileID: 3850774876630024338}
+  - {fileID: 1105279491}
+  - {fileID: 943453297}
+  - {fileID: 1504007424}
 --- !u!4 &2637096863366577538
 Transform:
   m_ObjectHideFlags: 0
