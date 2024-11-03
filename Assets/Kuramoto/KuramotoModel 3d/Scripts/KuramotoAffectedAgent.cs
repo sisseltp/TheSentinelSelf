@@ -5,6 +5,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
     [Header("Debugging Atrributes (just for looking)")]
     public float speedBPM = 60f; // speed force of the 
     public float speed = 1f;
+    public float phase = 1f;
     public float couplingRange = 1f; // distance it will couple
     public float noiseScl = 1f; // amount of noise
     public float coupling = 0.5f; // coupling scaler
@@ -30,6 +31,7 @@ public class KuramotoAffectedAgent : MonoBehaviour
     {
         speedBPM = settingsData[0];
         speed = speedBPM/60f;
+        phase = speed;
         noiseScl = settingsData[1];
         coupling = settingsData[2];
         couplingRange = settingsData[3];

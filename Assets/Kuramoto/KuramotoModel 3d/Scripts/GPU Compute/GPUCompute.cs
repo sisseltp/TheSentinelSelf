@@ -26,8 +26,9 @@ public class GPUCompute : MonoBehaviour
     private bool Scomputed = false;
     private bool Bcomputed = false;
 
+    private float cDT = 1;
+    private float timer = 0;
 
-    
     private ComputeBuffer sentinelBuffer;
     private ComputeBuffer BiomeBuffer;
     private ComputeBuffer plasticBuffer;
@@ -41,6 +42,7 @@ public class GPUCompute : MonoBehaviour
         public float connections;
         public int played;
         public float speed;
+        public float phase;
         public float cohPhi;
         public float coherenceRadius;
         public float couplingRange;
@@ -52,6 +54,7 @@ public class GPUCompute : MonoBehaviour
         public void SetFromKuramoto(KuramotoAffectedAgent kuramoto)
         {
             speed = kuramoto.speed;
+            phase = kuramoto.phase;
             couplingRange = kuramoto.couplingRange;
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
@@ -74,6 +77,7 @@ public class GPUCompute : MonoBehaviour
 
     private void Start()
     {
+        cDT = Time.deltaTime;
         StartCoroutine(UpdateTextureFromComputeASync());
     }
 
@@ -334,8 +338,6 @@ public class GPUCompute : MonoBehaviour
         sentinelBufferOut?.Release();
         plasticBufferOut?.Release();
     }
-
-
 }
 
 public static class Extensions
