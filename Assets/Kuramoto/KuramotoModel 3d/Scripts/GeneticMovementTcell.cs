@@ -43,143 +43,133 @@ public class GeneticMovementTcell : GeneticMovement
         lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnterPlayer(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Kill"))
+        List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
+        List<Transform> plastics = collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics;
+
+        if (plastics.Count > 0)
         {
-            agent.kuramoto.dead = true;
+            int rndIndx = Random.Range(0, plastics.Count);
+
+            target = plastics[rndIndx].GetComponent<Digestion>().origin;
+            notKeyed = false;
+            agent.renderer.material.SetFloat("KeyTrigger", 2);
+            agent.skinnedMeshRenderer.SetBlendShapeWeight(0, 100);
+            agent.kuramoto.played = 3;
+
+            // TODO: @Neander: This is where the TCell gets corrupted by the Sentinel
+            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellIsCorrupted, transform));
+            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
         }
-        else if (collision.gameObject.CompareTag("Player"))//if hits player
+        else if (Antigens.Count > 0)
         {
-            // get keys from children
-            List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
-            List<Transform> plastics = collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics;
+            // TODO: @Neander: Do the TCells get replicated? Do they go to the Pathogens? If yes how does it know which ones because the get killed by the sentinels?
 
-            if (plastics.Count > 0) 
+            // if it had antigens?
+            // get matches from children
+            AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
+
+            // run over results
+            for (int i = 1; i < results.Length; i++)
             {
-                int rndIndx = Random.Range(0, plastics.Count);
-
-                target = plastics[rndIndx].GetComponent<Digestion>().origin;
-                notKeyed = false;
-                GetComponent<Renderer>().material.SetFloat("KeyTrigger", 2);
-                GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0, 100);
-                GetComponent<KuramotoAffectedAgent>().played = 3;
-                
-                // TODO: @Neander: This is where the TCell gets corrupted by the Sentinel
-                CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellIsCorrupted, transform));
-                //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< hits a plastic agent and gets lost
-            } 
-            else if (Antigens.Count > 0) 
-            { 
-                // TODO: @Neander: Do the TCells get replicated? Do they go to the Pathogens? If yes how does it know which ones because the get killed by the sentinels?
-                
-                // if it had antigens?
-                // get matches from children
-                AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
-
-                // run over results
-                for (int i = 1; i < results.Length; i++)
+                // if it has a match
+                if (results[i].hit > 0)
                 {
-                    // if it has a match
-                    if (results[i].hit > 0)
-                    {
-                        // set movement gate to false
-                        notKeyed = false;
-                        // sett render value
-                        GetComponent<Renderer>().material.SetFloat("KeyTrigger", 1);
-                        GetComponent<KuramotoAffectedAgent>().played = 2; // I guess this means its looking for pathogens?
-                        // add fitness
-                        Antigens[i - 1].antigen.fitness++;
-                        
-                        // @neander: Sets the pathogen emitter as target and copies itself a few times
-                        // set the target from the origin
-                        target = Antigens[i - 1].origin;
-                        
-                        // TODO: @Neander: This is where the TCell goes to the pathogen emitter
-                        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
+                    // set movement gate to false
+                    notKeyed = false;
+                    // sett render value
+                    agent.renderer.material.SetFloat("KeyTrigger", 1);
+                    agent.kuramoto.played = 2; // I guess this means its looking for pathogens?
+                                                                      // add fitness
+                    Antigens[i - 1].antigen.fitness++;
 
-                        for (int j = 0; j < 2; j++)
+                    // @neander: Sets the pathogen emitter as target and copies itself a few times
+                    // set the target from the origin
+                    target = Antigens[i - 1].origin;
+
+                    // TODO: @Neander: This is where the TCell goes to the pathogen emitter
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
+
+                    for (int j = 0; j < 2; j++)
+                    {
+                        if ((agent.manager as TCellsManager).CanAddCell)
                         {
-                            if ((agent.manager as TCellsManager).CanAddCell)
-                            {
-                                // create a replica
-                                TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
-                                replica.geneticMovement.notKeyed = false;
-                                replica.geneticMovement.target = target;
-                                // add new tcell to manager
-                                manager.AddNewAgentAtTop(replica);
-                            }
-                            else
-                            {
-                                return;
-                            }
-                            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
+                            // create a replica
+                            TCell replica = Instantiate(gameObject, transform.parent).GetComponent<TCell>();
+                            replica.geneticMovement.notKeyed = false;
+                            replica.geneticMovement.target = target;
+                            // add new tcell to manager
+                            manager.AddNewAgentAtTop(replica);
                         }
+                        else
+                        {
+                            return;
+                        }
+                        //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and replicates
                     }
                 }
             }
         }
-        else if (collision.gameObject.CompareTag("Pathogen")) // TODO: Check why this is not firing
-        {
-            Debug.Log("Hit Pathogen");
-            
-            // get keys from children
-            GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
+    }
 
-            // if there are any keys
-            if (Antigens.Length > 0)
+    public override void OnCollisionEnterPathogen(Collision collision)
+    {
+        Debug.Log("Hit Pathogen");
+
+        // get keys from children
+        GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
+
+        // if there are any keys
+        if (Antigens.Length > 0)
+        {
+            // get matches from children
+            AntigenKeys[] results = Compare(Antigens);
+
+            // run over results
+            for (int i = 1; i < results.Length; i++)
             {
-                // get matches from children
-                AntigenKeys[] results = Compare(Antigens);
-
-                // run over results
-                for (int i = 1; i < results.Length; i++)
+                // if it has a connection
+                if (results[i].hit > 0)
                 {
-                    // if it has a connection
-                    if (results[i].hit > 0)
-                    {
-                        // add fitness
-                        Antigens[i - 1].antigen.fitness++;
-                        collision.gameObject.GetComponent<KuramotoAffectedAgent>().dead = true;
-                        
-                        // TODO: @Neander: This is where the TCell killed a Pathogen
-                        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellKillsPathogen, transform));
-                        //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and kils pathogen
+                    // add fitness
+                    Antigens[i - 1].antigen.fitness++;
+                    collision.gameObject.GetComponent<KuramotoAffectedAgent>().dead = true;
 
-                    }
+                    // TODO: @Neander: This is where the TCell killed a Pathogen
+                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellKillsPathogen, transform));
+                    //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< matches a key and kils pathogen
+
                 }
             }
         }
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Lymphonde") && notKeyed) 
-        {
-            target = transform.parent.position+(Random.onUnitSphere * 100);
-        }
-        else if (other.gameObject.CompareTag("PathogenEmitter")) 
-        { 
-            StartCoroutine(TargetTimeout(15));
-            
-            // TODO: @Neander: This is where the TCell reached the pathogen emitter
-            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellReachedPathogenEmitter, transform));
-            //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< tcell reaches the pathogen emitter
-        }
+
+    public override void OnTriggerEnterLymphonde(Collider collider) 
+    { 
+        if(notKeyed)
+            target = transform.parent.position + (Random.onUnitSphere * 100);
     }
 
-    private void OnTriggerExit(Collider other)
+    public override void OnTriggerEnterPathogenEmitter(Collider collider)
     {
-        if (other.gameObject.CompareTag("LymphOuter") && notKeyed)
-        {
+        StartCoroutine(TargetTimeout(15));
+
+        // TODO: @Neander: This is where the TCell reached the pathogen emitter
+        CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellReachedPathogenEmitter, transform));
+        //////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< tcell reaches the pathogen emitter
+    }
+
+    public override void OnTriggerExitLymphOuter(Collider collider)
+    {
+        if (notKeyed)
             target = transform.parent.position;
-        }
         // else if (other.gameObject.CompareTag("LymphOuter") && !notKeyed)
         // {
         //     // TODO: @Neander: This is where the TCell goes to the pathogen emitter
         //     CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
         // }
     }
-
 
     private IEnumerator TargetTimeout(float waitTime)
     {

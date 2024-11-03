@@ -36,19 +36,15 @@ public class AlgyController : MonoBehaviour
     [SerializeField]
     private float unhealthyEmmisionRate;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        PSyst = GetComponentInChildren<ParticleSystem>().main;
-        PSystm = GetComponentInChildren<ParticleSystem>().emission;
+        PSyst = GetComponent<ParticleSystem>().main;
+        PSystm = GetComponent<ParticleSystem>().emission;
 
-        StartCoroutine(checkWorld(10));
+        StartCoroutine(CheckWorld(10));
     }
 
-
-
-    IEnumerator checkWorld(float time)
+    IEnumerator CheckWorld(float time)
     {
         while (true)
         {
@@ -75,12 +71,5 @@ public class AlgyController : MonoBehaviour
 
             yield return new WaitForSeconds(time);
         }
-
-
     }
-
-
 }
-
-
-

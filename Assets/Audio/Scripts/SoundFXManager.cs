@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SoundFXManager : MonoBehaviour
 {
+    public static SoundFXManager Instance;
 
     [Tooltip("Sources to play when approaching the body")]
     public AudioSource[] approachBodyAudioSources;
@@ -37,37 +38,35 @@ public class SoundFXManager : MonoBehaviour
     [SerializeField]
     private List<AudioClip> voiceoverClips = new List<AudioClip>();
 
-    void Awake() {
+    void Awake() 
+    {
+        Instance = this;
+
         voiceoverSource.enabled = false;
 
-        foreach(AudioClip ac in Resources.LoadAll(voiceoverClipsPath, typeof(AudioClip))) {
+        foreach(AudioClip ac in Resources.LoadAll(voiceoverClipsPath, typeof(AudioClip)))
             voiceoverClips.Add(ac);
-        }
-        Debug.Assert(voiceoverClips.Count > 0, "No audio files found in voiceover clips path!");
 
+        Debug.Assert(voiceoverClips.Count > 0, "No audio files found in voiceover clips path!");
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        // Start voiceover...
         Play("VoiceOver");
-        
     }
 
-    void FixedUpdate() {
-        // Check if audio is playing
-        // if not, play next voice clip
-        if (voiceoverPlaying && (! voiceoverSource.isPlaying) ) {
-            PlayNextVoiceoverClip();
-        }
+    void FixedUpdate() 
+    {
+        if (!voiceoverPlaying || voiceoverSource.isPlaying)
+            return;
+
+        PlayNextVoiceoverClip();
     }
 
-    void PlayNextVoiceoverClip() {
-        currentVoiceoverClip++;
-        if(currentVoiceoverClip >= voiceoverClips.Count) {
-            currentVoiceoverClip=0;
-        }
+    void PlayNextVoiceoverClip() 
+    {
+        currentVoiceoverClip = (currentVoiceoverClip+1) % voiceoverClips.Count;
+
         voiceoverSource.Stop(); // if necessary? maybe fadeout would be nicer...
         // Changing the clip and playing immediately can cause glitches.. ideally do with Invoke
         //  or PlayDelayed...
@@ -79,7 +78,8 @@ public class SoundFXManager : MonoBehaviour
     // Used to play sources.
     public void Play(string tag) {
         // Debug.Log("Play: " + tag);
-        switch(tag) {
+        switch(tag) 
+        {
             case "VoiceOver":
                 // Start voiceover playback routine...
                 voiceoverSource.enabled = true;
@@ -87,21 +87,19 @@ public class SoundFXManager : MonoBehaviour
                 break;
             case "ApproachBody":
                 // In case the exit sources are already playing...
-                foreach(AudioSource src in exitBodyAudioSources) {
+                foreach(AudioSource src in exitBodyAudioSources) 
                     src.Stop();
-                }
                 // Play approach sources...
-                foreach(AudioSource src in approachBodyAudioSources) {
-                    src.Play();            
-                }
+                foreach(AudioSource src in approachBodyAudioSources)
+                    src.Play();  
+                
                 break;
 
             case "EnterBody":
 
                 // Play enter sources...
-                foreach(AudioSource src in enterBodyAudioSources) {
+                foreach(AudioSource src in enterBodyAudioSources)
                     src.Play();            
-                }
 
                 // Stop approach sources after 5 seconds
                 Invoke("StopApproachSounds", 2.0f);
@@ -109,17 +107,16 @@ public class SoundFXManager : MonoBehaviour
             
             case "ExitBody":
                 // In case any of the approach or enter sources are already playing..
-                foreach(AudioSource src in approachBodyAudioSources) {
+                foreach(AudioSource src in approachBodyAudioSources)
+                    src.Stop();       
+                
+                foreach(AudioSource src in enterBodyAudioSources)
                     src.Stop();            
-                }
-                foreach(AudioSource src in enterBodyAudioSources) {
-                    src.Stop();            
-                }
 
                 // Play exit sources
-                foreach(AudioSource src in exitBodyAudioSources) {
+                foreach(AudioSource src in exitBodyAudioSources)
                     src.Play();
-                }
+
                 break;
 
             default:
@@ -129,7 +126,7 @@ public class SoundFXManager : MonoBehaviour
 
     // Used to Stop sources
     public void Stop(string tag) {
-        Debug.Log("Stop: " + tag);
+        //Debug.Log("Stop: " + tag);
 
         switch(tag) {
 
@@ -141,21 +138,21 @@ public class SoundFXManager : MonoBehaviour
                 break;
 
             case "ApproachBody":
-                foreach(AudioSource src in approachBodyAudioSources) {
+                foreach(AudioSource src in approachBodyAudioSources)
                     src.Stop();            
-                }
+
                 break;
 
             case "EnterBody":
-                foreach(AudioSource src in enterBodyAudioSources) {
+                foreach(AudioSource src in enterBodyAudioSources)
                     src.Stop();            
-                }
+
                 break;
             
             case "ExitBody":
-                foreach(AudioSource src in exitBodyAudioSources) {
+                foreach(AudioSource src in exitBodyAudioSources)
                     src.Stop();
-                }
+
                 break;
 
             default:
@@ -163,7 +160,5 @@ public class SoundFXManager : MonoBehaviour
         }
     }
 
-    void StopApproachSounds() {
-        Stop("ApproachBody");
-    }
+    void StopApproachSounds() => Stop("ApproachBody");
 }

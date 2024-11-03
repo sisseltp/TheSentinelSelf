@@ -15,7 +15,6 @@ public enum WorldScene {InnerWorld, OuterWorld}
 
 public class SimulationStats : MonoBehaviour
 {
-
     [Tooltip("How often to update the status info (in seconds)")]
     public float updateStatsEvery = 5.0f;
 
@@ -31,7 +30,6 @@ public class SimulationStats : MonoBehaviour
     public float runningHours = 0.0f;
     public float runningMinutes = 0.0f;
     public float runningSeconds = 0.0f;
-
 
     // Tracks whether the scene is inside the body/simulation world
     [SerializeField]
@@ -147,7 +145,7 @@ public class SimulationStats : MonoBehaviour
         timeThreshold = minutesUnderThreshold * 60.0f;
 
         // Run stats calculation as a coroutine that updates every so many seconds..
-        StartCoroutine(checkWorld(updateStatsEvery));
+        StartCoroutine(CheckWorld(updateStatsEvery));
     }
 
     // Update is called once per frame
@@ -240,7 +238,7 @@ public class SimulationStats : MonoBehaviour
         //       & prune unnecessary game objects
     }
 
-    IEnumerator checkWorld(float timetowait)
+    IEnumerator CheckWorld(float timetowait)
     {
         while (true)
         {
@@ -306,9 +304,5 @@ public class SimulationStats : MonoBehaviour
 
             yield return new WaitForSeconds(timetowait);
         }
-
-
     }
-
-
 }

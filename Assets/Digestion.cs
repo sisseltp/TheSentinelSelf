@@ -16,30 +16,31 @@ public class Digestion : MonoBehaviour
     private Vector2Int boneSelection = new Vector2Int(2, 4);
 
     [HideInInspector]
-    public Vector3 origin; 
-    // Start is called before the first frame update
+    public Vector3 origin;
+
+    private Transform rootBone;
+
     void Start()
     {
-        StartCoroutine(DigestTimer(digestTime, swallowTimer));
         origin = transform.position;
     }
 
-
+    public void SetRootBoneAndStartDigestion(Transform b)
+    {
+        rootBone = b;
+        StartCoroutine(DigestTimer(digestTime, swallowTimer));
+    }
 
     IEnumerator DigestTimer(float dtime, float swallowTime)
     {
         yield return new WaitForSeconds(dtime);
-
-        Transform rootBone = GetComponentInParent<GeneticMovementSentinel>().rootBone;
 
         Transform newBone = rootBone;
 
         int randBone = Random.Range(boneSelection.x, boneSelection.y);
 
         for (int i = 1; i < randBone; i++)
-        {
             newBone = newBone.GetChild(0);
-        }
 
         float t = 0;
 
@@ -47,13 +48,12 @@ public class Digestion : MonoBehaviour
 
         Vector3 newPos = Random.insideUnitSphere * digestSphere;
 
-        while (t < 1)
+        while (t < 1f)
         {
-            t += 1 / (float)swallowSteps;
+            t += 1f / (float)swallowSteps;
             Vector3 nextPos = Vector3.Lerp(rootBone.position + origPos, newBone.position + newPos, t);
             transform.position = nextPos;
             yield return new WaitForSeconds(swallowTime/ (float)swallowSteps);
-
         }
         
         transform.parent = newBone;

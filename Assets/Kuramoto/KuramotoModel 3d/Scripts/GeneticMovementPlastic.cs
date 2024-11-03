@@ -6,7 +6,7 @@ using UnityEngine;
 public class GeneticMovementPlastic : GeneticMovement
 {
     [SerializeField]
-    private GameObject attachedGO;
+    private GameObject prefabDigested;
 
     [HideInInspector]
     public Vector3 origin;
@@ -33,50 +33,42 @@ public class GeneticMovementPlastic : GeneticMovement
         origin = transform.position;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public override void OnCollisionEnterPlayer(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Kill"))
+        agent.kuramoto.dead = true;
+
+        GameObject plast = Instantiate(prefabDigested, collision.GetContact(0).point, transform.rotation, collision.transform);
+
+        GeneticMovementSentinel sentinel = collision.gameObject.GetComponent<GeneticMovementSentinel>();
+        sentinel.plastics.Add(plast.transform);
+        plast.GetComponent<Digestion>().SetRootBoneAndStartDigestion(sentinel.rootBone);
+
+        if (!full)
         {
-            agent.kuramoto.dead = true;
-        }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            agent.kuramoto.dead = true;
+            sentinel.agent.kuramoto.speed *= 0.9f;
 
-            GameObject plast =  Instantiate(attachedGO, collision.GetContact(0).point, transform.rotation, collision.transform);
+            var drag = sentinel.agent.rigidBody.drag;
+            drag += dragItter;
+            sentinel.agent.rigidBody.drag = drag;
 
-            collision.gameObject.GetComponent<GeneticMovementSentinel>().plastics.Add(plast.transform);
-
-            if (!full)
+            if (drag > maxDrag)
             {
-                collision.gameObject.GetComponent<KuramotoAffectedAgent>().speed *= 0.9f;
+                // TODO: @Neander: This is where the sentinel dies and falls to the ground
+                CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelDies, collision.transform));
 
-                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
-
-                var drag = rb.drag;
-                drag += dragItter;
-                rb.drag = drag;
-                
-                if (drag > maxDrag)
-                {
-                    // TODO: @Neander: This is where the sentinel dies and falls to the ground
-                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelDies, collision.transform));
-                    
-                    rb.useGravity = true;
-                    full = true;
-                }
-                else
-                {
-                    // TODO: @Neander: Check the max drag and see if we are close, keep following this sentinel because it is about to die
-                    CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAtePlastic, collision.transform, new EventData(drag, maxDrag)));
-                }
+                sentinel.agent.rigidBody.useGravity = true;
+                full = true;
+            }
+            else
+            {
+                // TODO: @Neander: Check the max drag and see if we are close, keep following this sentinel because it is about to die
+                CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAtePlastic, collision.transform, new EventData(drag, maxDrag)));
             }
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    public override void OnTriggerStayPlasticMover(Collider collider)
     {
-        if(other.transform.CompareTag("PlasticMover") && agent.rigidBody != null)
-            agent.rigidBody.AddForceAtPosition(Vector3.down * Time.deltaTime * 10, transform.position + transform.up);
+        agent.rigidBody.AddForceAtPosition(Vector3.down * Time.deltaTime * 10, transform.position + transform.up);
     }
 }

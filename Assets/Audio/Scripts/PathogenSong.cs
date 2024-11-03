@@ -12,6 +12,11 @@ public enum SongScale {Scriabin, Sikah, WholeTone, Lydian, Bartok, Major};
 
 public class PathogenSong : MonoBehaviour
 {
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private KuramotoAffectedAgent kuramoto;
+
     public static Dictionary<SongScale, float[]> SongScaleRatios = new Dictionary<SongScale, float[]>
     {
     {SongScale.Scriabin, new [] {  0.18728838461084f,  0.21022410381474f,  0.25000000000139f,  0.26486577359123f,  0.31498026247517f,  0.37457676922064f,  0.42044820762831f,  0.50000000000139f,  0.52973154718099f,  0.6299605249486f,  0.74915353843921f,  0.8408964152543f,   }}, 
@@ -58,66 +63,65 @@ public class PathogenSong : MonoBehaviour
 
     private bool shoutTriggered = false;
     private float lastPhase = 0.0f;
-    private AudioSource audioSource;
-    private KuramotoAffectedAgent kuramoto;
+    
 
-    // Use for initialization...
-    // Called before Start (e.g. before the first frame will be run)
-    void Awake() {
-        audioSource = GetComponent<AudioSource>();
+    void Awake() 
+    {
         maxVolume = audioSource.volume;
 
         // Set pitchMultipliers based on scale.
         pitchMultipliers = SongScaleRatios[scale];
 
-        if(Random.value <= percentDisabled) {
+        if(Random.value <= percentDisabled) 
+        {
             // Disable this singer.
             audioSource.enabled = false;
             this.enabled = false;
-        } else {
+        } else 
+        {
             // Continue on as if nothing existentially significant had happened.
-            kuramoto = GetComponent<KuramotoAffectedAgent>();
             audioSource.loop = false;
             
             // Choose a random pitch multiplier
             pitchMultiplier =  pitchMultipliers[Random.Range(0, pitchMultipliers.Length)];
             audioSource.pitch = audioSource.pitch * pitchMultiplier;
-
         }
     }
 
     // Start is called before the first frame update
-    void Start() {
-        if(behavior == KuramotoSongBehavior.Swelling) {
-            // Play and loop.
-            audioSource.loop = true;
-            audioSource.Play();
-        }
+    void Start() 
+    {
+        if(behavior != KuramotoSongBehavior.Swelling)
+            return;
 
+        audioSource.loop = true;
+        audioSource.Play();
     }
 
     // Update is called once per animation frame
     // Since the kuramoto model is running at frame-rate (I think?)
     // we do sound synchronization with kuramoto oscillation here.
-    void Update() {
-
-        if(behavior == KuramotoSongBehavior.Swelling) {
+    void Update() 
+    {
+        if(behavior == KuramotoSongBehavior.Swelling) 
+        {
             // Swelling behavior
-            currentVolume = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
+            currentVolume = 0.5f * (Mathf.Sin(HeartRateManager.Instance.GlobalPhaseMod1 * 2.0f * Mathf.PI) + 1.0f);
             audioSource.volume = currentVolume * maxVolume;
-        } else { // Shouting behavior
-            if( kuramoto.phase - lastPhase < 0.0f  ) { shoutTriggered = false; }
+        } 
+        else 
+        { 
+            // Shouting behavior
+            if(HeartRateManager.Instance.GlobalPhaseMod1 - lastPhase < 0.0f  ) 
+                shoutTriggered = false;
 
-            if(kuramoto.phase >= shoutAtKuramotoPhase && shoutTriggered == false) {
+            if(HeartRateManager.Instance.GlobalPhaseMod1 >= shoutAtKuramotoPhase && shoutTriggered == false) 
+            {
                 audioSource.Play();
                 shoutTriggered = true;
             }
 
-            lastPhase = kuramoto.phase;
+            lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
         }
-
     }
-
-
-  
 }

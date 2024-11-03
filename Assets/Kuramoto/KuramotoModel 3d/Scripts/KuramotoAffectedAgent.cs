@@ -3,46 +3,40 @@ using UnityEngine;
 public class KuramotoAffectedAgent : MonoBehaviour
 {
     [Header("Debugging Atrributes (just for looking)")]
-    public float speedBPM; // speed force of the 
-    public float speed;
-    public float phase; // the phase its in 
-    public float couplingRange = 1; // distance it will couple
-    public float noiseScl = 1; // amount of noise
+    public float speedBPM = 60f; // speed force of the 
+    public float speed = 1f;
+    public float couplingRange = 1f; // distance it will couple
+    public float noiseScl = 1f; // amount of noise
     public float coupling = 0.5f; // coupling scaler
-    public float speedVariation = 0.1f; // amount to randomize data
     public float attractionSclr = 0.5f;// Scales Attraction
-    public float fitness = 0; // holds this agents fitness value
+    public float fitness = 0f; // holds this agents fitness value
     public int played = 0; // if the player has been in contact
-    public float age = 0; // holds this agents age
+    public float age = 0f; // holds this agents age
     public bool dead = false; // collision killer
 
-    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, Vector2 attractionSclRange, float thisSpeedVariation = 0.1f)
+    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, Vector2 attractionSclRange)
     {
-        speedBPM = UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y);
-        speed = speedBPM/60;
-        phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
-        noiseScl = UnityEngine.Random.Range(noiseRange.x, noiseRange.y);
-        coupling = UnityEngine.Random.Range(couplingScl.x, couplingScl.y);
-        couplingRange = UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y);
-        attractionSclr = UnityEngine.Random.Range(attractionSclRange.x, attractionSclRange.y);
-        fitness = 0;
-        age = 0;
-        dead = false;
-        played = 1;
+        float[] settings = new float[] {
+            UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y),
+            UnityEngine.Random.Range(noiseRange.x, noiseRange.y),
+            UnityEngine.Random.Range(couplingScl.x, couplingScl.y),
+            UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y),
+            UnityEngine.Random.Range(attractionSclRange.x, attractionSclRange.y)};
+
+        SetupData(settings);
     }
 
-    public void SetupData(float[] settingsData, float thisSpeedVariation = 0.1f)
+    public void SetupData(float[] settingsData)
     {
         speedBPM = settingsData[0];
+        speed = speedBPM/60f;
         noiseScl = settingsData[1];
         coupling = settingsData[2];
         couplingRange = settingsData[3];
         attractionSclr = settingsData[4];
 
-        speed = 60 / speedBPM;
-        phase = speed * UnityEngine.Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
-        fitness = 0;
-        age = 0;
+        fitness = 0f;
+        age = 0f;
         dead = false;
         played = 1;
     }
