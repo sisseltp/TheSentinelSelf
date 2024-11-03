@@ -13,6 +13,8 @@ public class AgentsManager : MonoBehaviour
     public int realAmountAgents = 0;
 
     [HideInInspector]
+    public GPUCompute.GPUOutput[] GPUOutput; // list of agent struct, that will hold the data for gpu compute
+    [HideInInspector]
     public GPUCompute.GPUData[] GPUStruct; // list of agent struct, that will hold the data for gpu compute
     [HideInInspector]
     public List<Genetics.GenVel> GenVelLib; // lib to hold the gene move data
@@ -31,6 +33,7 @@ public class AgentsManager : MonoBehaviour
     public virtual void Start()
     {
         agents = new Agent[parameters.maxAmountAgents];
+        GPUOutput = new GPUCompute.GPUOutput[parameters.maxAmountAgents];
         GPUStruct = new GPUCompute.GPUData[parameters.maxAmountAgents];
         GenKurLib = new List<Genetics.GenKurmto>();
         GenVelLib = new List<Genetics.GenVel>();
@@ -66,7 +69,10 @@ public class AgentsManager : MonoBehaviour
             else
             {
                 agents[i].kuramoto.age += Time.deltaTime;
+                agents[i].kuramoto.phase = (HeartRateManager.Instance.GlobalPhaseMod1 + GPUOutput[i].phaseAdition * Time.deltaTime) % 1f;
                 GPUStruct[i].played = agents[i].kuramoto.played;
+                GPUStruct[i].phase = HeartRateManager.Instance.GlobalPhaseMod1;
+                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
                 GPUStruct[i].speed = agents[i].kuramoto.speed;
                 GPUStruct[i].pos = agents[i].rigidBody.position;
             }
@@ -111,6 +117,7 @@ public class AgentsManager : MonoBehaviour
 
         GPUStruct[i].SetFromKuramoto(newAgent.kuramoto);
         GPUStruct[i].pos = newAgent.transform.position;
+        GPUOutput[i].Setup();
 
         agents[i] = newAgent;
     }
