@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class SerialCOM : MonoBehaviour
 {
+    [Header("Variables")]
     [SerializeField]
     private string port = "COM3";
     
     [SerializeField]
     private int baudRate = 115200;
     
+    [Header("References")]
+    [SerializeField]
+    private EthernetValues ethernetValues;
+    
     private SerialPort serialPort;
 
     private bool isStreaming;
-
+    
     private void Start()
     {
         Open();
@@ -41,35 +46,75 @@ public class SerialCOM : MonoBehaviour
 
     public void Close()
     {
-        serialPort.Close();
+        serialPort?.Close();
     }
 
     private void Update()
     {
-        if (isStreaming)
+        if (!isStreaming) return;
+        
+        var value = ReadSerialPort();
+        if (value != null )
         {
-            string value = ReadSerialPort();
-            if (value != null )
+            ParseMessage(value); // -> 0,600,0
+        }
+    }
+
+    private void ParseMessage(string message)
+    {
+        var split = message.Split(',');
+
+        if (split.Length != 3) return;
+
+        var bpm = 0;
+        var interval = 0;
+        var pulse = 0;
+
+        var success = true;
+        
+        for (var i = 0; i < split.Length; i++)
+        {
+            if (int.TryParse(split[i], out var value))
             {
-                Debug.Log($"Value: {value}");
+                switch (i)
+                {
+                    case 0:
+                        bpm = value;
+                        break;
+                    case 1:
+                        interval = value;
+                        break;
+                    case 2:
+                        pulse = value;
+                        break;
+                }
+            }
+            else
+            {
+                success = false;
+                break;
             }
         }
+
+        if (!success) return;
+        
+        ethernetValues.SetGlobalHeartBeatRateValue(bpm);
+        ethernetValues.SetGlobalHeartBeatIntervalValue(interval);
+        ethernetValues.SetGlobalHeartBeatPulseValue(pulse);
     }
 
     private string ReadSerialPort(int timeout = 50)
     {
-        string message;
-        
         serialPort.ReadTimeout = timeout;
 
         try
         {
-            message = serialPort.ReadLine();
+            var message = serialPort.ReadLine();
             return message;
         }
         catch (TimeoutException e)
         {
-            Debug.Log(e.Message);
+            // Debug.Log(e.Message);
             return null;
         }
     }

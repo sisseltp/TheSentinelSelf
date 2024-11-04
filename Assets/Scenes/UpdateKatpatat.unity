@@ -25603,6 +25603,7 @@ GameObject:
   - component: {fileID: 763207998845574541}
   - component: {fileID: 1055408008}
   - component: {fileID: 763207998845574542}
+  - component: {fileID: 763207998845574549}
   - component: {fileID: 763207998845574548}
   - component: {fileID: 763207998845574547}
   - component: {fileID: 763207998845574546}
@@ -25729,6 +25730,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   port: COM1
   baudRate: 115200
+  ethernetValues: {fileID: 763207998845574542}
+--- !u!114 &763207998845574549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998845574543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6bd2bb695be4a148967a19fb2fc6b0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useCOMPort: 1
+  oscReceiver: {fileID: 763207998845574547}
+  comReceiver: {fileID: 763207998845574548}
 --- !u!1 &765251146966339518
 GameObject:
   m_ObjectHideFlags: 0
