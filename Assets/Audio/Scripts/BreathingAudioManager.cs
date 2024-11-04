@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BreathingAudioManager : MonoBehaviour
@@ -6,7 +5,7 @@ public class BreathingAudioManager : MonoBehaviour
     public AudioSource[] breathingAudioSources;
 
     [Range(0.0f, 1.0f)]
-    public float pitchRandomization = 0.0f;
+    public float pitchRandomization;
 
     void Awake() 
     {

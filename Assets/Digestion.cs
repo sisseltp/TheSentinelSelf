@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Digestion : MonoBehaviour
@@ -50,10 +49,10 @@ public class Digestion : MonoBehaviour
 
         while (t < 1f)
         {
-            t += 1f / (float)swallowSteps;
+            t += 1f / swallowSteps;
             Vector3 nextPos = Vector3.Lerp(rootBone.position + origPos, newBone.position + newPos, t);
             transform.position = nextPos;
-            yield return new WaitForSeconds(swallowTime/ (float)swallowSteps);
+            yield return new WaitForSeconds(swallowTime/ swallowSteps);
         }
         
         transform.parent = newBone;

@@ -1,22 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO.Ports;
-using UnityEngine;
-using Freya;
+﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EthernetValues : MonoBehaviour
 {
     [Header("Sensor Values")]
-    public int GlobalRate;
-    public int GlobalInterval;
-    public float GlobalPulse;
+    [FormerlySerializedAs("GlobalRate")] 
+    public int globalRate;
+    [FormerlySerializedAs("GlobalInterval")] 
+    public int globalInterval;
+    [FormerlySerializedAs("GlobalPulse")] 
+    public float globalPulse;
 
     [Header("Kuramoto Values")]
     public float pulseGradient;
-    private const float CIRCLE_IN_RADIAN = 2f * Mathf.PI; //2* pi
-    public int bias = 3;
     
-    private bool reading = false;
+    private bool reading;
 
     [Header("Scene Threshold Values")]
     [SerializeField]
@@ -24,40 +22,40 @@ public class EthernetValues : MonoBehaviour
     [SerializeField]
     private float restartTimer = 5;
 
-    private float TimerGate = 0;
+    private float timerGate;
 
-    [SerializeField]
-    private float avrgDrag = 0.6f;
-    private float avrgRate = 0;
-    private float lastAvrgRate = 0;
+    [FormerlySerializedAs("avrgDrag")] [SerializeField]
+    private float averageDrag = 0.6f;
+    private float averageRate;
+    private float lastAverageRate;
     [SerializeField]
     private float changeGate = 10;
 
     void Update()
     {
-        if (GlobalInterval == 0)
+        if (globalInterval == 0)
             HeartRateManager.Instance.SetSensorConnected(false);
 
-        avrgRate += (GlobalRate - avrgRate) * avrgDrag;
-        float avrgChange = Mathf.Abs(GlobalRate - lastAvrgRate);
+        averageRate += (globalRate - averageRate) * averageDrag;
+        float averageChange = Mathf.Abs(globalRate - lastAverageRate);
 
-        if (avrgRate > 50 && avrgRate < 150 && (avrgChange < changeGate))
+        if (averageRate > 50 && averageRate < 150 && (averageChange < changeGate))
         {
             if (!reading) 
             {
                 reading = true;
-                TimerGate = Time.time;
+                timerGate = Time.time;
             }
-            else if (GlobalInterval > 0 && TimerGate + beginTimer < Time.time ) {
+            else if (globalInterval > 0 && timerGate + beginTimer < Time.time ) {
                 HeartRateManager.Instance.SetSensorConnected(true, true);
             }
 
-            float step = (float)GlobalRate / 30;
+            float step = (float)globalRate / 30;
             step *= Time.deltaTime;
             pulseGradient += step;
             pulseGradient = Mathf.Clamp01(pulseGradient);
 
-            if (GlobalPulse == 1)
+            if (Mathf.Approximately(globalPulse, 1))
                 pulseGradient = 0;
 
             if(!HeartRateManager.Instance.simulateHeartBeat)
@@ -66,26 +64,26 @@ public class EthernetValues : MonoBehaviour
         else if (reading) 
         {
             reading = false;
-            TimerGate = Time.time;
+            timerGate = Time.time;
         } 
-        else if (GlobalInterval > 0 && TimerGate + restartTimer < Time.time)
+        else if (globalInterval > 0 && timerGate + restartTimer < Time.time)
             HeartRateManager.Instance.SetSensorConnected(true);
 
-        lastAvrgRate = avrgRate;
+        lastAverageRate = averageRate;
     }
 
     public void SetGlobalHeartBeatRateValue(int value)
     {
-        GlobalRate = value;
+        globalRate = value;
     }
 
     public void SetGlobalHeartBeatIntervalValue(int value)
     {
-        GlobalInterval = value;
+        globalInterval = value;
     }
 
     public void SetGlobalHeartBeatPulseValue(int value)
     {
-        GlobalPulse = Mathf.Clamp01(value / 4095f);
+        globalPulse = Mathf.Clamp01(value / 4095f);
     }
 }

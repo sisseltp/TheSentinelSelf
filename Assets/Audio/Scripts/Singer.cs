@@ -26,7 +26,7 @@ public class Singer
         return sources[activeSource];
     }
 
-    public void setGameObject(GameObject go) {
+    public void SetGameObject(GameObject go) {
         Debug.Log("Setting Game Object " + go);
         gameObject = go;
     } 

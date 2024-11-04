@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Script.CameraSystem;
 using UnityEngine;
 
@@ -7,9 +6,6 @@ public class Fosilising : MonoBehaviour
 {
     [SerializeField]
     private float fadeTime = 2;
-
-    [SerializeField]
-    private float steps = 10;
 
     [SerializeField]
     private GameObject fosil;
@@ -24,7 +20,7 @@ public class Fosilising : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         originalDrag = rb.drag;
-        this.enabled = false;
+        enabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -82,10 +80,10 @@ namespace Romi.PathTools
         {
             EditorGUILayout.BeginVertical("Box");
             if (id < 0)
-                EditorGUILayout.LabelField(string.Format("No selected node"));
+                EditorGUILayout.LabelField("No selected node");
             else
             {
-                EditorGUILayout.LabelField(string.Format("Current selected Node: {0}", id));
+                EditorGUILayout.LabelField($"Current selected Node: {id}");
                 source.Nodes[id].orientation = EditorGUILayout.FloatField("Orientation: ", source.Nodes[id].orientation);
                 source.Nodes[id].tangentType = (TangentType)EditorGUILayout.EnumPopup("Tangent Type: ", source.Nodes[id].tangentType);
             }

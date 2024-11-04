@@ -68,7 +68,7 @@ public class CameraTracker : MonoBehaviour
     [SerializeField]
     private float restReset = 10;
 
-    public float restTimer = 0;
+    public float restTimer;
 
     [SerializeField]
     private bool normalized = true;
@@ -91,7 +91,6 @@ public class CameraTracker : MonoBehaviour
     private CameraBrain cameraBrain;
     [SerializeField] private Transform[] pathogenEmitterLocations;
     
-    private float lastChange = 0;    
     private Vector3 origin;
     private Quaternion origRot;
     private Vector3 lookPos;
@@ -438,11 +437,11 @@ public class CameraTracker : MonoBehaviour
 
         for (int i = 0; i < bodies.Length; i++)
         {
-            if (tracked != null && bodies[i].GetInstanceID() == tracked.GetInstanceID())
+            if (tracked && bodies[i].GetInstanceID() == tracked.GetInstanceID())
                 continue;
 
             Vector2 screenPos = mainCamera.WorldToScreenPoint(bodies[i].transform.position);
-            float thisDist = Vector2.Distance(screenPos, new Vector2(Screen.width / 2, Screen.height / 2));
+            float thisDist = Vector2.Distance(screenPos, new Vector2(Screen.width / 2f, Screen.height / 2f));
             if (thisDist < dist)
             {
                 indx = i;
@@ -459,7 +458,6 @@ public class CameraTracker : MonoBehaviour
 
     private enum CameraSwitchReason
     {
-        None,
         Start,
         TimeWasUp,
         BetterEvent,

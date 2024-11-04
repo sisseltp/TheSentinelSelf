@@ -22,13 +22,10 @@ public class GPUCompute : MonoBehaviour
     private GPUOutput[] pathogenAndTCellDataOut;
     private GPUOutput[] plasticDataOut;
 
-    private bool Pcomputed = false;
-    private bool Scomputed = false;
-    private bool Bcomputed = false;
-
-    private float cDT = 1;
-    private float timer = 0;
-
+    private bool Pcomputed;
+    private bool Scomputed;
+    private bool Bcomputed;
+    
     private ComputeBuffer sentinelBuffer;
     private ComputeBuffer BiomeBuffer;
     private ComputeBuffer plasticBuffer;
@@ -77,7 +74,6 @@ public class GPUCompute : MonoBehaviour
 
     private void Start()
     {
-        cDT = Time.deltaTime;
         StartCoroutine(UpdateTextureFromComputeASync());
     }
 

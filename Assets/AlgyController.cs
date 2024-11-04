@@ -1,15 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class AlgyController : MonoBehaviour
 {
 
-    private ParticleSystem.MainModule PSyst;
-    private ParticleSystem.EmissionModule PSystm;
+    private ParticleSystem.MainModule pSyst;
+    private ParticleSystem.EmissionModule pSystm;
 
+    [FormerlySerializedAs("MaxSclr")] 
     [SerializeField]
-    private int MaxSclr = 30;
+    private int maxSclr = 30;
 
     [SerializeField]
     private Color healthy1;
@@ -38,36 +39,37 @@ public class AlgyController : MonoBehaviour
 
     void Start()
     {
-        PSyst = GetComponent<ParticleSystem>().main;
-        PSystm = GetComponent<ParticleSystem>().emission;
+        pSyst = GetComponent<ParticleSystem>().main;
+        pSystm = GetComponent<ParticleSystem>().emission;
 
         StartCoroutine(CheckWorld(10));
     }
 
     IEnumerator CheckWorld(float time)
     {
+        // TODO: This is not good code fix at some point
         while (true)
         {
             GameObject[] eggs = GameObject.FindGameObjectsWithTag("Eggs");
             
             float eggScl = eggs.Length;
             
-            eggScl /= (float)MaxSclr;
+            eggScl /= maxSclr;
 
             Color lerp1 = Color.Lerp(healthy1, unhealthy1, eggScl);
 
             Color lerp2 = Color.Lerp(healthy2, unhealthy2, eggScl);
 
-            PSyst.startColor = new ParticleSystem.MinMaxGradient(lerp1, lerp2);
+            pSyst.startColor = new ParticleSystem.MinMaxGradient(lerp1, lerp2);
 
             float min = Mathf.Lerp(healthySizeMin, unhealthySizeMin, eggScl);
             float max = Mathf.Lerp(healthySizeMax, unhealthySizeMax, eggScl);
 
-            PSyst.startSize = new ParticleSystem.MinMaxCurve(min,max);
+            pSyst.startSize = new ParticleSystem.MinMaxCurve(min,max);
 
             float emission = Mathf.Lerp(healthyEmmisionRate, unhealthyEmmisionRate, eggScl);
 
-            PSystm.rateOverTime = emission;
+            pSystm.rateOverTime = emission;
 
             yield return new WaitForSeconds(time);
         }

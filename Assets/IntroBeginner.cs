@@ -19,9 +19,6 @@ public class IntroBeginner : MonoBehaviour
     
     [HideInInspector]
     public bool floating = true;
-
-    [SerializeField]
-    private float driftPower = 3.5f;
     
     [SerializeField]
     private float nScale = 3.5f;
@@ -34,9 +31,6 @@ public class IntroBeginner : MonoBehaviour
     private float rotSpeed = 1;
 
     private bool shouldChange;
-
-    private bool doingIntro;
-    private bool doingOutro;
 
     private void Awake()
     {
@@ -132,11 +126,9 @@ public class IntroBeginner : MonoBehaviour
 
     public void SetDoingIntro(bool state)
     {
-        doingIntro = state;
     }
 
     public void SetDoingOutro(bool state)
     {
-        doingOutro = state;
     }
 }

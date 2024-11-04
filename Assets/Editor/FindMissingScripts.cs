@@ -6,7 +6,7 @@ public class FindMissingScripts : EditorWindow
     [MenuItem("Tools/Find Missing Scripts")]
     public static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(FindMissingScripts));
+        GetWindow(typeof(FindMissingScripts));
     }
 
     private void OnGUI()
@@ -19,7 +19,7 @@ public class FindMissingScripts : EditorWindow
 
     private static void FindAllMissingScripts()
     {
-        GameObject[] allGameObjects = GameObject.FindObjectsOfType<GameObject>();
+        GameObject[] allGameObjects = FindObjectsOfType<GameObject>();
         foreach (GameObject go in allGameObjects)
         {
             Component[] components = go.GetComponents<Component>();

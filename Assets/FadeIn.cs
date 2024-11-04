@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FadeIn : MonoBehaviour
 {
-    private Renderer rndr;
+    private static readonly int FadeVal = Shader.PropertyToID("fadeVal");
+    
+    private new Renderer renderer;
     [SerializeField]
     private float fadeTime = 10;
     [SerializeField]
@@ -12,25 +13,24 @@ public class FadeIn : MonoBehaviour
     [SerializeField]
     private float waitTimeS = 360;
 
+    public float fadeVal;
 
-    public float fadeVal = 0;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        rndr = GetComponent<Renderer>();
+        renderer = GetComponent<Renderer>();
         StartCoroutine(TimedDisolve(fadeTime, waitTimeS));
     }
+    
+    // TODO: Remove while loop
     private IEnumerator TimedDisolve(float fade, float waitTime)
     {
-        float stepSize = fade / (float)steps;
-
+        float stepSize = fade / steps;
 
         while (fadeVal<1)
         {
-            
-            fadeVal += (float)1 / (float)steps;
+            fadeVal += 1f / steps;
 
-            rndr.material.SetFloat("fadeVal", fadeVal);
+            renderer.material.SetFloat(FadeVal, fadeVal);
        
             yield return new WaitForSeconds(stepSize);
         }
@@ -40,14 +40,14 @@ public class FadeIn : MonoBehaviour
         while (fadeVal>0)
         {
 
-            fadeVal -= (float)1 / (float)steps;
+            fadeVal -= 1f / steps;
 
-            rndr.material.SetFloat("fadeVal", fadeVal);
+            renderer.material.SetFloat(FadeVal, fadeVal);
 
             yield return new WaitForSeconds(stepSize);
         }
 
-        Destroy(this.transform.parent.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 
 }

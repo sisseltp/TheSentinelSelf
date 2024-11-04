@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -44,10 +43,14 @@ public class APCSong : MonoBehaviour
         // rolloff = AudioRolloffMode.Linear;
 
         // TODO: randomly choose 3 from each category
-        foreach(AudioClip ac in Resources.LoadAll(seekingClipsPath, typeof(AudioClip))) {
+        foreach(var o in Resources.LoadAll(seekingClipsPath, typeof(AudioClip)))
+        {
+            var ac = (AudioClip)o;
             seekingPathogenClips.Add(ac);
         }
-        foreach(AudioClip ac in Resources.LoadAll(carryingClipsPath, typeof(AudioClip))) {
+        foreach(var o in Resources.LoadAll(carryingClipsPath, typeof(AudioClip)))
+        {
+            var ac = (AudioClip)o;
             carryingAntigenClips.Add(ac);
         }
 
@@ -111,7 +114,7 @@ public class APCSong : MonoBehaviour
     void FixedUpdate() {
         // Check if audio is playing
         // if not, play next clip and cue following clip in audiosource
-        if (! singer.GetActiveSource().isPlaying ) {
+        if (!singer.GetActiveSource().isPlaying) {
             PlayNext();
         }
     }

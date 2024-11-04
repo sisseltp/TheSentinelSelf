@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AutomateUser : MonoBehaviour
@@ -8,16 +7,17 @@ public class AutomateUser : MonoBehaviour
     private float changeTimeS = 120;
     private IntroBeginner introBeginner;
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(UserChanger(changeTimeS));
     }
 
-    IEnumerator UserChanger(float delay)
+    private IEnumerator UserChanger(float delay)
     {
         yield return new WaitForSeconds(2);
         introBeginner = GetComponent<IntroBeginner>();
 
+        // TODO: Code smell fix this
         while (true)
         {
             introBeginner.ChangeStates();

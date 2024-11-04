@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace CTI {
 
@@ -15,27 +14,29 @@ namespace CTI {
 
 	    public float WindMultiplier = 1.0f;
 
-	    private bool init = false;
+	    private bool init;
 	    private int CTIWindPID;
         private int CTITurbulencedPID;
 
         private Transform trans;
 
-        void Init () {
+        private void Init () {
 			m_WindZone = GetComponent<WindZone>();
             CTIWindPID = Shader.PropertyToID("_CTI_SRP_Wind");
             CTITurbulencedPID = Shader.PropertyToID("_CTI_SRP_Turbulence");
-            trans = this.transform;
+            trans = transform;
+            init = true;
         }
 
-		void OnValidate () {
+        private void OnValidate () {
 			Update ();
 		}
-		
-		void Update () {
+
+		private void Update () {
 			if (!init) {
 				Init ();
 			}
+			
 			WindDirection = trans.forward;
 
 			WindStrength = m_WindZone.windMain;

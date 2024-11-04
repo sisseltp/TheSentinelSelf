@@ -23,38 +23,41 @@
     [ExecuteInEditMode]
     public class DoubleAudioSource : MonoBehaviour
     {
-        AudioSource _source0;
-        AudioSource _source1;
+        private AudioSource source0;
+        private AudioSource source1;
      
         #region internal vars
-        bool cur_is_source0 = true; //is _source0 currently the active AudioSource (plays some sound right now)
-     
-        Coroutine _curSourceFadeRoutine = null;
-        Coroutine _newSourceFadeRoutine = null;
+
+        private bool currentIsSource0 = true; //is _source0 currently the active AudioSource (plays some sound right now)
+
+        private Coroutine currentSourceFadeRoutine;
+        private Coroutine newSourceFadeRoutine;
         #endregion
      
      
         #region internal functionality
-        void Reset()
+
+        private void Reset()
         {
             Update();
         }
-     
-     
-        void Awake()
+
+
+        private void Awake()
         {
             Update();
         }
-     
-     
-        void Update()
+
+
+        private void Update()
         {
             //constantly check if our game object doesn't contain audio sources which we are referencing.
      
             //if the _source0 or _source1 contain obsolete references (most likely 'null'), then
             //we will re-init them:
-            if (_source0 == null || _source1 == null)
+            if (!source0 || !source1)
             {
+                // TODO: Code smell, should be sure they exist
                 InitAudioSources();
             }
      
@@ -62,15 +65,15 @@
      
      
         //re-establishes references to audio sources on this game object:
-        void InitAudioSources()
+        private void InitAudioSources()
         {
             //re-connect _source0 and _source1 to the ones in attachedSources[]
             AudioSource[] audioSources = gameObject.GetComponents<AudioSource>();
      
             if (ReferenceEquals(audioSources, null) || audioSources.Length == 0)
             {
-                _source0 = gameObject.AddComponent<AudioSource>();
-                _source1 = gameObject.AddComponent<AudioSource>();
+                source0 = gameObject.AddComponent<AudioSource>();
+                source1 = gameObject.AddComponent<AudioSource>();
                 //DefaultTheSource(_source0);
                 // DefaultTheSource(_source1);  //remove? we do this in editor only
                 return;
@@ -80,15 +83,15 @@
             {
                 case 1:
                     {
-                        _source0 = audioSources[0];
-                        _source1 = gameObject.AddComponent<AudioSource>();
+                        source0 = audioSources[0];
+                        source1 = gameObject.AddComponent<AudioSource>();
                         //DefaultTheSource(_source1);  //TODO remove?  we do this in editor only
                     }
                     break;
                 default:
                     { //2 and more
-                        _source0 = audioSources[0];
-                        _source1 = audioSources[1];
+                        source0 = audioSources[0];
+                        source1 = audioSources[1];
                     }
                     break;
             }//end switch
@@ -98,35 +101,35 @@
      
         //gradually shifts the sound comming from our audio sources to the this clip:
         // maxVolume should be in 0-to-1 range
-        public void CrossFade(AudioClip clipToPlay, float maxVolume, float fadingTime, float delay_before_crossFade = 0)
+        public void CrossFade(AudioClip clipToPlay, float maxVolume, float fadingTime, float delayBeforeCrossFade = 0)
         {
             //var fadeRoutine = StartCoroutine(Fade(clipToPlay, maxVolume, fadingTime, delay_before_crossFade));
-            StartCoroutine(Fade(clipToPlay, maxVolume, fadingTime, delay_before_crossFade));
+            StartCoroutine(Fade(clipToPlay, maxVolume, fadingTime, delayBeforeCrossFade));
      
         }//end CrossFade()
-     
-     
-        IEnumerator Fade(AudioClip playMe, float maxVolume, float fadingTime, float delay_before_crossFade = 0)
+
+
+        private IEnumerator Fade(AudioClip playMe, float maxVolume, float fadingTime, float delayBeforeCrossFade = 0)
         {
-            if (delay_before_crossFade > 0)
+            if (delayBeforeCrossFade > 0)
             {
-                yield return new WaitForSeconds(delay_before_crossFade);
+                yield return new WaitForSeconds(delayBeforeCrossFade);
             }
      
             AudioSource curActiveSource, newActiveSource;
-            if (cur_is_source0)
+            if (currentIsSource0)
             {
                 //_source0 is currently playing the most recent AudioClip
-                curActiveSource = _source0;
+                curActiveSource = source0;
                 //so launch on _source1
-                newActiveSource = _source1;
+                newActiveSource = source1;
             }
             else
             {
                 //otherwise, _source1 is currently active
-                curActiveSource = _source1;
+                curActiveSource = source1;
                 //so play on _source0
-                newActiveSource = _source0;
+                newActiveSource = source0;
             }
      
             //perform the switching
@@ -134,26 +137,23 @@
             newActiveSource.Play();
             newActiveSource.volume = 0;
      
-            if (_curSourceFadeRoutine != null)
+            if (currentSourceFadeRoutine != null)
             {
-                StopCoroutine(_curSourceFadeRoutine);
+                StopCoroutine(currentSourceFadeRoutine);
             }
      
-            if (_newSourceFadeRoutine != null)
+            if (newSourceFadeRoutine != null)
             {
-                StopCoroutine(_newSourceFadeRoutine);
+                StopCoroutine(newSourceFadeRoutine);
             }
      
-            _curSourceFadeRoutine = StartCoroutine(fadeSource(curActiveSource, curActiveSource.volume, 0, fadingTime));
-            _newSourceFadeRoutine = StartCoroutine(fadeSource(newActiveSource, newActiveSource.volume, maxVolume, fadingTime));
+            currentSourceFadeRoutine = StartCoroutine(FadeSource(curActiveSource, curActiveSource.volume, 0, fadingTime));
+            newSourceFadeRoutine = StartCoroutine(FadeSource(newActiveSource, newActiveSource.volume, maxVolume, fadingTime));
      
-            cur_is_source0 = !cur_is_source0;
-     
-            yield break;
+            currentIsSource0 = !currentIsSource0;
         }
-     
-     
-        IEnumerator fadeSource(AudioSource sourceToFade, float startVolume, float endVolume, float duration)
+
+        private static IEnumerator FadeSource(AudioSource sourceToFade, float startVolume, float endVolume, float duration)
         {
             float startTime = Time.time;
      
@@ -163,7 +163,7 @@
      
                 sourceToFade.volume = Mathf.Clamp01(Mathf.Lerp(startVolume, endVolume, elapsed / duration));
      
-                if (sourceToFade.volume == endVolume)
+                if (Mathf.Approximately(sourceToFade.volume, endVolume))
                 {
                     break;
                 }
@@ -175,17 +175,17 @@
      
         //returns false if BOTH sources are not playing and there are no sounds are staged to be played.
         //also returns false if one of the sources is not yet initialized
-        public bool isPlaying
+        public bool IsPlaying
         {
             get
             {
-                if (_source0 == null || _source1 == null)
+                if (source0 == null || source1 == null)
                 {
                     return false;
                 }
      
                 //otherwise, both sources are initialized. See if any is playing:
-                return _source0.isPlaying || _source1.isPlaying;
+                return source0.isPlaying || source1.isPlaying;
             }//end get
         }
      

@@ -2,23 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GeneticAntigenKey : MonoBehaviour
 {
     [Tooltip("Number of Keys in chain")]
     [SerializeField]
     private int keyLength = 10; // number of steps in cylcle
+    
     public Genetics.Antigen antigen; // list to hold keys in
+    
     [HideInInspector]
     public Vector3 origin;
+    
     [Tooltip("Time it takes to fade away")]
     [SerializeField]
     private float fadeTime = 10;
-    [Tooltip("varience in the fade time")]
-    [SerializeField]
-    private float fadeTimeVarience = 4;
 
-    void Start()
+    private void Start()
     {
         origin = transform.position;
     }

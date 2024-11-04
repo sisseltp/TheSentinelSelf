@@ -6,13 +6,27 @@
   <component name="ChangeListManager">
     <list default="true" id="eca29399-1e7d-422e-a84f-acbc2b0e7569" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Agent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Agent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AlgyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AlgyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Scripts/APCSong.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Scripts/APCSong.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Scripts/BreathingAudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Scripts/BreathingAudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Scripts/CrossFade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Scripts/CrossFade.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Audio/Scripts/Singer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Audio/Scripts/Singer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/AutomateUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AutomateUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/CTI URP/CTI Runtime Components URP/Scripts/CTI_SRP_CustomWind.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CTI URP/CTI Runtime Components URP/Scripts/CTI_SRP_CustomWind.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/CameraTracker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/CameraTracker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GeneticMovementPathogen.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GeneticMovementPathogen.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelA.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelA.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelB.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelB.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelC.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelC.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelD.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/prefab/based prefab/apc/SentinelD.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Digestion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Digestion.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/FindMissingScripts.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/FindMissingScripts.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/FadeIn.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/FadeIn.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Heart Rate Manager/Scripts/EthernetValues.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Heart Rate Manager/Scripts/EthernetValues.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/IntroBeginner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/IntroBeginner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/Fosilising.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/Fosilising.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GPU Compute/GPUCompute.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GPU Compute/GPUCompute.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GeneticAntigenKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Kuramoto/KuramotoModel 3d/Scripts/GeneticAntigenKey.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/OscCore/Runtime/Scripts/OscSocket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/OscCore/Runtime/Scripts/OscSocket.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PathTools/Scripts/Editor/PathScriptEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PathTools/Scripts/Editor/PathScriptEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PathTools/Scripts/PathScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PathTools/Scripts/PathScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +38,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c0c221501f3a41f8ac0af9d6a9dc9ff335fd90/74/7d6aa09e/Socket.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -38,7 +58,8 @@
   &quot;keyToString&quot;: {
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/camera__system&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/full__code__cleanup&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -74,10 +95,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3436">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="3436" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -95,6 +116,8 @@
       <updated>1730654617810</updated>
       <workItem from="1730654621084" duration="1177000" />
       <workItem from="1730663043347" duration="7557000" />
+      <workItem from="1730717639764" duration="3558000" />
+      <workItem from="1730722420524" duration="616000" />
     </task>
     <servers />
   </component>

@@ -7,9 +7,12 @@ namespace Romi.PathTools
     public class PathScript : MonoBehaviour
     {
         #region VARIABLES
-        [SerializeField] private List<Node> nodes = new List<Node>();
-        [SerializeField] private int selectedId;
-        [SerializeField] private float handleMulti = 0.2f;
+        [SerializeField] 
+        private List<Node> nodes = new List<Node>();
+        
+        [SerializeField] 
+        private int selectedId;
+        
         public bool closeLoop, showUpVector;
 
         private const int CURVE_SEGMENT = 20;
