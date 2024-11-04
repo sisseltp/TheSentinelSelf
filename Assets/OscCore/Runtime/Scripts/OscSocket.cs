@@ -24,7 +24,8 @@ namespace OscCore
         public OscSocket(int port)
         {
             Port = port;
-            m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp) { ReceiveTimeout = int.MaxValue };
+            m_Socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp) { ReceiveTimeout = int.MaxValue};
+            m_Socket.SetSocketOption(SocketOptionLevel.Socket,SocketOptionName.ReuseAddress, true);
             m_Thread = new Thread(Serve);
         }
 
@@ -36,7 +37,7 @@ namespace OscCore
             m_Disposed = false;
             if (!m_Socket.IsBound)
                 m_Socket.Bind(new IPEndPoint(IPAddress.Any, Port));
-
+            
             m_Thread.Start();
             m_Started = true;
         }
@@ -77,7 +78,7 @@ namespace OscCore
             
             Profiler.EndThreadProfiling();
         }
-
+        
         public void Dispose()
         {
             if (m_Disposed) return;
