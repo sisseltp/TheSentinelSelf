@@ -15,13 +15,16 @@ public class GeneticMovementPathogen : GeneticMovement
 
             GameObject newObj = transform.GetChild(0).gameObject;
 
-            newObj = Instantiate(newObj, collision.GetContact(0).point, rot, collision.transform);
+            var scale = newObj.transform.localScale / 100;
+            newObj = Instantiate(newObj, collision.GetContact(0).point, rot, collision.collider.transform);
+            newObj.transform.localScale = scale;
+            
             newObj.GetComponent<Digestion>().enabled = true;
+            
             collision.gameObject.GetComponent<GeneticMovementSentinel>().keys++;
             collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens.Add(newObj.GetComponent<GeneticAntigenKey>());
             agent.kuramoto.dead = true;
 
-            // TODO: @Neander: This is where the sentinel took an antigen
             CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAteAntigen, collision.transform, new EventData(numkeys, collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect + maxKeys)));
         }
     }

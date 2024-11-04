@@ -104,6 +104,7 @@ namespace Script.CameraSystem
 
                 if (eventBlackList.Count >= maxBlacklistedEvents)
                 {
+                    resetTimer = resetTime;
                     eventBlackList.Clear();
                 }
                 
@@ -121,7 +122,7 @@ namespace Script.CameraSystem
         {
             // Should we have interest in this event?
             // If we have interest remove from the list and setup the camera follow
-            if (currentEvent == null || GetHeuristicValue(eventToEvaluate.EventType) > GetHeuristicValue(currentEvent.EventType))
+            if (currentEvent == null)
             {
                 SetNextEvent(eventToEvaluate);
             }
@@ -191,6 +192,7 @@ namespace Script.CameraSystem
         {
             // Reset the blacklist everytime we go out of the simulation scene
             eventBlackList.Clear();
+            resetTimer = resetTime;
         }
 
         private void OnDestroy()

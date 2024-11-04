@@ -228,6 +228,7 @@ public class CameraTracker : MonoBehaviour
         if (nextTarget == currentTarget)
         {
             targetSwitchTimer = 0;
+            SwitchTarget(CameraSwitchReason.AlreadyFollowing);
             return;
         }
         
@@ -264,7 +265,7 @@ public class CameraTracker : MonoBehaviour
                 if (!pathogenEmitterLocations
                         .Select(pathogenEmitterLocation =>
                             Vector3.Distance(bodies[i].transform.position, pathogenEmitterLocation.position))
-                        .Any(dist => dist <= 20)) continue;
+                        .Any(dist => dist <= 5)) continue;
                 
                 indx = i;
                 break;
@@ -462,6 +463,7 @@ public class CameraTracker : MonoBehaviour
         Start,
         TimeWasUp,
         BetterEvent,
-        CameraWasTooStill
+        CameraWasTooStill,
+        AlreadyFollowing
     }
 }
