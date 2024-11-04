@@ -5229,7 +5229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc3200100e5b3f64b8da0eeb3cf76551, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSclr: 30
+  MaxSclr: 30
   healthy1: {r: 1, g: 1, b: 1, a: 1}
   healthy2: {r: 0.75315416, g: 0.70770735, b: 0.8207547, a: 1}
   healthySizeMin: 0.8
@@ -5900,6 +5900,7 @@ MonoBehaviour:
   look: {fileID: 6832333266842640922}
   useMouseToTransition: 1
   floating: 1
+  driftPower: 3.5
   nScale: 0.15
   movementScl: 30
   rotSpeed: 1
@@ -25582,13 +25583,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349b6e7de5d59944fb3dd86555ef8505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globalRate: 0
-  globalInterval: 0
-  globalPulse: 0
+  GlobalRate: 0
+  GlobalInterval: 0
+  GlobalPulse: 0
   pulseGradient: 0
+  bias: 3
   beginTimer: 2
   restartTimer: 5
-  averageDrag: 0.6
+  avrgDrag: 0.6
   changeGate: 10
 --- !u!1 &763207998845574543
 GameObject:
@@ -25601,6 +25603,7 @@ GameObject:
   - component: {fileID: 763207998845574541}
   - component: {fileID: 1055408008}
   - component: {fileID: 763207998845574542}
+  - component: {fileID: 763207998845574548}
   - component: {fileID: 763207998845574547}
   - component: {fileID: 763207998845574546}
   - component: {fileID: 763207998845574545}
@@ -25712,6 +25715,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Port: 9001
+--- !u!114 &763207998845574548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763207998845574543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cc27f46df82a4443810574728f8ac44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  port: COM1
+  baudRate: 115200
 --- !u!1 &765251146966339518
 GameObject:
   m_ObjectHideFlags: 0
@@ -41601,6 +41618,7 @@ MonoBehaviour:
     orientation: 0
     tangentType: 0
   selectedId: 0
+  handleMulti: 0.2
   closeLoop: 1
   showUpVector: 1
   lastPos: {x: -387.65652, y: -388.40073, z: 332.01016}
@@ -90389,6 +90407,7 @@ MonoBehaviour:
     orientation: 0
     tangentType: 0
   selectedId: 0
+  handleMulti: 0.2
   closeLoop: 1
   showUpVector: 1
   lastPos: {x: -152.3765, y: -180.68066, z: -561.7538}
@@ -90460,6 +90479,7 @@ MonoBehaviour:
     orientation: 0
     tangentType: 0
   selectedId: 0
+  handleMulti: 0.2
   closeLoop: 1
   showUpVector: 1
   lastPos: {x: -332.424, y: -343.0761, z: -422.83496}
