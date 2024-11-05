@@ -7,7 +7,7 @@
     <list default="true" id="eca29399-1e7d-422e-a84f-acbc2b0e7569" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.the-sentinel-self/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/UpdateKatpatat.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Script/COM/SerialCOM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/COM/SerialCOM.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +37,8 @@
   "keyToString": {
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/com__port__reading",
+    "git-widget-placeholder": "feature/camera__system",
+    "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -73,10 +74,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6200">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="6200" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -94,6 +95,7 @@
       <updated>1730654617810</updated>
       <workItem from="1730654621084" duration="1177000" />
       <workItem from="1730663043347" duration="7557000" />
+      <workItem from="1730737282874" duration="1510000" />
     </task>
     <servers />
   </component>
@@ -120,5 +122,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Script/CameraSystem/CameraBrain.cs</url>
+          <line>95</line>
+          <properties documentPath="C:\Users\Neander\Workspace\Katpatat\_Clients\Sissel\the-sentinel-self\Assets\Script\CameraSystem\CameraBrain.cs" containingFunctionPresentation="Method 'RegisterEvent'">
+            <startOffsets>
+              <option value="3276" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3307" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

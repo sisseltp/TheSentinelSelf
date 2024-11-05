@@ -203,18 +203,18 @@ public class CameraTracker : MonoBehaviour
         
         SwitchTarget(CameraSwitchReason.Start);
     }
-
+    
     private void SwitchTarget(CameraSwitchReason reason)
     {
         Debug.Log($"<color=orange>Camera System:</color> Camera switched target, reason: {reason}");
-        
-        if (!nextTarget)
+
+        if (nextTarget == null)
         {
             // Try get something interesting
             nextTarget = cameraBrain.GetNextInteresting();
 
             // Nothing interesting revert back to oldskool target
-            if (!nextTarget)
+            if (nextTarget == null)
             {
                 Debug.Log("<color=orange>Camera System:</color> No interesting target using oldskool logic.");
                 nextTarget = FindSceneTracked("Player");
@@ -225,15 +225,10 @@ public class CameraTracker : MonoBehaviour
             }
         }
 
-        if (nextTarget == currentTarget)
-        {
-            targetSwitchTimer = 0;
-            SwitchTarget(CameraSwitchReason.AlreadyFollowing);
-            return;
-        }
-        
         currentTarget = nextTarget;
         nextTarget = null;
+
+        if (currentTarget == null) return;
             
         look = currentTarget;
         tracked = currentTarget;
@@ -388,7 +383,7 @@ public class CameraTracker : MonoBehaviour
             StartTracking();
             
             rb.position -= new Vector3(0, underWaterJumpDist, 0);
-            sphereCollider.isTrigger = false;
+            // sphereCollider.isTrigger = false;
             doingIntro = false;
             IntroBeginner.Instance.SetDoingIntro(false);
 

@@ -15,9 +15,6 @@ namespace Script.CameraSystem
         [SerializeField]
         private bool logWorldEvents;
         
-        [SerializeField] 
-        private CameraTracker cameraTracker;
-
         [SerializeField]
         [Range(0, 11)]
         private int maxBlacklistedEvents;
@@ -28,6 +25,7 @@ namespace Script.CameraSystem
         [Header("Debugging")]
         [SerializeField] private float resetTimer;
         
+        private CameraTracker cameraTracker;
         private WorldEvent currentEvent;
         
         private List<WorldEvent> worldEvents = new List<WorldEvent>();
@@ -92,6 +90,11 @@ namespace Script.CameraSystem
         public void RegisterEvent(WorldEvent newWorldEvent)
         {
             if (!cameraTracker.tracking) return;
+
+            if (newWorldEvent.EventType == WorldEvents.TCellGoesToPathogen)
+            {
+                Debug.Log("TCell on the move");
+            }
             
             if (logWorldEvents)
             {
@@ -168,10 +171,11 @@ namespace Script.CameraSystem
         {
             switch (newWorldEvent.EventType)
             {
+                case WorldEvents.SentinelAteAntigen:
+                    break;
                 case WorldEvents.SentinelGoesToPathogen:
                 case WorldEvents.SentinelGoesToLymphNode:
                 case WorldEvents.SentinelAtePlastic:
-                case WorldEvents.SentinelAteAntigen:
                 case WorldEvents.SentinelDies:
                 case WorldEvents.SentinelBecomesEgg:
                 case WorldEvents.InfectedSentinelGoesToTCell:
