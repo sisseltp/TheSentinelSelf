@@ -28906,8 +28906,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logWorldEvents: 0
-  maxBlacklistedEvents: 5
-  resetTime: 300
+  maxBlacklistedEvents: 3
+  resetTime: 180
   resetTimer: 0
 --- !u!4 &1088792736221549654
 Transform:

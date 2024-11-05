@@ -91,11 +91,6 @@ namespace Script.CameraSystem
         {
             if (!cameraTracker.tracking) return;
 
-            if (newWorldEvent.EventType == WorldEvents.TCellGoesToPathogen)
-            {
-                Debug.Log("TCell on the move");
-            }
-            
             if (logWorldEvents)
             {
                 DebugEvents(newWorldEvent);
@@ -111,6 +106,8 @@ namespace Script.CameraSystem
                     eventBlackList.Clear();
                 }
                 
+                worldEvents.Add(newWorldEvent);
+                
                 if (worldEvents.Count >= 5)
                 {
                     worldEvents.RemoveAt(0);
@@ -125,7 +122,7 @@ namespace Script.CameraSystem
         {
             // Should we have interest in this event?
             // If we have interest remove from the list and setup the camera follow
-            if (currentEvent == null)
+            if (currentEvent == null || GetHeuristicValue(eventToEvaluate.EventType) > GetHeuristicValue(currentEvent.EventType))
             {
                 SetNextEvent(eventToEvaluate);
             }
@@ -151,10 +148,14 @@ namespace Script.CameraSystem
             if (worldEvents.Count <= 0) return null;
             
             var worldEvent = worldEvents[0];
-            if (worldEvent.EventTarget)
+            if (worldEvent.EventTarget != null)
             {
                 currentEvent = worldEvent;
                 return worldEvent.EventTarget;
+            }
+            else
+            {
+                Debug.Log($"Interesting but the target was null. Event: {worldEvent.EventType}");
             }
 
             worldEvents.RemoveAt(0);

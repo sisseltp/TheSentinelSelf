@@ -229,7 +229,7 @@ public class CameraTracker : MonoBehaviour
         nextTarget = null;
 
         if (currentTarget == null) return;
-            
+
         look = currentTarget;
         tracked = currentTarget;
     }

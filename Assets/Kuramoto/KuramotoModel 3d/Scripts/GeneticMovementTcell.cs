@@ -115,8 +115,6 @@ public class GeneticMovementTcell : GeneticMovement
 
     public override void OnCollisionEnterPathogen(Collision collision)
     {
-        Debug.Log("Hit Pathogen");
-
         // get keys from children
         GeneticAntigenKey[] Antigens = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>();
 
