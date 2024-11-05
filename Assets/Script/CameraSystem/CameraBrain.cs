@@ -171,10 +171,11 @@ namespace Script.CameraSystem
         {
             switch (newWorldEvent.EventType)
             {
+                case WorldEvents.SentinelAteAntigen:
+                    break;
                 case WorldEvents.SentinelGoesToPathogen:
                 case WorldEvents.SentinelGoesToLymphNode:
                 case WorldEvents.SentinelAtePlastic:
-                case WorldEvents.SentinelAteAntigen:
                 case WorldEvents.SentinelDies:
                 case WorldEvents.SentinelBecomesEgg:
                 case WorldEvents.InfectedSentinelGoesToTCell:
