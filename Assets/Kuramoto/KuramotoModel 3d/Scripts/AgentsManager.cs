@@ -28,6 +28,7 @@ public class AgentsManager : MonoBehaviour
     [ShowIf("@emitsContinuously == true")]
     public float delayBetweenEmissions = 1f;
 
+    [HideInInspector]
     public List<int> toRemove = new List<int>();
 
     public virtual void Start()
