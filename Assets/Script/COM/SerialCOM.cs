@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.IO.Ports;
 using UnityEngine;
 
@@ -39,9 +40,16 @@ public class SerialCOM : MonoBehaviour
         isStreaming = true;
         serialPort = new SerialPort(port, baudRate);
         serialPort.ReadTimeout = 1000;
-        serialPort.Open();
-        
-        Debug.Log("COM port opened successfully");
+
+        try
+        {
+            serialPort.Open();
+            Debug.Log("COM port opened successfully");
+        }
+        catch (IOException e)
+        {
+            Debug.Log(e.Message);
+        }  
     }
 
     public void Close()
@@ -109,12 +117,15 @@ public class SerialCOM : MonoBehaviour
 
         try
         {
-            var message = serialPort.ReadLine();
-            return message;
+            if (serialPort.IsOpen)
+                return serialPort.ReadLine();
+            else
+                return "ERROR: Serial Port Not Open";
+            
         }
         catch (TimeoutException e)
         {
-            // Debug.Log(e.Message);
+            Debug.Log(e.Message);
             return null;
         }
     }
