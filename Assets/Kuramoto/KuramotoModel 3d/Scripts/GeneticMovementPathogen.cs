@@ -6,10 +6,19 @@ public class GeneticMovementPathogen : GeneticMovement
     [SerializeField]
     private int maxKeys = 10;
 
+    public override void Update()
+    {
+        base.Update();
+        if(Vector3.SqrMagnitude(transform.position-agent.manager.transform.position)>15f*15f)
+            transform.position = transform.parent.position + Random.insideUnitSphere;
+    }
+
     public override void OnCollisionEnterPlayer(Collision collision)
     {
+        GeneticMovementSentinel sentinel = collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>();
+
         int numkeys = collision.gameObject.GetComponentsInChildren<GeneticAntigenKey>().Length;
-        if (numkeys < collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect + maxKeys)// if less than max num, pick up key
+        if (numkeys < sentinel.NumKeysToCollect + maxKeys)// if less than max num, pick up key
         {
             Quaternion rot = Quaternion.LookRotation(collision.transform.position, transform.up);
 
@@ -20,17 +29,15 @@ public class GeneticMovementPathogen : GeneticMovement
             newObj.transform.localScale = scale;
             
             newObj.GetComponent<Digestion>().enabled = true;
-            
-            collision.gameObject.GetComponent<GeneticMovementSentinel>().keys++;
-            collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens.Add(newObj.GetComponent<GeneticAntigenKey>());
+
+            sentinel.keys++;
+            sentinel.digestAntigens.Add(newObj.GetComponent<GeneticAntigenKey>());
             agent.kuramoto.dead = true;
 
-            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAteAntigen, collision.transform, new EventData(numkeys, collision.gameObject.GetComponentInChildren<GeneticMovementSentinel>().NumKeysToCollect + maxKeys)));
-        }
-    }
+            CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAteAntigen, collision.transform, new EventData(numkeys, sentinel.NumKeysToCollect + maxKeys)));
 
-    public override void OnTriggerExitPathogenEmitter(Collider collider)
-    {
-        transform.position = transform.parent.position+ Random.insideUnitSphere;
+            if(!sentinel.targeting)
+                sentinel.CheckIfEnoughKeys();
+        }
     }
 }

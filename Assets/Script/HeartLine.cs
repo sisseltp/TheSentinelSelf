@@ -23,7 +23,6 @@ public class HeartLine : MonoBehaviour
     Vector3[] finalPositions;
 
     Keyframe[] baseKeysCurve;
-    float multHeight = 1f;
 
     void Start()
     {
@@ -52,14 +51,14 @@ public class HeartLine : MonoBehaviour
         if(HeartRateManager.Instance.GlobalPhaseMod1>threshold && !wasOverThreshold)
         {
             Keyframe[] modifiedKeys = new Keyframe[baseKeysCurve.Length];
-            for(int i= 0;i < baseKeysCurve.Length;i++)
+
+            float multHeight = Random.Range(0.8f, 1.2f);
+            for (int i= 0;i < baseKeysCurve.Length;i++)
             {
                 Keyframe baseK = baseKeysCurve[i];
-                modifiedKeys[i] = new Keyframe(baseK.time+Random.Range(-0.02f,0.02f), baseK.value*Random.Range(0.8f,1.2f), baseK.inTangent, baseK.outTangent, baseK.inWeight, baseK.outWeight);
+                modifiedKeys[i] = new Keyframe(baseK.time+Random.Range(-0.02f,0.02f), (baseK.value*Random.Range(0.8f,1.2f))*multHeight, baseK.inTangent, baseK.outTangent, baseK.inWeight, baseK.outWeight);
                 curvePeak.keys = modifiedKeys;
             }
-
-            multHeight = Random.Range(0.8f, 1.2f);
 
             wasOverThreshold = true;
             progressPeak = 1f;
@@ -71,7 +70,7 @@ public class HeartLine : MonoBehaviour
         for (int k=0;k< speed; k++)
         {
             float newValue = 0f;
-            if (progressPeak > 0f)
+            if (progressPeak > 0f && HeartRateManager.Instance.sensorConnected)
             {
                 progressPeak -= Time.deltaTime * 3f/ speed;
                 progressPeak = Mathf.Clamp01(progressPeak);
@@ -81,7 +80,7 @@ public class HeartLine : MonoBehaviour
             for (int i = 0; i < amountPoints - 1; i++)
                 valuesHeart[i] = valuesHeart[i + 1];
 
-            valuesHeart[amountPoints - 1] = newValue * height* multHeight;
+            valuesHeart[amountPoints - 1] = newValue * height;
         }
 
         finalPositions = new Vector3[amountPoints];

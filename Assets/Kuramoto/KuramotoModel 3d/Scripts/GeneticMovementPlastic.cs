@@ -33,6 +33,13 @@ public class GeneticMovementPlastic : GeneticMovement
         origin = transform.position;
     }
 
+    public override void Update()
+    {
+        base.Update();
+        if(transform.position.y>450f)
+            agent.rigidBody.AddForceAtPosition(Vector3.down * Time.deltaTime * 10, transform.position + transform.up);
+    }
+
     public override void OnCollisionEnterPlayer(Collision collision)
     {
         agent.kuramoto.dead = true;
@@ -65,10 +72,5 @@ public class GeneticMovementPlastic : GeneticMovement
                 CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.SentinelAtePlastic, collision.transform, new EventData(drag, maxDrag)));
             }
         }
-    }
-
-    public override void OnTriggerStayPlasticMover(Collider collider)
-    {
-        agent.rigidBody.AddForceAtPosition(Vector3.down * Time.deltaTime * 10, transform.position + transform.up);
     }
 }

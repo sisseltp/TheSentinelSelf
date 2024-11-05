@@ -57,9 +57,9 @@ public class GeneticMovementSentinel : GeneticMovement
 
         Ray forward = new Ray(transform.position, Vector3.Normalize(agent.rigidBody.velocity) + Vector3.down * 0.5f);
 
-        if (Physics.Raycast(forward, out RaycastHit hit, 20))
+        if (Physics.Raycast(forward, out RaycastHit hit, 20f))
             if (hit.transform.CompareTag("Terrain"))
-                vel += Vector3.up * speedScl * 3;
+                vel += Vector3.up * speedScl * 3f;
 
         vel += geneticMovement[step] * genSpeedScl;
         vel *= agent.kuramoto.phase;
@@ -68,38 +68,11 @@ public class GeneticMovementSentinel : GeneticMovement
         lastPhase = agent.kuramoto.phase;
     }
 
-    public override void OnCollisionEnterKill(Collision collision)
+    public void CheckIfEnoughKeys()
     {
-        //DO NOT APPLY DEAD TO THE SENTINEL
-        return;
-    }
-
-    public override void OnCollisionEnterTCell(Collision collision)
-    {
-        tcellHits++;
-    }
-
-    public override void OnCollisionEnterTerrain(Collision collision)
-    {
-        (agent as Sentinel).fosilising.enabled = true;
-    }
-
-    public override void OnTriggerEnterLymphonde(Collider collider) 
-    {
-        targeting = false;
-    }
-
-    public override void OnTriggerEnterPathogenEmitter(Collider collider)
-    {
-        targeting = false;
-    }
-
-    public override void OnTriggerStayPathogenEmitter(Collider collider)
-    {
-        if (keys >= NumKeysToCollect && !targeting)
+        if (keys >= NumKeysToCollect)
         {
             int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
-
             target = GameManager.Instance.tCellsManagers[indx].transform.position;
             targeting = true;
             tcellHits = 0;
@@ -117,13 +90,11 @@ public class GeneticMovementSentinel : GeneticMovement
                 CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.InfectedSentinelGoesToTCell, transform));
             }
         }
-        else if (keys < NumKeysToCollect)
-            targeting = false;
     }
 
-    public override void OnTriggerStayLymphonde(Collider collider)
+    public void CheckIfEnoughTCellHits()
     {
-        if (tcellHits > 10 && !targeting)
+        if (tcellHits > 10)
         {
             int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
@@ -143,8 +114,20 @@ public class GeneticMovementSentinel : GeneticMovement
         }
     }
 
-    public override void OnTriggerExitAnything(Collider collider)
+    public override void OnCollisionEnterKill(Collision collision)
     {
-        targeting = true;
+        //DO NOT APPLY DEAD TO THE SENTINEL
+        return;
     }
+
+    public override void OnCollisionEnterTCell(Collision collision)
+    {
+        tcellHits++;
+        if (!targeting)
+            CheckIfEnoughTCellHits();
+    } 
+    public override void OnCollisionEnterTerrain(Collision collision) => (agent as Sentinel).fosilising.enabled = true;
+    public override void OnTriggerEnterLymphonde(Collider collider) => targeting = false;
+    public override void OnTriggerEnterPathogenEmitter(Collider collider) => targeting = false;
+    public override void OnTriggerExitAnything(Collider collider) => targeting = true;
 }
