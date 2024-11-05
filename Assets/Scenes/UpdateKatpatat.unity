@@ -28824,8 +28824,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58aad3ad0979d5419599ba55299d7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logWorldEvents: 0
-  cameraTracker: {fileID: 0}
+  logWorldEvents: 1
   maxBlacklistedEvents: 5
   resetTime: 300
   resetTimer: 0
