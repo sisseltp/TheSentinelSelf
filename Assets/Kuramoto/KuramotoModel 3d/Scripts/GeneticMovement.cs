@@ -12,20 +12,20 @@ public class GeneticMovement : MonoBehaviour
     [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
     public float genSpeedScl = 0.5f; // sclr for the speed
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3[] geneticMovement; // list to hold vels in
-    [HideInInspector]
+    //[HideInInspector]
     public int step = 0;// to hold the steps number
-    [HideInInspector]
+    //[HideInInspector]
     public float lastPhase = 0;// holds the last phase for a gate
     public bool notKeyed = true;
     [Tooltip("Scaler for the genetic speed")]
     [SerializeField]
     public float speedScl = 0.5f;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool targeting = true;
-    [HideInInspector]
+    //[HideInInspector]
     public Vector3 target;
 
     public virtual void Start()
@@ -95,24 +95,24 @@ public class GeneticMovement : MonoBehaviour
 
     public virtual void OnTriggerStay(Collider collider)
     {
-        if (collider.gameObject.CompareTag("Lymphonde"))
-            OnTriggerStayLymphonde(collider);
-        else if (collider.gameObject.CompareTag("PathogenEmitter"))
-            OnTriggerStayPathogenEmitter(collider);
-        else if (collider.gameObject.CompareTag("PlasticMover"))
-            OnTriggerStayPlasticMover(collider);
+        //if (collider.gameObject.CompareTag("Lymphonde"))
+            //OnTriggerStayLymphonde(collider);
+        //else if (collider.gameObject.CompareTag("PathogenEmitter"))
+            //OnTriggerStayPathogenEmitter(collider);
+        //else if (collider.gameObject.CompareTag("PlasticMover"))
+            //OnTriggerStayPlasticMover(collider);
     }
 
-    public virtual void OnTriggerStayLymphonde(Collider collider) { }
-    public virtual void OnTriggerStayPathogenEmitter(Collider collider) { }
-    public virtual void OnTriggerStayPlasticMover(Collider collider) { }
+   // public virtual void OnTriggerStayLymphonde(Collider collider) { }
+    //public virtual void OnTriggerStayPathogenEmitter(Collider collider) { }
+    //public virtual void OnTriggerStayPlasticMover(Collider collider) { }
 
     public virtual void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.CompareTag("LymphOuter"))
             OnTriggerExitLymphOuter(collider);
-        else if (collider.gameObject.CompareTag("PathogenEmitter"))
-            OnTriggerExitPathogenEmitter(collider);
+        //else if (collider.gameObject.CompareTag("PathogenEmitter"))
+            //OnTriggerExitPathogenEmitter(collider);
         else
             OnTriggerExitAnything(collider);
     }
