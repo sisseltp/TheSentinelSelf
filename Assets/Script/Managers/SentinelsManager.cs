@@ -9,7 +9,6 @@ public class SentinelsManager : AgentsManager
     {
         ResetAgentAtIndex(i);
         GPUStruct[i].SetFromKuramoto(agents[i].kuramoto);
-        GPUStruct[i].pos = agents[i].rigidBody.position;
     }
 
     public override void OnAgentAged(int i)

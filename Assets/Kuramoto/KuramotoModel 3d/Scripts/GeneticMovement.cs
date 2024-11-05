@@ -43,13 +43,13 @@ public class GeneticMovement : MonoBehaviour
 
     public virtual void Update()
     {
-        if (HeartRateManager.Instance.GlobalPhaseMod1 > lastPhase)
+        if (agent.kuramoto.phase > lastPhase)
             step = (step + 1) % cycleLength;
 
-        Vector3 vel = geneticMovement[step] * HeartRateManager.Instance.GlobalPhaseMod1 * speedScl;
+        Vector3 vel = geneticMovement[step] * agent.kuramoto.phase * speedScl;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
 
-        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
+        lastPhase = agent.kuramoto.phase;
     }
 
     public virtual void OnCollisionEnter(Collision collision)

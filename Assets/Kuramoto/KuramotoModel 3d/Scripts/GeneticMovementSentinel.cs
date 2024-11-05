@@ -47,7 +47,7 @@ public class GeneticMovementSentinel : GeneticMovement
 
     public override void Update()
     {
-        if (HeartRateManager.Instance.GlobalPhaseMod1 < lastPhase) 
+        if (agent.kuramoto.phase < lastPhase) 
             step = (step + 1) % cycleLength;
 
         Vector3 vel = Vector3.zero;
@@ -62,10 +62,10 @@ public class GeneticMovementSentinel : GeneticMovement
                 vel += Vector3.up * speedScl * 3;
 
         vel += geneticMovement[step] * genSpeedScl;
-        vel *= HeartRateManager.Instance.GlobalPhaseMod1;
+        vel *= agent.kuramoto.phase;
 
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.forward);
-        lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
+        lastPhase = agent.kuramoto.phase;
     }
 
     public override void OnCollisionEnterKill(Collision collision)

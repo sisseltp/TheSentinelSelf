@@ -106,22 +106,22 @@ public class PathogenSong : MonoBehaviour
         if(behavior == KuramotoSongBehavior.Swelling) 
         {
             // Swelling behavior
-            currentVolume = 0.5f * (Mathf.Sin(HeartRateManager.Instance.GlobalPhaseMod1 * 2.0f * Mathf.PI) + 1.0f);
+            currentVolume = 0.5f * (Mathf.Sin(kuramoto.phase * 2.0f * Mathf.PI) + 1.0f);
             audioSource.volume = currentVolume * maxVolume;
         } 
         else 
         { 
             // Shouting behavior
-            if(HeartRateManager.Instance.GlobalPhaseMod1 - lastPhase < 0.0f  ) 
+            if(kuramoto.phase - lastPhase < 0.0f  ) 
                 shoutTriggered = false;
 
-            if(HeartRateManager.Instance.GlobalPhaseMod1 >= shoutAtKuramotoPhase && shoutTriggered == false) 
+            if(kuramoto.phase >= shoutAtKuramotoPhase && shoutTriggered == false) 
             {
                 audioSource.Play();
                 shoutTriggered = true;
             }
 
-            lastPhase = HeartRateManager.Instance.GlobalPhaseMod1;
+            lastPhase = kuramoto.phase;
         }
     }
 }

@@ -11133,8 +11133,8 @@ MonoBehaviour:
   sensorConnected: 0
   sensorHasValue: 0
   GlobalPhase: 0
-  simulateHeartBeat: 0
-  simulatedBPM: 90
+  forceSimulateHeartBeat: 0
+  simulatedBPM: 30
 --- !u!1 &1105279490
 GameObject:
   m_ObjectHideFlags: 0
@@ -11344,20 +11344,6 @@ Transform:
   m_Father: {fileID: 954404691}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1144778776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3850774877200160642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7840e5d934a414f42b52f529b428954a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rndr: {fileID: 9004472621640559637}
-  growingObjs: []
 --- !u!1001 &1145815851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45812,6 +45798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8633041145975424803}
+  - component: {fileID: 2562773396529699849}
   m_Layer: 4
   m_Name: IntroScene
   m_TagString: Untagged
@@ -45819,6 +45806,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2562773396529699849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2562773396529699848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7840e5d934a414f42b52f529b428954a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rndr: {fileID: 9004472621640559637}
+  growingObjs: []
 --- !u!4 &2565682924260456553
 Transform:
   m_ObjectHideFlags: 0
@@ -58989,7 +58990,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3850774877200160641}
   - component: {fileID: 3850774877200160640}
-  - component: {fileID: 1144778776}
   m_Layer: 0
   m_Name: Agents Manager
   m_TagString: Untagged
