@@ -41,7 +41,8 @@ public class GeneticMovementSentinel : GeneticMovement
 
         agent.rigidBody.drag = origDrag;
 
-        target = GameManager.Instance.pathogensManagers[Random.Range(0, GameManager.Instance.pathogensManagers.Count)].transform.position;
+        //target = GameManager.Instance.pathogensManagers[Random.Range(0, GameManager.Instance.pathogensManagers.Count)].transform.position;
+        target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position).transform.position;
         targeting = true;
     }
 
@@ -72,8 +73,8 @@ public class GeneticMovementSentinel : GeneticMovement
     {
         if (keys >= NumKeysToCollect)
         {
-            int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
-            target = GameManager.Instance.tCellsManagers[indx].transform.position;
+            //int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
+            target = GameManager.Instance.GetRandomTCellsManagerAmongClosestHalf(transform.position).transform.position;
             targeting = true;
             tcellHits = 0;
 
@@ -96,9 +97,9 @@ public class GeneticMovementSentinel : GeneticMovement
     {
         if (tcellHits > 10)
         {
-            int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
+            //int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
-            target = GameManager.Instance.pathogensManagers[indx].transform.position;
+            target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position).transform.position;
             targeting = true;
 
             foreach (GeneticAntigenKey key in digestAntigens)
