@@ -69,13 +69,13 @@ public class AgentsManager : MonoBehaviour
             else
             {
                 agents[i].kuramoto.age += Time.deltaTime;
-                agents[i].kuramoto.phase = (agents[i].kuramoto.phase+(HeartRateManager.Instance.GlobalPhaseMod1+ GPUOutput[i].phaseAdition) * Time.deltaTime*0.75f) % 1f;
+                agents[i].kuramoto.phase = (agents[i].kuramoto.phase+(HeartRateManager.Instance.GlobalPhaseMod1+ GPUOutput[i].phaseAdition) * Time.deltaTime*0.5f) % 1f;
                 //agents[i].kuramoto.phase += (GPUOutput[i].phaseAdition * Time.deltaTime) % 1f;
                 GPUStruct[i].played = agents[i].kuramoto.played;
                 GPUStruct[i].phase = agents[i].kuramoto.phase;
                 GPUStruct[i].speed = agents[i].kuramoto.speed;
                 GPUStruct[i].pos = agents[i].rigidBody.position;
-                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
+                //agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
             }
         }
 

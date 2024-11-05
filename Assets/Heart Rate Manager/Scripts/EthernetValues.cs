@@ -60,7 +60,7 @@ public class EthernetValues : MonoBehaviour
             if (GlobalPulse == 1)
                 pulseGradient = 0;
 
-            if(!HeartRateManager.Instance.simulateHeartBeat)
+            if(!HeartRateManager.Instance.forceSimulateHeartBeat)
                 HeartRateManager.Instance.GlobalPhase = pulseGradient;
         } 
         else if (reading) 

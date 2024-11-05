@@ -15,7 +15,7 @@ public class HeartRateManager : MonoBehaviour
     public float GlobalPhase = 0f;
     public float GlobalPhaseMod1 => GlobalPhase % 1f;
 
-    public bool simulateHeartBeat = false;
+    public bool forceSimulateHeartBeat = false;
 
     [Range(1,180)]
     public int simulatedBPM = 30;
@@ -29,7 +29,7 @@ public class HeartRateManager : MonoBehaviour
 
     void Update()
     {
-        if(!sensorConnected || !sensorHasValue || simulateHeartBeat)
+        if(!sensorConnected || !sensorHasValue || forceSimulateHeartBeat)
         {
             simulatedPhase += Time.deltaTime * simulatedBPM / 60f;
             GlobalPhase = simulatedPhase;
