@@ -18,14 +18,14 @@ public class Genetics
             Vector3[] newVels = new Vector3[Vels.Length];
             for (int i = 0; i < newVels.Length; i++)
             {
-                float rand = UnityEngine.Random.value;
+                float rand = Random.value;
 
                 if (rand < 0.33f)
                     newVels[i] = Vels[i];
                 else if (rand < 0.66f)
                     newVels[i] = otherVels[i];
                 else
-                    newVels[i] = UnityEngine.Random.insideUnitSphere;
+                    newVels[i] = Random.insideUnitSphere;
             }
 
             return newVels;
@@ -52,7 +52,7 @@ public class Genetics
         {
             float[] newSetting = new float[Settings.Length];
             for (int i = 0; i < newSetting.Length; i++)
-                newSetting[i] = UnityEngine.Random.value<0.5f?Settings[i]: otherSettings[i];
+                newSetting[i] = Random.value<0.5f?Settings[i]: otherSettings[i];
 
             return newSetting;
         }
@@ -73,7 +73,7 @@ public class Genetics
             {
                 Key = new int[5];
                 for(int i=0; i<Key.Length; i++)
-                    Key[i] = UnityEngine.Random.Range(0, 10);
+                    Key[i] = Random.Range(0, 10);
             }
 
             fitness = fit;
@@ -83,7 +83,7 @@ public class Genetics
         {
             Key = new int[keyLength];
             for (int i = 0; i < keyLength; i++)
-                Key[i] = UnityEngine.Random.Range(0, keyLength);
+                Key[i] = Random.Range(0, keyLength);
                         
             fitness = 0f;
         }

@@ -22,12 +22,9 @@ public class GPUCompute : MonoBehaviour
     private GPUOutput[] pathogenAndTCellDataOut;
     private GPUOutput[] plasticDataOut;
 
-    private bool Pcomputed = false;
-    private bool Scomputed = false;
-    private bool Bcomputed = false;
-
-    private float cDT = 1;
-    private float timer = 0;
+    private bool plasticDataOutComputed = false;
+    private bool sentinelDataOutComputed = false;
+    private bool pathogenAndTCellDataOutComputed = false;
 
     private ComputeBuffer sentinelBuffer;
     private ComputeBuffer BiomeBuffer;
@@ -59,6 +56,7 @@ public class GPUCompute : MonoBehaviour
             noiseScl = kuramoto.noiseScl;
             coupling = kuramoto.coupling;
             attractionScl = kuramoto.attractionSclr;
+            pos = kuramoto.transform.position;
             played = 1;
         }
     }
@@ -77,154 +75,7 @@ public class GPUCompute : MonoBehaviour
 
     private void Start()
     {
-        cDT = Time.deltaTime;
         StartCoroutine(UpdateTextureFromComputeASync());
-    }
-
-    private void LinkData()
-    {
-        List<GPUData> sentData = new List<GPUData>();
-        List<GPUOutput> sentDataOut = new List<GPUOutput>();
-        for (int i = 0; i < GameManager.Instance.sentinelsManagers.Count; i++)
-            if (GameManager.Instance.sentinelsManagers[i].GPUStruct != null)
-            {
-                sentData.AddRange(GameManager.Instance.sentinelsManagers[i].GPUStruct);
-                sentDataOut.AddRange(GameManager.Instance.sentinelsManagers[i].GPUOutput);
-            }
-                
-
-        sentinelData = sentData.ToArray();
-        sentinelDataOut = sentDataOut.ToArray();
-
-        List<GPUData> bioData = new List<GPUData>();
-        List<GPUOutput> bioDataOut = new List<GPUOutput>();
-        for (int i = 0; i < GameManager.Instance.pathogensManagers.Count; i++)
-            if (GameManager.Instance.pathogensManagers[i].GPUStruct != null)
-            {
-                bioData.AddRange(GameManager.Instance.pathogensManagers[i].GPUStruct);
-                bioDataOut.AddRange(GameManager.Instance.pathogensManagers[i].GPUOutput);
-            }
-                
-        for (int i = 0; i < GameManager.Instance.tCellsManagers.Count; i++)
-            if (GameManager.Instance.tCellsManagers[i].GPUStruct != null)
-            {
-                bioData.AddRange(GameManager.Instance.tCellsManagers[i].GPUStruct);
-                bioDataOut.AddRange(GameManager.Instance.tCellsManagers[i].GPUOutput);
-            }
-                
-
-        pathogenAndTCellData = bioData.ToArray();
-        pathogenAndTCellDataOut = bioDataOut.ToArray();
-
-        List<GPUData> plasData = new List<GPUData>();
-        List<GPUOutput> plasDataOut = new List<GPUOutput>();
-        for (int i = 0; i < GameManager.Instance.plasticsManagers.Count; i++)
-            if (GameManager.Instance.plasticsManagers[i].GPUStruct != null)
-            {
-                plasData.AddRange(GameManager.Instance.plasticsManagers[i].GPUStruct);
-                plasDataOut.AddRange(GameManager.Instance.plasticsManagers[i].GPUOutput);
-            }
-                
-
-        plasticData = plasData.ToArray();
-        plasticDataOut = plasDataOut.ToArray();
-
-        TexResolution = 
-            pathogenAndTCellData.Length + 
-            sentinelData.Length + 
-            plasticData.Length;
-    }
-
-    private void SetData()
-    {
-        int bioOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.pathogensManagers.Count; i++)
-        {
-            if (GameManager.Instance.pathogensManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.pathogensManagers[i].GPUStruct = Extensions.SubArray(pathogenAndTCellData, bioOffset, GameManager.Instance.pathogensManagers[i].GPUStruct.Length);
-                bioOffset += GameManager.Instance.pathogensManagers[i].GPUStruct.Length;
-            }
-        }
-
-        for (int i = 0; i < GameManager.Instance.tCellsManagers.Count; i++)
-        {
-            if (GameManager.Instance.tCellsManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.tCellsManagers[i].GPUStruct = Extensions.SubArray(pathogenAndTCellData, bioOffset, GameManager.Instance.tCellsManagers[i].GPUStruct.Length);
-                bioOffset += GameManager.Instance.tCellsManagers[i].GPUStruct.Length;
-            }
-        }
-
-        int sentOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.sentinelsManagers.Count; i++)
-        {
-            if (GameManager.Instance.sentinelsManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.sentinelsManagers[i].GPUStruct = Extensions.SubArray(sentinelData, sentOffset, GameManager.Instance.sentinelsManagers[i].GPUStruct.Length);
-                sentOffset += GameManager.Instance.sentinelsManagers[i].GPUStruct.Length;
-            }
-        }
-
-        int plasticOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.plasticsManagers.Count; i++)
-        {
-            if (GameManager.Instance.plasticsManagers[i].GPUStruct != null)
-            {
-
-                GameManager.Instance.plasticsManagers[i].GPUStruct = Extensions.SubArray(plasticData, plasticOffset, GameManager.Instance.plasticsManagers[i].GPUStruct.Length);
-                plasticOffset += GameManager.Instance.plasticsManagers[i].GPUStruct.Length;
-            }
-        }
-    }
-
-    private void AsyncSetData()
-    {
-        int bioOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.pathogensManagers.Count; i++)
-        {
-            if (GameManager.Instance.pathogensManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.pathogensManagers[i].GPUOutput = Extensions.SubArray(pathogenAndTCellDataOut, bioOffset, GameManager.Instance.pathogensManagers[i].GPUStruct.Length);
-                bioOffset += GameManager.Instance.pathogensManagers[i].GPUStruct.Length;
-            }
-        }
-
-        for (int i = 0; i < GameManager.Instance.tCellsManagers.Count; i++)
-        {
-            if (GameManager.Instance.tCellsManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.tCellsManagers[i].GPUOutput = Extensions.SubArray(pathogenAndTCellDataOut, bioOffset, GameManager.Instance.tCellsManagers[i].GPUStruct.Length);
-
-                bioOffset += GameManager.Instance.tCellsManagers[i].GPUStruct.Length;
-            }
-        }
-
-        int sentOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.sentinelsManagers.Count; i++)
-        {
-            if (GameManager.Instance.sentinelsManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.sentinelsManagers[i].GPUOutput = Extensions.SubArray(sentinelDataOut, sentOffset, GameManager.Instance.sentinelsManagers[i].GPUStruct.Length);
-                sentOffset += GameManager.Instance.sentinelsManagers[i].GPUStruct.Length;
-            }
-        }
-
-        int plasticOffset = 0;
-
-        for (int i = 0; i < GameManager.Instance.plasticsManagers.Count; i++)
-        {
-            if (GameManager.Instance.plasticsManagers[i].GPUStruct != null)
-            {
-                GameManager.Instance.plasticsManagers[i].GPUOutput = Extensions.SubArray(plasticDataOut, plasticOffset, GameManager.Instance.plasticsManagers[i].GPUStruct.Length);
-                plasticOffset += GameManager.Instance.plasticsManagers[i].GPUStruct.Length;
-            }
-        }
     }
 
     IEnumerator UpdateTextureFromComputeASync()
@@ -257,7 +108,6 @@ public class GPUCompute : MonoBehaviour
             plasticBufferOut.SetData(new GPUOutput[plasticData.Length]);
 
             int UpdateBiome = shader.FindKernel("BiomeUpdate");
-            //int UpdateSentinel = shader.FindKernel("SentinelUpdate");
 
             shader.SetTexture(UpdateBiome, "Result", rt);
             shader.SetBuffer(UpdateBiome, "sentinelData", sentinelBuffer);
@@ -274,13 +124,11 @@ public class GPUCompute : MonoBehaviour
             AsyncGPUReadback.Request(sentinelBufferOut, SOnCompleteReadBack);
             AsyncGPUReadback.Request(BiomeBufferOut, BOnCompleteReadBack);
 
-            yield return new WaitUntil(() => Bcomputed && Scomputed && Pcomputed);
+            yield return new WaitUntil(() => pathogenAndTCellDataOutComputed && sentinelDataOutComputed && plasticDataOutComputed);
 
-            Bcomputed = false;
-            Scomputed = false;
-            Pcomputed = false;
-
-            //Debug.Log(plasticDataOut[0].phaseAdition);
+            pathogenAndTCellDataOutComputed = false;
+            sentinelDataOutComputed = false;
+            plasticDataOutComputed = false;
 
             AsyncSetData();
 
@@ -293,29 +141,106 @@ public class GPUCompute : MonoBehaviour
         }
     }
 
+    private void LinkData()
+    {
+        List<GPUData> sentData = new List<GPUData>();
+        List<GPUOutput> sentDataOut = new List<GPUOutput>();
+        for (int i = 0; i < GameManager.Instance.sentinelsManagers.Count; i++)
+        {
+            sentData.AddRange(GameManager.Instance.sentinelsManagers[i].GPUStruct);
+            sentDataOut.AddRange(GameManager.Instance.sentinelsManagers[i].GPUOutput);
+        }
+                
+        sentinelData = sentData.ToArray();
+        sentinelDataOut = sentDataOut.ToArray();
+
+        List<GPUData> bioData = new List<GPUData>();
+        List<GPUOutput> bioDataOut = new List<GPUOutput>();
+        for (int i = 0; i < GameManager.Instance.pathogensManagers.Count; i++)
+        {
+            bioData.AddRange(GameManager.Instance.pathogensManagers[i].GPUStruct);
+            bioDataOut.AddRange(GameManager.Instance.pathogensManagers[i].GPUOutput);
+        }
+
+        for (int i = 0; i < GameManager.Instance.tCellsManagers.Count; i++)
+        {
+            bioData.AddRange(GameManager.Instance.tCellsManagers[i].GPUStruct);
+            bioDataOut.AddRange(GameManager.Instance.tCellsManagers[i].GPUOutput);
+        }
+         
+        pathogenAndTCellData = bioData.ToArray();
+        pathogenAndTCellDataOut = bioDataOut.ToArray();
+
+        List<GPUData> plasData = new List<GPUData>();
+        List<GPUOutput> plasDataOut = new List<GPUOutput>();
+        for (int i = 0; i < GameManager.Instance.plasticsManagers.Count; i++)     
+        {
+            plasData.AddRange(GameManager.Instance.plasticsManagers[i].GPUStruct);
+            plasDataOut.AddRange(GameManager.Instance.plasticsManagers[i].GPUOutput);
+        }
+                
+
+        plasticData = plasData.ToArray();
+        plasticDataOut = plasDataOut.ToArray();
+
+        TexResolution = pathogenAndTCellData.Length + sentinelData.Length + plasticData.Length;
+    }
+
     void POnCompleteReadBack(AsyncGPUReadbackRequest request)
     {
-        if (request.hasError == false)
+        if (!request.hasError)
         {
             plasticDataOut = request.GetData<GPUOutput>().ToArray();
-            Pcomputed = true;
+            plasticDataOutComputed = true;
         }
+        
     }
 
     void SOnCompleteReadBack(AsyncGPUReadbackRequest request)
     {
-        if (request.hasError == false)
+        if (!request.hasError)
         {
             sentinelDataOut = request.GetData<GPUOutput>().ToArray();
-            Scomputed = true;
+            sentinelDataOutComputed = true;
         }
     }
+
     void BOnCompleteReadBack(AsyncGPUReadbackRequest request)
     {
-        if (request.hasError == false)
+        if (!request.hasError)
         {
             pathogenAndTCellDataOut = request.GetData<GPUOutput>().ToArray();
-            Bcomputed = true;
+            pathogenAndTCellDataOutComputed = true;
+        }  
+    }
+
+    private void AsyncSetData()
+    {
+        int pathoAndTCellOffset = 0;
+        foreach (PathogensManager manager in GameManager.Instance.pathogensManagers)
+        {
+            manager.GPUOutput = Extensions.SubArray(pathogenAndTCellDataOut, pathoAndTCellOffset, manager.GPUOutput.Length);
+            pathoAndTCellOffset += manager.GPUOutput.Length;
+        }
+
+        foreach (TCellsManager manager in GameManager.Instance.tCellsManagers)
+        {
+            manager.GPUOutput = Extensions.SubArray(pathogenAndTCellDataOut, pathoAndTCellOffset, manager.GPUOutput.Length);
+            pathoAndTCellOffset += manager.GPUOutput.Length;
+        }
+
+        int sentOffset = 0;
+        foreach (SentinelsManager manager in GameManager.Instance.sentinelsManagers)
+        {
+            manager.GPUOutput = Extensions.SubArray(sentinelDataOut, sentOffset, manager.GPUOutput.Length);
+            sentOffset += manager.GPUOutput.Length;
+        }
+
+        int plasticOffset = 0;
+        foreach (PlasticsManager manager in GameManager.Instance.plasticsManagers)
+        {
+            manager.GPUOutput = Extensions.SubArray(plasticDataOut, plasticOffset, manager.GPUOutput.Length);
+            plasticOffset += manager.GPUOutput.Length;
         }
     }
 
@@ -344,9 +269,7 @@ public static class Extensions
 {
     public static T[] SubArray<T>(this T[] array, int offset, int length)
     {
-        return array.Skip(offset)
-                    .Take(length)
-                    .ToArray();
-    }
+        return array.Skip(offset).Take(length).ToArray();
+    } 
 }
 

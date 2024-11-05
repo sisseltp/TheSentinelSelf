@@ -18,7 +18,6 @@ public class PathogensManager : AgentsManager
                 agents[realAmountAgents] = thisPathogen;
 
                 GPUStruct[realAmountAgents].SetFromKuramoto(thisPathogen.kuramoto);
-                GPUStruct[realAmountAgents].pos = agents[realAmountAgents].transform.position;
 
                 realAmountAgents++;
 

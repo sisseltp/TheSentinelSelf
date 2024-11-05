@@ -15,23 +15,23 @@ public class KuramotoAffectedAgent : MonoBehaviour
     public float age = 0f; // holds this agents age
     public bool dead = false; // collision killer
 
-    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, Vector2 attractionSclRange)
+    public void Setup(Vector2 noiseRange, Vector2 couplingRanges, Vector2 SpeedRange, Vector2 couplingScl, Vector2 attractionSclRange, float thisSpeedVariation = 0.1f)
     {
         float[] settings = new float[] {
-            UnityEngine.Random.Range(SpeedRange.x, SpeedRange.y),
-            UnityEngine.Random.Range(noiseRange.x, noiseRange.y),
-            UnityEngine.Random.Range(couplingScl.x, couplingScl.y),
-            UnityEngine.Random.Range(couplingRanges.x, couplingRanges.y),
-            UnityEngine.Random.Range(attractionSclRange.x, attractionSclRange.y)};
+            Random.Range(SpeedRange.x, SpeedRange.y),
+            Random.Range(noiseRange.x, noiseRange.y),
+            Random.Range(couplingScl.x, couplingScl.y),
+            Random.Range(couplingRanges.x, couplingRanges.y),
+            Random.Range(attractionSclRange.x, attractionSclRange.y)};
 
-        SetupData(settings);
+        SetupData(settings,thisSpeedVariation);
     }
 
-    public void SetupData(float[] settingsData)
+    public void SetupData(float[] settingsData, float thisSpeedVariation = 0.1f)
     {
         speedBPM = settingsData[0];
         speed = speedBPM/60f;
-        phase = speed;
+        phase = speed * Random.Range(1f - thisSpeedVariation, 1f + thisSpeedVariation);
         noiseScl = settingsData[1];
         coupling = settingsData[2];
         couplingRange = settingsData[3];
