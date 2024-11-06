@@ -22,7 +22,9 @@ public class CameraTracker : MonoBehaviour
     private Image faderImage;
     [SerializeField]
     private SphereCollider sphereCollider;
-
+    [SerializeField] 
+    private float maxSpeed = 5;
+    
     private Transform tracked;
 
     private Transform look;
@@ -105,13 +107,13 @@ public class CameraTracker : MonoBehaviour
         cameraBrain = GetComponent<CameraBrain>();
     }
 
-    void Start()
+    private void Start()
     {
         origin = transform.position;
         origRot = transform.rotation;
     }
 
-    void Update()
+    private void FixedUpdate()
     {
         if (!tracked || !look) 
             return;
@@ -180,6 +182,11 @@ public class CameraTracker : MonoBehaviour
         vel += dif * (power * Time.deltaTime);
         vel *= 0.8f;
         rb.velocity += vel;
+        
+        if(rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
     }
 
     public void OverrideTracked(Transform newTarget)
