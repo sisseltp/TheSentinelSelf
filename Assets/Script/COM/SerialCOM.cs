@@ -35,11 +35,11 @@ public class SerialCOM : MonoBehaviour
         Close();
     }
 
-    public void Open()
+    private void Open()
     {
         isStreaming = true;
         serialPort = new SerialPort(port, baudRate);
-        serialPort.ReadTimeout = 1000;
+        serialPort.ReadTimeout = 50;
 
         try
         {
@@ -52,19 +52,23 @@ public class SerialCOM : MonoBehaviour
         }  
     }
 
-    public void Close()
+    private void Close()
     {
         serialPort?.Close();
     }
-
+    
     private void Update()
     {
         if (!isStreaming) return;
-        
-        var value = ReadSerialPort();
-        if (value != null )
+
+        // Make sure we read all the data else it will stack up and give a delay
+        while (serialPort.BytesToRead > 0)
         {
-            ParseMessage(value); // -> 0,600,0
+            var value = ReadSerialPort();
+            if (value != null )
+            {
+                ParseMessage(value); // -> 0,600,0
+            }
         }
     }
 
@@ -106,6 +110,8 @@ public class SerialCOM : MonoBehaviour
 
         if (!success) return;
         
+        // Debug.Log($"Heart rate data. BPM: {bpm}, Interval : {interval}, Pulse : {pulse}");
+        
         ethernetValues.SetGlobalHeartBeatRateValue(bpm);
         ethernetValues.SetGlobalHeartBeatIntervalValue(interval);
         ethernetValues.SetGlobalHeartBeatPulseValue(pulse);
@@ -119,13 +125,13 @@ public class SerialCOM : MonoBehaviour
         {
             if (serialPort.IsOpen)
                 return serialPort.ReadLine();
-            else
-                return "ERROR: Serial Port Not Open";
             
+            return "ERROR: Serial Port Not Open";
+
         }
         catch (TimeoutException e)
         {
-            Debug.Log(e.Message);
+            Debug.LogWarning(e.Message);
             return null;
         }
     }

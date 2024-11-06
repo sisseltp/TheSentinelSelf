@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +16,14 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape pressed, quitting...");
+            Application.Quit();
+        }
+    }
 
     public List<SentinelsManager> GetSentinelsManagersSortedByDistance(Vector3 position)
     {
