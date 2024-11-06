@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Version: 0
   m_Tracks:
   - {fileID: 7247095676625001879}
-  m_FixedDuration: 324.65
+  m_FixedDuration: 325.06666666666666
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1
@@ -435,7 +435,25 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -747,7 +765,7 @@ MonoBehaviour:
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 0.5551383399212568
+    m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -789,7 +807,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: threading water
   - m_Version: 1
-    m_Start: 251.888471673254
+    m_Start: 252.44361001317526
     m_ClipIn: 0
     m_Asset: {fileID: -4338157336845208578}
     m_Duration: 32.90513833992097
@@ -797,11 +815,29 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 7247095676625001879}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 0.5551383399212568
+    m_BlendInDuration: -1
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -822,7 +858,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: threading water
   - m_Version: 1
-    m_Start: 284.793610013175
+    m_Start: 285.34874835309625
     m_ClipIn: 0
     m_Asset: {fileID: 1290659353157104791}
     m_Duration: 32.90513833992097
@@ -831,7 +867,7 @@ MonoBehaviour:
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
-    m_BlendOutDuration: 7.665415019762634
+    m_BlendOutDuration: 7.665415019762577
     m_MixInCurve:
       serializedVersion: 2
       m_Curve:
@@ -873,7 +909,7 @@ MonoBehaviour:
     m_PreExtrapolationTime: 0
     m_DisplayName: threading water
   - m_Version: 1
-    m_Start: 310.03333333333336
+    m_Start: 310.5884716732546
     m_ClipIn: 0
     m_Asset: {fileID: 201522099728269378}
     m_Duration: 14.666666666666664
@@ -881,11 +917,29 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 7247095676625001879}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
-    m_BlendInDuration: 7.665415019762634
+    m_BlendInDuration: 7.665415019762577
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve: []
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
