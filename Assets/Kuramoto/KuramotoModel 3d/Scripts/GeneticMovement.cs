@@ -99,8 +99,6 @@ public class GeneticMovement : MonoBehaviour
             OnTriggerStayLymphonde(collider);
         else if (collider.gameObject.CompareTag("PathogenEmitter"))
             OnTriggerStayPathogenEmitter(collider);
-        else if (collider.gameObject.CompareTag("PlasticMover"))
-            OnTriggerStayPlasticMover(collider);
     }
 
     public virtual void OnTriggerStayLymphonde(Collider collider) { }

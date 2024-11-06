@@ -138,12 +138,12 @@ public class GeneticMovementSentinel : GeneticMovement
 
     public override void OnTriggerStayPathogenEmitter(Collider collider)
     {
-        if (!CheckIfEnoughKeys())
-            targeting = false;
+        /*if (!CheckIfEnoughKeys())
+            targeting = false;*/
     }
 
     public override void OnTriggerStayLymphonde(Collider collider)
     {
-        CheckIfEnoughTCellHits();
+        //CheckIfEnoughTCellHits();
     }
 }
