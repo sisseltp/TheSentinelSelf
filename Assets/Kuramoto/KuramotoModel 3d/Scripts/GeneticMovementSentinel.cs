@@ -60,7 +60,7 @@ public class GeneticMovementSentinel : GeneticMovement
 
         if (Physics.Raycast(forward, out RaycastHit hit, 20f))
             if (hit.transform.CompareTag("Terrain"))
-                vel += Vector3.up * speedScl * 3f;
+                vel += 3f * speedScl * Vector3.up;
 
         vel += geneticMovement[step] * genSpeedScl;
         vel *= agent.kuramoto.phase;
@@ -69,7 +69,7 @@ public class GeneticMovementSentinel : GeneticMovement
         lastPhase = agent.kuramoto.phase;
     }
 
-    public void CheckIfEnoughKeys()
+    public bool CheckIfEnoughKeys()
     {
         if (keys >= NumKeysToCollect)
         {
@@ -90,7 +90,11 @@ public class GeneticMovementSentinel : GeneticMovement
                 // TODO: @Neander: This is where the sentinel has enough antigens and is infected by plastic
                 CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.InfectedSentinelGoesToTCell, transform));
             }
+
+            return true;
         }
+
+        return false;
     }
 
     public void CheckIfEnoughTCellHits()
@@ -131,4 +135,15 @@ public class GeneticMovementSentinel : GeneticMovement
     public override void OnTriggerEnterLymphonde(Collider collider) => targeting = false;
     public override void OnTriggerEnterPathogenEmitter(Collider collider) => targeting = false;
     public override void OnTriggerExitAnything(Collider collider) => targeting = true;
+
+    public override void OnTriggerStayPathogenEmitter(Collider collider)
+    {
+        if (!CheckIfEnoughKeys())
+            targeting = false;
+    }
+
+    public override void OnTriggerStayLymphonde(Collider collider)
+    {
+        CheckIfEnoughTCellHits();
+    }
 }

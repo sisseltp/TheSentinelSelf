@@ -379,6 +379,9 @@ public class CameraTracker : MonoBehaviour
             SoundFXManager.Instance.Play("EnterBody");
             SoundFXManager.Instance.Stop("VoiceOver");
 
+            faderImage.StopAllCoroutines();
+            faderImage.CrossFadeAlpha(1f, 0f, false);
+
             // FindSceneTracked("Player");
             StartTracking();
             
@@ -386,15 +389,21 @@ public class CameraTracker : MonoBehaviour
             // sphereCollider.isTrigger = false;
             doingIntro = false;
             IntroBeginner.Instance.SetDoingIntro(false);
-
             // StartCoroutine(ChangeCharacter(changeTrackTimer));
             // StartCoroutine(ChangeOrientation(changeTrackTimer * 0.666f));
+            
+            faderImage.CrossFadeAlpha(0f, 0.25f, false);
         } 
         else if (collision.transform.CompareTag("BodyAlign")) 
-        { 
+        {
             // camera is aligned and looking down at the body
             FindScreenTracked("Body");
         }
+        else if (collision.transform.CompareTag("StartFade"))
+        {
+            faderImage.CrossFadeAlpha(1f, 0.25f, false);
+        }
+
     }
 
     // Related to the body scene

@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     public static List<T> GetFirstHalfElements<T>(List<T> list)
     {
-        int elementsToTake = Mathf.CeilToInt(list.Count / 2);
+        int elementsToTake = Mathf.CeilToInt(list.Count / 1.5f);
         return list.Take(elementsToTake).ToList();
     }
 
