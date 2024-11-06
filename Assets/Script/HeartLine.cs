@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeartLine : MonoBehaviour
@@ -70,7 +68,7 @@ public class HeartLine : MonoBehaviour
         for (int k=0;k< speed; k++)
         {
             float newValue = 0f;
-            if (progressPeak > 0f && HeartRateManager.Instance.sensorConnected)
+            if (progressPeak > 0f && HeartRateManager.Instance.sensorConnected && HeartRateManager.Instance.sensorHasValue)
             {
                 progressPeak -= Time.deltaTime * 3f/ speed;
                 progressPeak = Mathf.Clamp01(progressPeak);
