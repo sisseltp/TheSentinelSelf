@@ -59,7 +59,10 @@ public class SerialCOM : MonoBehaviour
     
     private void Update()
     {
-        if (!isStreaming) return;
+        if (!isStreaming) 
+            return;
+        if (!serialPort.IsOpen)
+            return;
 
         // Make sure we read all the data else it will stack up and give a delay
         while (serialPort.BytesToRead > 0)

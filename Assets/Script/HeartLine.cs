@@ -21,6 +21,7 @@ public class HeartLine : MonoBehaviour
     Vector3[] finalPositions;
 
     Keyframe[] baseKeysCurve;
+    float lastValue;
 
     void Start()
     {
@@ -46,7 +47,7 @@ public class HeartLine : MonoBehaviour
 
     void Update()
     {
-        if(HeartRateManager.Instance.GlobalPhaseMod1>threshold && !wasOverThreshold)
+        if(HeartRateManager.Instance.GlobalPhaseMod1<lastValue)
         {
             Keyframe[] modifiedKeys = new Keyframe[baseKeysCurve.Length];
 
@@ -58,17 +59,19 @@ public class HeartLine : MonoBehaviour
                 curvePeak.keys = modifiedKeys;
             }
 
-            wasOverThreshold = true;
+
             progressPeak = 1f;
         }
 
-        if (HeartRateManager.Instance.GlobalPhaseMod1 <= threshold && wasOverThreshold)
+        if (HeartRateManager.Instance.GlobalPhaseMod1 > lastValue)
             wasOverThreshold = false;
+
+        lastValue = HeartRateManager.Instance.GlobalPhaseMod1;
 
         for (int k=0;k< speed; k++)
         {
             float newValue = 0f;
-            if (progressPeak > 0f && HeartRateManager.Instance.sensorConnected && HeartRateManager.Instance.sensorHasValue)
+            if (progressPeak > 0f && (HeartRateManager.Instance.forceSimulateHeartBeat || (HeartRateManager.Instance.sensorConnected && HeartRateManager.Instance.sensorHasValue)))
             {
                 progressPeak -= Time.deltaTime * 3f/ speed;
                 progressPeak = Mathf.Clamp01(progressPeak);
