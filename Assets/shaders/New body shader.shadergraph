@@ -113,9 +113,6 @@
         },
         {
             "m_Id": "caa9b98afd86481cb32af9287161a199"
-        },
-        {
-            "m_Id": "77b709b325d943f79b536fc812acba64"
         }
     ],
     "m_GroupDatas": [],
@@ -505,8 +502,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": -0.0000468686776002869,
-            "y": 199.99998474121095
+            "x": 135.0000457763672,
+            "y": 172.0
         },
         "m_Blocks": [
             {
@@ -529,9 +526,6 @@
             },
             {
                 "m_Id": "33e04156e6754c10941a6841bb9e8a14"
-            },
-            {
-                "m_Id": "77b709b325d943f79b536fc812acba64"
             }
         ]
     },
@@ -609,21 +603,6 @@
         "e32": 0.0,
         "e33": 1.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "010cfb23a3ba4a7cbf4725a23f9b0834",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha Clip Threshold",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "AlphaClipThreshold",
-    "m_StageCapability": 2,
-    "m_Value": 0.5,
-    "m_DefaultValue": 0.5,
-    "m_Labels": []
 }
 
 {
@@ -1960,39 +1939,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "77b709b325d943f79b536fc812acba64",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.AlphaClipThreshold",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "010cfb23a3ba4a7cbf4725a23f9b0834"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.AlphaClipThreshold"
 }
 
 {
@@ -3927,10 +3873,10 @@
     "m_ActiveSubTarget": {
         "m_Id": "002e866f691545728fd8fca6f02e06b9"
     },
-    "m_SurfaceType": 0,
+    "m_SurfaceType": 1,
     "m_AlphaMode": 0,
     "m_TwoSided": false,
-    "m_AlphaClip": true,
+    "m_AlphaClip": false,
     "m_CustomEditorGUI": ""
 }
 
