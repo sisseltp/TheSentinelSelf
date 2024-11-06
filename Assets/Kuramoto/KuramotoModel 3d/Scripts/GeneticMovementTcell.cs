@@ -42,7 +42,7 @@ public class GeneticMovementTcell : GeneticMovement
 
         lastPhase = agent.kuramoto.phase;
     }
-
+    
     public override void OnCollisionEnterPlayer(Collision collision)
     {
         List<GeneticAntigenKey> Antigens = collision.gameObject.GetComponent<GeneticMovementSentinel>().digestAntigens;
@@ -64,8 +64,6 @@ public class GeneticMovementTcell : GeneticMovement
         }
         else if (Antigens.Count > 0)
         {
-            // TODO: @Neander: Do the TCells get replicated? Do they go to the Pathogens? If yes how does it know which ones because the get killed by the sentinels?
-
             // if it had antigens?
             // get matches from children
             AntigenKeys[] results = Compare(Antigens.ToArray());// gpu accelerated key compare
@@ -162,11 +160,6 @@ public class GeneticMovementTcell : GeneticMovement
     {
         if (notKeyed)
             target = transform.parent.position;
-        // else if (other.gameObject.CompareTag("LymphOuter") && !notKeyed)
-        // {
-        //     // TODO: @Neander: This is where the TCell goes to the pathogen emitter
-        //     CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
-        // }
     }
 
     private IEnumerator TargetTimeout(float waitTime)
