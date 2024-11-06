@@ -101,8 +101,6 @@ public class GeneticMovementSentinel : GeneticMovement
     {
         if (tcellHits > 10)
         {
-            //int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
-
             target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position).transform.position;
             targeting = true;
 
@@ -134,7 +132,7 @@ public class GeneticMovementSentinel : GeneticMovement
     public override void OnCollisionEnterTerrain(Collision collision) => (agent as Sentinel).fosilising.enabled = true;
     public override void OnTriggerEnterLymphonde(Collider collider) => targeting = false;
     public override void OnTriggerEnterPathogenEmitter(Collider collider) => targeting = false;
-    public override void OnTriggerExitAnything(Collider collider) => targeting = true;
+    //public override void OnTriggerExitAnything(Collider collider) => targeting = true;
 
     public override void OnTriggerStayPathogenEmitter(Collider collider)
     {
