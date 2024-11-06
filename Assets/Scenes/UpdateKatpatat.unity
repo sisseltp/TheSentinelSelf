@@ -10619,6 +10619,7 @@ GameObject:
   - component: {fileID: 970190322}
   - component: {fileID: 970190321}
   - component: {fileID: 970190320}
+  - component: {fileID: 970190324}
   m_Layer: 0
   m_Name: small terrain
   m_TagString: Terrain
@@ -10727,6 +10728,19 @@ Terrain:
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
+--- !u!114 &970190324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970190318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb26797d28be9d4e8e7087d8fdf4026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detailDistance: 2000
 --- !u!1 &975875441
 GameObject:
   m_ObjectHideFlags: 0
@@ -46369,7 +46383,7 @@ MonoBehaviour:
   mainCamera: {fileID: 2550487142623021770}
   faderImage: {fileID: 447112307}
   sphereCollider: {fileID: 4049622654821292006}
-  maxSpeed: 40
+  maxSpeed: 80
   setDistance: 28
   distVariation: 3.45
   power: 0.2
