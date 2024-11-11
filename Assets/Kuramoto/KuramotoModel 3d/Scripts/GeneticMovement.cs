@@ -24,9 +24,10 @@ public class GeneticMovement : MonoBehaviour
     public float speedScl = 0.5f;
 
     //[HideInInspector]
-    public bool targeting = true;
+    //public bool targeting = true;
     //[HideInInspector]
-    public Vector3 target;
+    public ITargetable target;
+    public bool targeting => target != null;
 
     public virtual void Start()
     {
@@ -111,11 +112,11 @@ public class GeneticMovement : MonoBehaviour
             OnTriggerExitLymphOuter(collider);
         else if (collider.gameObject.CompareTag("PathogenEmitter"))
             OnTriggerExitPathogenEmitter(collider);
-        else
-            OnTriggerExitAnything(collider);
+        else if (collider.gameObject.CompareTag("Lymphonde"))
+            OnTriggerExitLymphonde(collider);
     }
 
     public virtual void OnTriggerExitLymphOuter(Collider collider) { }
     public virtual void OnTriggerExitPathogenEmitter(Collider collider) { }
-    public virtual void OnTriggerExitAnything(Collider collider) { }
+    public virtual void OnTriggerExitLymphonde(Collider collider) { }
 }

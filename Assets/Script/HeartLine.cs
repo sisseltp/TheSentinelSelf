@@ -8,11 +8,9 @@ public class HeartLine : MonoBehaviour
     public int amountPoints = 2000;
     float[] valuesHeart;
     float[] xs;
-
+    
     public AnimationCurve curvePeak;
 
-    bool wasOverThreshold = false;
-    float threshold = 0.9f;
     float progressPeak = 0f;
 
     public float speed = 50f;
@@ -59,12 +57,8 @@ public class HeartLine : MonoBehaviour
                 curvePeak.keys = modifiedKeys;
             }
 
-
             progressPeak = 1f;
         }
-
-        if (HeartRateManager.Instance.GlobalPhaseMod1 > lastValue)
-            wasOverThreshold = false;
 
         lastValue = HeartRateManager.Instance.GlobalPhaseMod1;
 

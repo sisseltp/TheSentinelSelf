@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneticAntigenKey : MonoBehaviour
+public class GeneticAntigenKey : MonoBehaviour, ITargetable
 {
     [Tooltip("Number of Keys in chain")]
     [SerializeField]
@@ -17,6 +17,7 @@ public class GeneticAntigenKey : MonoBehaviour
     [Tooltip("varience in the fade time")]
     [SerializeField]
     private float fadeTimeVarience = 4;
+    public Vector3 targetPoint => origin;
 
     void Start()
     {

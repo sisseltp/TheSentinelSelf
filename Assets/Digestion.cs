@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Digestion : MonoBehaviour
+public class Digestion : MonoBehaviour, ITargetable
 {
     [SerializeField]
     private float digestTime = 1;
@@ -19,6 +19,8 @@ public class Digestion : MonoBehaviour
     public Vector3 origin;
 
     private Transform rootBone;
+
+    public Vector3 targetPoint => origin;
 
     void Start()
     {

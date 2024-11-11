@@ -12,6 +12,8 @@ public class GeneticMovementTcell : GeneticMovement
     [SerializeField]
     private ComputeShader compare;
 
+    public Vector3 randomOffset = Vector3.zero;
+
     public override void Start()
     {
         base.Start();
@@ -19,7 +21,7 @@ public class GeneticMovementTcell : GeneticMovement
         manager = GetComponentInParent<TCellsManager>();
 
         if (notKeyed)
-            target = transform.parent.position;
+            target = transform.parent.gameObject.GetComponent<AgentsManager>();
     }
     
     public override void Update()
@@ -35,7 +37,14 @@ public class GeneticMovementTcell : GeneticMovement
         Vector3 vel = geneticMovement[step] * genSpeedScl;
 
         if (targeting)
-            vel += Vector3.Normalize(target - transform.position) * speedScl;
+        {
+            Vector3 targetOffset = Vector3.zero;
+            if (target is AgentsManager && notKeyed)
+                targetOffset = randomOffset;
+
+            vel += Vector3.Normalize((target.targetPoint+ targetOffset) - transform.position) * speedScl;
+        }
+           
 
         vel *= agent.kuramoto.phase;
         agent.rigidBody.AddForceAtPosition(vel * Time.deltaTime, transform.position + transform.up);
@@ -52,7 +61,7 @@ public class GeneticMovementTcell : GeneticMovement
         {
             int rndIndx = Random.Range(0, plastics.Count);
 
-            target = plastics[rndIndx].GetComponent<Digestion>().origin;
+            target = plastics[rndIndx].GetComponent<Digestion>();
             notKeyed = false;
             agent.renderer.material.SetFloat("KeyTrigger", 2);
             agent.skinnedMeshRenderer.SetBlendShapeWeight(0, 100);
@@ -84,7 +93,7 @@ public class GeneticMovementTcell : GeneticMovement
 
                     // @neander: Sets the pathogen emitter as target and copies itself a few times
                     // set the target from the origin
-                    target = Antigens[i - 1].origin;
+                    target = Antigens[i - 1];
 
                     // TODO: @Neander: This is where the TCell goes to the pathogen emitter
                     CameraBrain.Instance.RegisterEvent(new WorldEvent(WorldEvents.TCellGoesToPathogen, transform));
@@ -144,7 +153,19 @@ public class GeneticMovementTcell : GeneticMovement
     public override void OnTriggerEnterLymphonde(Collider collider) 
     { 
         if(notKeyed)
-            target = transform.parent.position + (Random.onUnitSphere * 100);
+        {
+            target = transform.parent.gameObject.GetComponent<AgentsManager>();
+            randomOffset = Random.onUnitSphere * 10;
+        }      
+    }
+
+    public override void OnTriggerExitLymphonde(Collider collider)
+    {
+        if (notKeyed)
+        {
+            target = transform.parent.gameObject.GetComponent<AgentsManager>();
+            randomOffset = Random.onUnitSphere * 2;
+        }
     }
 
     public override void OnTriggerEnterPathogenEmitter(Collider collider)
@@ -159,13 +180,13 @@ public class GeneticMovementTcell : GeneticMovement
     public override void OnTriggerExitLymphOuter(Collider collider)
     {
         if (notKeyed)
-            target = transform.parent.position;
+            target = transform.parent.gameObject.GetComponent<AgentsManager>();
     }
 
     private IEnumerator TargetTimeout(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        targeting = false;
+        target = null;
     }
 
     /// <summary>

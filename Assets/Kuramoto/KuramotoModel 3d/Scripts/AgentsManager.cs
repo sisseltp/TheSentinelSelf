@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-public class AgentsManager : MonoBehaviour
+public class AgentsManager : MonoBehaviour, ITargetable
 {
     public AgentsManagerParameters parameters;
     public GameObject[] prefabsAgents;
@@ -30,6 +30,8 @@ public class AgentsManager : MonoBehaviour
 
     [HideInInspector]
     public List<int> toRemove = new List<int>();
+
+    public Vector3 targetPoint => transform.position;
 
     public virtual void Start()
     {
@@ -70,12 +72,9 @@ public class AgentsManager : MonoBehaviour
             else
             {
                 agents[i].kuramoto.age += Time.deltaTime;
-
-                agents[i].kuramoto.phase += GPUOutput[i].phaseAdition * Time.deltaTime;
-                if (agents[i].kuramoto.phase > 1f)
-                    agents[i].kuramoto.phase--;
+                agents[i].kuramoto.phase = (agents[i].kuramoto.phase +GPUOutput[i].phaseAdition * Time.deltaTime)%1f;
+                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * Mathf.Lerp(0.5f,1f,HeartRateManager.Instance.GlobalPhaseMod1), agents[i].transform.position + agents[i].transform.up);
                 GPUStruct[i].phase = agents[i].kuramoto.phase;
-                agents[i].rigidBody.AddForceAtPosition(GPUOutput[i].vel * parameters.speedScl * Time.deltaTime * HeartRateManager.Instance.GlobalPhaseMod1, agents[i].transform.position + agents[i].transform.up);
                 GPUStruct[i].speed = agents[i].kuramoto.speed;
                 GPUStruct[i].pos = agents[i].rigidBody.position;
                 GPUStruct[i].played = agents[i].kuramoto.played;

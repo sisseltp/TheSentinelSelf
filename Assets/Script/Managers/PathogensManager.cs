@@ -37,4 +37,6 @@ public class PathogensManager : AgentsManager
         agents[i].kuramoto.age = 0f;
         DuplicatePathogen(agents[i] as Pathogen, 1);
     }
+
+    
 }

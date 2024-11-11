@@ -42,8 +42,8 @@ public class GeneticMovementSentinel : GeneticMovement
         agent.rigidBody.drag = origDrag;
 
         //target = GameManager.Instance.pathogensManagers[Random.Range(0, GameManager.Instance.pathogensManagers.Count)].transform.position;
-        target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position).transform.position;
-        targeting = true;
+        target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position);
+        //targeting = true;
     }
 
     public override void Update()
@@ -54,7 +54,7 @@ public class GeneticMovementSentinel : GeneticMovement
         Vector3 vel = Vector3.zero;
 
         if (targeting)  
-            vel = Vector3.Normalize(target - transform.position) * speedScl;
+            vel = Vector3.Normalize(target.targetPoint - transform.position) * speedScl;
 
         Ray forward = new Ray(transform.position, Vector3.Normalize(agent.rigidBody.velocity) + Vector3.down * 0.5f);
 
@@ -74,8 +74,7 @@ public class GeneticMovementSentinel : GeneticMovement
         if (keys >= NumKeysToCollect)
         {
             //int indx = Random.Range(0, GameManager.Instance.tCellsManagers.Count);
-            target = GameManager.Instance.GetRandomTCellsManagerAmongClosestHalf(transform.position).transform.position;
-            targeting = true;
+            target = GameManager.Instance.GetRandomTCellsManagerAmongClosestHalf(transform.position);
             tcellHits = 0;
 
             currentBehavior = APCBehavior.CarryingAntigens;
@@ -103,8 +102,8 @@ public class GeneticMovementSentinel : GeneticMovement
         {
             //int indx = Random.Range(0, GameManager.Instance.pathogensManagers.Count);
 
-            target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position).transform.position;
-            targeting = true;
+            target = GameManager.Instance.GetRandomPathogensManagerAmongClosestHalf(transform.position);
+            //targeting = true;
 
             foreach (GeneticAntigenKey key in digestAntigens)
                 key.TimeOut();
@@ -132,9 +131,33 @@ public class GeneticMovementSentinel : GeneticMovement
             CheckIfEnoughTCellHits();
     } 
     public override void OnCollisionEnterTerrain(Collision collision) => (agent as Sentinel).fosilising.enabled = true;
-    public override void OnTriggerEnterLymphonde(Collider collider) => targeting = false;
-    public override void OnTriggerEnterPathogenEmitter(Collider collider) => targeting = false;
-    public override void OnTriggerExitAnything(Collider collider) => targeting = true;
+    
+    
+    public override void OnTriggerEnterPathogenEmitter(Collider collider)
+    {
+        //THIS RESULTS IN THE SENTINEL STARTING TO DRIFT AWAY WHILE TRYING TO OBTAIN KEYS
+        target = null;
+    }
+
+    public override void OnTriggerExitPathogenEmitter(Collider collider)
+    {
+        //WHEN THE SENTINEL EXITS A PATHOGEN EMITTER, IF IT DOESNT HAVE ENOUGH KEYS WE FORCE IT TO GO BACK THERE
+        if(keys < NumKeysToCollect)
+            target = GameManager.Instance.GetFirstHalfClosestPathogensManagers(transform.position)[0];
+    }
+
+    public override void OnTriggerEnterLymphonde(Collider collider)
+    {
+        //THIS RESULTS IN THE SENTINEL STARTING TO DRIFT AWAY WHILE TRYING TO OBTAIN TCELLSHITS
+        target = null;
+    }
+
+    public override void OnTriggerExitLymphonde(Collider collider)
+    {
+        //WHEN THE SENTINEL EXITS A LYMPHNODE/TCELLSMANAGER, IF IT DOESNT HAVE ENOUGH TCELLSHITS WE FORCE IT TO GO BACK THERE
+        if (tcellHits<=10)
+            target = GameManager.Instance.GetFirstHalfClosestTCellsManagers(transform.position)[0];
+    }
 
     public override void OnTriggerStayPathogenEmitter(Collider collider)
     {
