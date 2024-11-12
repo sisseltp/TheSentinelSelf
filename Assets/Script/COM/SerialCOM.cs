@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.IO.Ports;
 using UnityEngine;
@@ -12,6 +13,9 @@ public class SerialCOM : MonoBehaviour
     [SerializeField]
     private int baudRate = 115200;
     
+    [SerializeField]
+    private int maxRetryConnectTime = 120;
+    
     [Header("References")]
     [SerializeField]
     private EthernetValues ethernetValues;
@@ -19,60 +23,83 @@ public class SerialCOM : MonoBehaviour
     private SerialPort serialPort;
 
     private bool isStreaming;
+    private int retryTime;
     
     private void Start()
     {
         Open();
     }
 
-    private void OnDestroy()
-    {
-        Close();
-    }
-
-    private void OnDisable()
-    {
-        Close();
-    }
-
     private void Open()
     {
-        isStreaming = true;
-        serialPort = new SerialPort(port, baudRate);
-        serialPort.ReadTimeout = 50;
-
         try
         {
+            serialPort = new SerialPort(port, baudRate);
+            serialPort.ReadTimeout = 50;
             serialPort.Open();
+            isStreaming = true;
             Debug.Log("COM port opened successfully");
+
+            retryTime = 0;
         }
         catch (IOException e)
         {
-            Debug.Log(e.Message);
+            // Debug.LogWarning($"Error during opening of port. Message: {e.Message}");
+            StartCoroutine(RetryConnect());
         }  
     }
 
     private void Close()
     {
+        isStreaming = false;
         serialPort?.Close();
+        
+        ethernetValues.SetGlobalHeartBeatRateValue(0);
+        ethernetValues.SetGlobalHeartBeatIntervalValue(0);
+        ethernetValues.SetGlobalHeartBeatPulseValue(0);
     }
-    
+
     private void Update()
     {
-        if (!isStreaming) 
+        if (!isStreaming)
             return;
         if (!serialPort.IsOpen)
             return;
 
         // Make sure we read all the data else it will stack up and give a delay
-        while (serialPort.BytesToRead > 0)
+        try
         {
-            var value = ReadSerialPort();
-            if (value != null )
+            while (serialPort.BytesToRead > 0)
             {
-                ParseMessage(value); // -> 0,600,0
+                var value = ReadSerialPort();
+                if (value != null)
+                {
+                    ParseMessage(value); // -> 0,600,0
+                }
             }
         }
+        catch (Exception e)
+        {
+            // Debug.LogWarning($"Problem during serial read. Message: {e.Message}");
+            Close();
+            StartCoroutine(RetryConnect());
+        }
+    }
+
+    private IEnumerator RetryConnect()
+    {
+        retryTime += 5; // Every retry wait 5 sec longer
+
+        if (retryTime > maxRetryConnectTime)
+        {
+            retryTime = maxRetryConnectTime;
+        }
+        
+        Debug.Log($"Waiting for {retryTime} seconds before retry.");
+        
+        yield return new WaitForSeconds(retryTime);
+        
+        Open();
     }
 
     private void ParseMessage(string message)
@@ -113,29 +140,30 @@ public class SerialCOM : MonoBehaviour
 
         if (!success) return;
         
-        // Debug.Log($"Heart rate data. BPM: {bpm}, Interval : {interval}, Pulse : {pulse}");
-        
         ethernetValues.SetGlobalHeartBeatRateValue(bpm);
         ethernetValues.SetGlobalHeartBeatIntervalValue(interval);
         ethernetValues.SetGlobalHeartBeatPulseValue(pulse);
     }
 
-    private string ReadSerialPort(int timeout = 50)
+    private string ReadSerialPort()
     {
-        serialPort.ReadTimeout = timeout;
-
         try
         {
-            if (serialPort.IsOpen)
-                return serialPort.ReadLine();
-            
-            return "ERROR: Serial Port Not Open";
-
+            return serialPort.IsOpen ? serialPort.ReadLine() : null;
         }
-        catch (TimeoutException e)
+        catch
         {
-            Debug.LogWarning(e.Message);
             return null;
         }
+    }
+    
+    private void OnDestroy()
+    {
+        Close();
+    }
+
+    private void OnDisable()
+    {
+        Close();
     }
 }
